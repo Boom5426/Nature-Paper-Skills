@@ -6,6 +6,7 @@
 mkdir -p ~/.claude/skills
 cp -R skills/core/paper-bootstrap ~/.claude/skills/
 cp -R skills/core/manuscript-optimizer ~/.claude/skills/
+cp -R skills/core/results-section-revision ~/.claude/skills/
 cp -R skills/core/submission-audit ~/.claude/skills/
 cp -R skills/venue/nature-portfolio-playbook ~/.claude/skills/
 ```
@@ -16,6 +17,7 @@ cp -R skills/venue/nature-portfolio-playbook ~/.claude/skills/
 mkdir -p .claude/skills
 cp -R skills/core/paper-bootstrap .claude/skills/
 cp -R skills/core/manuscript-optimizer .claude/skills/
+cp -R skills/core/results-section-revision .claude/skills/
 cp -R skills/core/submission-audit .claude/skills/
 cp -R skills/venue/nature-portfolio-playbook .claude/skills/
 ```

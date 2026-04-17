@@ -20,6 +20,7 @@ Use:
 - `nature-portfolio-playbook` when the target is `Nature`, `Nature Methods`, `Nature Biotechnology`, or the venue fit among those journals is still unclear
 - `scientific-writing` when drafting or rewriting sections in prose
 - `manuscript-optimizer` when the paper's claim structure, evidence chain, terminology, or prose need revision
+- `results-section-revision` when the Results section is scientifically stable but the subsection flow, paragraph openings, or argument progression still feel jumpy
 - `figure-planner` when the main bottleneck is figure logic, panel roles, or legend sync
 - `citation-verifier` when bibliography hygiene or source verification is the bottleneck
 - `submission-audit` when the paper is near submission or resubmission and needs a preflight pass
@@ -35,9 +36,10 @@ For most papers under `/data/boom/Papers`, prefer this order:
 3. Refresh `notes/project_truth.md`, `notes/result_summary.md`, and `notes/paper_handoff.md` after any major experimental or figure update
 4. `scientific-writing` or `manuscript-optimizer`
 5. `figure-planner`
-6. `citation-verifier`
-7. `submission-audit`
-8. `rebuttal-response` after external review
+6. `results-section-revision` when Results is substantively right but narratively abrupt
+7. `citation-verifier`
+8. `submission-audit`
+9. `rebuttal-response` after external review
 
 ## Common Mistakes
 

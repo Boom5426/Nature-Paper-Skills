@@ -32,7 +32,7 @@ cd nature-paper-skills
 Paste this into Codex:
 
 ```text
-Install the recommended skills from this repository into ~/.codex/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, figure-planner, citation-verifier, submission-audit, rebuttal-response. Copy the full skill directories, not just SKILL.md. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
+Install the recommended skills from this repository into ~/.codex/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, submission-audit, rebuttal-response. Copy the full skill directories, not just SKILL.md. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
 ```
 
 #### Option B: Ask Claude Code To Install It
@@ -40,7 +40,7 @@ Install the recommended skills from this repository into ~/.codex/skills/: paper
 Paste this into Claude Code:
 
 ```text
-Install the recommended skills from this repository into ~/.claude/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, figure-planner, citation-verifier, submission-audit, rebuttal-response. Copy the full skill directories, not just SKILL.md. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
+Install the recommended skills from this repository into ~/.claude/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, submission-audit, rebuttal-response. Copy the full skill directories, not just SKILL.md. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
 ```
 
 #### Option C: Install Manually
@@ -56,6 +56,7 @@ cp -R \
   skills/core/paper-bootstrap \
   skills/core/scientific-writing \
   skills/core/manuscript-optimizer \
+  skills/core/results-section-revision \
   skills/core/figure-planner \
   skills/core/citation-verifier \
   skills/core/submission-audit \
@@ -73,6 +74,7 @@ cp -R \
   skills/core/paper-bootstrap \
   skills/core/scientific-writing \
   skills/core/manuscript-optimizer \
+  skills/core/results-section-revision \
   skills/core/figure-planner \
   skills/core/citation-verifier \
   skills/core/submission-audit \
@@ -98,6 +100,7 @@ paper-bootstrap
   -> nature-portfolio-playbook
   -> scientific-writing / manuscript-optimizer
   -> figure-planner
+  -> results-section-revision
   -> citation-verifier
   -> submission-audit
   -> rebuttal-response
@@ -115,6 +118,7 @@ The default assumption is:
 - `paper-bootstrap`: initialize a paper project, source of truth, and state files
 - `scientific-writing`: draft or rewrite manuscript sections in full prose
 - `manuscript-optimizer`: repair claim structure, evidence chain, terminology, and prose drift
+- `results-section-revision`: repair late-stage narrative flow inside Results subsections
 - `figure-planner`: reorganize figures around one main claim each and align legends with Results
 - `citation-verifier`: clean local bibliography artifacts before final source verification
 - `submission-audit`: run a final manuscript preflight before submission or resubmission

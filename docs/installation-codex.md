@@ -19,6 +19,7 @@ cp -R skills/core/paper-workflow ~/.codex/skills/
 cp -R skills/core/paper-bootstrap ~/.codex/skills/
 cp -R skills/core/scientific-writing ~/.codex/skills/
 cp -R skills/core/manuscript-optimizer ~/.codex/skills/
+cp -R skills/core/results-section-revision ~/.codex/skills/
 cp -R skills/core/figure-planner ~/.codex/skills/
 cp -R skills/core/citation-verifier ~/.codex/skills/
 cp -R skills/core/submission-audit ~/.codex/skills/

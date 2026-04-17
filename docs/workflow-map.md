@@ -8,15 +8,17 @@ The default manuscript path in this repository is:
 3. refresh project_truth / result_summary / paper_handoff
 4. scientific-writing or manuscript-optimizer
 5. figure-planner
-6. citation-verifier
-7. submission-audit
-8. rebuttal-response
+6. results-section-revision when Results is scientifically stable but still reads as jumpy or figure-by-figure
+7. citation-verifier
+8. submission-audit
+9. rebuttal-response
 ```
 
 ## Routing Rule
 
 - Use `scientific-writing` when the section mostly needs to be drafted or rewritten in prose.
 - Use `manuscript-optimizer` when the paper's story, evidence chain, figure logic, or terminology may be unstable.
+- Use `results-section-revision` when the remaining problem is local Results architecture rather than claim selection.
 
 ## Working Principle
 

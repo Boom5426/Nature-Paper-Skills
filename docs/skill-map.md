@@ -6,6 +6,7 @@
 - `paper-bootstrap`: initialize a paper project and source of truth
 - `scientific-writing`: draft and section-level rewriting
 - `manuscript-optimizer`: structural revision and evidence-chain repair
+- `results-section-revision`: late-stage Results narrative repair
 - `figure-planner`: figure claim design and legend sync
 - `citation-verifier`: bibliography hygiene
 - `submission-audit`: pre-submission or pre-resubmission QA

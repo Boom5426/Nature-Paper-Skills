@@ -32,7 +32,7 @@ cd nature-paper-skills
 把下面这句话直接发给 Codex：
 
 ```text
-把当前仓库里的推荐 skills 安装到 ~/.codex/skills/：paper-workflow、paper-bootstrap、nature-portfolio-playbook、scientific-writing、manuscript-optimizer、figure-planner、citation-verifier、submission-audit、rebuttal-response。复制整个 skill 目录，不要只复制 SKILL.md。安装完成后，列出已安装目录，并用 paper-workflow 帮我判断当前稿件下一步该用哪个 skill。
+把当前仓库里的推荐 skills 安装到 ~/.codex/skills/：paper-workflow、paper-bootstrap、nature-portfolio-playbook、scientific-writing、manuscript-optimizer、results-section-revision、figure-planner、citation-verifier、submission-audit、rebuttal-response。复制整个 skill 目录，不要只复制 SKILL.md。安装完成后，列出已安装目录，并用 paper-workflow 帮我判断当前稿件下一步该用哪个 skill。
 ```
 
 #### 方式 B：直接让 Claude Code 安装
@@ -40,7 +40,7 @@ cd nature-paper-skills
 把下面这句话直接发给 Claude Code：
 
 ```text
-把当前仓库里的推荐 skills 安装到 ~/.claude/skills/：paper-workflow、paper-bootstrap、nature-portfolio-playbook、scientific-writing、manuscript-optimizer、figure-planner、citation-verifier、submission-audit、rebuttal-response。复制整个 skill 目录，不要只复制 SKILL.md。安装完成后，列出已安装目录，并用 paper-workflow 帮我判断当前稿件下一步该用哪个 skill。
+把当前仓库里的推荐 skills 安装到 ~/.claude/skills/：paper-workflow、paper-bootstrap、nature-portfolio-playbook、scientific-writing、manuscript-optimizer、results-section-revision、figure-planner、citation-verifier、submission-audit、rebuttal-response。复制整个 skill 目录，不要只复制 SKILL.md。安装完成后，列出已安装目录，并用 paper-workflow 帮我判断当前稿件下一步该用哪个 skill。
 ```
 
 #### 方式 C：手动安装
@@ -56,6 +56,7 @@ cp -R \
   skills/core/paper-bootstrap \
   skills/core/scientific-writing \
   skills/core/manuscript-optimizer \
+  skills/core/results-section-revision \
   skills/core/figure-planner \
   skills/core/citation-verifier \
   skills/core/submission-audit \
@@ -73,6 +74,7 @@ cp -R \
   skills/core/paper-bootstrap \
   skills/core/scientific-writing \
   skills/core/manuscript-optimizer \
+  skills/core/results-section-revision \
   skills/core/figure-planner \
   skills/core/citation-verifier \
   skills/core/submission-audit \
@@ -98,6 +100,7 @@ paper-bootstrap
   -> nature-portfolio-playbook
   -> scientific-writing / manuscript-optimizer
   -> figure-planner
+  -> results-section-revision
   -> citation-verifier
   -> submission-audit
   -> rebuttal-response
@@ -115,6 +118,7 @@ paper-bootstrap
 - `paper-bootstrap`: 初始化论文项目、source of truth 和状态文件
 - `scientific-writing`: 章节撰写与重写
 - `manuscript-optimizer`: 结构与证据链修复
+- `results-section-revision`: Results 小节级叙述结构修复
 - `figure-planner`: 一图一主张、panel 角色、legend 同步
 - `citation-verifier`: 引用与 BibTeX 卫生检查
 - `submission-audit`: 投稿前/返修前总预检
