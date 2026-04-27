@@ -202,3 +202,7 @@ GitHub 仓库 description、topics 和 About 面板文案统一放在 [.github/r
 ## 归因
 
 来源归因见 [ATTRIBUTION.md](ATTRIBUTION.md)。
+## 致谢
+
+本仓库中的部分 skills 在设计与实现上参考并优化自 [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw)。
+
