@@ -513,3 +513,33 @@ This skill includes comprehensive reference files covering specific aspects of s
 - `references/writing_principles.md`: Core principles of effective scientific communication
 
 Load these references as needed when working on specific aspects of scientific writing.
+
+## Nature-Style Academic Polishing
+
+### Sentence Length Control
+
+**Rule: Every sentence in the polished output must be ≤30 words and span no more than 2 lines at standard formatting.**
+
+**Cohesion strategies:**
+
+| Strategy | Example |
+|----------|---------|
+| Restate the subject | "The resulting serial sections exhibit inherent spatial asymmetry. Such asymmetry makes pixel-level alignment unattainable." |
+| Adverbial connective | "PAS captures only one dimension of the pathology. Therefore, special stains are essential." |
+| Pronoun reference | "Pathologists employ a panel of histochemical stains. Each targets a distinct feature." |
+| Definite article + noun | "The renal biopsy specimen is small. The limited tissue complicates multi-modal analysis." |
+| Demonstrative + noun | "This heterogeneity makes IgAN an ideal test case." |
+
+### Practical Heuristics
+
+- Each English sentence should carry ONE subject + ONE verb as its core.
+- Avoid overloading sentences with participial phrases, lists, or multiple propositions.
+- Split long sentences to improve clarity and flow.
+
+### Example
+
+**Before:**
+To characterise phenotypic evolution and spatial reorganisation within this microenvironment during kidney injury, pathologists employ a panel of histochemical stains. PAS, Masson's trichrome, PAM and H&E each interrogate distinct pathological dimensions, including basement membrane lesions, collagen deposition and cellular infiltration, enabling a composite assessment of tissue damage. (38 words)
+
+**After:**
+To characterise phenotypic evolution and spatial reorganisation within this microenvironment during kidney injury, pathologists employ a panel of histochemical stains. PAS, Masson's trichrome, PAM and H&E each interrogate distinct pathological dimensions. These include basement membrane lesions, collagen deposition and cellular infiltration. Together, they enable a composite assessment of tissue damage.

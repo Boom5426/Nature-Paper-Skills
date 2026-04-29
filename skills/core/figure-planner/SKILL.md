@@ -109,6 +109,33 @@ After the figure logic is stable, run one visual-hygiene pass:
 - keeping weak auxiliary metrics at headline level instead of demoting them
 - inconsistent figure typography, whitespace, or color logic making the scientific comparison harder to read
 
+## Nature-Style Enhancements
+
+### Matplotlib Figure Standards
+
+For figures targeting Nature or similar high-impact journals, apply the following `rcParams`:
+
+```python
+import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Arial']
+plt.rcParams['svg.fonttype'] = 'none'          # editable text in SVG/PDF
+plt.rcParams['font.size'] = 16                 # 24 for large bar panels
+plt.rcParams['axes.spines.right'] = False
+plt.rcParams['axes.spines.top'] = False
+plt.rcParams['axes.linewidth'] = 2.5           # 3 for big bars, 2 for compact
+plt.rcParams['legend.frameon'] = False
+```
+
+Use `text.usetex = True` only when LaTeX is installed and math-rich labels are required.
+
+### When to Use
+
+- Figures for **papers, slides, or reports** targeting Nature, NeurIPS, ICLR, or similar venues.
+- Requests involving **grouped bars, trend lines, heatmaps, radar plots, multi-panel grids**, or **PDF/SVG/high-DPI** output.
+- Any mention of "Nature style", "publication figure", "paper figure", or "high-quality scientific plot".
+
 ## Output Standard
 
 When using this skill, produce:
