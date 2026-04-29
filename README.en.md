@@ -156,8 +156,7 @@ nature-paper-skills/
 ├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md
-├── README.en.md
-└── README.zh.md
+└── README.en.md
 ```
 
 Scripts needed by individual skills live inside the skill directories so each skill remains installable as a self-contained unit.

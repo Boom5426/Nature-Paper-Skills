@@ -25,7 +25,7 @@ This skill should be used when:
 **When creating documents with this skill, consider adding diagrams when they clarify a workflow, architecture, or evaluation framework.**
 
 If the document does not already contain suitable figures:
-- Use the **inno-figure-gen** skill to generate publication-style diagrams.
+- Use an installed figure-generation skill such as `inno-figure-gen` to generate publication-style diagrams.
 - Describe the desired figure in natural language and specify academic style constraints.
 - Iterate prompts until the figure is clear, readable, and suitable for review materials.
 
@@ -37,7 +37,7 @@ uv run ~/.codex/skills/inno-figure-gen/scripts/generate_image.py \
   --resolution 2K
 ```
 
-Requires `GEMINI_API_KEY` or an explicit `--api-key`.
+If you are in Claude Code, replace `~/.codex/skills` with `~/.claude/skills`. Requires `GEMINI_API_KEY` or an explicit `--api-key`.
 
 **When to add figures:**
 - Peer review workflow diagrams
@@ -48,7 +48,7 @@ Requires `GEMINI_API_KEY` or an explicit `--api-key`.
 - Reporting guidelines compliance diagrams
 - Any complex concept that benefits from visualization
 
-For detailed guidance on creating figures, refer to the `inno-figure-gen` skill documentation.
+For detailed guidance on creating figures, refer to the figure-generation skill you have installed.
 
 ---
 

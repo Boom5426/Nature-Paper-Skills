@@ -17,6 +17,7 @@ Use the helper script when you need a clean baseline layout quickly:
 
 ```bash
 python ~/.codex/skills/paper-bootstrap/scripts/init_paper_layout.py /data/boom/Papers/<paper>
+# Claude Code users: replace ~/.codex/skills with ~/.claude/skills
 ```
 
 ## When To Use

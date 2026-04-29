@@ -25,7 +25,7 @@ Use:
 - `citation-verifier` when bibliography hygiene or source verification is the bottleneck
 - `submission-audit` when the paper is near submission or resubmission and needs a preflight pass
 - `rebuttal-response` when reviewer comments exist and a response letter plus aligned manuscript edits are needed
-- `ml-paper-writing` only when the user explicitly wants a conference paper for venues such as NeurIPS, ICML, ICLR, ACL, AAAI, or COLM
+- `conference-paper-writing` only when the user explicitly wants a conference paper for venues such as NeurIPS, ICML, ICLR, ACL, AAAI, or COLM
 
 ## Default Sequence
 

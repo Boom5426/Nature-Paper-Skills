@@ -9,7 +9,7 @@
     ↓
 data-analyst (Agent)
     ↓
-inno-experiment-analysis (Skill)
+results-analysis (Skill)
 ```
 
 ## 快速开始
@@ -24,7 +24,7 @@ inno-experiment-analysis (Skill)
 
 系统会自动：
 1. 触发 data-analyst agent
-2. Agent 使用 inno-experiment-analysis skill 的方法论
+2. Agent 使用 results-analysis skill 的方法论
 3. 生成分析报告和 Results 草稿
 
 ### 2. 指定分析类型
@@ -196,7 +196,7 @@ Agent 只生成可视化规格，不进行统计分析。
 
 ## Skill 方法论
 
-Agent 在分析过程中遵循 inno-experiment-analysis skill 的方法论：
+Agent 在分析过程中遵循 results-analysis skill 的方法论：
 
 ### 1. 统计方法（references/statistical-methods.md）
 
@@ -256,7 +256,7 @@ Results Analysis Workflow 提供了从实验数据到论文 Results 部分的完
 
 1. **Command** (`/analyze-results`) - 用户友好的入口
 2. **Agent** (`data-analyst`) - 自动化分析执行
-3. **Skill** (`inno-experiment-analysis`) - 学术标准方法论
+3. **Skill** (`results-analysis`) - 学术标准方法论
 
 遵循这个工作流可以确保：
 - 统计分析的正确性

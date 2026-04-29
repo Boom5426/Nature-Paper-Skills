@@ -7,11 +7,11 @@ description: Use when writing or revising scientific manuscripts, abstracts, fig
 
 ## Overview
 
-**This is the core skill for the deep research and writing tool**—combining AI-driven deep research with well-formatted written outputs. Every document produced is backed by comprehensive literature search and verified citations through the research-lookup skill.
+This is the core journal-writing skill in this repository. Use it to turn a stable scientific story into clear, well-structured manuscript prose while keeping citations, figures, and reporting standards aligned.
 
 Scientific writing is a process for communicating research with precision and clarity. Write manuscripts using IMRAD structure, citations (APA/AMA/Vancouver), figures/tables, and reporting guidelines (CONSORT/STROBE/PRISMA). Apply this skill for research papers and journal submissions.
 
-**Critical Principle: Always write in full paragraphs with flowing prose. Never submit bullet points in the final manuscript.** Use a two-stage process: first create section outlines with key points using research-lookup, then convert those outlines into complete paragraphs.
+**Critical Principle: Always write in full paragraphs with flowing prose. Never submit bullet points in the final manuscript.** Use a two-stage process: first create section outlines with key points from verified notes, literature, and results, then convert those outlines into complete paragraphs.
 
 For revision-heavy journal manuscripts, do not jump from stale prose directly to polishing. First stabilize the section with a reverse outline and a claim-evidence map, then rewrite the paragraphs.
 
@@ -31,14 +31,14 @@ This skill should be used when:
 
 ## Visual Enhancement with Scientific Figures
 
-When a manuscript would benefit from a schematic, workflow diagram, or conceptual figure, use the installed `inno-figure-gen` skill.
+When a manuscript would benefit from a schematic, workflow diagram, or conceptual figure, use an installed figure-generation skill if one is available, such as `inno-figure-gen`.
 
 Before finalizing any document:
 1. Add at least one figure when it materially improves comprehension.
 2. Prefer 2-3 figures for longer papers (methods flowchart, results visualization, conceptual diagram).
 
 **How to generate figures:**
-- Use the **inno-figure-gen** skill to generate publication-style diagrams.
+- Use an installed figure-generation skill such as `inno-figure-gen` to generate publication-style diagrams.
 - Write prompts that specify academic style, white background, clean labels, colorblind-friendly colors, and high contrast.
 - Save outputs under a local `figures/` directory in the current project.
 
@@ -50,7 +50,7 @@ uv run ~/.codex/skills/inno-figure-gen/scripts/generate_image.py \
   --resolution 2K
 ```
 
-Requires `GEMINI_API_KEY` or an explicit `--api-key`. Iterate on the prompt until the figure is publication-ready.
+If you are in Claude Code, replace `~/.codex/skills` with `~/.claude/skills`. Requires `GEMINI_API_KEY` or an explicit `--api-key`. Iterate on the prompt until the figure is publication-ready.
 
 **When to add figures:**
 - Study design and methodology flowcharts (CONSORT, PRISMA, STROBE)
@@ -61,7 +61,7 @@ Requires `GEMINI_API_KEY` or an explicit `--api-key`. Iterate on the prompt unti
 - System architecture visualizations
 - Any complex concept that benefits from visualization
 
-For detailed guidance on creating figures, refer to the `inno-figure-gen` skill documentation.
+For detailed guidance on creating figures, refer to the figure-generation skill you have installed.
 
 ---
 
@@ -211,7 +211,7 @@ Scientific papers must be written in complete, flowing prose. Use this two-stage
 **Stage 1: Create Section Outlines with Key Points**
 
 When starting a new section:
-1. Use the research-lookup skill to gather relevant literature and data
+1. Gather the relevant literature and data from verified local notes, trusted web sources, or an installed literature-search skill
 2. Create a structured outline with bullet points marking:
    - Main arguments or findings to present
    - Key studies to cite
@@ -291,10 +291,10 @@ Lists may appear in scientific papers only in specific contexts:
 - **Supplementary Materials**: Extended protocols, equipment lists, detailed parameters
 - **Never in**: Abstract, Introduction, Results, Discussion, Conclusions
 
-**Integration with Research Lookup:**
+**Integration with Literature Search:**
 
-The research-lookup skill is essential for Stage 1 (creating outlines):
-1. Search for relevant papers using research-lookup
+Verified literature gathering is essential for Stage 1 (creating outlines):
+1. Search for relevant papers using trusted sources or an installed literature-search skill
 2. Extract key findings, methods, and data
 3. Organize findings as bullet points in your outline
 4. Then convert the outline to full paragraphs in Stage 2
@@ -467,7 +467,7 @@ Adapt language, terminology, and conventions to match the specific scientific di
 **Stage 2: Drafting** (Use two-stage writing process for each section)
 1. Start with figures and tables (the core data story)
 2. For each section below, follow the two-stage process:
-   - **First**: Create outline with bullet points using research-lookup
+   - **First**: Create outline with bullet points from verified literature, notes, and results
    - **Second**: Convert bullet points to full paragraphs with flowing prose
 3. Write Methods (often easiest to draft first)
 4. Draft Results (describing figures/tables objectively)

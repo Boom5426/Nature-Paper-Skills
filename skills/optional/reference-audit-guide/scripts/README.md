@@ -16,7 +16,7 @@
 
 ## 主要工作流
 
-**实际的引用验证应该使用 `ml-paper-writing` skill 中的 Citation Workflow：**
+**实际的引用验证应优先使用 `citation-verifier` skill 的本地优先工作流：**
 
 1. 使用 WebSearch 查找论文
 2. 在 Google Scholar 上验证
@@ -24,7 +24,7 @@
 4. 验证声明（如需要）
 5. 添加到 bibliography
 
-详见 `ml-paper-writing` skill 的 "Citation Workflow (Hallucination Prevention)" 部分。
+详见 `citation-verifier` 的 `SKILL.md`。
 
 ## 脚本说明
 
@@ -59,7 +59,7 @@ BibTeX和LaTeX格式检查工具，包含：
 ## 使用建议
 
 **对于日常论文写作**:
-- ✅ 使用 `ml-paper-writing` skill 的 Citation Workflow
+- ✅ 使用 `citation-verifier` skill 的本地优先工作流
 - ✅ 使用 WebSearch 和 Google Scholar
 - ❌ 不要使用这些Python脚本
 
@@ -78,4 +78,4 @@ pip install bibtexparser requests semanticscholar arxiv
 
 ## 更多信息
 
-详见 `inno-reference-audit` skill 的 SKILL.md 文件。
+详见 `reference-audit-guide` skill 的 `SKILL.md` 文件。

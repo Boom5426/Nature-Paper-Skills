@@ -156,8 +156,7 @@ nature-paper-skills/
 ├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md
-├── README.en.md
-└── README.zh.md
+└── README.en.md
 ```
 
 脚本随 skill 目录分发，保证 skill 可独立复制和复用。
@@ -206,4 +205,3 @@ GitHub 仓库 description、topics 和 About 面板文案统一放在 [.github/r
 ## 致谢
 
 本仓库部分代码和灵感来源于 [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw) and [罗小罗团队Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills)，感谢所有为本项目贡献代码、文档和测试的开发者社区成员。
-

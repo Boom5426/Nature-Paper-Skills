@@ -326,5 +326,5 @@
 ---
 
 **报告生成时间**: 2024-01-20 15:30
-**分析工具**: inno-experiment-analysis skill
+**分析工具**: results-analysis skill
 **联系人**: research-team@example.com
