@@ -1,6 +1,6 @@
 ---
 name: paper-bootstrap
-description: Use when starting a new manuscript project or cleaning up an existing paper directory under `/data/boom/Papers` and you need a standard structure, active source files, project memory, and venue defaults before deeper writing begins.
+description: Use when starting a new manuscript project or cleaning up an existing paper directory and you need a standard structure, active source files, project memory, and venue defaults before deeper writing begins.
 ---
 
 # Paper Bootstrap
@@ -16,14 +16,15 @@ When the manuscript depends on experiments, figures, or results produced across 
 Use the helper script when you need a clean baseline layout quickly:
 
 ```bash
-python ~/.codex/skills/paper-bootstrap/scripts/init_paper_layout.py /data/boom/Papers/<paper>
-# Claude Code users: replace ~/.codex/skills with ~/.claude/skills
+python ~/.codex/skills/paper-bootstrap/scripts/init_paper_layout.py path/to/paper
+# Claude Code (global install): replace ~/.codex/skills with ~/.claude/skills
+# Claude Code (project-local install): replace ~/.codex/skills with .claude/skills
 ```
 
 ## When To Use
 
 Use this skill when:
-- A new paper directory is being created under `/data/boom/Papers`
+- A new paper directory is being created
 - An existing paper directory has drafts, figures, notes, and outputs scattered across multiple places
 - It is unclear which file is the active manuscript source of truth
 - The project has no paper-specific memory yet

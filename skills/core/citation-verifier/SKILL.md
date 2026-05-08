@@ -33,7 +33,8 @@ The helper script:
 
 ```bash
 python ~/.codex/skills/citation-verifier/scripts/scan_citations.py path/to/file_or_dir [...]
-# Claude Code users: replace ~/.codex/skills with ~/.claude/skills
+# Claude Code (global install): replace ~/.codex/skills with ~/.claude/skills
+# Claude Code (project-local install): replace ~/.codex/skills with .claude/skills
 ```
 
 Use it to find:

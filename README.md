@@ -32,7 +32,7 @@ cd nature-paper-skills
 把下面这句话直接发给 Codex：
 
 ```text
-把当前仓库里的推荐 skills 安装到 ~/.codex/skills/：paper-workflow、paper-bootstrap、nature-portfolio-playbook、scientific-writing、manuscript-optimizer、results-section-revision、figure-planner、citation-verifier、submission-audit、rebuttal-response。复制整个 skill 目录，不要只复制 SKILL.md。安装完成后，列出已安装目录，并用 paper-workflow 帮我判断当前稿件下一步该用哪个 skill。
+把当前仓库里的推荐 skills 安装到 ~/.codex/skills/：paper-workflow、paper-bootstrap、nature-portfolio-playbook、scientific-writing、manuscript-optimizer、results-section-revision、figure-planner、citation-verifier、data-availability、submission-audit、rebuttal-response。复制整个 skill 目录，不要只复制 SKILL.md。安装完成后，列出已安装目录，并用 paper-workflow 帮我判断当前稿件下一步该用哪个 skill。
 ```
 
 #### 方式 B：直接让 Claude Code 安装
@@ -40,8 +40,10 @@ cd nature-paper-skills
 把下面这句话直接发给 Claude Code：
 
 ```text
-把当前仓库里的推荐 skills 安装到 ~/.claude/skills/：paper-workflow、paper-bootstrap、nature-portfolio-playbook、scientific-writing、manuscript-optimizer、results-section-revision、figure-planner、citation-verifier、submission-audit、rebuttal-response。复制整个 skill 目录，不要只复制 SKILL.md。安装完成后，列出已安装目录，并用 paper-workflow 帮我判断当前稿件下一步该用哪个 skill。
+把当前仓库里的推荐 skills 安装到 ~/.claude/skills/：paper-workflow、paper-bootstrap、nature-portfolio-playbook、scientific-writing、manuscript-optimizer、results-section-revision、figure-planner、citation-verifier、data-availability、submission-audit、rebuttal-response。复制整个 skill 目录，不要只复制 SKILL.md。安装完成后，列出已安装目录，并用 paper-workflow 帮我判断当前稿件下一步该用哪个 skill。
 ```
+
+如果你只想让当前仓库生效，把上面提示里的目标目录改成 `.claude/skills/`。
 
 #### 方式 C：手动安装
 
@@ -59,6 +61,7 @@ cp -R \
   skills/core/results-section-revision \
   skills/core/figure-planner \
   skills/core/citation-verifier \
+  skills/core/data-availability \
   skills/core/submission-audit \
   skills/core/rebuttal-response \
   skills/venue/nature-portfolio-playbook \
@@ -77,6 +80,7 @@ cp -R \
   skills/core/results-section-revision \
   skills/core/figure-planner \
   skills/core/citation-verifier \
+  skills/core/data-availability \
   skills/core/submission-audit \
   skills/core/rebuttal-response \
   skills/venue/nature-portfolio-playbook \
@@ -92,6 +96,7 @@ cp -R \
 ```
 
 更详细的安装说明见 [docs/installation-codex.md](docs/installation-codex.md) 和 [docs/installation-claude.md](docs/installation-claude.md)。
+Codex 使用 `~/.codex/skills/`；Claude Code 使用 `~/.claude/skills/` 或 `.claude/skills/`，这几种安装方式可以并存，不会互相覆盖。
 
 ## 默认工作流
 
@@ -102,6 +107,7 @@ paper-bootstrap
   -> figure-planner
   -> results-section-revision
   -> citation-verifier
+  -> data-availability
   -> submission-audit
   -> rebuttal-response
 ```
@@ -121,6 +127,7 @@ paper-bootstrap
 - `results-section-revision`: Results 小节级叙述结构修复
 - `figure-planner`: 一图一主张、panel 角色、legend 同步
 - `citation-verifier`: 引用与 BibTeX 卫生检查
+- `data-availability`: Data Availability 声明、仓库与 accession/source data 规划
 - `submission-audit`: 投稿前/返修前总预检
 - `rebuttal-response`: 审稿意见回复与改稿联动
 
@@ -145,6 +152,7 @@ nature-paper-skills/
 ├── .github/
 ├── docs/
 ├── examples/
+├── reference/
 ├── skills/
 │   ├── core/
 │   ├── venue/

@@ -9,6 +9,7 @@
 - `results-section-revision`: late-stage Results narrative repair
 - `figure-planner`: figure claim design and legend sync
 - `citation-verifier`: bibliography hygiene
+- `data-availability`: data-sharing statements, repository planning, and source-data coverage
 - `submission-audit`: pre-submission or pre-resubmission QA
 - `rebuttal-response`: author-side reviewer response workflow
 

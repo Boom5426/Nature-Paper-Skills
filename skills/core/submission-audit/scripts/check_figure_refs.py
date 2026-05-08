@@ -8,9 +8,10 @@ from pathlib import Path
 
 
 REF_PATTERN = re.compile(
-    r"(?P<kind>Supplementary\s+Fig\.|Fig\.)\s*"
+    r"(?P<kind>Extended\s+Data\s+Fig\.|Supplementary\s+Fig\.|Fig\.)\s*"
     r"(?P<num>\d+)"
-    r"(?P<panels>(?:[a-z](?:[-,][a-z])*)?)",
+    r"(?P<panels>(?:[a-z](?:[-,][a-z])*)?)"
+    r"(?=\b|[)\].,;:])",
     re.IGNORECASE,
 )
 
@@ -18,6 +19,7 @@ REF_PATTERN = re.compile(
 def expand_panels(raw: str) -> list[str]:
     if not raw:
         return []
+    raw = raw.strip()
     parts: list[str] = []
     for chunk in raw.split(","):
         chunk = chunk.strip()
@@ -40,9 +42,15 @@ def main() -> None:
     for raw in args.files:
         path = Path(raw)
         text = path.read_text(encoding="utf-8", errors="replace")
-        for lineno, line in enumerate(text.splitlines(), start=1):
+        for line in text.splitlines():
             for match in REF_PATTERN.finditer(line):
-                kind = "supp" if "supplementary" in match.group("kind").lower() else "main"
+                raw_kind = match.group("kind").lower()
+                if "extended data" in raw_kind:
+                    kind = "extended"
+                elif "supplementary" in raw_kind:
+                    kind = "supp"
+                else:
+                    kind = "main"
                 key = f"{kind}:{match.group('num')}"
                 grouped[key]["mentions"] = int(grouped[key]["mentions"]) + 1
                 panels = expand_panels(match.group("panels"))
@@ -53,9 +61,20 @@ def main() -> None:
                 else:
                     grouped[key]["whole"] = int(grouped[key]["whole"]) + 1
 
-    for key in sorted(grouped.keys(), key=lambda x: (x.split(":")[0], int(x.split(":")[1]))):
+    if not grouped:
+        print("No figure references found.")
+        return
+
+    order = {"main": 0, "extended": 1, "supp": 2}
+    labels = {
+        "main": "Fig.",
+        "extended": "Extended Data Fig.",
+        "supp": "Supplementary Fig.",
+    }
+
+    for key in sorted(grouped.keys(), key=lambda x: (order[x.split(":")[0]], int(x.split(":")[1]))):
         kind, num = key.split(":")
-        prefix = "Supplementary Fig." if kind == "supp" else "Fig."
+        prefix = labels[kind]
         panels = sorted(grouped[key]["panels"])
         whole = int(grouped[key]["whole"])
         mentions = int(grouped[key]["mentions"])

@@ -15,7 +15,8 @@ Use the helper script when you want a fast local pass over figure citations:
 
 ```bash
 python ~/.codex/skills/submission-audit/scripts/check_figure_refs.py path/to/manuscript.md
-# Claude Code users: replace ~/.codex/skills with ~/.claude/skills
+# Claude Code (global install): replace ~/.codex/skills with ~/.claude/skills
+# Claude Code (project-local install): replace ~/.codex/skills with .claude/skills
 ```
 
 ## When To Use

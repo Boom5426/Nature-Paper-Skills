@@ -22,6 +22,7 @@ cp -R skills/core/manuscript-optimizer ~/.codex/skills/
 cp -R skills/core/results-section-revision ~/.codex/skills/
 cp -R skills/core/figure-planner ~/.codex/skills/
 cp -R skills/core/citation-verifier ~/.codex/skills/
+cp -R skills/core/data-availability ~/.codex/skills/
 cp -R skills/core/submission-audit ~/.codex/skills/
 cp -R skills/core/rebuttal-response ~/.codex/skills/
 cp -R skills/venue/nature-portfolio-playbook ~/.codex/skills/
@@ -30,3 +31,4 @@ cp -R skills/venue/nature-portfolio-playbook ~/.codex/skills/
 ## Note
 
 Some skills include helper scripts inside their own directories. Copy the whole skill directory, not just `SKILL.md`.
+Codex installs can coexist with Claude Code installs because Codex reads `~/.codex/skills/` while Claude Code reads `~/.claude/skills/` or `.claude/skills/`.

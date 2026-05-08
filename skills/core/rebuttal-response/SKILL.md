@@ -54,6 +54,26 @@ Classify each comment before writing:
 
 Triage first. Only then decide what to change.
 
+## Severity And Readiness
+
+Assign each comment a severity:
+
+- `minor`
+  presentation, clarity, formatting, citation, or small method-detail issue
+- `major`
+  evidence, validation, method, statistics, interpretation, or scope issue that may affect editorial confidence
+- `blocking`
+  ethics, compliance, data integrity, unsupported central claim, or another issue that should not be drafted around
+- `unclear`
+  insufficient information to judge severity safely
+
+Label the package honestly at the end:
+
+- `ready_to_submit`
+- `draft_with_placeholders`
+- `needs_author_input`
+- `blocked`
+
 ## Response Order
 
 1. Parse all reviewer comments into atomic items.
@@ -73,6 +93,15 @@ Triage first. Only then decide what to change.
    - table
    - line or paragraph location if available
 7. End with a short revision summary for the editor if the venue expects one.
+
+## Editor-Efficiency Rule
+
+Assume the editor is scanning quickly for three things:
+- whether you agree or disagree with the comment
+- what concrete revision was made
+- where that revision can be found
+
+Do not write replies that only say the manuscript was revised without specifying the change.
 
 ## Decision Rules
 
@@ -119,13 +148,35 @@ Best move:
 - Quote or paraphrase each reviewer point fairly before responding.
 - Start with appreciation, then move quickly to substance.
 - State the action taken in the first 1-2 sentences of the reply.
+- State explicitly whether you agree, partially agree, or disagree when that is not already obvious from the action taken.
 - Distinguish clearly between:
   - what was changed
   - what was clarified
   - what was not changed and why
 - If new text, analysis, or figures were added, say exactly where.
+- Give page and line numbers whenever the manuscript format makes that possible.
+- If figure, table, or supplement numbering changed, cite the updated identifiers directly.
 - If a claim was softened, say so explicitly.
 - If a request cannot be fully satisfied, explain the scope boundary and give the strongest honest response available.
+- If the journal allows or expects marked revisions, make sure the changed text is visibly highlighted in the manuscript.
+
+## Comment Taxonomy
+
+Classify comments using these buckets before drafting:
+
+- editorial or presentation
+- evidence or interpretation
+- methodological
+- statistical
+- data, code, or materials
+- citation or positioning
+- scope or feasibility
+- ethics or compliance
+
+Use the category to choose the response action. For example:
+- editorial issues usually need text or figure clarification
+- evidence and statistics issues often need new support, claim-softening, or explicit limitation language
+- ethics and compliance issues are often `blocking` until the missing facts exist
 
 ## Tone Rules
 
@@ -147,6 +198,7 @@ Avoid:
 
 - Writing the response letter before deciding the manuscript edits
 - Thanking the reviewer but never stating the action taken
+- Saying "revised accordingly" without saying what changed
 - Claiming a concern is addressed without citing the revised location
 - Agreeing with contradictory reviewer requests without resolving the conflict
 - Refusing a request without clearly defining the scope boundary
@@ -160,3 +212,4 @@ When using this skill, produce:
 - the revised response text
 - the linked manuscript change locations
 - any remaining unresolved issues that still need user judgment
+- a final readiness label: `ready_to_submit`, `draft_with_placeholders`, `needs_author_input`, or `blocked`

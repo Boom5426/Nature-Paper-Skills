@@ -32,7 +32,7 @@ cd nature-paper-skills
 Paste this into Codex:
 
 ```text
-Install the recommended skills from this repository into ~/.codex/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, submission-audit, rebuttal-response. Copy the full skill directories, not just SKILL.md. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
+Install the recommended skills from this repository into ~/.codex/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, data-availability, submission-audit, rebuttal-response. Copy the full skill directories, not just SKILL.md. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
 ```
 
 #### Option B: Ask Claude Code To Install It
@@ -40,8 +40,10 @@ Install the recommended skills from this repository into ~/.codex/skills/: paper
 Paste this into Claude Code:
 
 ```text
-Install the recommended skills from this repository into ~/.claude/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, submission-audit, rebuttal-response. Copy the full skill directories, not just SKILL.md. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
+Install the recommended skills from this repository into ~/.claude/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, data-availability, submission-audit, rebuttal-response. Copy the full skill directories, not just SKILL.md. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
 ```
+
+If you want the install to affect only the current repository, change the target directory in that prompt to `.claude/skills/`.
 
 #### Option C: Install Manually
 
@@ -59,6 +61,7 @@ cp -R \
   skills/core/results-section-revision \
   skills/core/figure-planner \
   skills/core/citation-verifier \
+  skills/core/data-availability \
   skills/core/submission-audit \
   skills/core/rebuttal-response \
   skills/venue/nature-portfolio-playbook \
@@ -77,6 +80,7 @@ cp -R \
   skills/core/results-section-revision \
   skills/core/figure-planner \
   skills/core/citation-verifier \
+  skills/core/data-availability \
   skills/core/submission-audit \
   skills/core/rebuttal-response \
   skills/venue/nature-portfolio-playbook \
@@ -92,6 +96,7 @@ Use paper-workflow to tell me which skill I should use next for this manuscript.
 ```
 
 For more installation detail, see [docs/installation-codex.md](docs/installation-codex.md) and [docs/installation-claude.md](docs/installation-claude.md).
+Codex uses `~/.codex/skills/`; Claude Code uses `~/.claude/skills/` or `.claude/skills/`. These install locations can coexist without overwriting each other.
 
 ## Default Workflow
 
@@ -102,6 +107,7 @@ paper-bootstrap
   -> figure-planner
   -> results-section-revision
   -> citation-verifier
+  -> data-availability
   -> submission-audit
   -> rebuttal-response
 ```
@@ -121,6 +127,7 @@ The default assumption is:
 - `results-section-revision`: repair late-stage narrative flow inside Results subsections
 - `figure-planner`: reorganize figures around one main claim each and align legends with Results
 - `citation-verifier`: clean local bibliography artifacts before final source verification
+- `data-availability`: draft Data Availability statements, repository plans, and source-data coverage
 - `submission-audit`: run a final manuscript preflight before submission or resubmission
 - `rebuttal-response`: turn reviewer comments into aligned manuscript edits and response letters
 
@@ -145,6 +152,7 @@ nature-paper-skills/
 ├── .github/
 ├── docs/
 ├── examples/
+├── reference/
 ├── skills/
 │   ├── core/
 │   ├── venue/

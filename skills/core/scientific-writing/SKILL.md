@@ -29,9 +29,11 @@ This skill should be used when:
 - Ensuring proper use of field-specific terminology and nomenclature
 - Addressing reviewer comments and revising manuscripts
 
+For title, abstract, cover-letter, or top-level logic decisions, read `references/editor-first-impression.md`.
+
 ## Visual Enhancement with Scientific Figures
 
-When a manuscript would benefit from a schematic, workflow diagram, or conceptual figure, use an installed figure-generation skill if one is available, such as `inno-figure-gen`.
+When a manuscript would benefit from a schematic, workflow diagram, or conceptual figure, use an installed figure-generation skill if one is available, such as `inno-figure-gen`. This repository does not ship that optional skill in the default install set.
 
 Before finalizing any document:
 1. Add at least one figure when it materially improves comprehension.
@@ -42,15 +44,17 @@ Before finalizing any document:
 - Write prompts that specify academic style, white background, clean labels, colorblind-friendly colors, and high contrast.
 - Save outputs under a local `figures/` directory in the current project.
 
-**Example command:**
+**Example command when `inno-figure-gen` is installed:**
 ```bash
 uv run ~/.codex/skills/inno-figure-gen/scripts/generate_image.py \
   --prompt "Publication-style scientific schematic of your method; white background; clean labels; colorblind-friendly palette; high contrast" \
   --filename "figures/output.png" \
   --resolution 2K
+# Claude Code (global install): replace ~/.codex/skills with ~/.claude/skills
+# Claude Code (project-local install): replace ~/.codex/skills with .claude/skills
 ```
 
-If you are in Claude Code, replace `~/.codex/skills` with `~/.claude/skills`. Requires `GEMINI_API_KEY` or an explicit `--api-key`. Iterate on the prompt until the figure is publication-ready.
+Requires `GEMINI_API_KEY` or an explicit `--api-key`. Iterate on the prompt until the figure is publication-ready.
 
 **When to add figures:**
 - Study design and methodology flowcharts (CONSORT, PRISMA, STROBE)
@@ -86,7 +90,28 @@ For detailed guidance on IMRAD structure, refer to `references/imrad_structure.m
 
 ### 2. Section-Specific Writing Guidance
 
-**Abstract Composition**: Craft concise, standalone summaries (100-250 words) that capture the paper's purpose, methods, results, and conclusions. Support both structured abstracts (with labeled sections) and unstructured single-paragraph formats.
+**Editor-First Front Door**: Make the title, abstract, introduction, Results, discussion, and cover letter answer the same four questions in the same order:
+- why did the study need to be done
+- what did you do
+- what did you find
+- how does the study advance the field
+
+If these sections answer different versions of the story, the manuscript will feel fragmented even when the prose is locally strong.
+
+**Abstract Composition**: Craft concise, standalone summaries (100-250 words) that capture the paper's purpose, methods, results, and conclusions. Support both structured abstracts (with labeled sections) and unstructured single-paragraph formats. Make the abstract state the problem, the aim/method, the key result, and the implication. Do not spend most of the space on generic background or report only that results were significant.
+
+**Title and Cover Letter**: Make the title a concise summary of the main contribution, ideally about 20 words or fewer. Prefer concrete keywords, avoid question-form titles, avoid unnecessary abbreviations, and avoid making the method the title unless the method itself is the main contribution. Make the cover letter about one page, state significance, journal fit, readership fit, and one or two key findings, and do not turn it into a second abstract or a full result list.
+
+**Top-Level Logic**: Keep one visible chain across the manuscript:
+- topic
+- published work
+- unresolved problem
+- objective
+- methodology
+- results and figures
+- summary of findings
+- interpretation
+- implication for the field
 
 **Introduction Development**: Build compelling introductions that:
 - Establish the research problem's importance
