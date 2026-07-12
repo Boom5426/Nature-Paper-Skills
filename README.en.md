@@ -83,8 +83,9 @@ To affect only the current repository, change the target directory to `.claude/s
 <br/>
 
 ```bash
-# Codex uses ~/.codex/skills; Claude Code uses ~/.claude/skills or .claude/skills
-mkdir -p ~/.codex/skills
+# Install target: Codex uses ~/.codex/skills; Claude Code uses ~/.claude/skills (or .claude/skills for this repo only)
+DEST=~/.codex/skills          # Claude Code users: change to DEST=~/.claude/skills
+mkdir -p "$DEST"
 cp -R \
   skills/core/paper-workflow \
   skills/core/paper-bootstrap \
@@ -99,13 +100,15 @@ cp -R \
   skills/core/stats-reporting-audit \
   skills/core/scientific-prose-style \
   skills/venue/nature-portfolio-playbook \
-  ~/.codex/skills/
+  "$DEST"/
 ```
 
 </details>
 
 > [!TIP]
 > The **figure skills** (`nature-figure`, `figure-style`) are not in the recommended install set by default because they need a plotting backend (Python matplotlib/seaborn or R ggplot2). `nature-figure`'s optional AI-schematic route additionally needs an `OPENROUTER_API_KEY`. See the Figure Stack section in [docs/installation-claude.md](docs/installation-claude.md) or [docs/installation-codex.md](docs/installation-codex.md).
+>
+> To enable the `nature-figure` / `figure-style` trio shown in the highlights and workflow, run one more copy after the recommended set: `cp -R skills/figure/nature-figure skills/figure/figure-style "$DEST"/`.
 
 **First prompt after install**
 
@@ -129,6 +132,8 @@ flowchart TD
     J --> K[submission-audit]
     K --> L[rebuttal-response]
 ```
+
+> `nature-figure` / `figure-style` in the diagram are the optional Figure Stack; install them per the TIP above.
 
 The default assumption is:
 
@@ -233,8 +238,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution rules, naming convention
 
 ## 🙏 Acknowledgements
 
-Parts of this repository were inspired by [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw) and [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills). Thanks to everyone in the community who contributed code, docs, and tests.
+Parts of this repository were inspired by [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw), [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills), and the Claude Science skill pack. Thanks to everyone in the community who contributed code, docs, and tests. Per-component provenance and licensing are in [ATTRIBUTION.md](ATTRIBUTION.md).
 
 ## 📄 License
 
-[MIT](LICENSE)
+Repository-original content is [MIT](LICENSE). Some vendored skills (`nature-figure`, `figure-style`, `scientific-prose-style`, `stats-reporting-audit`, and several merged fragments) are Apache-2.0: full text in [LICENSE-APACHE](LICENSE-APACHE), coverage in [NOTICE](NOTICE).

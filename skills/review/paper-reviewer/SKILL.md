@@ -25,19 +25,20 @@ This skill should be used when:
 **When creating documents with this skill, consider adding diagrams when they clarify a workflow, architecture, or evaluation framework.**
 
 If the document does not already contain suitable figures:
-- Use an installed figure-generation skill such as `inno-figure-gen` to generate publication-style diagrams.
+- Use this repository's `nature-figure` skill (its optional OpenRouter AI-schematic route) to generate publication-style diagrams, if it is installed. If it is not, describe the figure in text instead.
 - Describe the desired figure in natural language and specify academic style constraints.
 - Iterate prompts until the figure is clear, readable, and suitable for review materials.
 
-**Example command:**
+**Example command (via the `nature-figure` skill's OpenRouter route):**
 ```bash
-uv run ~/.codex/skills/inno-figure-gen/scripts/generate_image.py \
-  --prompt "Publication-style diagram of the review workflow; white background; clean labels; colorblind-friendly palette; high contrast" \
-  --filename "figures/review-workflow.png" \
-  --resolution 2K
+export OPENROUTER_API_KEY="sk-or-..."
+python ~/.codex/skills/nature-figure/scripts/generate_openrouter_schematic.py \
+  --title "Peer review workflow" \
+  --panel-map "left: submission; center: assessment stages; right: recommendation" \
+  --outdir figures --basename review-workflow --resolution 2K
 ```
 
-If you are in Claude Code, replace `~/.codex/skills` with `~/.claude/skills`. Requires `GEMINI_API_KEY` or an explicit `--api-key`.
+If you are in Claude Code, replace `~/.codex/skills` with `~/.claude/skills`. See `nature-figure`'s `references/openrouter-image-generation.md` for full options.
 
 **When to add figures:**
 - Peer review workflow diagrams
@@ -48,7 +49,7 @@ If you are in Claude Code, replace `~/.codex/skills` with `~/.claude/skills`. Re
 - Reporting guidelines compliance diagrams
 - Any complex concept that benefits from visualization
 
-For detailed guidance on creating figures, refer to the figure-generation skill you have installed.
+For detailed guidance on creating figures, refer to the `nature-figure` skill if it is installed.
 
 ---
 

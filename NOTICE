@@ -1,0 +1,27 @@
+Nature-Paper-Skills
+Copyright (c) 2026 Boom5426
+
+All repository-original content is licensed under the MIT License (see LICENSE).
+This product also includes components developed by third parties and
+redistributed under the Apache License, Version 2.0 (see LICENSE-APACHE).
+
+Apache-2.0 skills vendored into this repository
+-----------------------------------------------
+- skills/figure/nature-figure
+    from https://github.com/Yuan1z0825/nature-skills  (skill "nature-figure")
+- skills/core/stats-reporting-audit
+    from https://github.com/Yuan1z0825/nature-skills  (skill "nature-statistics")
+- skills/figure/figure-style
+    from the Claude Science skill pack                (skill "figure-style")
+- skills/core/scientific-prose-style
+    from the Claude Science skill pack                (skill "scientific-prose-style")
+
+Apache-2.0 fragments merged into existing (MIT) skills
+------------------------------------------------------
+- skills/core/figure-planner     <- Nature palette (Claude Science "nature-palette")
+- skills/core/data-availability  <- FAIR/DataCite + Chinese-author alignment (Yuan1z0825 "nature-data")
+- skills/core/citation-verifier  <- severity matrix + volume-year/DOI-year check (Yuan1z0825 "nature-ref-verifier")
+- skills/core/scientific-writing <- LaTeX float/layout reference (Yuan1z0825 "nature-polishing")
+
+Each vendored skill declares `license: Apache-2.0` in its SKILL.md.
+See ATTRIBUTION.md for full per-component provenance.

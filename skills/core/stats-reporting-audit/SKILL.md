@@ -118,4 +118,4 @@ If the supplied material is insufficient for a defensible statistical recommenda
 
 ---
 
-*Provenance: github.com/Yuan1z0825/nature-skills; original skill `nature-statistics`, license Apache-2.0. Imported into the local catalog; body preserved, only cross-references and bundled-script paths adapted.*
+*Provenance: github.com/Yuan1z0825/nature-skills; original skill `nature-statistics`, license Apache-2.0. Imported into the local catalog; body preserved, only cross-references adapted.*

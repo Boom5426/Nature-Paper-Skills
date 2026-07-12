@@ -33,28 +33,29 @@ For title, abstract, cover-letter, or top-level logic decisions, read `reference
 
 ## Visual Enhancement with Scientific Figures
 
-When a manuscript would benefit from a schematic, workflow diagram, or conceptual figure, use an installed figure-generation skill if one is available, such as `inno-figure-gen`. This repository does not ship that optional skill in the default install set.
+When a manuscript would benefit from a schematic, workflow diagram, or conceptual figure, use this repository's `nature-figure` skill, which ships an OpenRouter AI-schematic route. It is not in the default recommended set because it needs a plotting backend or an `OPENROUTER_API_KEY`; install it from the Figure Stack (see the installation docs).
 
 Before finalizing any document:
 1. Add at least one figure when it materially improves comprehension.
 2. Prefer 2-3 figures for longer papers (methods flowchart, results visualization, conceptual diagram).
 
 **How to generate figures:**
-- Use an installed figure-generation skill such as `inno-figure-gen` to generate publication-style diagrams.
+- Use the `nature-figure` skill's OpenRouter route to generate publication-style schematics.
 - Write prompts that specify academic style, white background, clean labels, colorblind-friendly colors, and high contrast.
 - Save outputs under a local `figures/` directory in the current project.
 
-**Example command when `inno-figure-gen` is installed:**
+**Example command (via the `nature-figure` skill, once installed):**
 ```bash
-uv run ~/.codex/skills/inno-figure-gen/scripts/generate_image.py \
-  --prompt "Publication-style scientific schematic of your method; white background; clean labels; colorblind-friendly palette; high contrast" \
-  --filename "figures/output.png" \
-  --resolution 2K
+export OPENROUTER_API_KEY="sk-or-..."
+python ~/.codex/skills/nature-figure/scripts/generate_openrouter_schematic.py \
+  --title "Your method" \
+  --panel-map "left: problem; center: proposed mechanism; right: validated outcome" \
+  --outdir figures --basename schematic --resolution 2K
 # Claude Code (global install): replace ~/.codex/skills with ~/.claude/skills
 # Claude Code (project-local install): replace ~/.codex/skills with .claude/skills
 ```
 
-Requires `GEMINI_API_KEY` or an explicit `--api-key`. Iterate on the prompt until the figure is publication-ready.
+Requires `OPENROUTER_API_KEY`. Iterate on the panel map and title until the figure is publication-ready. See `nature-figure`'s `references/openrouter-image-generation.md` for full options.
 
 **When to add figures:**
 - Study design and methodology flowcharts (CONSORT, PRISMA, STROBE)
@@ -65,7 +66,7 @@ Requires `GEMINI_API_KEY` or an explicit `--api-key`. Iterate on the prompt unti
 - System architecture visualizations
 - Any complex concept that benefits from visualization
 
-For detailed guidance on creating figures, refer to the figure-generation skill you have installed.
+For detailed guidance on creating figures, refer to the `nature-figure` skill.
 
 ---
 

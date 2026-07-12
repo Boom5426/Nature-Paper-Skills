@@ -83,8 +83,9 @@ cd Nature-Paper-Skills
 <br/>
 
 ```bash
-# Codex 用 ~/.codex/skills；Claude Code 用 ~/.claude/skills 或 .claude/skills
-mkdir -p ~/.codex/skills
+# 安装目标：Codex 用 ~/.codex/skills；Claude Code 用 ~/.claude/skills（仅当前仓库用 .claude/skills）
+DEST=~/.codex/skills          # Claude Code 用户改成： DEST=~/.claude/skills
+mkdir -p "$DEST"
 cp -R \
   skills/core/paper-workflow \
   skills/core/paper-bootstrap \
@@ -99,13 +100,15 @@ cp -R \
   skills/core/stats-reporting-audit \
   skills/core/scientific-prose-style \
   skills/venue/nature-portfolio-playbook \
-  ~/.codex/skills/
+  "$DEST"/
 ```
 
 </details>
 
 > [!TIP]
 > **图形技能**（`nature-figure`、`figure-style`）默认不在推荐安装集内，因为它们需要绘图后端（Python matplotlib / seaborn 或 R ggplot2）。`nature-figure` 的可选 AI 示意图路线另需 `OPENROUTER_API_KEY`。安装方式见 [docs/installation-claude.md](docs/installation-claude.md) / [docs/installation-codex.md](docs/installation-codex.md) 的 Figure Stack 部分。
+>
+> 想启用特性区与下方工作流图里的 `nature-figure` / `figure-style`，装完推荐集后再跑一次： `cp -R skills/figure/nature-figure skills/figure/figure-style "$DEST"/`。
 
 **安装后第一句话**
 
@@ -129,6 +132,8 @@ flowchart TD
     J --> K[submission-audit]
     K --> L[rebuttal-response]
 ```
+
+> 工作流图中的 `nature-figure` / `figure-style` 属可选 Figure Stack，需按上方 TIP 额外安装。
 
 默认假设：
 
@@ -233,8 +238,8 @@ Nature-Paper-Skills/
 
 ## 🙏 致谢
 
-本仓库部分代码和灵感来源于 [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw) 与 [罗小罗团队 Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills)，感谢所有为本项目贡献代码、文档和测试的开发者社区成员。
+本仓库部分代码和灵感来源于 [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw)、[罗小罗团队 Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills) 与 Claude Science skill pack，感谢所有为本项目贡献代码、文档和测试的开发者社区成员。逐项来源与许可见 [ATTRIBUTION.md](ATTRIBUTION.md)。
 
 ## 📄 许可
 
-[MIT](LICENSE)
+仓库自有内容为 [MIT](LICENSE)。部分 vendored skill（`nature-figure`、`figure-style`、`scientific-prose-style`、`stats-reporting-audit` 及若干合并片段）为 Apache-2.0，许可全文见 [LICENSE-APACHE](LICENSE-APACHE)，覆盖范围见 [NOTICE](NOTICE)。

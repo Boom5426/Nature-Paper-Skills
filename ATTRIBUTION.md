@@ -31,5 +31,10 @@ Source: https://github.com/Yuan1z0825/nature-skills
 
 - `academic-researcher` preserves the role and broad intent of an earlier imported skill and was normalized for this repository.
 - Several workflow refinements in the core manuscript skills were shaped by iterative manuscript work on `Nature`-style papers and by public paper-writing guidance that informed the local skill stack over time.
+- Broad repository structure, workflow routing, and design ideas were also informed by [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw), credited in the README acknowledgments.
 
 This file is intentionally conservative. If you later want per-skill provenance, add a short `ORIGIN.md` inside each adapted skill directory.
+
+## Licensing
+
+Repository-original content is under the [MIT License](LICENSE). Skills vendored from Apache-2.0 sources remain under Apache-2.0: `skills/figure/nature-figure`, `skills/figure/figure-style`, `skills/core/scientific-prose-style`, and `skills/core/stats-reporting-audit`, plus the fragments merged into `figure-planner`, `data-availability`, `citation-verifier`, and `scientific-writing`. Each such skill declares `license: Apache-2.0` in its `SKILL.md`. The Apache-2.0 license text is in [LICENSE-APACHE](LICENSE-APACHE); the covered components are listed in [NOTICE](NOTICE).
