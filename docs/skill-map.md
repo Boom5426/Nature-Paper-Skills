@@ -12,10 +12,17 @@
 - `data-availability`: data-sharing statements, repository planning, and source-data coverage
 - `submission-audit`: pre-submission or pre-resubmission QA
 - `rebuttal-response`: author-side reviewer response workflow
+- `stats-reporting-audit`: author-side statistical-reporting audit (independent-unit `n`, replication, multiple comparisons, figure-legend statistics)
+- `scientific-prose-style`: sentence-level prose linting (em-dash budget, hedging, sentence rhythm, paragraph openers)
 
 ## Venue
 
 - `nature-portfolio-playbook`: choose among `Nature`, `Nature Methods`, and `Nature Biotechnology`; run Nature Portfolio preflight
+
+## Figure
+
+- `nature-figure`: submission-grade Python or R figure production workflow, plus an optional OpenRouter AI-schematic route (needs a plotting backend)
+- `figure-style`: publication-grade figure correctness and legibility checklist with portable matplotlib helpers
 
 ## Research
 

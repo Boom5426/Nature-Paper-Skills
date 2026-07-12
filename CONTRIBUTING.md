@@ -22,6 +22,7 @@ Thanks for contributing. This repository is intentionally narrow: it is a journa
 - `skills/venue/`: venue-selection or venue-policy skills
 - `skills/research/`: literature, analysis, and evidence-generation helpers
 - `skills/review/`: reviewer-side evaluation skills
+- `skills/figure/`: figure production and figure-correctness skills (may need a plotting backend)
 - `skills/optional/`: useful but non-default extensions
 - `docs/`: workflow maps, installation notes, and design references
 - `examples/`: compact examples that show the expected output shape or handoff style

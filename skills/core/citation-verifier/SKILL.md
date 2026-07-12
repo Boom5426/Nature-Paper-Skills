@@ -62,6 +62,20 @@ Treat imported BibTeX and Google Scholar-style exports as draft metadata, not as
 6. If a claim depends on a specific result, confirm the cited paper actually supports that claim.
 7. Only then finalize formatting for the venue.
 
+## Severity Grading
+
+When you report field-level mismatches, grade each one so authors fix the dangerous ones first:
+
+- **Critical (must fix)**: wrong or fabricated first author, reversed author order, a DOI that resolves to a different paper, a title whose core terms do not match, or a page range off by five or more.
+- **Warning (verify)**: volume-year inconsistent with the DOI-registration year, a missing or extra issue number, a missing middle initial, a page range off by one to four, or an ambiguous publisher-name variant.
+- **Info (note only)**: title case versus sentence case, abbreviated versus full journal name, and punctuation or conjunction differences (`and` versus `&`).
+
+Two checks are easy to miss and worth running explicitly:
+- **Volume-year versus DOI-year**: a citation whose stated volume-year differs from the year encoded in the DOI or the online-publication date is a common sign of a miscopied entry.
+- **Author-order reversal**: verify the first author specifically, not just that all names are present; a reversed or shifted author list still passes a set-membership check.
+
+Roll each reference up to one confidence verdict: `verified`, `check_suggested` (has a Warning), `needs_fix` (has a Critical), or `unverifiable` (no source could confirm it).
+
 ## Trusted Verification Sources
 
 Prefer this order when moving beyond local scans:

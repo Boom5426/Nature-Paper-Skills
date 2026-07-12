@@ -68,6 +68,10 @@ Open these only when needed:
   Use when deciding where each dataset should live and what identifier type is needed.
 - `references/source-data-checks.md`
   Use when checking whether figures, tables, and supplements expose enough underlying data.
+- `references/fair-metadata-checklist.md`
+  Use when the journal expects FAIR or DataCite-style dataset metadata, or a formal dataset citation.
+- `references/chinese-author-alignment.md`
+  Use when aligning a Chinese-language data-availability draft to English submission wording.
 
 ## Output Standard
 

@@ -536,6 +536,7 @@ This skill includes comprehensive reference files covering specific aspects of s
 - `references/figures_tables.md`: Best practices for creating effective data visualizations
 - `references/reporting_guidelines.md`: Study-specific reporting standards and checklists
 - `references/writing_principles.md`: Core principles of effective scientific communication
+- `references/latex-layout.md`: LaTeX float placement and typesetting fixes (loose pages, stranded headings, figures that do not fill the page, "Float too large")
 
 Load these references as needed when working on specific aspects of scientific writing.
 

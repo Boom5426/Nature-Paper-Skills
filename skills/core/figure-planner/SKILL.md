@@ -130,6 +130,38 @@ plt.rcParams['legend.frameon'] = False
 
 Use `text.usetex = True` only when LaTeX is installed and math-rich labels are required.
 
+### Nature-Style Palette
+
+When a figure needs a fixed, print-friendly palette, this warm Nature-style set works well for Nature Communications and similar journals. Give the baseline or reference series terracotta, then walk down the list for the remaining categories, keeping one category in one color family:
+
+```text
+#C96144  terracotta (baseline / reference)   #99C290  light green
+#E99D4E  amber                                #C0BEDC  light purple
+#5185C0  blue                                 #8EA9D4  light blue
+#8281B9  purple                               #F2CB9F  light amber
+#55966B  green                                #99AABB  grey-blue
+#FFB3C1  pink        #FFD3E0  light pink       #87CEEB  sky blue
+```
+
+```python
+NATURE_PALETTE = [
+    "#C96144", "#E99D4E", "#5185C0", "#8281B9", "#55966B",
+    "#99C290", "#C0BEDC", "#8EA9D4", "#F2CB9F", "#99AABB",
+    "#FFB3C1", "#FFD3E0", "#87CEEB",
+]
+
+def nature_assign(labels, baseline=None):
+    """Map labels to palette colors; the baseline label gets terracotta."""
+    result, idx = {}, 0
+    for label in labels:
+        if label == baseline:
+            result[label] = NATURE_PALETTE[0]
+        else:
+            result[label] = NATURE_PALETTE[min(idx + 1, len(NATURE_PALETTE) - 1)]
+            idx += 1
+    return result
+```
+
 ### When to Use
 
 - Figures for **papers, slides, or reports** targeting Nature, NeurIPS, ICLR, or similar venues.
