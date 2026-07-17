@@ -38,83 +38,85 @@ Drafting · structural revision · figure/text alignment · citation verificatio
 
 ## 📦 Quick Start
 
-The fastest path is not to read every skill first. Install the recommended stack, then let the agent route your next step.
-
-**Step 1: Clone the repository**
+One command. No clone required. It detects whether you use Codex or Claude Code, installs the recommended 13-skill stack, and cleanly replaces any earlier copy.
 
 ```bash
-git clone https://github.com/Boom5426/Nature-Paper-Skills.git
-cd Nature-Paper-Skills
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
 ```
 
-**Step 2: Choose an install mode**
-
-<details open>
-<summary><b>Option A · Ask Codex to install it (recommended)</b></summary>
-
-<br/>
-
-Paste this into Codex:
-
-```text
-Install the recommended skills from this repository into ~/.codex/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, data-availability, submission-audit, rebuttal-response, stats-reporting-audit, scientific-prose-style. Copy the full skill directories, not just SKILL.md. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
-```
-
-</details>
-
-<details>
-<summary><b>Option B · Ask Claude Code to install it</b></summary>
-
-<br/>
-
-Paste this into Claude Code:
-
-```text
-Install the recommended skills from this repository into ~/.claude/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, data-availability, submission-audit, rebuttal-response, stats-reporting-audit, scientific-prose-style. Copy the full skill directories, not just SKILL.md. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
-```
-
-To affect only the current repository, change the target directory to `.claude/skills/`.
-
-</details>
-
-<details>
-<summary><b>Option C · Install manually (shell)</b></summary>
-
-<br/>
-
-```bash
-# Install target: Codex uses ~/.codex/skills; Claude Code uses ~/.claude/skills (or .claude/skills for this repo only)
-DEST=~/.codex/skills          # Claude Code users: change to DEST=~/.claude/skills
-mkdir -p "$DEST"
-cp -R \
-  skills/core/paper-workflow \
-  skills/core/paper-bootstrap \
-  skills/core/scientific-writing \
-  skills/core/manuscript-optimizer \
-  skills/core/results-section-revision \
-  skills/core/figure-planner \
-  skills/core/citation-verifier \
-  skills/core/data-availability \
-  skills/core/submission-audit \
-  skills/core/rebuttal-response \
-  skills/core/stats-reporting-audit \
-  skills/core/scientific-prose-style \
-  skills/venue/nature-portfolio-playbook \
-  "$DEST"/
-```
-
-</details>
-
-> [!TIP]
-> The **figure skills** (`nature-figure`, `figure-style`) are not in the recommended install set by default because they need a plotting backend (Python matplotlib/seaborn or R ggplot2). `nature-figure`'s optional AI-schematic route additionally needs an `OPENROUTER_API_KEY`. See the Figure Stack section in [docs/installation-claude.md](docs/installation-claude.md) or [docs/installation-codex.md](docs/installation-codex.md).
->
-> To enable the `nature-figure` / `figure-style` trio shown in the highlights and workflow, run one more copy after the recommended set: `cp -R skills/figure/nature-figure skills/figure/figure-style "$DEST"/`.
-
-**First prompt after install**
+Then fully restart your agent so it picks up the new skills (quit and relaunch Claude Code or Codex, not just `/clear`), and paste:
 
 ```text
 Use paper-workflow to tell me which skill I should use next for this manuscript.
 ```
+
+That is the whole setup. Everything below is optional.
+
+<details>
+<summary><b>Install options</b></summary>
+
+<br/>
+
+```bash
+# Choose the agent yourself instead of auto-detecting (claude | codex | both)
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex
+
+# Add the figure stack (needs a plotting backend; see the TIP below)
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --figure
+
+# Install into the current project only, not your home directory (Claude Code)
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --local
+
+# All 22 skills, or preview without writing anything
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --set all
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --dry-run
+```
+
+Run the installer with `--help` for the full flag list. Re-running it upgrades in place.
+
+</details>
+
+<details>
+<summary><b>Prefer to read the script before running it, or work from a clone</b></summary>
+
+<br/>
+
+Piping a script from the internet into `bash` is a reasonable thing to be wary of. Read [install.sh](install.sh) first, or clone and run it locally:
+
+```bash
+git clone https://github.com/Boom5426/Nature-Paper-Skills.git
+cd Nature-Paper-Skills
+./install.sh --agent claude --figure
+```
+
+Run this way, the installer copies from your clone and downloads nothing. Pass `--ref <branch|tag|sha>` if you want it to fetch a specific published version instead.
+
+</details>
+
+<details>
+<summary><b>Prefer to install by hand</b></summary>
+
+<br/>
+
+Copy whole skill directories, not just `SKILL.md`, because some skills carry local scripts. Delete an existing copy before re-copying, otherwise files removed upstream linger and you end up with two versions mixed in one directory.
+
+```bash
+# Codex uses ~/.codex/skills; Claude Code uses ~/.claude/skills (or .claude/skills for one repo only)
+DEST=~/.codex/skills
+mkdir -p "$DEST"
+for s in skills/core/*/ skills/venue/nature-portfolio-playbook/; do
+  name=$(basename "$s")
+  rm -rf "$DEST/$name"
+  cp -R "$s" "$DEST/$name"
+done
+```
+
+Per-agent details: [docs/installation-claude.md](docs/installation-claude.md) · [docs/installation-codex.md](docs/installation-codex.md).
+
+</details>
+
+> [!TIP]
+> The **figure skills** (`nature-figure`, `figure-style`) are not in the recommended set by default because they need a plotting backend (Python matplotlib/seaborn or R ggplot2). `nature-figure`'s optional AI-schematic route additionally needs an `OPENROUTER_API_KEY`; the Python/R plotting core works without it. Add them with `--figure`.
 
 ## 🔄 Default Workflow
 
@@ -215,6 +217,7 @@ Nature-Paper-Skills/
 │   ├── research/    # literature, analysis, evidence generation
 │   ├── review/      # reviewer-side evaluation
 │   └── optional/    # useful but non-default extensions
+├── install.sh       # one-line installer for Codex and Claude Code
 ├── ATTRIBUTION.md
 ├── CONTRIBUTING.md
 ├── README.md

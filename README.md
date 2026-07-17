@@ -38,83 +38,85 @@
 
 ## 📦 快速开始
 
-最快的上手方式不是先通读所有 skill，而是先把推荐安装集装好，然后直接让 agent 帮你路由下一步。
-
-**第 1 步：克隆仓库**
+一条命令，不用克隆。脚本会自动识别你用的是 Codex 还是 Claude Code，装好推荐的 13 个 skill，并干净地覆盖旧版本。
 
 ```bash
-git clone https://github.com/Boom5426/Nature-Paper-Skills.git
-cd Nature-Paper-Skills
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
 ```
 
-**第 2 步：选一种安装方式**
-
-<details open>
-<summary><b>方式 A · 直接让 Codex 安装（推荐）</b></summary>
-
-<br/>
-
-把下面这句话发给 Codex：
-
-```text
-把当前仓库里的推荐 skills 安装到 ~/.codex/skills/：paper-workflow、paper-bootstrap、nature-portfolio-playbook、scientific-writing、manuscript-optimizer、results-section-revision、figure-planner、citation-verifier、data-availability、submission-audit、rebuttal-response、stats-reporting-audit、scientific-prose-style。复制整个 skill 目录，不要只复制 SKILL.md。安装完成后，列出已安装目录，并用 paper-workflow 帮我判断当前稿件下一步该用哪个 skill。
-```
-
-</details>
-
-<details>
-<summary><b>方式 B · 直接让 Claude Code 安装</b></summary>
-
-<br/>
-
-把下面这句话发给 Claude Code：
-
-```text
-把当前仓库里的推荐 skills 安装到 ~/.claude/skills/：paper-workflow、paper-bootstrap、nature-portfolio-playbook、scientific-writing、manuscript-optimizer、results-section-revision、figure-planner、citation-verifier、data-availability、submission-audit、rebuttal-response、stats-reporting-audit、scientific-prose-style。复制整个 skill 目录，不要只复制 SKILL.md。安装完成后，列出已安装目录，并用 paper-workflow 帮我判断当前稿件下一步该用哪个 skill。
-```
-
-如果你只想让当前仓库生效，把目标目录改成 `.claude/skills/`。
-
-</details>
-
-<details>
-<summary><b>方式 C · 手动安装（shell）</b></summary>
-
-<br/>
-
-```bash
-# 安装目标：Codex 用 ~/.codex/skills；Claude Code 用 ~/.claude/skills（仅当前仓库用 .claude/skills）
-DEST=~/.codex/skills          # Claude Code 用户改成： DEST=~/.claude/skills
-mkdir -p "$DEST"
-cp -R \
-  skills/core/paper-workflow \
-  skills/core/paper-bootstrap \
-  skills/core/scientific-writing \
-  skills/core/manuscript-optimizer \
-  skills/core/results-section-revision \
-  skills/core/figure-planner \
-  skills/core/citation-verifier \
-  skills/core/data-availability \
-  skills/core/submission-audit \
-  skills/core/rebuttal-response \
-  skills/core/stats-reporting-audit \
-  skills/core/scientific-prose-style \
-  skills/venue/nature-portfolio-playbook \
-  "$DEST"/
-```
-
-</details>
-
-> [!TIP]
-> **图形技能**（`nature-figure`、`figure-style`）默认不在推荐安装集内，因为它们需要绘图后端（Python matplotlib / seaborn 或 R ggplot2）。`nature-figure` 的可选 AI 示意图路线另需 `OPENROUTER_API_KEY`。安装方式见 [docs/installation-claude.md](docs/installation-claude.md) / [docs/installation-codex.md](docs/installation-codex.md) 的 Figure Stack 部分。
->
-> 想启用特性区与下方工作流图里的 `nature-figure` / `figure-style`，装完推荐集后再跑一次： `cp -R skills/figure/nature-figure skills/figure/figure-style "$DEST"/`。
-
-**安装后第一句话**
+装完后彻底重启 agent 让它加载新装的 skills（退出并重新打开 Claude Code 或 Codex，不是 /clear），再把这句话发过去：
 
 ```text
 用 paper-workflow 帮我判断这篇稿子下一步该用哪个 skill。
 ```
+
+到这里就装完了，下面全是可选项。
+
+<details>
+<summary><b>安装选项</b></summary>
+
+<br/>
+
+```bash
+# 不用自动识别，自己指定 agent（claude | codex | both）
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex
+
+# 额外装上图形技能（需要绘图后端，见下方 TIP）
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --figure
+
+# 只对当前项目生效，不写入 home 目录（Claude Code）
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --local
+
+# 装全部 22 个 skill；或先预览，不写任何文件
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --set all
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --dry-run
+```
+
+完整参数见 `--help`。重复执行即原地升级。
+
+</details>
+
+<details>
+<summary><b>想先看脚本内容，或者习惯从克隆装</b></summary>
+
+<br/>
+
+把网上的脚本直接 pipe 给 `bash` 值得警惕，这很合理。可以先读 [install.sh](install.sh)，或者克隆下来本地跑：
+
+```bash
+git clone https://github.com/Boom5426/Nature-Paper-Skills.git
+cd Nature-Paper-Skills
+./install.sh --agent claude --figure
+```
+
+这样运行时脚本直接用你本地的克隆作为来源，不会联网下载任何东西。如果想改成拉取某个已发布版本，加 `--ref <branch|tag|sha>`。
+
+</details>
+
+<details>
+<summary><b>想完全手动装</b></summary>
+
+<br/>
+
+复制整个 skill 目录，不要只复制 `SKILL.md`，因为部分 skill 自带脚本。重装前先删掉旧目录，否则上游已删除的文件会残留，同一个目录里混着两个版本。
+
+```bash
+# 安装目标：Codex 用 ~/.codex/skills；Claude Code 用 ~/.claude/skills（仅当前仓库用 .claude/skills）
+DEST=~/.codex/skills
+mkdir -p "$DEST"
+for s in skills/core/*/ skills/venue/nature-portfolio-playbook/; do
+  name=$(basename "$s")
+  rm -rf "$DEST/$name"
+  cp -R "$s" "$DEST/$name"
+done
+```
+
+分 agent 的细节见 [docs/installation-claude.md](docs/installation-claude.md) · [docs/installation-codex.md](docs/installation-codex.md)。
+
+</details>
+
+> [!TIP]
+> **图形技能**（`nature-figure`、`figure-style`）默认不在推荐安装集内，因为它们需要绘图后端（Python matplotlib / seaborn 或 R ggplot2）。`nature-figure` 的可选 AI 示意图路线另需 `OPENROUTER_API_KEY`，Python / R 绘图主路线不需要。加 `--figure` 即可安装。
 
 ## 🔄 默认工作流
 
@@ -215,6 +217,7 @@ Nature-Paper-Skills/
 │   ├── research/    # 文献、分析、证据生成
 │   ├── review/      # 审稿人视角评估
 │   └── optional/    # 有用但非默认的扩展
+├── install.sh       # Codex / Claude Code 一条命令安装脚本
 ├── ATTRIBUTION.md
 ├── CONTRIBUTING.md
 ├── README.md
