@@ -49,7 +49,7 @@ Backend selection blocks plotting tasks, but it should not annoy the same user f
 - `python` — matplotlib / seaborn.
 - `r` — ggplot2 / patchwork / ComplexHeatmap.
 
-Do not guess or choose a backend by aesthetics alone. Only recommend a backend when the user explicitly asks you to choose; then use `references/backend-selection.md`, state the reason, save the selected backend, and proceed. Once selected, the backend is **exclusive** for all drawing, previewing, exporting, and visual QA (see `core/contract.md`). This gate does not apply to the explicit OpenRouter AI-schematic route above.
+Do not guess or choose a backend by aesthetics alone. Only recommend a backend when the user explicitly asks you to choose; then use `references/backend-selection.md`, state the reason, save the selected backend, and proceed. Once selected, the backend is **exclusive** for all drawing, previewing, exporting, and visual QA (see `static/core/contract.md`). This gate does not apply to the explicit OpenRouter AI-schematic route above.
 
 ### 3. Load the matching backend fragment
 
@@ -59,8 +59,8 @@ After the backend is resolved, Read the mapped fragment (`static/fragments/backe
 
 Apply the loaded material in this order:
 
-1. Figure contract (`core/contract.md`) — write the core conclusion, map the evidence chain, classify the archetype, set the journal/export contract, before any code.
-2. Default stance (`core/stance.md`) — archetype-first composition, hero panel, restrained palette, statistics/integrity as part of the figure.
+1. Figure contract (`static/core/contract.md`) — write the core conclusion, map the evidence chain, classify the archetype, set the journal/export contract, before any code.
+2. Default stance (`static/core/stance.md`) — archetype-first composition, hero panel, restrained palette, statistics/integrity as part of the figure.
 3. Backend fragment — the exclusive Python or R quick-start and execution rule.
 
 The chart serves the scientific logic; aesthetic polish is subordinate to making the core conclusion clear, defensible, and reviewable.
