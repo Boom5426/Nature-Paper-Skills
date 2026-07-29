@@ -59,7 +59,7 @@ Treat imported BibTeX and Google Scholar-style exports as draft metadata, not as
    - volume, issue, pages, or article number
    - DOI versus preprint identifier
 5. For every citation that matters to a scientific claim, verify the paper exists in trusted sources.
-6. If a claim depends on a specific result, confirm the cited paper actually supports that claim.
+6. If a claim depends on a specific result, confirm the cited paper actually supports that claim. For a systematic pass over many such claims, hand off to `claim-source-verification`: existence and metadata checks do not catch a real paper made to carry a conclusion it does not reach.
 7. Only then finalize formatting for the venue.
 
 ## Severity Grading

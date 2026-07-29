@@ -8,7 +8,10 @@
 - `manuscript-optimizer`: structural revision and evidence-chain repair
 - `results-section-revision`: late-stage Results narrative repair
 - `figure-planner`: figure claim design and legend sync
-- `citation-verifier`: bibliography hygiene
+- `citation-verifier`: bibliography hygiene (duplicate keys, required fields, DOI syntax, cited-vs-defined, BibTeX toolchain hardening)
+- `claim-source-verification`: adversarial claim-to-evidence checking; does a cited source actually support the sentence
+- `review-article-architecture`: Review, survey, and Perspective structure; governing plan document, drift audit, thesis-as-macro, display-item budget
+- `draft-marker-discipline`: in-source draft markers, triage by resolution route, prose word counts, safe archival, assertion-guarded scripted edits
 - `data-availability`: data-sharing statements, repository planning, and source-data coverage
 - `submission-audit`: pre-submission or pre-resubmission QA
 - `rebuttal-response`: author-side reviewer response workflow

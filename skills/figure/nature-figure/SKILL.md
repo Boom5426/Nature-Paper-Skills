@@ -2,6 +2,7 @@
 name: nature-figure
 description: >-
   Submission-grade Nature/high-impact journal figure workflow for Python or R, plus optional OpenRouter GPT Image 2 manuscript schematic generation when the user explicitly asks for AI-generated graphical abstracts, concept schematics, mechanism diagrams, or paper schematic illustrations. Use whenever the user asks to create, revise, audit, or polish manuscript figures, multi-panel scientific plots, figures4papers-style matplotlib plots, journal-ready SVG/PDF/TIFF outputs, or OpenRouter/API-generated schematic drafts, especially for Nature-family or other high-impact journals. Before plotting or image generation, define the figure's conclusion, evidence logic, export needs, and review risks. For plotting tasks, honor an explicit Python/R choice, otherwise reuse the saved nature-figure backend preference; if no preference exists, ask once whether the user prefers Python or R and save that answer for future calls. For explicit OpenRouter/GPT Image 2 schematic generation, do not ask Python or R; use the AI-schematic route. Supports matplotlib/seaborn, ggplot2/patchwork/ComplexHeatmap, and OpenRouter Images API drafts. Not for dashboards or Illustrator/Figma-first infographics. Also trigger on general academic-writing figure needs even without the word "Nature", such as making figures/plots for a paper, scientific/academic plotting, data visualization for a manuscript, AI-generated paper schematics, and Chinese phrasings like 论文配图、学术写作配图、科研绘图、科研作图、画图、作图、出图、论文图表、可视化、论文示意图、机制示意图、图形摘要.
+license: Apache-2.0
 ---
 
 # Nature Figure Making — Router
@@ -66,7 +67,7 @@ The chart serves the scientific logic; aesthetic polish is subordinate to making
 
 ### 5. Reach for references only when needed
 
-The files under `references/` are deep references, not defaults. Open them on demand per the `references.on_demand` table in the manifest — for example `references/figure-contract.md` to build the contract, `references/api.md` for the Python palette and helpers, `references/r-workflow.md` for R, `references/design-theory.md` for color/typography/export rationale, `references/common-patterns.md` and `references/chart-types.md` for layout/chart recipes, `references/nature-2026-observations.md` for real Nature page archetypes, `references/qa-contract.md` before final delivery, and `references/tutorials.md` / `references/demos.md` for worked examples.
+The files under `references/` are deep references, not defaults. Open them on demand per the `references.on_demand` table in the manifest — for example `references/figure-contract.md` to build the contract, `references/api.md` for the Python palette and helpers, `references/r-workflow.md` for R, `references/design-theory.md` for color/typography/export rationale, `references/common-patterns.md` and `references/chart-types.md` for layout/chart recipes, `references/nature-2026-observations.md` for real Nature page archetypes, `references/qa-contract.md` before final delivery, `references/figure-delivery-bundle.md` for the panel-first build pipeline (draw each panel as its own unit, review at 1:1, then assemble the composite) and for handing a figure over as an auditable bundle (directory layout, canonical version, source-data traceability), and `references/tutorials.md` / `references/demos.md` for worked examples.
 
 ## Why this split
 

@@ -22,7 +22,12 @@ Use:
 - `manuscript-optimizer` when the paper's claim structure, evidence chain, terminology, or prose need revision
 - `results-section-revision` when the Results section is scientifically stable but the subsection flow, paragraph openings, or argument progression still feel jumpy
 - `figure-planner` when the main bottleneck is figure logic, panel roles, or legend sync
-- `citation-verifier` when bibliography hygiene or source verification is the bottleneck
+- `citation-verifier` when the bibliography as an artifact is the bottleneck: duplicate keys, missing fields, DOI syntax, cited-but-undefined
+- `claim-source-verification` when the question is whether a cited source supports the sentence citing it, not whether the reference is well formed
+- `review-article-architecture` when the piece is a Review, survey, or Perspective rather than a research article, or when a long-running draft may no longer match its brief
+- `draft-marker-discipline` before a batch pass over open markers, before quoting a manuscript's length, or before a scripted edit across many files
+- `stats-reporting-audit` when statistical-reporting integrity is the bottleneck: independent-unit `n`, replication, multiple comparisons, figure-legend statistics
+- `scientific-prose-style` for a final sentence-level pass on already-stable prose
 - `data-availability` when repository plans, accession numbers, source-data coverage, or Data Availability wording are the bottleneck
 - `submission-audit` when the paper is near submission or resubmission and needs a preflight pass
 - `rebuttal-response` when reviewer comments exist and a response letter plus aligned manuscript edits are needed

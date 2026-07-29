@@ -12,7 +12,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Focus](https://img.shields.io/badge/focus-Nature%20series-1f6feb)](docs/venue-routing.md)
 [![Workflow](https://img.shields.io/badge/workflow-claim--driven-blue)](docs/workflow-map.md)
-[![Skills](https://img.shields.io/badge/skills-22-8a63d2)](docs/skill-map.md)
+[![Skills](https://img.shields.io/badge/skills-25-8a63d2)](docs/skill-map.md)
 [![Codex](https://img.shields.io/badge/agent-Codex-0a7ea4)](docs/installation-codex.md)
 [![Claude Code](https://img.shields.io/badge/agent-Claude%20Code-cc785c)](docs/installation-claude.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -38,7 +38,7 @@
 
 ## 📦 快速开始
 
-一条命令，不用克隆。脚本会自动识别你用的是 Codex 还是 Claude Code，装好推荐的 13 个 skill，并干净地覆盖旧版本。
+一条命令，不用克隆。脚本会自动识别你用的是 Codex 还是 Claude Code，装好推荐的 16 个 skill，并干净地覆盖旧版本。
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
@@ -67,7 +67,7 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 # 只对当前项目生效，不写入 home 目录（Claude Code）
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --local
 
-# 装全部 22 个 skill；或先预览，不写任何文件
+# 装全部 25 个 skill；或先预览，不写任何文件
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --set all
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --dry-run
 ```
@@ -129,13 +129,16 @@ flowchart TD
     E --> F[results-section-revision]
     F --> G[stats-reporting-audit]
     G --> H[citation-verifier]
-    H --> I[data-availability]
+    H --> H2[claim-source-verification]
+    H2 --> I[data-availability]
     I --> J[scientific-prose-style]
     J --> K[submission-audit]
     K --> L[rebuttal-response]
 ```
 
 > 工作流图中的 `nature-figure` / `figure-style` 属可选 Figure Stack，需按上方 TIP 额外安装。
+>
+> 写**综述 / survey / perspective** 时不走这条链：先用 `review-article-architecture` 立权威 plan，再用 `draft-marker-discipline` 建标记体系，压缩润色前先跑一次漂移审计。完整路径见 [docs/workflow-map.md](docs/workflow-map.md)。
 
 默认假设：
 
@@ -155,7 +158,10 @@ flowchart TD
 | `manuscript-optimizer` | 结构、证据链、术语、图逻辑漂移修复 |
 | `results-section-revision` | Results 小节级叙述结构修复 |
 | `figure-planner` | 一图一主张、panel 角色、legend 同步、Nature 配色 |
-| `citation-verifier` | 引用与 BibTeX 卫生 + 严重度分级 |
+| `citation-verifier` | 引用与 BibTeX 卫生 + 严重度分级 + LaTeX 工具链加固 |
+| `claim-source-verification` | 对抗式核验：这条文献到底支不支持这句话 |
+| `review-article-architecture` | 综述 / survey / perspective 架构：权威 plan、漂移审计、论点即宏 |
+| `draft-marker-discipline` | 稿内标记体系、按解决途径分诊、真实字数、安全归档、断言式改稿 |
 | `data-availability` | 数据可用性声明、仓库/accession、FAIR、中文对照 |
 | `submission-audit` | 投稿前 / 返修前总预检 |
 | `rebuttal-response` | 审稿意见回复与改稿联动 |
@@ -201,6 +207,8 @@ flowchart TD
 - 对已有章节重写前，先做 reverse outline
 - 不允许前半部分（Abstract / Introduction）比下游证据更强
 - venue 与 article type 要前置决策，不要末期再救火
+- 文献存在且元数据正确，不等于它支持那句话
+- 权威文档高于好想法：冲突要提出，不能靠改稿子解决
 
 详见 [workflow-map](docs/workflow-map.md) · [skill-map](docs/skill-map.md) · [venue-routing](docs/venue-routing.md) · [design-principles](docs/design-principles.md)。
 

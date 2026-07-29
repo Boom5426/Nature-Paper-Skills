@@ -27,6 +27,29 @@ Source: https://github.com/Yuan1z0825/nature-skills
 - `skills/figure/figure-style` was vendored from the Claude Science `figure-style` skill; the render-then-verify loop and helper loading were de-coupled from the Operon host runtime so the skill runs in a plain install. The correctness checklist is unchanged.
 - The Nature-style color palette merged into `skills/core/figure-planner` derives from the Claude Science `nature-palette` skill (original source: github.com/Boom5426/Awesome-Virtual-Cell 配色.ipynb).
 
+## Original To This Repository
+
+The following are not adapted from any upstream skill. They were extracted from
+two real manuscript projects, a commissioned `Nature`-family Review and a
+machine-learning research manuscript, and each rule in them corresponds to a
+failure that actually occurred rather than to general advice:
+
+- `skills/core/claim-source-verification`, including its rejection taxonomy and
+  the two-role adversarial protocol. The calibration numbers come from one
+  measured verification run over 139 proposed sources.
+- `skills/core/review-article-architecture`, including the governing-document
+  protocol and the drift audit.
+- `skills/core/draft-marker-discipline`, including `scripts/prose_wordcount.py`.
+- `skills/core/citation-verifier/references/bibtex-toolchain.md` and
+  `skills/core/citation-verifier/scripts/audit_bib.py`.
+- `skills/figure/nature-figure/references/figure-delivery-bundle.md`, added to
+  the vendored Apache-2.0 skill and therefore distributed under that skill's
+  Apache-2.0 terms.
+
+The two generalized scripts were derived from working project scripts, with
+project-specific paths, section lists, contributor-name scans, and thresholds
+replaced by command-line parameters.
+
 ## Additional Notes
 
 - `academic-researcher` preserves the role and broad intent of an earlier imported skill and was normalized for this repository.

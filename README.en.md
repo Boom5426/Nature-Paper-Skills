@@ -12,7 +12,7 @@ Drafting · structural revision · figure/text alignment · citation verificatio
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Focus](https://img.shields.io/badge/focus-Nature%20series-1f6feb)](docs/venue-routing.md)
 [![Workflow](https://img.shields.io/badge/workflow-claim--driven-blue)](docs/workflow-map.md)
-[![Skills](https://img.shields.io/badge/skills-22-8a63d2)](docs/skill-map.md)
+[![Skills](https://img.shields.io/badge/skills-25-8a63d2)](docs/skill-map.md)
 [![Codex](https://img.shields.io/badge/agent-Codex-0a7ea4)](docs/installation-codex.md)
 [![Claude Code](https://img.shields.io/badge/agent-Claude%20Code-cc785c)](docs/installation-claude.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -38,7 +38,7 @@ Drafting · structural revision · figure/text alignment · citation verificatio
 
 ## 📦 Quick Start
 
-One command. No clone required. It detects whether you use Codex or Claude Code, installs the recommended 13-skill stack, and cleanly replaces any earlier copy.
+One command. No clone required. It detects whether you use Codex or Claude Code, installs the recommended 16-skill stack, and cleanly replaces any earlier copy.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
@@ -67,7 +67,7 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 # Install into the current project only, not your home directory (Claude Code)
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --local
 
-# All 22 skills, or preview without writing anything
+# All 25 skills, or preview without writing anything
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --set all
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --dry-run
 ```
@@ -129,13 +129,16 @@ flowchart TD
     E --> F[results-section-revision]
     F --> G[stats-reporting-audit]
     G --> H[citation-verifier]
-    H --> I[data-availability]
+    H --> H2[claim-source-verification]
+    H2 --> I[data-availability]
     I --> J[scientific-prose-style]
     J --> K[submission-audit]
     K --> L[rebuttal-response]
 ```
 
 > `nature-figure` / `figure-style` in the diagram are the optional Figure Stack; install them per the TIP above.
+>
+> A **Review, survey, or Perspective** does not follow this chain. Start with `review-article-architecture` to establish the governing plan, set up markers with `draft-marker-discipline`, and run a drift audit before any compression pass. Full path in [docs/workflow-map.md](docs/workflow-map.md).
 
 The default assumption is:
 
@@ -155,7 +158,10 @@ The default assumption is:
 | `manuscript-optimizer` | Repair claim structure, evidence chain, terminology, figure logic |
 | `results-section-revision` | Repair late-stage narrative flow inside Results subsections |
 | `figure-planner` | One claim per figure, panel roles, legend sync, Nature palette |
-| `citation-verifier` | Bibliography and BibTeX hygiene with severity grading |
+| `citation-verifier` | Bibliography and BibTeX hygiene with severity grading, plus LaTeX toolchain hardening |
+| `claim-source-verification` | Adversarial checking of whether a cited source supports the sentence citing it |
+| `review-article-architecture` | Review / survey / Perspective structure: governing plan, drift audit, thesis-as-macro |
+| `draft-marker-discipline` | In-source draft markers, triage by resolution route, honest word counts, safe archival |
 | `data-availability` | Data Availability statements, repositories/accession, FAIR, zh alignment |
 | `submission-audit` | Final manuscript preflight before submission or resubmission |
 | `rebuttal-response` | Turn reviewer comments into aligned edits and response letters |
@@ -201,6 +207,8 @@ The default assumption is:
 - reverse-outline before polishing stale prose
 - never let the front half promise more than the downstream evidence supports
 - decide venue fit and article type before optimizing around the wrong target
+- a source must support the claim, not merely exist and carry correct metadata
+- governing document over good ideas: raise the conflict, do not resolve it by editing
 
 See [workflow-map](docs/workflow-map.md) · [skill-map](docs/skill-map.md) · [venue-routing](docs/venue-routing.md) · [design-principles](docs/design-principles.md).
 

@@ -75,6 +75,8 @@ references:
       path: references/openrouter-image-generation.md
     - condition: writing or auditing figure/table legend text — Fig. N | title, panel style, stats in legend, Source Data boilerplate, attribution
       path: references/figure-legend-conventions.md
+    - condition: "building a multi-panel figure panel-first then assembling the composite, and packaging it as an auditable delivery bundle: per-panel source files exported at true print size, review at 1:1 before assembly, LaTeX or drawing-program assembly with millimetre placement coordinates, figure directory layout and hygiene, canonical-version declaration, source-data CSV carrying an owning manuscript section per asserted cell, four-state status markers, AI-image policy by venue"
+      path: references/figure-delivery-bundle.md
     - condition: "end-to-end walkthroughs: bars, trends, heatmaps"
       path: references/tutorials.md
     - condition: "radar, 3D sphere, fill_between, scatter patterns"
