@@ -1,215 +1,165 @@
 ---
 name: rebuttal-response
-description: Use when responding to journal or conference reviewer comments and you need a structured author response, aligned manuscript edits, and clear decisions about when to clarify, add evidence, concede, or respectfully disagree.
+description: >-
+  Author-side reviewer response workflow. Triage each comment by cause, decide whether to concede,
+  clarify, or push back, calibrate every claim to the evidence, and audit the drafted letter before
+  it is sent. Use when reviewer comments exist and a point-by-point response plus aligned manuscript
+  edits are needed, and whenever a reply must stay inside what the data actually support: seeds
+  versus independent samples, a finite sweep versus an optimum, a diagnostic versus a mechanism,
+  absence of difference versus equivalence, dataset-specific versus general superiority, or mean
+  plus or minus s.d. versus a confidence interval. Also covers overview-first response
+  architecture, evidence-ladder wording substitutions, honest handling of negative results, and a
+  submission-ready audit of numbers, figures, panels, notes, terminology, and response to
+  manuscript to Supplementary synchronization.
 ---
 
-# Rebuttal Response
+# Revise Reviewer Responses
 
-## Overview
+Build reviewer replies as an evidence chain, not as defensive prose. Make the reviewer understand, in this order: what was done, what was found, what changed, and what remains outside the evidence.
 
-Use this skill when reviewer comments already exist and the task is no longer generic manuscript revision. The goal is to produce a response package that is credible, efficient, and easy for editors or reviewers to verify.
+## Where this sits
 
-This skill is not for redesigning the whole paper. Use `manuscript-optimizer` first if the manuscript itself is structurally unstable. Use this skill when the paper is in revision mode and each comment must be turned into an explicit response and, where needed, a concrete manuscript change.
+This skill owns the whole author-side response job: triage, stance, claim calibration, and the
+final audit. It does not restructure the manuscript itself.
 
-## When To Use
+- `manuscript-optimizer` when a reviewer comment exposes an unstable claim hierarchy or evidence
+  chain. Fix the manuscript there first, then write the reply against the revised text.
+- `stats-reporting-audit` when the disputed point is the statistical reporting itself rather than
+  its wording.
+- `claim-source-verification` when a reviewer disputes whether a cited source supports the sentence
+  citing it, and `citation-verifier` when the bibliography artifact is at fault.
+- `scientific-prose-style` for a final sentence-level pass on the finished letter.
+- `paper-compilation` conventions apply to the revised manuscript build; see the build checks in
+  `references/final-audit.md`.
 
-Use this skill when:
-- Reviewer comments, decision letters, or revision requests are available
-- The user needs a point-by-point response letter
-- The manuscript and response document need to stay synchronized
-- Some comments should lead to new analyses or text changes, while others should be answered by clarification
-- The revision requires deciding where to concede and where to push back
+## Start from the authoritative materials
 
-Do not use this skill for:
-- Initial manuscript drafting
-- Submission-preflight QA before any reviewer feedback exists
-- Generic peer review written from the reviewer side
+1. Identify the newest response letter, manuscript, Supplementary Information, figures, tables, and result files relevant to the comment.
+2. Treat the user's stated version hierarchy as binding. Do not revive text or conclusions from an older response when the user says the manuscript or SI is authoritative.
+3. Read the complete reviewer comment and the complete current response before editing either.
+4. Build a compact evidence ledger:
+   - reviewer request;
+   - action taken;
+   - result or textual clarification;
+   - document location;
+   - inferential limit.
+5. Never invent a result, statistic, experiment, citation, revision location, or placeholder value. Mark unavailable values explicitly or ask for the missing source.
 
-## Response Principle
+If the task involves editing the response letter or manuscript on disk, read the file before editing it, keep the marked copy separate from the clean copy, and render the finished file (`paper-compilation` for LaTeX) so the result can be checked visually. Never edit a file you have not read.
 
-Every reviewer comment should end in exactly one of these outcomes:
-- clarified in response only
-- revised in the manuscript
-- revised in both manuscript and response
-- respectfully declined with justification
+## Analyze before drafting
 
-Do not leave a comment in the vague middle ground where the reply sounds polite but the action taken is unclear.
+Unless the user explicitly requests only final prose, begin with a short diagnosis:
 
-## Triage Categories
+- What is the reviewer actually asking for?
+- Is the concern methodological, evidential, interpretive, presentational, or terminological?
+- Does it require a new experiment, a new analysis of existing results, a clarification, or only narrower wording?
+- What is the strongest conclusion the available evidence supports?
+- What statement in the manuscript, SI, or response must change for the reply to be credible?
 
-Classify each comment before writing:
+Do not assume that adding an experiment is automatically the best response. Prefer the smallest action that genuinely resolves the concern, but do not use wording changes to conceal a real evidential gap.
 
-- misunderstanding
-  The paper may already contain the answer, but it was not easy enough to find.
-- clarity problem
-  The intended claim is defensible, but the wording or organization caused confusion.
-- evidence gap
-  The reviewer is asking for support that is genuinely missing or too weak.
-- scope mismatch
-  The request is reasonable in general but outside the paper's actual contribution or revision budget.
-- incorrect premise
-  The reviewer comment is based on a factual or interpretive error.
-- high-risk criticism
-  The comment challenges novelty, validity, leakage, controls, statistics, or overclaim.
+Read [triage-and-stance.md](references/triage-and-stance.md) to classify the comment by cause and to decide whether the reply should concede, clarify, or push back. Make that decision before drafting; claim calibration applies to the stance you chose, it does not substitute for choosing one.
 
-Triage first. Only then decide what to change.
+## Use the default response architecture
 
-## Severity And Readiness
+For a substantive comment, preserve this structure:
 
-Assign each comment a severity:
+1. **Overview paragraph.** State the measure taken, the central result, and the revised conclusion. It must stand alone for a reviewer who reads only this paragraph.
+2. **Action list.** Introduce with `Specifically, we:` and list the concrete revisions or analyses in the same order as the detailed response.
+3. **Numbered evidence sections.** Give each section a direct topic sentence such as `We first clarified...`, `We next tested...`, or `Taken together...`. Separate scope, design, result, interpretation, and boundary when that helps navigation.
+4. **Revision locations and exact text.** Identify where the changes appear and quote the revised manuscript or SI language when useful.
+5. **Closing boundary.** End with the conclusion the evidence supports and, when needed, what it should not be interpreted as proving.
 
-- `minor`
-  presentation, clarity, formatting, citation, or small method-detail issue
-- `major`
-  evidence, validation, method, statistics, interpretation, or scope issue that may affect editorial confidence
-- `blocking`
-  ethics, compliance, data integrity, unsupported central claim, or another issue that should not be drafted around
-- `unclear`
-  insufficient information to judge severity safely
+Compress this architecture for a simple minor comment. Do not force a long list or multiple subsections when one direct paragraph fully answers the concern.
 
-Label the package honestly at the end:
+Read [response-patterns.md](references/response-patterns.md) when drafting or substantially restructuring a reply.
 
-- `ready_to_submit`
-- `draft_with_placeholders`
-- `needs_author_input`
-- `blocked`
+## Make every paragraph reviewer-navigable
 
-## Response Order
+- Put the paragraph's conclusion or function in its first sentence.
+- Make the logical link explicit; do not require the reviewer to infer why a result answers the comment.
+- Distinguish an experimental result from the interpretation it motivates.
+- Keep one main claim per paragraph.
+- Use direct, familiar scientific vocabulary. Avoid newly coined labels, abstract phrases, unnecessary `transparent`, and formulaic praise.
+- Do not default to `We agree that...`; acknowledge the concern briefly and move to the action.
+- Avoid em dashes unless the source style clearly favors them.
+- Retain relevant literature, figure, table, and Supplementary Note citations during rewriting.
 
-1. Parse all reviewer comments into atomic items.
-2. Mark each item by triage category.
-3. Decide the action:
-   - clarify
-   - edit text
-   - add analysis
-   - add experiment
-   - narrow claim
-   - decline with justification
-4. Update the manuscript first when the response depends on a real change.
-5. Write the response letter against the updated manuscript, not against the old draft.
-6. Cite exact revised locations whenever possible:
-   - section
-   - figure
-   - table
-   - line or paragraph location if available
-7. End with a short revision summary for the editor if the venue expects one.
+## Calibrate claims to evidence
 
-## Editor-Efficiency Rule
+Apply this evidence ladder:
 
-Assume the editor is scanning quickly for three things:
-- whether you agree or disagree with the comment
-- what concrete revision was made
-- where that revision can be found
+1. **Direct observation:** `showed`, `was higher`, `remained impaired`.
+2. **Run-level reproducibility:** `was reproduced across the evaluated runs`.
+3. **Association:** `was associated with`, `is consistent with`.
+4. **Diagnostic or intervention:** `provides evidence consistent with`, `supports a possible explanation`.
+5. **Causal attribution:** use only when the design isolates the factor and credible alternatives are controlled.
 
-Do not write replies that only say the manuscript was revised without specifying the change.
+Follow these recurring boundary rules:
 
-## Decision Rules
+- A diagnostic analysis can support a mechanism; it rarely proves that mechanism.
+- Multiple random seeds characterize training variability. They are not automatically independent biological samples or a basis for population-level inference.
+- Failure to detect a meaningful advantage does not establish statistical identity or equivalence.
+- A finite hyperparameter sweep identifies the `best-performing evaluated ratio`, not a global `optimum`.
+- Holding maximum path depth constant does not hold parameter sharing or effective capacity constant.
+- Dataset-specific findings must name the dataset. Avoid `consistently`, `universally`, `default choice`, or broad superiority claims unless the evidence truly spans the claimed scope.
+- `Mean ± s.d.` describes run-to-run variation; do not call it a confidence interval.
+- Distinguish practical effect magnitude, stochastic stability, statistical uncertainty, and cross-dataset consistency.
+- When sources of domain shift remain confounded, report setting-specific correlates or plausible explanations, not a complete variance or causal decomposition.
+- Equal nominal loss weights do not imply equal gradient pressure.
+- A disruption test shows sensitivity or dependence under that intervention; do not automatically call it effective information exchange.
 
-### When To Concede
+State both what was controlled and what necessarily changed. If architecture, parameter sharing, feature construction, preprocessing, or effective capacity differs, preserve that limitation in the reply.
 
-Concede when:
-- the reviewer correctly identifies an evidence gap
-- a claim is stronger than the data
-- wording created a reasonable misunderstanding
-- a control, comparison, or limitation statement is missing
+## Keep the response, manuscript, and SI synchronized
 
-Best move:
-- narrow the claim
-- add the missing evidence if feasible
-- explicitly thank the reviewer for improving precision
+For each substantive claim, verify:
 
-### When To Clarify Without Major New Work
+- the number, unit, metric name, seed count, dataset, split, comparator, and aggregation are exact;
+- the manuscript contains the promised revision;
+- the SI contains enough methodological detail to support any analysis described at length in the response;
+- figure, table, note, and panel numbers exist and match their actual content;
+- quoted revised text matches the document verbatim;
+- terminology is stable across the overview, detailed reply, manuscript, SI, and captions;
+- the response does not generalize beyond the revised manuscript;
+- every embedded figure is introduced in text before it appears and has a meaningful callout;
+- no figure, table, or note is orphaned, and no citation points to a nonexistent or wrong panel.
 
-Use clarification when:
-- the result already exists but was buried
-- the reviewer missed a definition, setup, or metric explanation
-- the requested point can be handled by reorganizing text or adding cross-references
+Use [final-audit.md](references/final-audit.md) for a whole-letter or submission-ready review.
 
-Best move:
-- revise the manuscript for discoverability
-- do not imply that a major scientific flaw was fixed if the issue was presentation
+## Match the requested output mode
 
-### When To Push Back
+### Diagnose a comment
 
-Push back only when:
-- the request depends on a false premise
-- the requested experiment is outside the paper's stated scope
-- the request would require a different paper rather than a fair revision
-- the current evidence already answers the concern
+Lead with the verdict: what is already adequate, what is unsupported, and what must change. Then propose the response logic. Do not draft a full reply unless requested.
 
-Best move:
-- acknowledge the concern as reasonable
-- explain the boundary precisely
-- point to the evidence already in the manuscript
-- avoid defensive tone or rhetorical overreach
+### Draft or revise a reply
 
-## Writing Rules
+Give a brief analysis first, followed by complete ready-to-use prose. If only one sentence or paragraph is requested, return only that unit after the short analysis. When the deliverable is purely copy-ready prose, keep the analysis to a few lines and put the prose in a single fenced block so it can be copied without edits.
 
-- Quote or paraphrase each reviewer point fairly before responding.
-- Start with appreciation, then move quickly to substance.
-- State the action taken in the first 1-2 sentences of the reply.
-- State explicitly whether you agree, partially agree, or disagree when that is not already obvious from the action taken.
-- Distinguish clearly between:
-  - what was changed
-  - what was clarified
-  - what was not changed and why
-- If new text, analysis, or figures were added, say exactly where.
-- Give page and line numbers whenever the manuscript format makes that possible.
-- If figure, table, or supplement numbering changed, cite the updated identifiers directly.
-- If a claim was softened, say so explicitly.
-- If a request cannot be fully satisfied, explain the scope boundary and give the strongest honest response available.
-- If the journal allows or expects marked revisions, make sure the changed text is visibly highlighted in the manuscript.
+### Audit a response letter
 
-## Comment Taxonomy
+Separate findings into:
 
-Classify comments using these buckets before drafting:
+1. **Must change:** factual errors, unsupported claims, contradictions, missing promised revisions, wrong citations or panels, placeholders, duplicated text, and submission-breaking layout issues.
+2. **Strongly recommended:** material clarity or boundary improvements that reduce reviewer risk.
+3. **Optional:** stylistic polishing only.
 
-- editorial or presentation
-- evidence or interpretation
-- methodological
-- statistical
-- data, code, or materials
-- citation or positioning
-- scope or feasibility
-- ethics or compliance
+If the user asks only for mandatory changes, report only category 1 and explicitly say when none remain.
 
-Use the category to choose the response action. For example:
-- editorial issues usually need text or figure clarification
-- evidence and statistics issues often need new support, claim-softening, or explicit limitation language
-- ethics and compliance issues are often `blocking` until the missing facts exist
+## Preserve useful negative results
 
-## Tone Rules
+Do not hide or overcorrect an unfavorable analysis. Reframe it precisely:
 
-Prefer:
-- respectful
-- direct
-- specific
-- non-defensive
-- evidence-led
+- explain what uncertainty or hypothesis the analysis addresses;
+- report the observed result without inflation;
+- state what conclusion is weakened or narrowed;
+- identify the remaining practical implication;
+- avoid claiming failure proves irrelevance.
 
-Avoid:
-- over-thanking
-- vague promises
-- evasive wording
-- replying to criticism with hype
-- claiming to have addressed a concern when only wording changed
+The goal is a credible revision record, not a uniformly positive story.
 
-## Common Failure Modes
+---
 
-- Writing the response letter before deciding the manuscript edits
-- Thanking the reviewer but never stating the action taken
-- Saying "revised accordingly" without saying what changed
-- Claiming a concern is addressed without citing the revised location
-- Agreeing with contradictory reviewer requests without resolving the conflict
-- Refusing a request without clearly defining the scope boundary
-- Using soft language to hide that the paper actually needed a claim downgrade
-
-## Output Standard
-
-When using this skill, produce:
-- a triaged reviewer-comment map
-- the action chosen for each comment
-- the revised response text
-- the linked manuscript change locations
-- any remaining unresolved issues that still need user judgment
-- a final readiness label: `ready_to_submit`, `draft_with_placeholders`, `needs_author_input`, or `blocked`
+*Provenance: distilled from a completed major-revision cycle on a computational-biology benchmark manuscript, then generalized. The triage and stance layer in `references/triage-and-stance.md` is this repository's original `rebuttal-response` body.*

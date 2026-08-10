@@ -50,6 +50,13 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 用 paper-workflow 帮我判断这篇稿子下一步该用哪个 skill。
 ```
 
+以后凡是泛泛的请求（`帮我优化论文`、`润色一下`、`投稿前检查`）都直接说就行，
+paper-workflow 会先分类再报出要跑的整条链，不会只挑一个 skill 就开工。
+
+```text
+帮我优化这篇论文。
+```
+
 到这里就装完了，下面全是可选项。
 
 <details>
@@ -152,9 +159,10 @@ flowchart TD
 
 | Skill | 作用 |
 |---|---|
-| `paper-workflow` | 顶层路由：选对 skill、按对顺序推进 |
+| `paper-workflow` | 泛泛请求的唯一入口：按稿件粒度分类，给出必须整条跑完的 skill 链 |
 | `paper-bootstrap` | 初始化论文项目、source of truth 与状态文件 |
-| `scientific-writing` | 章节撰写与重写（全段落 prose）|
+| `scientific-writing` | 章节撰写与重写（全段落 prose）、引用格式与报告规范 |
+| `write-scientific-manuscript` | 段落级清晰度与逻辑诊断：读不懂的那段到底哪里出了问题 |
 | `manuscript-optimizer` | 结构、证据链、术语、图逻辑漂移修复 |
 | `results-section-revision` | Results 小节级叙述结构修复 |
 | `figure-planner` | 一图一主张、panel 角色、legend 同步、Nature 配色 |

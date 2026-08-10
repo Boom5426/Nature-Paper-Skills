@@ -11,6 +11,13 @@ Use this skill when citation integrity is the bottleneck. It is narrower and mor
 
 Use this skill together with `scientific-writing` or `submission-audit`, not instead of them.
 
+This is stage one of three. It shows the bibliography is well-formed; it cannot show that the
+cited papers are real, and it cannot show that a real paper supports the sentence citing it.
+Hand the surviving entries to `reference-audit-guide`, which queries CrossRef, Semantic Scholar,
+arXiv, and PubMed to confirm existence and match metadata, then to `claim-source-verification`
+for claim-to-evidence support. A fabricated citation carrying a well-formed DOI passes this skill
+and fails the next one.
+
 ## When To Use
 
 Use this skill when:

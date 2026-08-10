@@ -1,12 +1,17 @@
 # Workflow Map
 
+> **The authoritative routing logic lives in `skills/core/paper-workflow/SKILL.md`, not here.**
+> That file is what the model loads; this page is its human-readable summary. When the two
+> disagree, the skill wins and this page should be corrected. A routing rule added only to this
+> page changes nothing, because files under `docs/` are never loaded into the model's context.
+
 The default manuscript path in this repository is:
 
 ```text
 1. paper-bootstrap
 2. nature-portfolio-playbook
 3. refresh project_truth / result_summary / paper_handoff
-4. scientific-writing or manuscript-optimizer
+4. manuscript-optimizer or scientific-writing, then write-scientific-manuscript for passage-level clarity
 5. figure-planner, then nature-figure to produce the figure and figure-style to check it
 6. results-section-revision when Results is scientifically stable but still reads as jumpy or figure-by-figure
 7. stats-reporting-audit for statistical-reporting integrity
@@ -41,7 +46,11 @@ harder to see, not easier.
 
 ## Routing Rule
 
-- Use `scientific-writing` when the section mostly needs to be drafted or rewritten in prose.
+- Use `scientific-writing` when the section mostly needs to be drafted or rewritten in prose,
+  or when the task names a citation style or reporting guideline.
+- Use `write-scientific-manuscript` when the science is settled but a passage is hard to follow:
+  buried topic sentences, missing logical bridges, ambiguous referents, noun chains, incomplete
+  comparisons, or terminology coined where an ordinary word would do.
 - Use `manuscript-optimizer` when the paper's story, evidence chain, figure logic, or terminology may be unstable.
 - Use `results-section-revision` when the remaining problem is local Results architecture rather than claim selection.
 - Use `data-availability` when repository plans, accession identifiers, source-data coverage, or restricted-data wording are the bottleneck.

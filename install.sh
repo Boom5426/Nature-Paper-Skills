@@ -25,6 +25,7 @@ RECOMMENDED_SKILLS=(
   core/paper-workflow
   core/paper-bootstrap
   core/scientific-writing
+  core/write-scientific-manuscript
   core/manuscript-optimizer
   core/results-section-revision
   core/figure-planner

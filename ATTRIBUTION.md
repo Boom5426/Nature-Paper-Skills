@@ -45,6 +45,21 @@ failure that actually occurred rather than to general advice:
 - `skills/figure/nature-figure/references/figure-delivery-bundle.md`, added to
   the vendored Apache-2.0 skill and therefore distributed under that skill's
   Apache-2.0 terms.
+- `skills/core/write-scientific-manuscript`, distilled from a completed revision
+  cycle on a computational-biology manuscript. Its clarity rules, the conditions
+  under which a new term may be coined, and the sentence-load diagnostics each
+  correspond to a revision that was actually required.
+- The claim-calibration layer of `skills/core/rebuttal-response`, namely its
+  `SKILL.md`, `references/response-patterns.md`, and `references/final-audit.md`,
+  distilled from a completed major-revision cycle on a benchmark manuscript. The
+  evidence ladder and the boundary rules on seeds, finite sweeps, capacity
+  controls, and equivalence each correspond to a reviewer objection that was
+  actually raised. The skill's original triage and stance body is preserved in
+  `references/triage-and-stance.md`.
+
+Both were generalized before inclusion: project-identifying datasets, task names,
+seed counts, and worked examples were replaced with neutral equivalents, while the
+transferable rules were kept intact.
 
 The two generalized scripts were derived from working project scripts, with
 project-specific paths, section lists, contributor-name scans, and thresholds

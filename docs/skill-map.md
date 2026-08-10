@@ -5,6 +5,7 @@
 - `paper-workflow`: top-level router
 - `paper-bootstrap`: initialize a paper project and source of truth
 - `scientific-writing`: draft and section-level rewriting
+- `write-scientific-manuscript`: clarity and logic diagnosis for a passage that is correct but hard to follow
 - `manuscript-optimizer`: structural revision and evidence-chain repair
 - `results-section-revision`: late-stage Results narrative repair
 - `figure-planner`: figure claim design and legend sync
@@ -14,7 +15,7 @@
 - `draft-marker-discipline`: in-source draft markers, triage by resolution route, prose word counts, safe archival, assertion-guarded scripted edits
 - `data-availability`: data-sharing statements, repository planning, and source-data coverage
 - `submission-audit`: pre-submission or pre-resubmission QA
-- `rebuttal-response`: author-side reviewer response workflow
+- `rebuttal-response`: author-side reviewer response workflow, claim calibration, and final letter audit
 - `stats-reporting-audit`: author-side statistical-reporting audit (independent-unit `n`, replication, multiple comparisons, figure-legend statistics)
 - `scientific-prose-style`: sentence-level prose linting (em-dash budget, hedging, sentence rhythm, paragraph openers)
 

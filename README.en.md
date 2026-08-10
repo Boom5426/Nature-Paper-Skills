@@ -50,6 +50,14 @@ Then fully restart your agent so it picks up the new skills (quit and relaunch C
 Use paper-workflow to tell me which skill I should use next for this manuscript.
 ```
 
+After that, phrase requests however you like. A general ask such as `improve my paper`,
+`polish this`, or `get this ready to submit` enters through paper-workflow, which classifies
+the request and announces the full chain instead of reaching for a single skill.
+
+```text
+Improve this manuscript.
+```
+
 That is the whole setup. Everything below is optional.
 
 <details>
@@ -152,8 +160,9 @@ The default assumption is:
 
 | Skill | What it does |
 |---|---|
-| `paper-workflow` | Top-level router: pick the right skill in the right order |
+| `paper-workflow` | The entry point for any general request: classifies by input granularity and prescribes the full chain to run |
 | `paper-bootstrap` | Initialize a paper project, source of truth, and state files |
+| `write-scientific-manuscript` | Passage-level clarity and logic diagnosis: why a paragraph is hard to follow, and what to change |
 | `scientific-writing` | Draft or rewrite manuscript sections in full prose |
 | `manuscript-optimizer` | Repair claim structure, evidence chain, terminology, figure logic |
 | `results-section-revision` | Repair late-stage narrative flow inside Results subsections |

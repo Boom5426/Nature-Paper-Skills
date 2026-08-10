@@ -11,6 +11,12 @@ introduction, results, and discussion. Load this whenever you draft or revise
 manuscript text. (Figure planning lives in `figure-planner`; this skill
 is about words on the page.)
 
+This skill owns punctuation and rhythm only, and it runs last. When a passage is hard to follow
+for reasons punctuation cannot fix, such as an unstable claim, a missing evidence link, or a
+paragraph whose job is unclear, fix that first with `manuscript-optimizer` or `scientific-writing`.
+Re-punctuating a sentence whose scientific role is wrong does not make it readable, and polishing a
+drifted Review before its `review-article-architecture` drift audit makes the drift harder to see.
+
 ## Rule 1 — Em-dash budget (the headline rule)
 
 The long em-dash (`—`) is the single most overused mark in generated scientific

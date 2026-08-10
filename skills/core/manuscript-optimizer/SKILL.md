@@ -29,6 +29,12 @@ Do not use this skill as the primary workflow for:
 - Methods-only statistical review
 - Journal peer review reports that focus mainly on acceptance recommendations
 
+This skill works above the sentence. Once the claim hierarchy and evidence chain are stable, hand
+the sections to `scientific-writing` for prose and then to `scientific-prose-style` for the
+sentence-level pass. For a Review, survey, or Perspective, use `review-article-architecture`
+instead of this skill; a Review's failure mode is drifting from its brief, not overclaiming past
+its data.
+
 ## Operating Principle
 
 Always move in this order:

@@ -32,7 +32,7 @@ Re-running the installer upgrades in place: each skill directory is removed and 
 If you would rather not run a script, paste this into Codex from a clone of this repository:
 
 ```text
-Install the recommended skills from this repository into ~/.codex/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, data-availability, submission-audit, rebuttal-response, stats-reporting-audit, scientific-prose-style. Copy the full skill directories, not just SKILL.md, and delete any existing copy of a skill before re-copying it. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
+Install the recommended skills from this repository into ~/.codex/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, write-scientific-manuscript, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, claim-source-verification, review-article-architecture, draft-marker-discipline, data-availability, submission-audit, rebuttal-response, stats-reporting-audit, scientific-prose-style. Copy the full skill directories, not just SKILL.md, and delete any existing copy of a skill before re-copying it. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
 ```
 
 ## Install One Skill
