@@ -52,7 +52,8 @@ Do not use this skill for:
 - deciding whether a claim is interesting. That is `manuscript-optimizer`.
 
 The three stack: `citation-verifier` for hygiene, this skill for claim support,
-`reference-audit-guide` for the underlying principles.
+`reference-audit-guide` (optional set, `--set all`) to machine-verify that a cited work exists
+before asking whether it supports the sentence.
 
 ## The Two-Role Protocol
 

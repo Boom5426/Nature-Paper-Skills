@@ -37,7 +37,7 @@ Default assumption: unless a conference venue is named, the manuscript follows t
 | A long draft carried across many sessions | `long-draft` | `draft-marker-discipline` then `review-article-architecture` drift audit |
 | Near submission or resubmission | `preflight` | `submission-audit`, `citation-verifier`, `claim-source-verification`, `stats-reporting-audit`, `data-availability` |
 | Reviewer comments exist | `response` | `rebuttal-response` |
-| Figures are the bottleneck | `figure` | `figure-planner`, then `nature-figure` to render, then `figure-style` to check |
+| Figures are the bottleneck | `figure` | `figure-planner`, then `nature-figure` to render, then `figure-style` to check. The last two are the figure stack, installed with `--figure` |
 | No draft yet, project new or messy | `bootstrap` | `paper-bootstrap` then `nature-portfolio-playbook` |
 
 When two classes with different chains both fit, ask one question. That is the one case worth a
@@ -95,7 +95,7 @@ Integrity checks run alongside, not in sequence: `citation-verifier`, `claim-sou
    experimental, statistical, or figure update
 4. `manuscript-optimizer` or `scientific-writing` per the class table, then
    `write-scientific-manuscript` for passage-level clarity
-5. `figure-planner`, then `nature-figure` to produce and `figure-style` to check
+5. `figure-planner`, then `nature-figure` to produce and `figure-style` to check (figure stack, `--figure`)
 6. `results-section-revision` when Results is stable but reads jumpy
 7. `stats-reporting-audit`
 8. `citation-verifier`, then `claim-source-verification`
@@ -114,7 +114,7 @@ overclaiming past its data.
 3. `draft-marker-discipline` to set up the marker system before drafting starts
 4. `scientific-writing`, sourcing in step with the prose
 5. `citation-verifier`, then `claim-source-verification`
-6. `figure-planner`, then `nature-figure` and `figure-style`
+6. `figure-planner`, then `nature-figure` and `figure-style` (figure stack, `--figure`)
 7. `review-article-architecture` drift audit, before any compression pass
 8. `draft-marker-discipline` to measure length and triage what remains open
 9. `scientific-prose-style`, last
@@ -136,15 +136,18 @@ Run step 7 before step 9, never after.
   says nothing about claim support: in one measured run, 55 of 139 proposed sources were rejected,
   none of them fabricated.
 - `reference-audit-guide` when references must be checked against live scholarly APIs rather than
-  inspected locally. It ships runnable verification scripts and is the only stage that catches a
+  inspected locally. Optional set, installed with `--set all`. It ships runnable verification scripts and is the only stage that catches a
   fabricated citation carrying a well-formed DOI.
 - `review-article-architecture` for a Review, survey, or Perspective, or whenever a piece written
   across many sessions may no longer match its brief. `manuscript-optimizer` for research articles.
 - `draft-marker-discipline` before a batch pass over open markers, before quoting a manuscript's
   length, before removing superseded material, and before scripting the same edit across many files.
 - `figure-planner` to decide what each figure argues, then `nature-figure` to render it, then
-  `figure-style` to check correctness and legibility before export.
-- `conference-paper-writing` only when a conference venue is explicitly named.
+  `figure-style` to check correctness and legibility before export. The last two are the figure
+  stack; if they are not installed, `figure-planner` still produces the panel plan and the author
+  renders it themselves.
+- `conference-paper-writing` only when a conference venue is explicitly named. Optional set,
+  installed with `--set all`.
 
 ## Working principle
 

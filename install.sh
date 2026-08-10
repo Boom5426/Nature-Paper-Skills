@@ -90,7 +90,7 @@ Options:
   --agent <claude|codex|both>  Target agent. Default: auto-detect from ~/.claude and ~/.codex.
   --local                      Install into ./.claude/skills (current project only; Claude Code only).
   --dest <dir>                 Install into an explicit directory. Overrides --agent; conflicts with --local.
-  --set <recommended|all>      Which skills to install. Default: recommended (16 skills).
+  --set <recommended|all>      Which skills to install. Default: recommended (17 skills).
   --figure                     Add the figure stack (nature-figure, figure-style) to --set recommended.
                                Needs a plotting backend: Python matplotlib/seaborn or R ggplot2.
   --ref <branch|tag|sha>       Download and install from this ref. Forces a download even from a clone.

@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run the test suite
+        run: python -m unittest discover -s tests -v
+
+      - name: Check the installer is valid shell
+        run: bash -n install.sh
+
+      - name: Install every skill into a scratch directory
+        run: |
+          bash install.sh --dest "${RUNNER_TEMP}/skills" --set all
+          test "$(ls -1 "${RUNNER_TEMP}/skills" | wc -l)" -eq "$(find skills -mindepth 2 -maxdepth 2 -type d | wc -l)"
+
+      - name: Re-run the installer to confirm it is idempotent
+        run: |
+          bash install.sh --dest "${RUNNER_TEMP}/skills" --set all
+          test "$(ls -1 "${RUNNER_TEMP}/skills" | wc -l)" -eq "$(find skills -mindepth 2 -maxdepth 2 -type d | wc -l)"

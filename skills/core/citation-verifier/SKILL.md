@@ -13,9 +13,11 @@ Use this skill together with `scientific-writing` or `submission-audit`, not ins
 
 This is stage one of three. It shows the bibliography is well-formed; it cannot show that the
 cited papers are real, and it cannot show that a real paper supports the sentence citing it.
-Hand the surviving entries to `reference-audit-guide`, which queries CrossRef, Semantic Scholar,
-arXiv, and PubMed to confirm existence and match metadata, then to `claim-source-verification`
-for claim-to-evidence support. A fabricated citation carrying a well-formed DOI passes this skill
+Hand the surviving entries to `reference-audit-guide` (optional set, installed with `--set all`),
+which queries CrossRef, Semantic Scholar, arXiv, and PubMed to confirm existence and match
+metadata, then to `claim-source-verification` for claim-to-evidence support. When
+`reference-audit-guide` is not installed, say that existence was not machine-verified rather than
+letting a clean local scan stand in for it. A fabricated citation carrying a well-formed DOI passes this skill
 and fails the next one.
 
 ## When To Use

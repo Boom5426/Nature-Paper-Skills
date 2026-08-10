@@ -12,7 +12,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Focus](https://img.shields.io/badge/focus-Nature%20series-1f6feb)](docs/venue-routing.md)
 [![Workflow](https://img.shields.io/badge/workflow-claim--driven-blue)](docs/workflow-map.md)
-[![Skills](https://img.shields.io/badge/skills-25-8a63d2)](docs/skill-map.md)
+[![Skills](https://img.shields.io/badge/skills-26-8a63d2)](docs/skill-map.md)
 [![Codex](https://img.shields.io/badge/agent-Codex-0a7ea4)](docs/installation-codex.md)
 [![Claude Code](https://img.shields.io/badge/agent-Claude%20Code-cc785c)](docs/installation-claude.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -38,7 +38,7 @@
 
 ## 📦 快速开始
 
-一条命令，不用克隆。脚本会自动识别你用的是 Codex 还是 Claude Code，装好推荐的 16 个 skill，并干净地覆盖旧版本。
+一条命令，不用克隆。脚本会自动识别你用的是 Codex 还是 Claude Code，装好推荐的 17 个 skill，并干净地覆盖旧版本。
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
@@ -74,7 +74,7 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 # 只对当前项目生效，不写入 home 目录（Claude Code）
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --local
 
-# 装全部 25 个 skill；或先预览，不写任何文件
+# 装全部 26 个 skill；或先预览，不写任何文件
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --set all
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --dry-run
 ```
@@ -202,9 +202,28 @@ flowchart TD
 
 | Skill | 作用 |
 |---|---|
-| `reference-audit-guide` | 引用核验原则 |
+| `reference-audit-guide` | 联网核验引用是否真实存在：CrossRef / Semantic Scholar / arXiv / PubMed，附可运行脚本 |
 | `conference-paper-writing` | 仅用于 conference-first 流程 |
 | `academic-presentations` | 论文转 slides / talk |
+
+<details>
+<summary><b>装完没反应 / 常见问题</b></summary>
+
+<br/>
+
+**agent 好像没加载 skill。** 装完必须**完全重启** agent，退出进程再打开，`/clear` 不够，它不会重新扫描 skill 目录。
+
+**它只用了一个 skill，没跑完整条链。** 直接说 `用 paper-workflow` 或者把请求说得更泛一点（`帮我优化这篇论文`）。`paper-workflow` 会先分类再报出要跑的链；如果它没报链就直接开工，说明匹配到了别的 skill，点名让它走 paper-workflow。
+
+**它让我用某个 skill，但我这儿没有。** 默认只装 17 个。`nature-figure` 和 `figure-style` 要 `--figure`（需要 matplotlib/seaborn 或 ggplot2），其余的用 `--set all`。
+
+**装到哪儿了。** Claude Code 是 `~/.claude/skills/`，Codex 是 `~/.codex/skills/`，`--local` 是当前项目的 `./.claude/skills/`。`bash install.sh --list` 可以先看要装什么，`--dry-run` 可以看会发生什么但不写盘。
+
+**同时装了 Codex 和 Claude Code。** `--agent both`，两边互不干扰。
+
+**想换个版本或回滚。** `--ref <branch|tag|sha>` 从指定 ref 安装。重复运行是幂等的，会干净覆盖旧版本。
+
+</details>
 
 ## 🧭 设计原则
 

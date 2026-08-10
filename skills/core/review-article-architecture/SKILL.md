@@ -39,7 +39,8 @@ Do not use this skill for:
 - venue selection among Nature journals. Use `nature-portfolio-playbook`.
 - sentence-level prose. Use `scientific-prose-style` after this is stable.
 - finding, summarizing, or comparing the literature itself. Use
-  `academic-researcher`; this skill governs the article's structure, not source
+  `academic-researcher` (optional set, installed with `--set all`); this skill
+  governs the article's structure, not source
   discovery.
 - deciding what each figure argues. Use `figure-planner`; this skill decides
   which section owns it and how many there may be.
@@ -148,7 +149,8 @@ Two consequences follow:
 - **Every asserted cell in the artwork traces to the owning section.** If a figure
   states a maturity level, a "not established", or an absence of evaluation, that
   is an assertion and it needs the same traceability as a sentence. See
-  `nature-figure`'s figure-delivery-bundle reference for the mechanism.
+  `nature-figure`'s figure-delivery-bundle reference for the mechanism
+  (figure stack, installed with `--figure`).
 
 **Watch for ownership gaps when the plan changes.** In the real case, the team's
 division of labour was written against five figures and a Table. The plan later

@@ -23,7 +23,7 @@ cd Nature-Paper-Skills
 ./install.sh --agent codex
 ```
 
-Useful flags: `--set all` (install all 25 skills), `--dry-run` (preview), `--list` (print the selection), `--dest <dir>` (explicit target), `--ref <branch|tag|sha>` (download and install a specific ref, even when run from a clone), `--help`.
+Useful flags: `--set all` (install all 26 skills), `--dry-run` (preview), `--list` (print the selection), `--dest <dir>` (explicit target), `--ref <branch|tag|sha>` (download and install a specific ref, even when run from a clone), `--help`.
 
 Re-running the installer upgrades in place: each skill directory is removed and re-copied, so files deleted upstream do not linger.
 

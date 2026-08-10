@@ -50,6 +50,12 @@ Thanks for contributing. This repository is intentionally narrow: it is a journa
 2. Write or update `SKILL.md` with a clear `name` and `description`.
 3. Add only the supporting files the skill actually needs.
 4. Update [docs/skill-map.md](docs/skill-map.md) if the skill changes the public map of the repo.
+4a. If the skill belongs in the default install, add it to `RECOMMENDED_SKILLS` in
+   [install.sh](install.sh) and to both installation docs. If it does not, make sure every skill
+   that points at it also says how to obtain it, or a default-install user follows the reference
+   into a dead end.
+4b. Update the skill-count badge and the counts in both READMEs. `tests/test_repo_consistency.py`
+   enforces all of the above, so run `python -m unittest discover -s tests` before opening the PR.
 5. Update the root READMEs if install guidance, scope, or the default workflow changes.
 6. Update [ATTRIBUTION.md](ATTRIBUTION.md) when provenance needs to be recorded.
 

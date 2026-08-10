@@ -12,7 +12,7 @@ Drafting · structural revision · figure/text alignment · citation verificatio
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Focus](https://img.shields.io/badge/focus-Nature%20series-1f6feb)](docs/venue-routing.md)
 [![Workflow](https://img.shields.io/badge/workflow-claim--driven-blue)](docs/workflow-map.md)
-[![Skills](https://img.shields.io/badge/skills-25-8a63d2)](docs/skill-map.md)
+[![Skills](https://img.shields.io/badge/skills-26-8a63d2)](docs/skill-map.md)
 [![Codex](https://img.shields.io/badge/agent-Codex-0a7ea4)](docs/installation-codex.md)
 [![Claude Code](https://img.shields.io/badge/agent-Claude%20Code-cc785c)](docs/installation-claude.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -38,7 +38,7 @@ Drafting · structural revision · figure/text alignment · citation verificatio
 
 ## 📦 Quick Start
 
-One command. No clone required. It detects whether you use Codex or Claude Code, installs the recommended 16-skill stack, and cleanly replaces any earlier copy.
+One command. No clone required. It detects whether you use Codex or Claude Code, installs the recommended 17-skill stack, and cleanly replaces any earlier copy.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
@@ -75,7 +75,7 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 # Install into the current project only, not your home directory (Claude Code)
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --local
 
-# All 25 skills, or preview without writing anything
+# All 26 skills, or preview without writing anything
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --set all
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --dry-run
 ```
@@ -203,9 +203,28 @@ The default assumption is:
 
 | Skill | What it does |
 |---|---|
-| `reference-audit-guide` | Citation-verification principles |
+| `reference-audit-guide` | Verify references exist against CrossRef / Semantic Scholar / arXiv / PubMed; ships runnable checkers |
 | `conference-paper-writing` | Conference-first workflows only |
 | `academic-presentations` | Turn papers into decks or talks |
+
+<details>
+<summary><b>Troubleshooting</b></summary>
+
+<br/>
+
+**The agent does not seem to see the skills.** A full restart is required after installing. Quit the process and relaunch it; `/clear` is not enough, because it does not rescan the skills directory.
+
+**It used one skill instead of running the chain.** Say `use paper-workflow` explicitly, or phrase the request more generally (`improve this manuscript`). `paper-workflow` classifies the request and announces the chain before starting; if no chain was announced, a different skill matched, so name paper-workflow directly.
+
+**It told me to use a skill I do not have.** The default install is 17 skills. `nature-figure` and `figure-style` need `--figure` (and a plotting backend: matplotlib/seaborn or ggplot2); everything else comes with `--set all`.
+
+**Where things were installed.** `~/.claude/skills/` for Claude Code, `~/.codex/skills/` for Codex, and `./.claude/skills/` with `--local`. Use `bash install.sh --list` to preview the set and `--dry-run` to see what would happen without writing anything.
+
+**Both Codex and Claude Code.** Use `--agent both`; the two installs do not interfere.
+
+**Pinning or rolling back.** `--ref <branch|tag|sha>` installs from a specific ref. Re-running is idempotent and cleanly replaces the previous copy.
+
+</details>
 
 ## 🧭 Design Principles
 
