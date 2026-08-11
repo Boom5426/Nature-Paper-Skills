@@ -36,7 +36,8 @@ Default assumption: unless a conference venue is named, the manuscript follows t
 | A Review, survey, or Perspective | `review-article` | `review-article-architecture` first, then the Review path below |
 | A long draft carried across many sessions | `long-draft` | `draft-marker-discipline` then `review-article-architecture` drift audit |
 | Near submission or resubmission | `preflight` | `submission-audit`, `citation-verifier`, `claim-source-verification`, `stats-reporting-audit`, `data-availability` |
-| Reviewer comments exist | `response` | `rebuttal-response` |
+| Reviewer comments exist | `response` | `paper-reviewer` to inventory every ask, `rebuttal-response` to draft and calibrate, then `paper-reviewer` again to grade the draft. `paper-reviewer` is not in the default recommended set; install it with `--set all` |
+| A manuscript to referee, or a request to predict what reviewers will attack | `referee` | `paper-reviewer`, installed with `--set all` |
 | Figures are the bottleneck | `figure` | `figure-planner`, then `nature-figure` to render, then `figure-style` to check. The last two are the figure stack, installed with `--figure` |
 | No draft yet, project new or messy | `bootstrap` | `paper-bootstrap` then `nature-portfolio-playbook` |
 
@@ -102,7 +103,8 @@ Integrity checks run alongside, not in sequence: `citation-verifier`, `claim-sou
 9. `data-availability`
 10. `scientific-prose-style`
 11. `submission-audit`
-12. `rebuttal-response` after external review
+12. after external review: `paper-reviewer` to inventory the reports, `rebuttal-response` to draft and
+    calibrate, then `paper-reviewer` again to grade the draft
 
 ## Review, survey, and Perspective path
 
@@ -148,6 +150,11 @@ Run step 7 before step 9, never after.
   renders it themselves.
 - `conference-paper-writing` only when a conference venue is explicitly named. Optional set,
   installed with `--set all`.
+- `paper-reviewer` when the question is what the reviewer asked or whether the reviewer would accept
+  the answer. `rebuttal-response` when the question is what the authors may claim and how the letter,
+  manuscript, and Supplementary Information stay consistent. They stack, in that order, and
+  `paper-reviewer` runs a second time at the end to grade the draft. Optional set, installed with
+  `--set all`.
 
 ## Working principle
 
@@ -168,4 +175,7 @@ before attempting heavy revision.
 - treating citation formatting as the same thing as citation verification
 - treating a clean bibliography as evidence that the sources support the claims
 - writing a response letter before deciding the underlying manuscript edits
+- answering a reviewer report without first listing every ask and sub-ask in the reviewer's own words
+- renumbering, reordering, or grouping reviewer comments by theme, which makes coverage impossible to
+  check at a glance
 - rewriting whole paragraphs when the author flagged two sentences

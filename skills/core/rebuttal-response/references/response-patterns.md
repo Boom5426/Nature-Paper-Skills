@@ -2,62 +2,76 @@
 
 ## Contents
 
-1. Substantive-comment architecture
-2. Overview paragraph
-3. Action list
-4. Evidence sections
-5. Claim-strength substitutions
-6. Common response types
+1. Reviewer-alignment matrix
+2. Architecture selection
+3. Overview paragraph
+4. Action lists and evidence sections
+5. Revision-location close
+6. Claim-strength substitutions
+7. Common response types
 
-## 1. Substantive-comment architecture
+## 1. Reviewer-alignment matrix
 
-Use this skeleton selectively. Replace bracketed text with verified facts.
+Before drafting, create one private row for every independently answerable request:
+
+| Reviewer term or request | Direct answer | Action/evidence | Result | Revision location |
+| --- | --- | --- | --- | --- |
+| [exact object] | [yes/no/what changed] | [analysis or edit] | [verified finding] | [figure, note, section] |
+
+Treat this as an acceptance test, not text to paste into the letter. Preserve distinctions in the comment. For example, do not merge gene and drug representations, external datasets and cell lines, or component ablation and hyperparameter sensitivity if the reviewer names them separately.
+
+## 2. Architecture selection
+
+### Simple comment
 
 ```text
-Response: We thank the reviewer for this important comment. We [performed/added/clarified] [action] to address [specific concern]. [Central result.] We have therefore revised the manuscript to [revised interpretation or scope]. Specifically, we:
-
-1. [action or clarification];
-2. [analysis and reporting change];
-3. [interpretive boundary]; and
-4. [documents or sections revised].
-
-1. We first clarified [scope or design]. [What the study does and does not evaluate.]
-
-2. We next tested [question]. [Design, controlled factors, result, and direct implication.]
-
-3. We then examined [mechanism, sensitivity, or robustness]. [Evidence and cautious interpretation.]
-
-4. Taken together, [supported conclusion]. [Boundary: what this should not be interpreted as proving.]
-
-Detailed revisions are provided in [locations].
+Response: We thank the reviewer for [raising this point/this helpful suggestion]. We [corrected/clarified/added] [direct answer or change]. The revised text now reads: "[verified text]." This change appears in [exact location].
 ```
 
-Keep list items parallel and order them exactly as the detailed sections.
+### Moderate substantive comment
 
-## 2. Overview paragraph
+```text
+Response: We thank the reviewer for [this important comment/raising this point]. To determine whether [reviewer's concern], we [action]. [Central result.] These results show [direct answer]. We added the analysis to [location] and revised [section] to [specific change].
 
-The overview should answer four questions without forcing the reviewer to read further:
+1. [Reviewer's first question object]
+[Direct answer -> design -> result -> implication.]
+
+2. [Reviewer's second question object]
+[Direct answer -> design -> result -> implication.]
+
+The complete analysis has been added to [figure/note]. We revised the Results to [change], the Methods to [change], and the Discussion to [change].
+```
+
+### Complex multi-part major comment
+
+Use the moderate structure plus `Specifically, we:` only when the reviewer benefits from a short roadmap. Make every list item correspond one-to-one with a detailed section. Delete the list if it merely repeats the overview.
+
+## 3. Overview paragraph
+
+Begin every formal response with one brief sentence thanking the reviewer. Vary the wording naturally across comments, but do not turn the sentence into formulaic praise, a full paraphrase of the comment, or an automatic statement of agreement. The first substantive sentence immediately after it should answer the concern.
+
+The overview should then answer four questions without forcing the reviewer to read further:
 
 | Question | Required content |
 | --- | --- |
 | What did you do? | New experiment, reanalysis, clarification, or textual revision |
 | What did you find? | Central result, including direction and scope |
 | What does it mean? | Direct answer to the reviewer concern |
-| What changed? | Revised claim, method, limitation, or supporting material |
+| What changed? | Revised claim, method, interpretation, or supporting material |
 
-Prefer:
+Prefer a brief-thanks-then-action opening:
 
 ```text
-We added a multi-seed analysis to characterize the magnitude of the observed differences relative to run-to-run variation. The results showed [verified result]. We therefore revised the manuscript to distinguish reproducibility across training runs from practical effect magnitude and to avoid interpreting small numerical differences as universal superiority.
+We thank the reviewer for this important comment. To determine whether [reviewer's named factor] affected [named outcome], we evaluated [design]. Although [specific values or local results] changed, [overall result] remained stable. These results show [direct answer]. We added the complete analysis to [location] and revised [section] to [specific change].
 ```
 
 Avoid:
 
 ```text
-We performed additional experiments and added more discussion. The results support our conclusions.
+We sincerely thank the reviewer for the extremely insightful and valuable comment regarding [full paraphrase of the comment]. We directly addressed this concern and added more discussion.
 ```
 
-## 3. Action list
+## 4. Action lists and evidence sections
 
 Action items should describe completed, auditable changes. Begin with verbs:
 
@@ -73,7 +87,9 @@ Action items should describe completed, auditable changes. Begin with verbs:
 
 Do not use vague entries such as `improved the discussion` unless the item states what interpretation was added or changed.
 
-## 4. Evidence sections
+Keep the hierarchy consistent. If an experiment contains separate gene and drug results, use one top-level action for the experiment and place gene and drug as matched subsections beneath it. Do not mix them as peer items in the action list.
+
+### Evidence sections
 
 Use explicit first sentences:
 
@@ -89,10 +105,22 @@ Within a section, use this order when possible:
 2. design and controls;
 3. result;
 4. interpretation;
-5. limitation or boundary;
-6. document/figure citation.
+5. document or figure citation;
+6. essential boundary only if needed for accuracy.
 
-## 5. Claim-strength substitutions
+Use the reviewer's vocabulary in section titles when accurate. Prefer `Ranking stability of gene representations` over an author-centered label such as `Further analysis 1`.
+
+## 5. Revision-location close
+
+Close the response by specifying both location and function:
+
+```text
+The complete analysis has been added to Supplementary Note [X], "[title]," and Supplementary Fig. [Y]. We revised the Results to report [finding], the Methods to describe [design], and the Discussion to clarify [interpretation].
+```
+
+Do not end with a generic `The manuscript has been revised accordingly.` Do not append an automatic defensive limitation after this close.
+
+## 6. Claim-strength substitutions
 
 | Risky wording | Safer evidence-matched wording |
 | --- | --- |
@@ -110,15 +138,15 @@ Within a section, use this order when possible:
 | feature-space harmonization | harmonization to the shared [exact output/input] space |
 | entered a stable regime | validation performance had stabilized or reached a plateau |
 
-## 6. Common response types
+## 7. Common response types
 
 ### Standardized benchmark versus individual optimization
 
-Define the benchmark target first. Explain that a common protocol estimates practical downstream utility, not intrinsic quality or each method's performance ceiling. Add sensitivity analyses if available. Limit the conclusion to the evaluated architectures and protocols.
+Directly test whether the named downstream choice changes the requested outcome, such as overall rankings. Report absolute-value changes, local rank exchanges, and overall ranking stability separately. Then clarify what the standardized benchmark measures. Do not let a scope explanation replace the requested sensitivity evidence.
 
 ### Frozen versus fine-tuned backbones
 
-Explain why the primary frozen protocol serves the benchmark objective. Describe evaluated adaptation strategies as task-specific fine-tuning approaches. State why a method's released tuning workflow may not transfer to the setting evaluated here. Report the result, then preserve the possibility that more extensive model-specific conditioning could differ.
+Explain why the primary frozen protocol serves the benchmark objective. Describe evaluated adaptation strategies as task-specific fine-tuning approaches. State why released tuning workflows may not transfer to the present perturbation setting. Report the result directly. Mention untested model-specific conditioning only when needed to answer the reviewer accurately.
 
 ### Small numerical improvements
 
@@ -128,7 +156,7 @@ Separate:
 2. absolute effect magnitude;
 3. consistency across datasets.
 
-Explain what the seed count actually quantifies and what it does not. Report precise mean ± s.d. for the primary comparison. Avoid a low-power significance test merely to produce a P value.
+Explain what five seeds do and do not quantify. Report precise mean ± s.d. for the primary comparison. Avoid a low-power significance test merely to produce a P value.
 
 ### Mechanistic interpretation from diagnostics
 
@@ -140,27 +168,7 @@ Analyze each OOD setting separately before synthesizing. State which factors can
 
 ### Data pairing and multimodal complementarity
 
-Describe pairing granularity, aggregation, alignment keys, retained metadata, and unmatched nuisance factors. Distinguish co-measurement of two modalities on the same unit from matching them at a coarser entity level. Prefer `predictive complementarity` or `non-redundant predictive information` unless complementarity in the underlying system is directly demonstrated.
-
-### Missing baseline or comparison
-
-Name what the added comparator tests and under what protocol before reporting any number. State whether the comparator was tuned or ran under the shared protocol with its published configuration unreproduced. A comparison added under a protocol that favors the proposed method answers a different question than the one asked.
-
-### Insufficient ablation
-
-State what each removed component is hypothesized to contribute, then report the observed change against run-to-run variation, not against zero. A drop smaller than the seed spread does not establish a contribution. Say which ablations were run and which were not.
-
-### Scalability or efficiency
-
-Separate wall-clock time, peak memory, and asymptotic complexity; they fail independently. Name hardware, batch size, precision, and data size for every timing number. Do not present a complexity bound as a measurement, or a single measurement as a bound.
-
-### Theoretical concern
-
-State the assumptions of any added proposition and whether the empirical setting satisfies them. A result proved under assumptions the experiments violate is not evidence for those experiments; say so rather than letting the statement stand as implicit support.
-
-### Missing related work
-
-State how the cited work differs in problem setting, supervision, or evaluation, not only that it differs. Verify every added citation against the actual paper. Do not add a reference solely to satisfy the comment, and do not assert a difference the cited work does not have.
+Describe pairing granularity, aggregation, alignment keys, retained metadata, and unmatched nuisance factors. Distinguish co-measurement from compound-level matching. Prefer `predictive complementarity` or `non-redundant predictive information` unless biological complementarity is directly demonstrated.
 
 ### Minor comment
 

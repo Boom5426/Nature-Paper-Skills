@@ -1,6 +1,53 @@
 # Scientific Reporting Standards and Guidelines
 
-This document catalogs major reporting standards and guidelines across scientific disciplines. When reviewing manuscripts, verify that authors have followed the appropriate guidelines for their study type and discipline.
+This catalogs major reporting standards across disciplines. As the referee, verify that authors followed
+the appropriate guideline for their study type. Answering a compliance comment, use it to find the
+specific item at issue, because an item-level answer closes the point and a general claim of compliance
+does not.
+
+`scientific-writing` owns which guideline to follow while drafting. This file is the referee-side and
+reply-side view: which guideline a referee will check against, and what a reply must show to close the
+ask.
+
+## Contents
+
+- [Nature Portfolio requirements](#nature-portfolio-requirements)
+- Clinical trials and medical research: CONSORT, STROBE, PRISMA, SPIRIT, CARE
+- Animal research: ARRIVE
+- Genomics and molecular biology: MIAME, MINSEQE, MIGS/MIMS
+- Structural biology: PDB deposition
+- Proteomics and mass spectrometry: MIAPE
+- Neuroscience: COBIDAS
+- Flow cytometry: MIFlowCyt
+- Ecology and environmental science: MIAPPE
+- Chemistry and chemical biology: MIRIBEL
+- Quality assessment and bias: CAMARADES, SYRCLE
+- [General principles across guidelines](#general-principles-across-guidelines)
+- [Answering a guideline comment](#answering-a-guideline-comment)
+
+## Nature Portfolio requirements
+
+These apply across the portfolio and are the ones most likely to appear in a real referee report or an
+editorial requirement, yet they sit outside the discipline catalogue below.
+
+**Reporting Summary.** Authors of research articles in the life sciences, behavioural and social
+sciences, and ecology, evolution and environmental sciences must complete a reporting summary covering
+elements of experimental and analytical design that are frequently poorly reported. It is available to
+editors and reviewers during assessment and is published with all accepted manuscripts. In the physical
+sciences it applies to solar cells and to claims of lasing.
+
+**Editorial Policy Checklist.** Also visible to reviewers during assessment. A referee may raise a point
+that comes from the checklist rather than from the manuscript text.
+
+**Code availability.** A `Code availability` statement is required as a separate section after the data
+availability statement and before the references. Nature journals peer-review custom code, mathematical
+algorithms, and software when they are central to the manuscript, and some titles expose a separate
+code-assessment section in the referee form.
+
+**Data availability.** See `data-availability` for drafting and auditing the statement itself.
+
+Reference: Nature Portfolio, Reporting standards and availability of data, materials, code and
+protocols, https://www.nature.com/nature-portfolio/editorial-policies/reporting-standards
 
 ## Clinical Trials and Medical Research
 
@@ -288,3 +335,18 @@ When reviewing a manuscript:
 6. Suggest the appropriate guideline if not mentioned
 
 Many journals require authors to complete reporting checklists at submission. Reviewers should verify compliance even if a checklist was submitted.
+
+## Answering a guideline comment
+
+A completed checklist is not an answer to `item 11b is missing`. Run the same six steps backwards:
+
+1. Name the guideline the referee named, in their words, even if you would have cited a different one.
+2. Find the specific item behind the comment. Referees usually describe the item rather than number it,
+   so translate their description into the item and cite the number.
+3. Say where that item now appears: manuscript section and page, Reporting Summary field, or
+   supplementary note. An item-level location closes the point; `we followed CONSORT` does not.
+4. If the item genuinely does not apply, say why in one sentence, and say what you reported instead.
+5. If the study does not fit the guideline the referee cited, name the guideline it does fit and why, in
+   one sentence, without lecturing.
+6. If the ask reaches the Reporting Summary or the Editorial Policy Checklist, remember the referee can
+   already see both. Point at the field rather than describing what you put in it.

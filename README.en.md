@@ -197,7 +197,7 @@ The default assumption is:
 | `paper-analyzer` | Structured deep read of a single paper |
 | `academic-researcher` | Literature review and methodology support |
 | `results-analysis` | Turn experiment outputs into defensible paper-ready findings |
-| `paper-reviewer` | Reviewer-side evaluation of methodology, statistics, reproducibility |
+| `paper-reviewer` | Reviewer-side evaluation of methodology, statistics, reproducibility; splits a received report into atomic asks and grades a reply for one-to-one coverage |
 
 **Optional** `skills/optional/`
 

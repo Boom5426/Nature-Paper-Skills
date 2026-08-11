@@ -1,51 +1,30 @@
 ---
 name: rebuttal-response
-description: >-
-  Author-side reviewer response workflow. Triage each comment by cause, decide whether to concede,
-  clarify, or push back, calibrate every claim to the evidence, and audit the drafted letter before
-  it is sent. Use when reviewer comments exist and a point-by-point response plus aligned manuscript
-  edits are needed, and whenever a reply must stay inside what the data actually support: seeds
-  versus independent samples, a finite sweep versus an optimum, a diagnostic versus a mechanism,
-  absence of difference versus equivalence, dataset-specific versus general superiority, or mean
-  plus or minus s.d. versus a confidence interval. Also covers overview-first response
-  architecture, evidence-ladder wording substitutions, honest handling of negative results, and a
-  submission-ready audit of numbers, figures, panels, notes, terminology, and response to
-  manuscript to Supplementary synchronization.
+description: Analyze, draft, revise, or audit scientific peer-review response letters and point-by-point rebuttals. Use for reviewer comments, response letters, rebuttals, revision summaries, quoted manuscript changes, replies that must align with a manuscript or Supplementary Information, and submission-ready checks of direct question-answer alignment, evidence, figures, tables, notes, panels, terminology, numbers, and internal citations. Especially useful when replies must reuse the reviewer's terms, map every sub-question to an explicit answer, report new analyses or experiments, identify exact revision locations, or distinguish mandatory fixes from optional polishing.
 ---
 
 # Revise Reviewer Responses
 
-Build reviewer replies as an evidence chain, not as defensive prose. Make the reviewer understand, in this order: what was done, what was found, what changed, and what remains outside the evidence.
-
-## Where this sits
-
-This skill owns the whole author-side response job: triage, stance, claim calibration, and the
-final audit. It does not restructure the manuscript itself.
-
-- `manuscript-optimizer` when a reviewer comment exposes an unstable claim hierarchy or evidence
-  chain. Fix the manuscript there first, then write the reply against the revised text.
-- `stats-reporting-audit` when the disputed point is the statistical reporting itself rather than
-  its wording.
-- `claim-source-verification` when a reviewer disputes whether a cited source supports the sentence
-  citing it, and `citation-verifier` when the bibliography artifact is at fault.
-- `scientific-prose-style` for a final sentence-level pass on the finished letter.
-- `paper-compilation` conventions apply to the revised manuscript build; see the build checks in
-  `references/final-audit.md`.
+Build reviewer replies for a busy reader. Begin every formal response with a brief expression of thanks to the reviewer. Then make every answer immediately traceable to the reviewer's exact concern: lead with what was done and found, state what it means, and identify where the manuscript changed. Do not make the reviewer infer the mapping, search across paragraphs, or read defensive prose after the answer is already clear.
 
 ## Start from the authoritative materials
 
 1. Identify the newest response letter, manuscript, Supplementary Information, figures, tables, and result files relevant to the comment.
 2. Treat the user's stated version hierarchy as binding. Do not revive text or conclusions from an older response when the user says the manuscript or SI is authoritative.
 3. Read the complete reviewer comment and the complete current response before editing either.
-4. Build a compact evidence ledger:
-   - reviewer request;
-   - action taken;
-   - result or textual clarification;
-   - document location;
-   - inferential limit.
-5. Never invent a result, statistic, experiment, citation, revision location, or placeholder value. Mark unavailable values explicitly or ask for the missing source.
+4. Split the comment into independently answerable requests. Preserve the reviewer's own nouns and distinctions, including datasets, methods, comparison units, requested analyses, and claimed outcomes.
+5. Build a private alignment matrix with one row per request:
+   - reviewer's exact concern or phrase;
+   - direct answer;
+   - action or evidence;
+   - result;
+   - supported conclusion;
+   - revision location;
+   - essential evidence boundary, if one is genuinely required.
+6. Use the matrix as an acceptance test. Every row must appear explicitly in the response; no paragraph may substitute an adjacent analysis for the requested object.
+7. Never invent a result, statistic, experiment, citation, revision location, or placeholder value. Mark unavailable values explicitly or ask for the missing source.
 
-If the task involves editing the response letter or manuscript on disk, read the file before editing it, keep the marked copy separate from the clean copy, and render the finished file (`paper-compilation` for LaTeX) so the result can be checked visually. Never edit a file you have not read.
+If the task involves direct document editing, also use the relevant document skill and render the finished file for visual verification.
 
 ## Analyze before drafting
 
@@ -61,30 +40,52 @@ Do not assume that adding an experiment is automatically the best response. Pref
 
 Read [triage-and-stance.md](references/triage-and-stance.md) to classify the comment by cause and to decide whether the reply should concede, clarify, or push back. Make that decision before drafting; claim calibration applies to the stance you chose, it does not substitute for choosing one.
 
-## Use the default response architecture
+## Choose the response architecture by complexity
 
-For a substantive comment, preserve this structure:
+Do not impose one template on every comment.
 
-1. **Overview paragraph.** State the measure taken, the central result, and the revised conclusion. It must stand alone for a reviewer who reads only this paragraph.
-2. **Action list.** Introduce with `Specifically, we:` and list the concrete revisions or analyses in the same order as the detailed response.
-3. **Numbered evidence sections.** Give each section a direct topic sentence such as `We first clarified...`, `We next tested...`, or `Taken together...`. Separate scope, design, result, interpretation, and boundary when that helps navigation.
-4. **Revision locations and exact text.** Identify where the changes appear and quote the revised manuscript or SI language when useful.
-5. **Closing boundary.** End with the conclusion the evidence supports and, when needed, what it should not be interpreted as proving.
+- **Simple comment:** direct answer or action, corrected text if useful, and revision location in one compact paragraph.
+- **Moderate substantive comment:** one stand-alone overview followed by two or three sections named after the reviewer's actual sub-questions, then a precise revision-location paragraph.
+- **Complex multi-part major comment:** one stand-alone overview, an optional `Specifically, we:` action list, matching evidence sections in exactly the same order, and a precise revision-location paragraph.
 
-Compress this architecture for a simple minor comment. Do not force a long list or multiple subsections when one direct paragraph fully answers the concern.
+Use an action list only when it materially helps navigation. If used, make it a true table of contents: its item count, order, concepts, and labels must match the detailed sections. Do not place a top-level action beside a lower-level result such as gene and drug analyses if both belong under one experiment.
+
+The overview must stand alone for a reviewer who reads only the first paragraph. Its first sentence must briefly thank the reviewer. Vary the wording naturally according to the comment, for example `We thank the reviewer for this important comment`, `We appreciate the reviewer's helpful suggestion`, or `We thank the reviewer for raising this point`. Do not use the same phrase mechanically throughout the letter, add excessive praise, agree with a premise that is not accepted, or paraphrase the full comment in the thank-you sentence.
+
+Immediately after the thank-you sentence, open the substantive response with the action, result, or direct answer that resolves the concern, not a sentence merely announcing that the concern was addressed. Follow this order whenever the evidence permits:
+
+1. brief thanks;
+2. action or experiment;
+3. central result;
+4. direct answer to the reviewer;
+5. manuscript change.
+
+Name detailed sections with the reviewer's question objects rather than the author's internal reasoning categories. Reuse the reviewer's exact technical terms when accurate. If the reviewer separately asks about two representations, datasets, baselines, settings, or outcomes, answer them separately.
 
 Read [response-patterns.md](references/response-patterns.md) when drafting or substantially restructuring a reply.
 
 ## Make every paragraph reviewer-navigable
 
 - Put the paragraph's conclusion or function in its first sentence.
+- Make the first substantive sentence after the mandatory thank-you convey new information. Delete empty transitional openings such as `We directly addressed the concern that...` or a paraphrase of the comment with no action or answer.
 - Make the logical link explicit; do not require the reviewer to infer why a result answers the comment.
+- Match the experimental or statistical unit the reviewer is questioning. Reusing the reviewer's words is insufficient if the response tests a neighboring but different object.
 - Distinguish an experimental result from the interpretation it motivates.
 - Keep one main claim per paragraph.
 - Use direct, familiar scientific vocabulary. Avoid newly coined labels, abstract phrases, unnecessary `transparent`, and formulaic praise.
-- Do not default to `We agree that...`; acknowledge the concern briefly and move to the action.
+- Always thank the reviewer in the first sentence, but do not default to `We agree that...`; gratitude does not require agreeing with every premise of the comment.
 - Avoid em dashes unless the source style clearly favors them.
 - Retain relevant literature, figure, table, and Supplementary Note citations during rewriting.
+- Introduce each embedded figure or table with a sentence stating what question it answers before inserting it.
+
+## Control repetition and defensive prose
+
+- State the overall answer in the overview, the object-specific result in its corresponding section, and the manuscript changes at the end. Do not repeat the same synthesis in an action list, every subsection, a separate conclusion section, and the closing paragraph.
+- Delete a standalone synthesis section when it only restates the overview and the preceding results.
+- Do not append habitual concessions such as `However, this does not prove...` after a supported conclusion.
+- Include a boundary only when the reviewer explicitly asks for it, omission would make the claim inaccurate, or the design creates a material risk of overinterpretation.
+- Place a necessary boundary beside the exact claim it qualifies. Do not turn it into a defensive closing paragraph.
+- End on the supported answer and concrete revisions, not on speculation about analyses that were not performed.
 
 ## Calibrate claims to evidence
 
@@ -110,7 +111,7 @@ Follow these recurring boundary rules:
 - Equal nominal loss weights do not imply equal gradient pressure.
 - A disruption test shows sensitivity or dependence under that intervention; do not automatically call it effective information exchange.
 
-State both what was controlled and what necessarily changed. If architecture, parameter sharing, feature construction, preprocessing, or effective capacity differs, preserve that limitation in the reply.
+State both what was controlled and what necessarily changed when that distinction is material to the claim. Preserve necessary limitations without automatically foregrounding every conceivable alternative explanation.
 
 ## Keep the response, manuscript, and SI synchronized
 
@@ -125,6 +126,8 @@ For each substantive claim, verify:
 - the response does not generalize beyond the revised manuscript;
 - every embedded figure is introduced in text before it appears and has a meaningful callout;
 - no figure, table, or note is orphaned, and no citation points to a nonexistent or wrong panel.
+- each revision-location statement says what changed there, for example: Results report the finding, Methods describe the analysis, Discussion revises the interpretation;
+- the overview, optional action list, section headings, detailed evidence, and closing revision paragraph preserve the same one-to-one mapping.
 
 Use [final-audit.md](references/final-audit.md) for a whole-letter or submission-ready review.
 
@@ -136,7 +139,7 @@ Lead with the verdict: what is already adequate, what is unsupported, and what m
 
 ### Draft or revise a reply
 
-Give a brief analysis first, followed by complete ready-to-use prose. If only one sentence or paragraph is requested, return only that unit after the short analysis. When the deliverable is purely copy-ready prose, keep the analysis to a few lines and put the prose in a single fenced block so it can be copied without edits.
+Give a brief analysis first, followed by complete ready-to-use prose. If only one sentence or paragraph is requested, return only that unit after the short analysis. Use a writing block when the task is purely copy-ready prose and that capability is available.
 
 ### Audit a response letter
 
@@ -159,7 +162,3 @@ Do not hide or overcorrect an unfavorable analysis. Reframe it precisely:
 - avoid claiming failure proves irrelevance.
 
 The goal is a credible revision record, not a uniformly positive story.
-
----
-
-*Provenance: distilled from a completed major-revision cycle on a computational-biology benchmark manuscript, then generalized. The triage and stance layer in `references/triage-and-stance.md` is this repository's original `rebuttal-response` body.*

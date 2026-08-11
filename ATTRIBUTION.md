@@ -5,7 +5,9 @@ This repository assembles and curates an applied manuscript-skill stack from a w
 ## Directly Adapted Or Renamed From Existing Local Skills
 
 - `results-analysis` was adapted from `inno-experiment-analysis`
-- `paper-reviewer` was adapted from `inno-paper-reviewer`
+- `paper-reviewer` was adapted from `inno-paper-reviewer`. The adapted material is the referee-report
+  half: `references/review_checklist.md`, `references/common_issues.md`, and
+  `references/reporting_standards.md`. The reply-alignment layer is original to this repository; see below.
 - `reference-audit-guide` was adapted from `inno-reference-audit`
 - `conference-paper-writing` was adapted from `ml-paper-writing`
 - `academic-presentations` was adapted from `making-academic-presentations`
@@ -49,13 +51,22 @@ failure that actually occurred rather than to general advice:
   cycle on a computational-biology manuscript. Its clarity rules, the conditions
   under which a new term may be coined, and the sentence-load diagnostics each
   correspond to a revision that was actually required.
-- The claim-calibration layer of `skills/core/rebuttal-response`, namely its
-  `SKILL.md`, `references/response-patterns.md`, and `references/final-audit.md`,
-  distilled from a completed major-revision cycle on a benchmark manuscript. The
-  evidence ladder and the boundary rules on seeds, finite sweeps, capacity
-  controls, and equivalence each correspond to a reviewer objection that was
-  actually raised. The skill's original triage and stance body is preserved in
-  `references/triage-and-stance.md`.
+- The triage and stance layer of `skills/core/rebuttal-response`, namely
+  `references/triage-and-stance.md`, which classifies a reviewer comment by cause
+  and decides whether the reply concedes, clarifies, or pushes back. The rest of
+  that skill is no longer repository-original; see below.
+- The reply-alignment layer of `skills/review/paper-reviewer`, namely
+  `references/comment_splitting.md`, `references/reply_blocks.md`, and
+  `scripts/check_coverage.py`. It was distilled from published Nature Portfolio
+  guidance on responding to referees and from two transparent peer review files,
+  and every rule corresponds to a failure visible in those files: a five-part
+  sub-list answered in one block, a light comment answered at ten times the
+  needed length, a change promised in the letter that never reached the
+  manuscript, and a figure range updated only in part. The sources are Nature's
+  editorial criteria and processes, Nature Chemistry `Revision notes`
+  (doi:10.1038/nchem.909), Nature Methods `The way you say it`
+  (doi:10.1038/nmeth.2686), and Nature Neuroscience `Crafting a revision`
+  (doi:10.1038/nn0811-941).
 
 Both were generalized before inclusion: project-identifying datasets, task names,
 seed counts, and worked examples were replaced with neutral equivalents, while the
@@ -64,6 +75,17 @@ transferable rules were kept intact.
 The two generalized scripts were derived from working project scripts, with
 project-specific paths, section lists, contributor-name scans, and thresholds
 replaced by command-line parameters.
+
+## Replaced By An Upstream Version
+
+- `skills/core/rebuttal-response` carries the body of the `revise-reviewer-response`
+  skill supplied by the repository owner, which is the same lineage as this
+  repository's earlier claim-calibration layer and supersedes it. `SKILL.md`,
+  `references/response-patterns.md`, and `references/final-audit.md` are that
+  upstream text; the only local changes are the `name` field, one straight
+  apostrophe, and the pointer to `references/triage-and-stance.md`. The upstream
+  bundle declares no license, so its terms are unresolved: confirm them before
+  redistributing this skill.
 
 ## Additional Notes
 

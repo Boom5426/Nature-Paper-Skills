@@ -19,7 +19,7 @@ The default manuscript path in this repository is:
 9. data-availability
 10. scientific-prose-style for a final sentence-level prose pass
 11. submission-audit
-12. rebuttal-response
+12. after review: paper-reviewer to inventory the reports, rebuttal-response to draft, paper-reviewer to grade the draft
 ```
 
 ## Review, Survey, And Perspective Path

@@ -8,8 +8,7 @@
 4. Cross-document consistency
 5. Figures, tables, notes, and citations
 6. Editorial and layout integrity
-7. Build and revision-marking integrity
-8. Final reporting
+7. Final reporting
 
 ## 1. Source control
 
@@ -22,14 +21,16 @@
 
 For every reviewer comment, verify that the reply:
 
+- splits the comment into all independently answerable requests;
+- visibly reuses the reviewer's key terms and distinctions where accurate;
 - answers the actual request rather than a nearby issue;
 - states the action taken;
 - reports the central result or clarification;
 - explains how the result changes or supports the manuscript;
 - identifies the revision location;
-- states the inferential boundary when needed.
+- states an inferential boundary only when needed for accuracy.
 
-Check that the opening summary and the detailed response tell the same story.
+Check that the opening summary, optional action list, headings, detailed response, and closing revision paragraph tell the same story in the same order. Flag an action list that does not map one-to-one to the detailed sections.
 
 ## 3. Evidence and claim boundaries
 
@@ -61,7 +62,7 @@ Check every promised revision against the manuscript and SI:
 - Results, Methods, Discussion, Abstract, captions, and SI do not retain an older broader claim;
 - terminology and abbreviations are uniform;
 - dataset names and modality suffixes are exact;
-- sample, unit, and entity counts agree at every level the paper reports;
+- sample/profile/compound/gene counts agree;
 - metric names, values, signs, ranges, units, and precision agree;
 - seed count, split, checkpoint selection, and training budget agree;
 - the response does not contain more methodological detail than the SI can support;
@@ -99,6 +100,10 @@ Search mechanically for:
 - `approximately` where exact values are available;
 - unexplained abbreviations;
 - contradictory statements between summary and detail.
+- empty openings that merely announce the concern was addressed;
+- repeated synthesis sentences across the overview, action list, subsections, standalone conclusion, and close;
+- habitual defensive endings that introduce no necessary correction;
+- generic revision locations that name documents without saying what changed in each.
 
 Render the complete document and inspect every page for:
 
@@ -111,29 +116,7 @@ Render the complete document and inspect every page for:
 - inconsistent highlighting or revision colors;
 - page-break artifacts.
 
-## 7. Build and revision-marking integrity
-
-Run these when the revised manuscript is a compiled document. Merged from the former
-`paper-revision` skill.
-
-- The revised manuscript compiles without new errors, and no new undefined reference or citation
-  warning appeared relative to the previous version.
-- Every citation added during the revision has a matching bibliography entry, and that entry was
-  verified against the actual source rather than generated.
-- The revised manuscript still satisfies the venue page or word limit, including any limit that
-  counts references and figures.
-- Every claimed revision is visibly marked in the marked copy, and a clean copy exists separately.
-- The marking convention matches the venue: Nature-family revisions are conventionally red, many
-  conference and society venues expect blue. Use one convention throughout, since a document with
-  two revision colors reads as two revision rounds.
-- No revision marking survives in the clean copy, and no unmarked revision survives in the marked
-  copy.
-- Figure, table, equation, and section numbers were re-resolved after the edits. A renumbered
-  object invalidates every response sentence that cites its old number.
-
-A passing compile is not evidence that the revision is correct. It only means the document builds.
-
-## 8. Final reporting
+## 7. Final reporting
 
 Lead with one of these verdicts:
 

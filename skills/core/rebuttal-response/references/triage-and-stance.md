@@ -127,12 +127,19 @@ narrow the claim; do not argue the reviewer out of a correct objection.
 ## 9. Editor-efficiency rule
 
 Assume the editor scans for three things: whether you agree, what concrete revision was made, and
-where to find it. State all three in the first two sentences of each reply.
+where to find it. State all three in the two sentences immediately after the thank-you sentence.
+
+Assume the same of the reviewer. Nature Neuroscience puts it as `keeping in mind that referees are
+busy`. A reviewer who reads only the first sentence of each reply must still be able to tell what
+happened to their point.
 
 ## 10. Writing rules
 
-- Quote or paraphrase each reviewer point fairly before responding.
-- State the action taken in the first one or two sentences of the reply.
+- Reproduce each reviewer point verbatim above its reply. Do not paraphrase it. Nature Methods names
+  rephrasing a reviewer's comment as a manipulative tactic, and a paraphrase is also how half an ask
+  silently disappears.
+- State the action taken in the first one or two sentences after the thank-you sentence. The
+  thank-you occupies sentence one; it must never occupy sentence two as well.
 - State explicitly whether you agree, partially agree, or disagree when the action alone does not
   make that obvious.
 - Distinguish what was changed, what was clarified, and what was not changed and why.

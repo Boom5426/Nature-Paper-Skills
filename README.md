@@ -196,7 +196,7 @@ flowchart TD
 | `paper-analyzer` | 单篇论文的结构化深读 |
 | `academic-researcher` | 文献综述与方法学支持 |
 | `results-analysis` | 把实验输出转成可辩护的论文级结论 |
-| `paper-reviewer` | 审稿人视角的方法 / 统计 / 复现性评估 |
+| `paper-reviewer` | 审稿人视角的方法 / 统计 / 复现性评估；把收到的审稿意见拆成逐条 ask，检查回复是否逐个对应 |
 
 **可选技能** `skills/optional/`
 

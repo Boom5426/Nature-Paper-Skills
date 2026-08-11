@@ -36,7 +36,9 @@
 
 ## Review
 
-- `paper-reviewer`: reviewer-side evaluation of methodology, evidence, reproducibility, and reporting
+- `paper-reviewer`: both sides of the referee exchange. Writes referee reports on methodology, evidence,
+  reproducibility, and reporting; splits a received report into every ask and sub-ask in the reviewer's
+  own numbering; and grades a drafted reply for one-to-one coverage and plainness
 
 ## Optional
 

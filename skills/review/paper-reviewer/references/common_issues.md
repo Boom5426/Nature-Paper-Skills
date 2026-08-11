@@ -1,6 +1,38 @@
 # Common Methodological and Statistical Issues in Scientific Manuscripts
 
-This document catalogs frequent issues encountered during peer review, organized by category. Use this as a reference to identify potential problems and provide constructive feedback.
+This catalogs frequent issues encountered during peer review, organized by category. It reads in both
+directions.
+
+- **As the referee:** use it to find what to raise, and to phrase the objection so that it names the
+  evidence that would settle it.
+- **Holding a report you must answer:** use it to identify which of the 22 issues a comment belongs to,
+  because the `What to Recommend` list under each one is the shape of fix the referee expects. Name that
+  fix in your first sentence. Answer the specific issue raised, not the topic it belongs to: a comment
+  about pseudoreplication is not answered by a paragraph about statistics in general.
+
+Issues 1 to 6 and 21 overlap `stats-reporting-audit`, which is authoritative on statistical substance.
+Take the substance from there; the framing here is what makes a comment classifiable.
+
+## Contents
+
+**Statistical issues:** 1 p-value misuse, 2 inappropriate tests, 3 sample size and power, 4 missing
+data, 5 circular analysis and double-dipping, 6 pseudoreplication.
+
+**Experimental design:** 7 lack of appropriate controls, 8 confounding variables, 9 insufficient
+replication.
+
+**Reproducibility:** 10 insufficient methodological detail, 11 data and code availability, 12 lack of
+method validation.
+
+**Interpretation:** 13 overstatement of results, 14 cherry-picking and selective reporting, 15 ignoring
+alternative explanations.
+
+**Figures and data presentation:** 16 inappropriate data visualization, 17 image manipulation concerns.
+
+**Study design:** 18 poorly defined hypotheses and outcomes, 19 baseline imbalance and selection bias,
+20 temporal and batch effects.
+
+**Reporting:** 21 incomplete statistical reporting, 22 methods-results mismatch.
 
 ## Statistical Issues
 
@@ -541,7 +573,7 @@ This document catalogs frequent issues encountered during peer review, organized
 
 ## How to Use This Reference
 
-When reviewing manuscripts:
+When reviewing a manuscript:
 1. Read through methods and results systematically
 2. Check for common issues in each category
 3. Note specific problems with evidence
@@ -549,4 +581,15 @@ When reviewing manuscripts:
 5. Distinguish major issues (affect validity) from minor issues (affect clarity)
 6. Prioritize reproducibility and transparency
 
-This is not an exhaustive list but covers the most frequently encountered issues. Always consider the specific context and discipline when evaluating potential problems.
+When answering a comment you have received:
+1. Find which of the 22 issues the comment belongs to
+2. Read its `How to Identify` list to see what the referee was looking at
+3. Read its `What to Recommend` list; that is what the referee will accept as a resolution
+4. Name that resolution in the first sentence of your reply, using the referee's own words
+5. Set severity from the issue, not from the referee's tone. A validity issue filed as a minor
+   comment still gets the full fix, even though the reply stays short
+6. If the comment matches nothing here, say so plainly in the reply rather than answering the nearest
+   issue that does match. Answering an adjacent question is the most common way a reply fails
+
+This is not an exhaustive list but covers the most frequently encountered issues. Always consider the
+specific context and discipline when evaluating potential problems.
