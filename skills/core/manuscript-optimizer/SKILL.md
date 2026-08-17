@@ -1,334 +1,363 @@
 ---
 name: manuscript-optimizer
-description: Use when reviewing or revising an academic manuscript whose central claim, evidence chain, figures, terminology, and prose may have drifted out of sync before submission or resubmission.
+description: Use when auditing, restructuring, or revising a research manuscript whose scientific question, claim hierarchy, evidence chain, section logic, figures, terminology, or prose may be unclear or out of sync. Apply before sentence-level polishing, especially for whole drafts, major revisions, resubmissions, overclaiming, experiment-by-experiment Results, inaccessible narratives, or manuscripts that need a claim-driven architecture.
 ---
 
 # Manuscript Optimizer
 
-## Overview
+Treat scientific writing as reasoning, not decoration. Do not make existing results sound more
+impressive. Organize the scientific question, evidence, interpretation, and conclusion into a chain
+that a broad scientific reader can follow and evaluate.
 
-Use this skill to treat a manuscript like a precision instrument: fix the top-level design first, then the evidence chain, then the figures, then the terminology, and only then the sentence-level polish.
+Use this priority order without exception:
 
-This workflow is not tied to a single paper or field. Use it across manuscript projects whenever structure, evidence, figures, and prose need to be brought back into alignment.
+> scientific correctness > logic > information structure > clarity > concision > style
 
-Core rule: do not spend effort polishing prose that sits on top of an unstable claim, a broken evidence chain, or inconsistent figures.
+Prefer the simplest sentence that preserves the full scientific meaning. Never polish prose built
+on an unstable claim, a missing evidence link, or a false scientific premise.
 
-## When To Use
+## Scope and handoff
 
-Use this skill when:
-- A paper is being drafted, revised, resubmitted, or journal-adapted
-- The abstract or introduction may be stronger than the downstream evidence
-- The storyline feels diffuse, repetitive, or hard to defend
-- Figures, legends, and main text may have drifted out of sync
-- Core terminology or abbreviations may be unstable
-- The writing needs to become clearer, tighter, and more reader-friendly without losing rigor
+Use this skill above the sentence level. Own the paper's scientific direction, claim architecture,
+evidence boundaries, section and paragraph functions, figure-text logic, and terminology.
 
-Do not use this skill as the primary workflow for:
-- Pure literature review generation
-- Citation-format-only cleanup
-- Methods-only statistical review
-- Journal peer review reports that focus mainly on acceptance recommendations
+- Use `scientific-writing` after the architecture is stable to draft or rewrite full prose.
+- Use `write-scientific-manuscript` to repair paragraph-level clarity and local reasoning.
+- Use `scientific-prose-style` last for punctuation and rhythm.
+- Use `results-section-revision` only when the claims are stable and Results needs local flow repair.
+- Use `review-article-architecture` instead for a Review, survey, or Perspective.
 
-This skill works above the sentence. Once the claim hierarchy and evidence chain are stable, hand
-the sections to `scientific-writing` for prose and then to `scientific-prose-style` for the
-sentence-level pass. For a Review, survey, or Perspective, use `review-article-architecture`
-instead of this skill; a Review's failure mode is drifting from its brief, not overclaiming past
-its data.
+For review-only requests, diagnose and stop. For revision requests, diagnose first and then edit in
+the macro-to-micro order below.
 
-## Operating Principle
+## Hard constraints
 
-Always move in this order:
-1. Direction first
-2. Logic second
-3. Visual evidence third
-4. Terminology fourth
-5. Language last
+Preserve the scientific record. Never:
 
-If a higher-level problem is unresolved, do not present lower-level polish as a solution.
+- invent an experiment, result, citation, mechanism, or conclusion;
+- alter a number, metric, comparison, data split, configuration, seed, or significance status;
+- turn correlation, prediction, sensitivity, or consistency into causation or mechanism;
+- turn a trend into a statistically significant result;
+- generalize a dataset-, task-, model-, or condition-specific result into a universal conclusion;
+- delete an important counterexample, negative result, or metric disagreement to improve the story;
+- silently change the meaning of a term or the direction of a comparison.
 
-## Two Modes
+When the evidence is missing, state the gap. Do not fill it with language. If a design or
+implementation flaw invalidates a result, stop interpreting that result and report the flaw.
 
-### Review Mode
+## Reader model
 
-Use when the task is to diagnose weaknesses before editing.
+Assume a reader who understands the broad life-science or AI domain but does not know this
+benchmark, dataset, metric, model, or local terminology.
 
-Output priorities:
-- Findings first
-- Highest-level issues first
-- Explicitly separate unsupported claims, weak support, and cosmetic issues
-- Cite exact sections, figures, or sentences when possible
+Do not assume that the reader knows:
 
-### Optimization Mode
+- why an analysis is necessary;
+- what a metric measures scientifically;
+- why a comparison is valid;
+- why a model or baseline is included;
+- why a result matters;
+- whether two nearby terms denote the same concept.
 
-Use when the task is to actually rewrite or tighten the manuscript.
+Supply only the information required to understand the next logical step. Minimize reader inference
+without turning the manuscript into an experimental log or a tutorial.
 
-Execution order:
-- Fix macro positioning and claim boundaries
-- Repair section logic and evidence chain
-- Sync figures, legends, and text
-- Canonicalize terminology
-- Polish prose, grammar, and format
-
-## The Five-Level Audit
-
-### 1. Top-Level Design And Core Contribution
+## Mandatory workflow
 
-Check the manuscript's top story before touching paragraph style.
-
-Audit:
-- What is the central problem?
-- Why does it matter now?
-- What is the single-sentence take-home message?
-- Is the main contribution a method, framework, benchmark, resource, biological finding, or something else?
-- Is the claim ambitious enough to matter but narrow enough to defend?
-- After reading the abstract and introduction, can a broad scientific reader understand why this work is not interchangeable with prior work?
+### 1. Establish the source of truth
 
-Guardrails:
-- Do not let the paper sound like it contributes three equally important things unless that structure is deliberate and defensible
-- Do not let examples, intuitions, or motivating cases masquerade as experimental evidence
-- If the real contribution is a reformulation or evaluation framework, do not accidentally rewrite it as "a new model"
-
-### 2. Logic Architecture And Evidence Chain
+Before rewriting, identify the authoritative manuscript, figures, legends, tables, result summary,
+and project decisions. Preserve citations, figure references, numbers, symbols, and formatting.
 
-This is the main structural check.
-
-Build a claim-to-evidence map:
-- Extract every substantive claim from the abstract
-- Extract every substantive claim from the introduction and discussion
-- For each claim, point to the exact supporting result, figure, table, or supplementary item
-- Mark each claim as:
-  - fully supported
-  - partially supported
-  - not supported by current evidence
-
-Then run a reverse outline on the current section structure:
-- Write the section thesis in one sentence.
-- Write one line for each paragraph:
-  - paragraph job
-  - key evidence or reasoning inside it
-  - the transition relation to the previous paragraph
-- Merge, move, or remove any paragraph that cannot be mapped cleanly to the section thesis.
-
-When a claim is not fully supported, only three acceptable actions exist:
-- weaken the claim
-- add the missing evidence
-- reframe the claim as intuition, hypothesis, or motivation
-
-Questions to ask:
-- Does each Results subsection answer a clear question?
-- Does each module in the method or framework have a corresponding validation experiment?
-- If the manuscript claims OOD generalization, cross-domain transfer, causal disentanglement, or clinical relevance, is there direct evidence for that exact statement?
-- Are surprising or paradoxical findings explained, not merely reported?
-
-Never leave the abstract or introduction stronger than the Results.
-
-### Adversarial Self-Review
-
-Before calling the structure stable, pressure-test the manuscript like a skeptical reviewer in five dimensions:
-- contribution sufficiency
-- writing clarity and reproducibility
-- empirical strength
-- evaluation completeness
-- method or framework soundness
-
-Do not answer these with intuition alone. Point to concrete sections, figures, tables, or supplementary items.
-
-### 3. Data Visualization And Figure Expression
-
-Treat figures as independent carriers of the paper's logic.
-
-Audit each figure on its own:
-- Can the figure tell its own story without the main text?
-- Do panel labels, legends, and body text say the same thing?
-- Are metrics, baselines, datasets, and abbreviations defined consistently?
-- If a panel was removed or reordered, were the text and legend updated in the same pass?
-- Are the key comparisons visually obvious, not buried in clutter?
-- Does the figure support the exact claim made about it in the Results?
-
-For high-impact-journal style manuscripts:
-- Prefer figures that communicate one main message each
-- Reduce decorative complexity
-- Make figure titles and legends carry real interpretive value
-- Do not let legends overclaim relative to the plotted data
-
-### Results Compression And Figure-Legend Balance
-
-When a Results section feels overloaded, compress it by claim rather than by panel count.
-
-Rules:
-- Prefer one main claim per figure.
-- If a figure needs internal subdivision, keep it to at most two Results subsections unless there is a strong reason otherwise.
-- Keep only `1-2` hard numbers in the main-text paragraph that directly support the local claim.
-- Move panel-level values, method-by-method comparisons, and denser quantitative detail into figure legends or supplementary display items.
-- Treat figure legends as the second layer of result narration: they should define panel roles, preserve key quantitative anchors, and stay synchronized with the compressed main text.
-
-Before rewriting figure-linked prose, identify each panel's real role:
-- claim-supporting evidence
-- methodological bridge or definition
-- validation under a new regime
-- translational or practical consequence
-- case illustration
-
-Do not flatten a methodological bridge panel into generic motivation. If a panel explains where a metric or evaluation space comes from, say so explicitly in the main text.
-
-When multiple metrics are shown:
-- keep the strongest metric as the primary evidence in the Results paragraph
-- demote weaker or more auxiliary metrics to complementary readouts
-- do not oversell a metric that is mainly included for completeness or secondary utility
-
-### 4. Terminology And Domain Language
-
-Scientific credibility depends on stable naming.
-
-Create a canonical term list early:
-- core concepts
-- formal decomposition terms
-- benchmark names
-- task settings
-- baseline names
-- abbreviations
-
-Then enforce it everywhere:
-- abstract
-- introduction
-- results
-- discussion
-- figure labels
-- legends
-- supplementary text
-
-Audit:
-- Are old and new names mixed?
-- Are informal descriptions replacing formal terms in key places?
-- Are multiple near-synonyms being used for one concept?
-- Are any terms likely to create domain confusion because they already mean something else in the field?
-
-If a term is formal, keep it stable.
-If a looser explanatory phrase is needed, make sure it does not compete with the formal term.
-
-### 5. Micro-Level Polish
-
-Only do this after the first four levels are stable.
+Separate the input into three classes:
 
-Targets:
-- grammar
-- singular/plural consistency
-- tense consistency
-- punctuation
-- article usage
-- redundant phrases
-- repeated transitions
-- overlong sentences
-- vague intensifiers
-- empty summary lines
+- **Confirmed:** directly supported by provided results or authoritative project records.
+- **Assumed:** plausible but not verified from the supplied material.
+- **Unresolved:** missing, contradictory, or scientifically ambiguous.
 
-Preferred prose style:
-- professional but readable
-- specific rather than ornamental
-- short-to-medium sentences by default
-- one paragraph, one job
-- observations and interpretations clearly separated
+Do not present an assumption as a confirmed fact. Ask for missing information only when it would
+materially change the scientific conclusion or revision direction; otherwise flag it and continue.
 
-Avoid:
-- bloated topic sentences
-- unnecessary jargon
-- unstable voice
-- repeated transition formulas
-- em dashes unless explicitly wanted
-- generic AI-sounding escalation words
-
-## Default Workflow
-
-When asked to improve a manuscript, follow this sequence:
-
-1. Identify venue, article type, and the paper's intended central contribution.
-2. Read abstract, introduction, results headings, and figure legends first.
-3. Write a short claim-to-evidence map.
-4. Reverse-outline the current section or subsection structure before rewriting.
-5. Flag any mismatch between front-half claims and downstream support.
-6. Check whether figures and legends independently support the stated claim.
-7. Run a compact skeptical-review pass across contribution, clarity, empirical support, evaluation completeness, and design soundness.
-8. Lock canonical terminology.
-9. Only after the above, rewrite for clarity and concision.
-
-If the user asks for review only, stop after diagnosis.
-If the user asks for revision, edit in the same macro-to-micro order.
-
-## Common Failure Modes
-
-### Front Half Stronger Than Back Half
-
-Symptom:
-- Abstract or introduction promises more than the Results show
-
-Fix:
-- downgrade the claim or add evidence
-- do not hide the gap with stronger prose
-
-### Framework Turns Into Model
-
-Symptom:
-- A benchmark, reformulation framework, or evaluation protocol gets described as if it were the predictive architecture itself
-
-Fix:
-- restate the contribution type explicitly
-- distinguish the framework from the instantiated pipeline or baseline comparisons
-
-### Metric Drop Framed As Mechanism
-
-Symptom:
-- A harsher metric is described as causal proof of a deeper mechanism
-
-Fix:
-- separate what the metric directly shows from the interpretation it suggests
-- use "suggests", "is consistent with", or "implicates" when direct mechanism evidence is absent
-
-### Figure Drift
-
-Symptom:
-- Panel letters, metrics, datasets, baselines, or numbers changed in the figure but not in the text
-
-Fix:
-- re-read the actual figure
-- update text, legend, and claims together
-
-### Terminology Drift
-
-Symptom:
-- Several labels compete for the same concept
-
-Fix:
-- choose one canonical term
-- allow looser explanatory phrases only when they do not function as competing formal labels
-
-### Premature Sentence Polishing
-
-Symptom:
-- The prose becomes smoother but the argument remains unstable
-
-Fix:
-- return to macro and structural levels first
-
-## Output Standard
-
-When reporting findings, prefer this order:
-- macro contribution problem
-- evidence-chain problem
-- figure or legend inconsistency
-- terminology inconsistency
-- prose and formatting issues
-
-When no major structural problems exist, say that explicitly and then move to lower-level optimization.
-
-## Minimal Review Template
-
-Use this compact structure when reviewing a manuscript:
-
-- Central claim:
-- Claim | Evidence | Status:
-- Strongest supporting result:
-- Weakest or unsupported claim:
-- Reverse-outline break point:
-- Figure-text mismatch:
-- Terminology drift:
-- Recommended next revision step:
+### 2. Define the North Star
+
+Write one sentence for each item:
+
+1. the broad problem;
+2. the central scientific question;
+3. the main claim supported by the study;
+4. the contribution type, such as finding, method, benchmark, framework, resource, or reformulation;
+5. the boundary conditions.
+
+Look beneath model comparison when appropriate. Ask whether measurement, identifiability, data
+resolution, task formulation, or evaluation design is the actual limiting issue.
+
+If the main claim cannot be stated accurately in one sentence, do not begin prose revision.
+
+### 3. Build the Claim Architecture
+
+Create this artifact before restructuring a whole manuscript:
+
+```text
+North Star
+└── Central scientific question
+    └── Main claim
+        ├── Claim 1
+        │   └── Evidence: result / figure / table / analysis
+        ├── Claim 2
+        │   └── Evidence: result / figure / table / analysis
+        ├── Claim 3
+        │   └── Evidence: result / figure / table / analysis
+        └── Boundary conditions and unresolved points
+```
+
+Use the architecture across the paper:
+
+- Introduction raises the question.
+- Results establishes the claims.
+- Discussion interprets and connects the claims.
+- Abstract compresses the chain.
+- Title expresses the highest supported claim or question.
+
+Do not force three claims when the paper supports two, and do not present several contributions as
+equally central unless the evidence and design require that structure.
+
+### 4. Map claims to evidence and calibrate their level
+
+Extract substantive claims from the title, abstract, introduction, Results headings, figure
+legends, and discussion. For each claim, record its exact support and mark it:
+
+- fully supported;
+- partially supported;
+- unsupported by current evidence;
+- hypothesis or interpretation rather than direct finding.
+
+Use the claim ladder:
+
+```text
+observation → empirical pattern → interpretation → mechanism → general principle
+```
+
+Write only at the highest level directly licensed by the evidence. Distinguish, for example,
+`performed best under the evaluated settings` from `is the best representation`.
+
+For a claim that exceeds its evidence, take one of three actions:
+
+1. narrow the claim;
+2. add or request the missing evidence;
+3. label it as a hypothesis, possible explanation, or motivation.
+
+Calibrate the claim itself instead of making an inflated statement and retracting it through a
+defensive caveat. Use `This pattern is consistent with...` or `One possible explanation is...`
+when a mechanistic interpretation lacks a direct mechanism experiment.
+
+### 5. Reverse-outline before rewriting
+
+For each section, state its one-sentence function. For each paragraph, record:
+
+- its one main message;
+- the evidence or reasoning it contains;
+- its relationship to the previous paragraph;
+- its contribution to the section claim.
+
+Move, merge, split, or remove material that cannot be mapped cleanly. Organize Results by questions
+and answers, not by the chronological order of experiments or panels.
+
+Choose the edit depth only after this audit:
+
+- **Micro-edit:** logic and order are sound; wording is the bottleneck.
+- **Local rewrite:** the paragraph claim is valid, but order, reasoning, or emphasis is weak.
+- **Structural rewrite:** the section question, claim hierarchy, or evidence sequence is wrong.
+- **Scientific blocker:** the evidence is missing, contradictory, or invalid; do not rewrite past it.
+
+Do not default to preserving the original sentence or paragraph structure.
+
+### 6. Align figures, text, and terminology
+
+Assign every figure and panel one primary role: claim-supporting evidence, definition or
+methodological bridge, validation in a new setting, practical consequence, or case illustration.
+
+Check that:
+
+- each main figure carries one primary claim unless the paper's logic requires a composite figure;
+- every major claim points to the correct figure, table, or supplementary item;
+- the Results states the question and main inference rather than merely saying a figure is similar;
+- the figure carries evidence density while the text carries the inference;
+- panel labels, metrics, baselines, datasets, abbreviations, and numbers agree across all locations;
+- negative results and metric disagreements remain visible;
+- legends define the evidence without making a stronger claim than the plot supports.
+
+Create a canonical term list for core concepts, tasks, settings, datasets, models, baselines, and
+abbreviations. Use one primary term per concept. Change terms only when the scientific level truly
+changes; do not rotate synonyms merely to avoid repetition.
+
+### 7. Rewrite from macro to micro
+
+After the architecture is stable, revise in this order:
+
+1. section purpose and order;
+2. subsection question and claim;
+3. paragraph function and evidence sequence;
+4. explicit reasoning and transitions;
+5. claim verbs and scope qualifiers;
+6. terminology;
+7. sentence clarity and concision;
+8. punctuation and rhythm.
+
+Run a final skeptical review across contribution sufficiency, scientific clarity, empirical
+strength, evaluation completeness, and method or framework soundness. Point to evidence rather than
+answering from intuition.
+
+## Section contracts
+
+### Title
+
+Express the central scientific finding or question at the highest supported level. Prefer:
+
+> concept or finding > framework name > implementation
+
+Use a benchmark or method name as the title focus only when that artifact is itself the main
+contribution. Avoid unexplained acronyms, inflated umbrella terms, and unsupported breadth.
+
+### Abstract
+
+Build one complete chain:
+
+> problem → unresolved gap → approach → two or three main findings → conceptual implication
+
+Do not compress Results mechanically. Omit dataset lists, every baseline, every metric, pipeline
+details, and secondary analyses unless one is essential to the main claim. Ensure that a broad
+reader can state the paper's main finding after one read.
+
+### Introduction
+
+Use this default progression:
+
+1. the field-level problem;
+2. the missing capability or unresolved question;
+3. why the problem remains difficult or conceptually unresolved;
+4. what this study does and what it makes possible to learn.
+
+Move from `field → gap → precise question → solution`. Use literature to establish the gap, not to
+display coverage. Avoid method-by-method catalogues. Define the real scientific problem before
+introducing the proposed model, benchmark, or framework.
+
+### Results
+
+Treat Results as an argument. Organize each subsection as:
+
+> question → why the analysis is needed → design → core observation → interpretation
+
+Lead paragraphs with the scientific message when the evidence already supports it, not with a
+generic action such as `We next investigated...`. Make the link from analysis to conclusion
+explicit; do not make the reader derive the decisive inference from a list of observations.
+
+For every reported metric, state its scientific or evaluative meaning when needed for the next
+inference. When metrics disagree, explain what each metric captures and treat the disagreement as a
+result. For example, distinguish pattern agreement, magnitude error, and direction accuracy rather
+than treating one higher correlation as globally better performance.
+
+Report only the one or two quantitative anchors needed to support the local claim, not every plotted
+number. Keep denser panel-level values in the figure or legend. Do not package all findings as
+positive. Context dependence, no universal winner, negative results, and metric disagreement may be
+the central result.
+
+### Discussion
+
+Answer these questions instead of replaying the Results:
+
+1. What do the findings jointly establish?
+2. What could explain the pattern?
+3. How does it change the understanding of the problem?
+4. Which implications extend beyond this dataset or analysis, and why?
+5. Where are the boundaries?
+
+Use `main answer → scientific interpretation → broader implication → limitations → future
+implication`. Clearly label mechanism evidence versus mechanistic hypothesis. State limitations
+once, where they constrain the claim, rather than appending defensive caveats to every result.
+
+### Figures and legends
+
+Make the main text state the question, important pattern, and inference. Make the figure carry dense
+evidence and the legend define panels, groups, units, statistics, sample sizes, and visual encodings.
+Never write only `Supplementary Fig. X shows similar results`; state what question it answers and
+what pattern matters.
+
+## Paragraph and sentence rules
+
+Use the paragraph as the basic logical unit. Give it one main job and, when appropriate, this form:
+
+> topic sentence → evidence → interpretation → transition or implication
+
+Make the first sentence explain why the paragraph exists. Prefer the scientific message to the
+experimental action. Do not force every paragraph into the template when another order is clearer.
+
+State important inference explicitly. If observations A, B, and C support a modality-dependent
+effect, write that conclusion instead of asking the reader to assemble it.
+
+Use common, precise words and concrete scientific nouns. Prefer verbs to nominalizations. Avoid
+noun stacks such as `representation architecture robustness evaluation analysis`. Keep one main
+logical relationship per sentence. Split a sentence that simultaneously introduces background,
+describes a method, reports numbers, interprets the result, and qualifies the claim.
+
+Do not replace readable prose with a sequence of fragments. Align syntactic units with logical
+units, and retain technical distinctions that change the scientific meaning.
+
+## Prohibited patterns
+
+Reject or rewrite these patterns unless the evidence and context specifically justify them:
+
+- experiment logs: `We evaluated... We found... We also found... In addition...`;
+- disconnected proof: `We did A and B. We observed C and D. Therefore, X` without the missing link;
+- procedural paragraph openers that hide the message: `To further investigate...`;
+- ornamental or vague abstractions such as `stable performance regimes`, `intrinsic quality`, or
+  `comprehensive superiority` when ordinary words are more exact;
+- empty intensifiers such as `remarkably`, `notably`, `encouragingly`, and `promisingly`;
+- repeated defensive caveats after already bounded claims;
+- synonym rotation for one scientific concept;
+- causal or mechanistic verbs for observational evidence;
+- universal labels such as `optimal`, `general`, `robust`, `fundamental`, `transparent`, or
+  `state-of-the-art` without evidence covering that scope;
+- subsection titles that name only the procedure when the supported finding can orient the reader;
+- figure references with no stated question, pattern, or inference.
+
+Do not ban a word mechanically. Reject it when it obscures meaning, inflates the claim, or adds no
+scientific information.
+
+## Six-question gate
+
+Before accepting any revised paragraph, answer:
+
+1. Why is this paragraph here?
+2. What is its one message?
+3. What evidence supports that message?
+4. Does the claim exceed the evidence?
+5. Can a broad scientific reader follow the reasoning without supplying a key inference?
+6. Can anything be removed without losing scientific meaning?
+
+If question 1, 2, or 3 has no clear answer, restructure the paragraph. If question 4 is yes, narrow
+the claim or obtain evidence. If question 5 is no, add the missing bridge. If question 6 is yes,
+delete the excess.
+
+## Output standard
+
+For a manuscript audit, report in this order:
+
+1. **Verdict:** whether the scientific narrative is stable enough to rewrite.
+2. **Confirmed / assumed / unresolved:** the truth boundary used for the audit.
+3. **Claim Architecture:** North Star, central question, main claim, supporting claims, evidence,
+   and boundaries.
+4. **Major findings:** unsupported claims, missing reasoning, structural breaks, figure-text
+   mismatch, metric misinterpretation, and terminology drift, in severity order.
+5. **Edit depth:** micro-edit, local rewrite, structural rewrite, or scientific blocker.
+6. **Next action:** the smallest safe revision step.
+
+For an authorized revision, add:
+
+- complete ready-to-use revised prose or file edits;
+- a concise account of material scientific choices;
+- unresolved evidence gaps that language cannot repair;
+- verification performed.
+
+Do not claim that a manuscript or section is improved merely because the prose is smoother. Claim
+completion only after the evidence chain, information structure, terminology, and revised text have
+been checked together.
