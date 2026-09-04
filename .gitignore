@@ -6,3 +6,8 @@ __pycache__/
 *.swp
 reference/
 refer/
+
+# Output written by running the reference/tutorial code fences. The fences save to a
+# relative ./figures/ path, so executing one from the repo root drops artefacts here.
+figures/
+.figure-scratch/

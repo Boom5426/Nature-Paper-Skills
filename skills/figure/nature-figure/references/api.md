@@ -108,13 +108,17 @@ should feel visually unified.
 
 ## MANDATORY font + SVG rules (always first, no exceptions)
 
-These three lines are **non-negotiable** and must appear at the top of every script,
-before any figure is created. They guarantee editable text in SVG output:
+These lines are **non-negotiable** and must appear at the top of every script,
+before any figure is created. They guarantee editable text in both SVG and PDF
+output. Type-3 fonts, matplotlib's PDF default, are flagged or rejected by
+several publishers' preflight, which is what `pdf.fonttype = 42` avoids:
 
 ```python
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
 plt.rcParams['svg.fonttype'] = 'none'   # keeps text as <text> nodes, not paths
+plt.rcParams['pdf.fonttype'] = 42       # TrueType, not Type-3, in PDF
+plt.rcParams['ps.fonttype'] = 42
 ```
 
 **Why `svg.fonttype = 'none'`**: matplotlib's default (`'path'`) converts every
@@ -122,20 +126,24 @@ glyph to a bezier path, making text unselectable, unsearchable, and impossible t
 re-align in Illustrator / Inkscape. With `'none'`, text stays as SVG `<text>` elements
 and font substitution happens at render time.
 
-**Output format**: always save as `.svg` (primary). PNG/PDF are optional secondary
-exports. Never use `.png` alone when the figure contains text that may need adjustment.
+**Output format**: always save as `.svg` (primary), with `.pdf` alongside it for
+submission. Never deliver `.png` alone when the figure contains text that may need
+adjustment. PNG remains the right format for the review raster that the
+`figure-style` QA loop inspects; that is a working copy, not a delivery format.
 
 ---
 
 ## apply_publication_style()
 
 ```python
-def apply_publication_style(font_size=16, axes_linewidth=2.5, use_tex=False):
+def apply_publication_style(font_size=7, axes_linewidth=0.8, use_tex=False):
     """Apply Nature-style rcParams. Call once before creating any figures."""
     # ── MANDATORY: editable SVG text ──────────────────────────────────────────
     plt.rcParams['font.family'] = 'sans-serif'
     plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
     plt.rcParams['svg.fonttype'] = 'none'
+    plt.rcParams['pdf.fonttype'] = 42
+    plt.rcParams['ps.fonttype'] = 42
     # ── Layout & style ────────────────────────────────────────────────────────
     plt.rcParams['font.size'] = font_size
     plt.rcParams['axes.spines.right'] = False
@@ -146,22 +154,52 @@ def apply_publication_style(font_size=16, axes_linewidth=2.5, use_tex=False):
         plt.rcParams['text.usetex'] = True
 ```
 
-**Presets:**
-- Large bar panels: `apply_publication_style(font_size=24, axes_linewidth=3)`
-- Compact figures: `apply_publication_style(font_size=15, axes_linewidth=2)`
-- Dense journal-width multi-panels: `apply_publication_style(font_size=8, axes_linewidth=1)`
+**Presets (print scale, the default regime).** The canvas is the printed panel, so
+every number is the size the reader sees:
+
+- Single or double column: `apply_publication_style()` gives 7 pt text, 0.8 pt rules
+- Dense journal-width multi-panels: `apply_publication_style(font_size=6, axes_linewidth=0.6)`
 - LaTeX labels: `apply_publication_style(use_tex=True)`
+
+**Presets (design scale).** Use only when deliberately authoring on an `S`-times
+oversized canvas and downscaling a raster into the column. Divide by `S` to check
+the value that actually prints:
+
+- `S` about 2, compact: `apply_publication_style(font_size=15, axes_linewidth=2)` prints at 7.5 pt / 1.0 pt
+- `S` about 4, large bar panels: `apply_publication_style(font_size=24, axes_linewidth=3)` prints at 6.1 pt / 0.76 pt
+
+Every other absolute size in this file is print scale. Do not mix the two regimes
+in one script, and do not use design scale for line art: a downscaled PNG of a bar
+chart is a raster of something that should have stayed a vector.
 
 ---
 
-## is_dark(hex_color, threshold=128)
+## ink_on(rgb) — in-mark label colour
 
 ```python
-def is_dark(hex_color, threshold=128):
-    """Return True if hex color is dark (use white text on it)."""
+def relative_luminance(rgb):
+    """WCAG relative luminance from an (r, g, b) triple in 0-1."""
+    def lin(c):
+        return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = (lin(c) for c in rgb[:3])
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def ink_on(rgb, threshold=0.179):
+    """Return 'white' or 'black', whichever has more contrast against `rgb`.
+
+    0.179 is the luminance where white and black tie at about 4.58:1, so the
+    worse of the two choices still clears the WCAG AA 4.5:1 floor. The older
+    BT.601 rule (0.299r + 0.587g + 0.114b < 128 on 0-255) picks the wrong ink
+    on mid-tone fills and bottoms out near 3.5:1, which is not enough for a
+    5-7 pt label sitting inside a mark.
+    """
+    return 'white' if relative_luminance(rgb) < threshold else 'black'
+
+
+def hex_to_rgb(hex_color):
     c = hex_color.lstrip('#')
-    r, g, b = int(c[0:2], 16), int(c[2:4], 16), int(c[4:6], 16)
-    return (0.299*r + 0.587*g + 0.114*b) < threshold
+    return tuple(int(c[i:i + 2], 16) / 255 for i in (0, 2, 4))
 ```
 
 ---
@@ -169,7 +207,7 @@ def is_dark(hex_color, threshold=128):
 ## add_panel_label(ax, label, ...)
 
 ```python
-def add_panel_label(ax, label, x=-0.06, y=1.02, fontsize=14,
+def add_panel_label(ax, label, x=-0.06, y=1.02, fontsize=8,
                     color='black', fontweight='bold'):
     """Place a Nature-style panel label near the top-left edge."""
     ax.text(
@@ -234,7 +272,7 @@ def make_grouped_bar(ax, categories, series, labels,
     if colors is None:
         colors = DEFAULT_COLORS
     if error_kw is None:
-        error_kw = {'elinewidth': 2, 'capthick': 2, 'capsize': 10}
+        error_kw = {'elinewidth': 0.8, 'capthick': 0.8, 'capsize': 2}
     n_groups = len(series)
     n_cats = len(categories)
     w = bar_width / n_groups
@@ -243,14 +281,14 @@ def make_grouped_bar(ax, categories, series, labels,
     for i, (vals, label, color) in enumerate(zip(series, labels, colors)):
         offset = (i - (n_groups - 1) / 2) * w
         bars = ax.bar(x + offset, vals, width=w, label=label,
-                      color=color, edgecolor='black', linewidth=1.5,
+                      color=color, edgecolor='black', linewidth=0.5,
                       error_kw=error_kw)
         containers.append(bars)
         if annotate:
             for bar, val in zip(bars, vals):
                 ax.text(bar.get_x() + bar.get_width() / 2,
                         bar.get_height() + 0.01,
-                        f'{val:.2f}', ha='center', va='bottom', fontsize=10)
+                        f'{val:.2f}', ha='center', va='bottom', fontsize=6)
     ax.set_xticks(x)
     ax.set_xticklabels(categories)
     ax.set_ylabel(ylabel)
@@ -266,7 +304,7 @@ def make_grouped_bar(ax, categories, series, labels,
 def make_trend(ax, x, y_series, labels,
                colors=None, ylabel=None, xlabel=None,
                show_shadow=False, shadow_alpha=0.15,
-               lw=2.5, marker='o', markersize=8):
+               lw=1.0, marker='o', markersize=3):
     """
     Multi-line trend plot.
 
@@ -305,7 +343,7 @@ def make_trend(ax, x, y_series, labels,
 ```python
 def make_forest_plot(ax, labels, estimates, ci_low, ci_high,
                      colors=None, ref=0.0, xlabel=None, xlim=None,
-                     marker='o', markersize=5, lw=1.5):
+                     marker='o', markersize=2.5, lw=0.8):
     """
     Minimal forest plot helper for Nature-style clinical/statistical panels.
     """
@@ -316,7 +354,7 @@ def make_forest_plot(ax, labels, estimates, ci_low, ci_high,
     for yi, est, lo, hi, color in zip(y, estimates, ci_low, ci_high, colors):
         ax.plot([lo, hi], [yi, yi], color=color, lw=lw)
         ax.plot(est, yi, marker=marker, ms=markersize, color=color)
-    ax.axvline(ref, color='#767676', linestyle='--', linewidth=1.2, alpha=0.8)
+    ax.axvline(ref, color='#767676', linestyle='--', linewidth=0.6, alpha=0.8)
     ax.set_yticks(y)
     ax.set_yticklabels(labels)
     if xlabel:
@@ -337,13 +375,29 @@ clinical-triptych look from `Nature`.
 ```python
 def make_heatmap(ax, matrix, x_labels=None, y_labels=None,
                  cmap='magma', cbar_label=None, annotate=False,
-                 fmt='{:.2f}', fontsize=12):
-    """
-    2D heatmap with optional colorbar and cell annotations.
+                 fmt='{:.2f}', fontsize=6, norm=None):
+    """2D heatmap with optional colorbar and cell annotations.
+
+    `norm` is a caller-supplied Normalize. Pass one whenever the colour has to
+    mean something fixed: anchor it at zero (`Normalize(0, col_max)`, or
+    `Normalize(col_min, 0)` with a reversed ramp for a lower-is-better column)
+    so saturation always reads as the same direction. The default,
+    `Normalize(matrix.min(), matrix.max())`, stretches whatever range it is
+    handed, so the palest cell means "smallest here" and nothing more.
+
+    Columns that do not share a scale must not share one colorbar: leave
+    `cbar_label` unset and annotate every cell instead.
+
+    `imshow` embeds a raster image inside the exported PDF (`/Subtype /Image`).
+    For a fully vector cell field, draw `Rectangle` patches instead; the worked
+    version is Tutorial 4 in `tutorials.md`.
     """
     import numpy as np
     import matplotlib as mpl
-    im = ax.imshow(matrix, cmap=cmap, aspect='auto')
+    import matplotlib.pyplot as plt
+    if norm is None:
+        norm = mpl.colors.Normalize(vmin=matrix.min(), vmax=matrix.max())
+    im = ax.imshow(matrix, cmap=cmap, norm=norm, aspect='auto')
     if cbar_label:
         cbar = ax.figure.colorbar(im, ax=ax)
         cbar.set_label(cbar_label)
@@ -354,14 +408,13 @@ def make_heatmap(ax, matrix, x_labels=None, y_labels=None,
         ax.set_yticks(range(len(y_labels)))
         ax.set_yticklabels(y_labels)
     if annotate:
-        norm = mpl.colors.Normalize(vmin=matrix.min(), vmax=matrix.max())
         cm_obj = plt.get_cmap(cmap)
         for (i, j), val in np.ndenumerate(matrix):
-            r, g, b, _ = cm_obj(norm(val))
-            lum = 0.299*r + 0.587*g + 0.114*b
-            color = 'white' if lum < 0.5 else 'black'
+            # One RGBA lookup per cell, reused for the fill and for the ink, so
+            # the label can never be coloured against a different value.
+            rgba = cm_obj(norm(val))
             ax.text(j, i, fmt.format(val), ha='center', va='center',
-                    fontsize=fontsize, color=color)
+                    fontsize=fontsize, color=ink_on(rgba))
     ax.set_frame_on(False)
 ```
 
@@ -370,8 +423,8 @@ def make_heatmap(ax, matrix, x_labels=None, y_labels=None,
 ## finalize_figure(fig, out_path, ...)
 
 ```python
-def finalize_figure(fig, out_path, formats=None, dpi=300,
-                    pad=2, bbox_inches=None, close=True):
+def finalize_figure(fig, out_path, formats=None, dpi=600,
+                    pad=0.4, bbox_inches=None, close=True):
     """
     Apply tight_layout and save figure.
 
@@ -379,11 +432,15 @@ def finalize_figure(fig, out_path, formats=None, dpi=300,
     ----------
     out_path : str   — path without extension, or with extension
     formats  : list  — e.g. ['png', 'pdf']. If None, uses extension of out_path.
-    dpi      : int   — 300 standard, 600 for dense bar panels
-    pad      : float — tight_layout pad (2 default, 1 for compact multi-panel)
+    dpi      : int   — raster only; 600 for line + halftone, 300 is the floor.
+                       Ignored by vector formats, which is why svg/pdf come first.
+    pad      : float — tight_layout pad, in font-size units. 0.4 at 7 pt is about
+                       1 mm. Do not carry a design-scale pad (2) into print scale:
+                       at 7 pt that is a 5 mm border, 11% of an 89 mm panel.
     """
     import os
     from pathlib import Path
+    import matplotlib.pyplot as plt
     fig.tight_layout(pad=pad)
     base = Path(out_path)
     os.makedirs(base.parent, exist_ok=True)

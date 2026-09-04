@@ -16,7 +16,7 @@ Prefer **unified method families across all panels** over maximal hue separation
 - Keep one restrained palette per figure: usually one neutral family, one signal family, and one accent family.
 - Treat statistics, `n`, error-bar definitions, source-data traceability, and image-integrity notes as part of the figure, not as optional caption cleanup.
 - When the user asks for broad `Nature` style rather than ML/NMI-specific style, read `references/nature-2026-observations.md` before choosing layout.
-- When the user references `figures4papers` or the older `scientific-figure-making` skill, treat this skill as the successor and open `references/demos.md` for bundled Python demo scripts.
+- `figures4papers` and its `scientific-figure-making` skill are live upstream material, not superseded predecessors. Treat them as a **craft layer** underneath this skill's contract: borrow the annotation grammar (baseline reference line with labelled deltas, value labels whose colour follows background luminance, one saturated focal series against a receding comparator family) and borrow the ratios, but never let them set the figure's size, scale regime, or export format. Their absolute sizes are authored at a design scale of roughly `S = 4` and their export policy is raster-only, which does not meet Nature vector and editable-text requirements. Divide by `S` before use, keep this skill's export contract, and open `references/demos.md` for the demo index.
 
 ## User-facing privacy rule
 

@@ -118,17 +118,39 @@ For figures targeting Nature or similar high-impact journals, apply the followin
 ```python
 import matplotlib.pyplot as plt
 
+MM = 1 / 25.4
+
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.sans-serif'] = ['Arial']
-plt.rcParams['svg.fonttype'] = 'none'          # editable text in SVG/PDF
-plt.rcParams['font.size'] = 16                 # 24 for large bar panels
+plt.rcParams['svg.fonttype'] = 'none'          # editable text in SVG
+plt.rcParams['pdf.fonttype'] = 42              # editable TrueType text in PDF
+plt.rcParams['font.size'] = 7                  # 5-7 pt at final printed size
 plt.rcParams['axes.spines.right'] = False
 plt.rcParams['axes.spines.top'] = False
-plt.rcParams['axes.linewidth'] = 2.5           # 3 for big bars, 2 for compact
+plt.rcParams['axes.linewidth'] = 0.8           # 0.75-1 pt at final printed size
 plt.rcParams['legend.frameon'] = False
+
+fig = plt.figure(figsize=(89 * MM, 60 * MM))   # single column; 183 mm double
 ```
 
 Use `text.usetex = True` only when LaTeX is installed and math-rich labels are required.
+
+### Print scale versus design scale
+
+The numbers above are **print scale**: the canvas is the printed panel, so every
+size is the size the reader sees. This is the default and the safer regime.
+
+You will also meet figures authored at **design scale**, where the canvas is `S`
+times the printed width and the export is downscaled into the column. A common
+choice is `S` around 4, which turns `font.size = 24` into 6.1 pt on the page and
+`axes.linewidth = 3` into 0.76 pt. Those values are legal, but only after the
+division. Two rules follow:
+
+- Never mix regimes in one script. Pick `S`, state it in a comment, and divide
+  every absolute size by it.
+- Design scale only exports raster. If the figure is line art, use print scale
+  and export vector, because a downscaled PNG of a bar chart is a raster of
+  something that should have stayed a vector.
 
 ### Nature-Style Palette
 
@@ -151,13 +173,27 @@ NATURE_PALETTE = [
 ]
 
 def nature_assign(labels, baseline=None):
-    """Map labels to palette colors; the baseline label gets terracotta."""
+    """Map labels to palette colors, one distinct color per label.
+
+    The baseline/reference series gets terracotta and the rest walk the palette
+    in order. Raises rather than reusing a color: two series sharing one color
+    silently breaks the figure's color threading.
+    """
+    has_baseline = baseline is not None and baseline in labels
+    available = NATURE_PALETTE[1:] if has_baseline else NATURE_PALETTE
+    others = [label for label in labels if label != baseline]
+    if len(others) > len(available):
+        raise ValueError(
+            f"{len(others)} series but only {len(available)} distinct colors "
+            "available; group related series into one color family, or move "
+            "some of them to a separate panel"
+        )
     result, idx = {}, 0
     for label in labels:
-        if label == baseline:
+        if has_baseline and label == baseline:
             result[label] = NATURE_PALETTE[0]
         else:
-            result[label] = NATURE_PALETTE[min(idx + 1, len(NATURE_PALETTE) - 1)]
+            result[label] = available[idx]
             idx += 1
     return result
 ```

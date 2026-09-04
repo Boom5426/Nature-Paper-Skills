@@ -32,7 +32,8 @@ Default assumption: unless a conference venue is named, the manuscript follows t
 | One sentence or one paragraph | `passage` | `write-scientific-manuscript` then `scientific-prose-style` |
 | One section to draft or rewrite in prose | `section` | `scientific-writing`, `write-scientific-manuscript`, then `scientific-prose-style` |
 | A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision` then `scientific-prose-style` |
-| A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, `scientific-writing`, `write-scientific-manuscript`, then `scientific-prose-style` |
+| A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, `scientific-writing`, `write-scientific-manuscript`, `anti-defensive-writing`, then `scientific-prose-style` |
+| Reads hedged, over-caveated, apologetic, or timid; too many disclaimers; a paragraph opens with a limitation | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
 | A Review, survey, or Perspective | `review-article` | `review-article-architecture` first, then the Review path below |
 | A long draft carried across many sessions | `long-draft` | `draft-marker-discipline` then `review-article-architecture` drift audit |
 | Near submission or resubmission | `preflight` | `submission-audit`, `citation-verifier`, `claim-source-verification`, `stats-reporting-audit`, `data-availability` |
@@ -82,11 +83,22 @@ Every skill sits at one layer. This is why the chains are ordered.
 3. **Passage logic**: is this paragraph followable? Buried topic sentences, missing bridges,
    ambiguous referents, noun chains, incomplete comparisons, coined terminology.
    `write-scientific-manuscript`.
-4. **Sentence**: em-dash budget, hedging, sentence rhythm, paragraph openers.
+4. **Rhetorical posture**: does the text advance its claim, or negotiate with an imagined critic?
+   Unnecessary disclaimers, caveats in high-impact positions, paragraphs that open with a
+   limitation, repeated statements of what the text does not claim. `anti-defensive-writing`.
+   It runs after the claim hierarchy is settled, because before that an unnecessary disclaimer
+   and a real scope condition are indistinguishable: the claim they qualify is still moving.
+5. **Sentence**: em-dash budget, hedging, sentence rhythm, paragraph openers.
    `scientific-prose-style`, last.
 
 Integrity checks run alongside, not in sequence: `citation-verifier`, `claim-source-verification`,
 `stats-reporting-audit`, `draft-marker-discipline`.
+
+Layer 4 has a boundary the other layers do not: **a limitation placed by an integrity check is
+load-bearing and stays.** `anti-defensive-writing` may move it out of a high-impact position, state
+it once instead of at every mention, or rewrite it as positive scope, but it must not delete it. A
+defensive-writing pass that silently removes a mandated caveat is a reporting failure, not a style
+improvement.
 
 ## Default journal path
 
@@ -101,9 +113,10 @@ Integrity checks run alongside, not in sequence: `citation-verifier`, `claim-sou
 7. `stats-reporting-audit`
 8. `citation-verifier`, then `claim-source-verification`
 9. `data-availability`
-10. `scientific-prose-style`
-11. `submission-audit`
-12. after external review: `paper-reviewer` to inventory the reports, `rebuttal-response` to draft and
+10. `anti-defensive-writing`, after the integrity checks above have placed every caveat they require
+11. `scientific-prose-style`
+12. `submission-audit`
+13. after external review: `paper-reviewer` to inventory the reports, `rebuttal-response` to draft and
     calibrate, then `paper-reviewer` again to grade the draft
 
 ## Review, survey, and Perspective path
@@ -119,10 +132,11 @@ overclaiming past its data.
 6. `figure-planner`, then `nature-figure` and `figure-style` (figure stack, `--figure`)
 7. `review-article-architecture` drift audit, before any compression pass
 8. `draft-marker-discipline` to measure length and triage what remains open
-9. `scientific-prose-style`, last
-10. `submission-audit`
+9. `anti-defensive-writing`
+10. `scientific-prose-style`, last
+11. `submission-audit`
 
-Run step 7 before step 9, never after.
+Run step 7 before step 10, never after.
 
 ## Choosing between adjacent skills
 

@@ -121,7 +121,12 @@ or extend the limit past any annotation.
 **3.2 Axis breaks over wasted range.** When data occupy <40 % of an axis, break
 the axis or start it at the data floor with a clear non-zero tick. Never draw a
 reference line, threshold, or annotation inside a broken-axis gap — the gap has
-no coordinate.
+no coordinate. This applies to **position-encoded** marks: points, lines, dot
+plots. For **length-encoded** marks (bars, stacked bars, area fills) only the
+drawn break is available, because the reader reads bar length as proportional to
+value: never start a bar axis at the data floor. Starting a bar axis at
+`min - 0.1 * range` renders a true 1.14:1 ratio as 11:1, and the drawn ratio then
+depends only on the padding fraction, not on the measurement.
 
 **3.3 Log axes get human-readable ticks** — `10²`, `10³`, or `1k / 10k / 100k`,
 not raw exponents. **Never** draw filled bars on a log-scaled value axis (bar

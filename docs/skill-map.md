@@ -17,6 +17,7 @@
 - `submission-audit`: pre-submission or pre-resubmission QA
 - `rebuttal-response`: author-side reviewer response workflow, claim calibration, and final letter audit
 - `stats-reporting-audit`: author-side statistical-reporting audit (independent-unit `n`, replication, multiple comparisons, figure-legend statistics)
+- `anti-defensive-writing`: rhetorical posture (unnecessary disclaimers, caveats in high-impact positions, paragraphs opening with a limitation). Runs after the integrity checks have placed every caveat they require; a mandated limitation is load-bearing and is reshaped, never deleted
 - `scientific-prose-style`: sentence-level prose linting (em-dash budget, hedging, sentence rhythm, paragraph openers)
 
 ## Venue
