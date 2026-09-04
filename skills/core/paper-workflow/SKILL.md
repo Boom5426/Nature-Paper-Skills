@@ -4,8 +4,10 @@ description: >-
   Entry point for any manuscript request that does not name a specific skill. Load this FIRST
   whenever the ask is general, then run the chain it prescribes. Covers optimize my paper, improve
   the manuscript, polish this draft, make this better, clean it up, help with my paper, review my
-  writing, get this ready to submit, work on the paper, and the Chinese equivalents 优化论文,
-  改论文, 润色论文, 帮我看看论文, 论文写作, 学术写作, 把论文弄好, 论文修改, 投稿前检查.
+  writing, get this ready to submit, work on the paper, make it more direct, less defensive, cut
+  the hedging, too many caveats, and the Chinese equivalents 优化论文,
+  改论文, 润色论文, 帮我看看论文, 论文写作, 学术写作, 把论文弄好, 论文修改, 投稿前检查,
+  防御性写作, 太多免责, 写得太怂, 太啰嗦, 让语气更肯定.
   Also decides which skill applies and how to sequence manuscript work from project setup through
   submission and rebuttal, including the separate path for a Review, survey, or Perspective.
   A general manuscript request is never served well by one skill alone; this file decides which
@@ -29,9 +31,9 @@ Default assumption: unless a conference venue is named, the manuscript follows t
 
 | Input | Class | Chain |
 |---|---|---|
-| One sentence or one paragraph | `passage` | `write-scientific-manuscript` then `scientific-prose-style` |
-| One section to draft or rewrite in prose | `section` | `scientific-writing`, `write-scientific-manuscript`, then `scientific-prose-style` |
-| A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision` then `scientific-prose-style` |
+| One sentence or one paragraph | `passage` | `write-scientific-manuscript`, then `anti-defensive-writing` if the passage is hedged or over-caveated, then `scientific-prose-style` |
+| One section to draft or rewrite in prose | `section` | `scientific-writing`, `write-scientific-manuscript`, `anti-defensive-writing`, then `scientific-prose-style` |
+| A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision`, `anti-defensive-writing`, then `scientific-prose-style` |
 | A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, `scientific-writing`, `write-scientific-manuscript`, `anti-defensive-writing`, then `scientific-prose-style` |
 | Reads hedged, over-caveated, apologetic, or timid; too many disclaimers; a paragraph opens with a limitation | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
 | A Review, survey, or Perspective | `review-article` | `review-article-architecture` first, then the Review path below |
@@ -50,7 +52,8 @@ clarifying question; guessing wastes more time than asking.
 State the chain in one line before starting, so the author can redirect early:
 
 > Running the `manuscript` chain: structure (`manuscript-optimizer`), prose (`scientific-writing`),
-> passage logic (`write-scientific-manuscript`), then sentence pass (`scientific-prose-style`).
+> passage logic (`write-scientific-manuscript`), posture (`anti-defensive-writing`), then sentence
+> pass (`scientific-prose-style`).
 
 Load each skill in sequence and apply it. Do not skip a link because the previous one already
 improved the text. Each layer catches a different defect class, and a later layer cannot see the
@@ -72,6 +75,10 @@ findings that evaporate on the next revision.
 Never run `scientific-prose-style` on a drifted Review before the drift audit. Polishing a drifted
 draft makes the drift harder to see, not easier.
 
+Never run `anti-defensive-writing` before the claim hierarchy is stable. Until the claim is settled,
+an unnecessary disclaimer and a real scope condition look identical, and the pass strips the wrong
+one.
+
 ## The layers
 
 Every skill sits at one layer. This is why the chains are ordered.
@@ -84,10 +91,11 @@ Every skill sits at one layer. This is why the chains are ordered.
    ambiguous referents, noun chains, incomplete comparisons, coined terminology.
    `write-scientific-manuscript`.
 4. **Rhetorical posture**: does the text advance its claim, or negotiate with an imagined critic?
-   Unnecessary disclaimers, caveats in high-impact positions, paragraphs that open with a
-   limitation, repeated statements of what the text does not claim. `anti-defensive-writing`.
-   It runs after the claim hierarchy is settled, because before that an unnecessary disclaimer
-   and a real scope condition are indistinguishable: the claim they qualify is still moving.
+   Unnecessary disclaimers, caveats in high-impact positions, paragraphs that open with a limitation,
+   repeated statements of what the text does not claim, reflexive `not X but Y`, self-undermining
+   contribution statements. `anti-defensive-writing`. It runs after the claim hierarchy is settled,
+   because before that an unnecessary disclaimer and a real scope condition are indistinguishable:
+   the claim they qualify is still moving.
 5. **Sentence**: em-dash budget, hedging, sentence rhythm, paragraph openers.
    `scientific-prose-style`, last.
 
@@ -96,9 +104,9 @@ Integrity checks run alongside, not in sequence: `citation-verifier`, `claim-sou
 
 Layer 4 has a boundary the other layers do not: **a limitation placed by an integrity check is
 load-bearing and stays.** `anti-defensive-writing` may move it out of a high-impact position, state
-it once instead of at every mention, or rewrite it as positive scope, but it must not delete it. A
-defensive-writing pass that silently removes a mandated caveat is a reporting failure, not a style
-improvement.
+it once instead of at every mention, or rewrite it as positive scope, but it must not delete it. The
+same holds for a scope condition the Methods needs to stay reproducible. A defensive-writing pass
+that silently removes a mandated caveat is a reporting failure, not a style improvement.
 
 ## Default journal path
 
@@ -146,6 +154,15 @@ Run step 7 before step 10, never after.
   science is settled but the passage is hard to follow.
 - `results-section-revision` when the remaining problem is local Results architecture rather than
   claim selection.
+- `anti-defensive-writing` when the text is accurate but timid: it keeps saying what it does not
+  claim, opens paragraphs with caveats, hedges what the evidence actually supports, or explains
+  itself to a critic who is not in the room. `scientific-prose-style` when the remaining problem is
+  punctuation, rhythm, em-dash budget, or hedge calibration inside a single sentence. They stack, in
+  that order, because removing defensive scaffolding rewrites the paragraph openers and sentence
+  boundaries the punctuation pass then settles. Neither one may overrule an integrity audit; see the
+  layer-4 boundary above. In a Methods section, most caveats are load-bearing, and the edit is
+  usually to convert a negation into positive scope and to state it once instead of at every
+  mention.
 - `citation-verifier` when the bibliography as an artifact is the problem: duplicate keys, missing
   fields, DOI syntax, cited-but-undefined. `claim-source-verification` when the question is whether
   a source supports the sentence citing it. They stack, in that order. A clean bibliography audit
@@ -180,6 +197,10 @@ before attempting heavy revision.
 
 - answering a general manuscript request with whichever single skill matched the wording best
 - polishing sentences before the claim hierarchy is stable
+- running a defensive-writing pass before the claim hierarchy is stable, which strips real scope
+  conditions along with the disclaimers
+- letting a defensive-writing pass delete a limitation that a statistics, citation, or data audit put
+  there, instead of moving it out of a high-impact position and stating it once
 - running a submission audit on a draft still being restructured
 - polishing a Review before its drift audit
 - using conference-style writing skills by default for journal manuscripts
