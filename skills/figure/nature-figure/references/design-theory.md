@@ -15,15 +15,35 @@ Derived from scripts in the [figures4papers](https://github.com/ChenLiu-1996/fig
 - LaTeX math labels: `text.usetex = True` only when LaTeX is installed
 
 ### Font size hierarchy
-| Context | font.size | axes.linewidth |
-|---------|-----------|---------------|
-| Journal-final dense multi-panel figure at publication width | 7–9 | 0.8–1.2 |
-| Large comparison bar panels (figsize > 28in wide) | 24 | 3 |
-| Compact subfigures / analytic plots | 15–16 | 2 |
-| Axis labels on large panels | 32–54 (override per-label) | — |
-| In-bar annotations | 32–36 | — |
-| Legend text on large panels | 28–38 | — |
-| Tick labels | 20–36 | — |
+
+Two scale regimes are in play and the table below mixes them, so read the scale
+column first. **Print scale** means the canvas is the printed panel, so the number
+is the size the reader sees. **Design scale** means the canvas is `S` times the
+printed width and the export is downscaled into the column, so the size that
+prints is the number divided by `S`:
+
+```text
+S = canvas_width_in / printed_width_in
+```
+
+Worked from a real flagship panel: `figsize=(28, 6)` placed in a 180 mm double
+column gives `S = 28 / 7.09 = 3.95`, so `font.size = 24` prints at 6.1 pt and
+`axes.linewidth = 3` prints at 0.76 pt. Both land inside the journal band. The
+large absolute numbers below are not wrong, they are pre-multiplied by `S`.
+
+| Context | Scale | font.size | axes.linewidth | prints at |
+|---|---|---|---|---|
+| Journal-final dense multi-panel figure at publication width | print | 7-9 | 0.75-1.0 | as written |
+| Large comparison bar panels (figsize > 28in wide) | design, S about 4 | 24 | 3 | 6.1 pt, 0.76 pt |
+| Compact subfigures / analytic plots | design, S about 2 | 15-16 | 2 | 7.5-8 pt, 1.0 pt |
+| Axis labels on large panels | design, S about 4 | 32-54 (override per-label) | | 8-14 pt |
+| In-bar annotations | design, S about 4 | 32-36 | | 8-9 pt |
+| Legend text on large panels | design, S about 4 | 28-38 | | 7-10 pt |
+| Tick labels | design, S about 4 | 20-36 | | 5-9 pt |
+
+Never mix the two regimes in one script: pick `S`, state it in a comment, and
+divide every absolute size by it. Design scale can only be exported as raster, so
+it is the wrong choice for line art, which should stay vector at print scale.
 
 When targeting the final dimensions of a two-column `Nature` figure page, start smaller than
 slide-sized preview figures. The sampled 2026 papers routinely landed in the `7–9 pt` final-text
@@ -166,9 +186,41 @@ ax_legend.legend(handles, labels, fontsize=..., loc='center', frameon=False)
 ax_legend.set_axis_off()
 ```
 
-### Dynamic y-axis scaling
-Never use fixed 0–100 when values sit in a narrow band.
-Tighten limits to data range: e.g., `ax.set_ylim([data.min() - margin, data.max() + margin])`.
+### Y-axis limits by mark type
+
+The limit rule follows the mark, not the data range.
+
+Bar length, stacked bars and area fills are ratio-scale encodings: the reader reads
+length, so length must stay proportional to value, and they keep the zero baseline.
+Two exceptions, both declared in the panel. First, a real null, where the scale has
+a meaningful non-zero origin (AUROC 0.5, log fold change 0, delta versus control 0);
+put the baseline on the null and label it. Second, an axis break that is actually
+drawn, with no reference line, threshold or annotation inside the gap.
+
+Points, lines and dot plots encode position rather than length, so they may tighten
+to the data. Budget the headroom for value labels and annotations before drawing,
+not by widening the limit afterwards. Percentages anchor to their true range: a
+share of a whole spans 0 to 100.
+
+What tightening costs on a bar panel, using this skill's own tutorial data
+(`tutorials.md` Tutorial 1, `Metric 1` from 0.81 to 0.92): the former advice,
+`margin = 0.1 * (max - min)` then `ylim = [min - margin, max + margin]`, gives
+`[0.799, 0.931]`. The shortest bar becomes 0.011 long and the tallest 0.121, a
+drawn ratio of 11.0 : 1 for a true ratio of 1.14 : 1, so the panel overstates the
+gap 9.7-fold. The 11 : 1 is not a property of the data: for a margin fraction `f`
+the drawn ratio is `(1 + f) / f` for any input, so the bars encode the padding
+constant rather than the measurement. On a zero baseline the drawn ratio is
+1.14 : 1 and matches the numbers.
+
+If the interesting range is genuinely narrow, change the mark rather than the axis.
+A dot plot with a 95% CI, a paired-slope plot, or a difference-from-reference panel
+shows a one-point gap at full resolution without distorting it.
+
+This is the mark-aware reading of `figure-style` §3.2: its "break the axis or start
+it at the data floor" applies to position-encoded marks, and for length-encoded
+marks only the drawn break is available. `figure-style` §3.3 already states the
+underlying reason when it forbids filled bars on a log-scaled value axis, because
+bar length encodes ratio to an arbitrary floor.
 
 ### Nature page archetypes from sampled 2026 papers
 
@@ -332,13 +384,18 @@ Illustrator or Inkscape. Always save SVG first.
 ```python
 import os
 os.makedirs('./figures/', exist_ok=True)
-fig.tight_layout(pad=2)   # default; use pad=1 for compact multi-panel
+fig.tight_layout(pad=0.4)   # font-size units: 0.4 at 7 pt is about 1 mm
 
-# ── PRIMARY ── editable vector, text as <text> nodes ─────────────────────────
-fig.savefig('./figures/name.svg', bbox_inches='tight')
+# ── SHIP ── editable vector, plus the raster the portal asks for ─────────────
+fig.savefig('./figures/name.pdf')            # the delivery vector
+fig.savefig('./figures/name.png', dpi=600)   # review copy and portal upload
 
-# ── SECONDARY ── raster for quick preview / submission portals ────────────────
-fig.savefig('./figures/name.png', dpi=300, bbox_inches='tight')
+# ── OPTIONAL ── add SVG only when a co-author edits panels in a drawing program
+# fig.savefig('./figures/name.svg')
+#
+# references/figure-delivery-bundle.md owns this contract; it is one PDF plus one
+# PNG at true print size. Do not add bbox_inches='tight' to any of these: it
+# re-crops the canvas, so the exported page stops being the size you built.
 
 plt.close(fig)   # always close to free memory
 ```
@@ -421,16 +478,16 @@ Label quadrants ("Immune-hot / low tumor", "Immune-desert / high tumor", …) wi
 
 To match Nature publication standards:
 
-- [ ] **MANDATORY first lines**: `font.family='sans-serif'`, `font.sans-serif=['Arial','DejaVu Sans','Liberation Sans']`, `svg.fonttype='none'`
+- [ ] **MANDATORY first lines**: `font.family='sans-serif'`, `font.sans-serif=['Arial','DejaVu Sans','Liberation Sans']`, `svg.fonttype='none'`, `pdf.fonttype=42`, `ps.fonttype=42`
 - [ ] **Save as SVG** (primary). PNG dpi=300 as optional raster preview.
 - [ ] Top and right spines off; frameless legend
 - [ ] Figure architecture chosen intentionally: grid, schematic-led composite, image plate, or asymmetric hero layout
-- [ ] Font size ≥ 16 base; 24 for large bar panels; 32–54 for axis labels on large panels
+- [ ] Scale regime declared. Print scale (the default): 7 pt base, 8 pt panel letters. Design scale: state `S` and check that every size divided by `S` lands in the print band
 - [ ] Colors from blue-green-red-neutral semantic palette
 - [ ] Black background used only for imaging plates, not for ordinary plots
 - [ ] Legends omitted or shared when direct labels or one legend strip read better
-- [ ] Y-limits tightened to data range (not 0–100 when values are 80–95)
+- [ ] Y-limits set by mark type. Bars, stacked bars and area fills keep the zero baseline, unless a declared real null (AUROC 0.5, log fold change 0) or an explicitly drawn axis break says otherwise; points, lines and dot plots may tighten to the data with headroom budgeted before drawing; percentages span their true range
 - [ ] X-ticks hidden when methods are named in legend
 - [ ] Legend in dedicated panel or `frameon=False`
-- [ ] `tight_layout(pad=2)` before save
+- [ ] `tight_layout(pad=0.4)` before save at print scale (`pad` is in font-size units, so `pad=2` at 7 pt is a 5 mm border)
 - [ ] `plt.close(fig)` after save

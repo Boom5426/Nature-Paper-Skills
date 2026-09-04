@@ -76,7 +76,15 @@ This repository is mostly Markdown and skill assets, so verification is lightwei
 - confirm new scripts are referenced from the owning `SKILL.md`
 - re-read the changed README sections for consistency with the actual repository layout
 - check whether the Chinese README needs the same user-facing change
+- if a vendored Apache-2.0 file changed, refresh the section 4(b) list in `ATTRIBUTION.md`
 
 ## Licensing
 
-By contributing, you agree that your contributions will be released under the [MIT License](LICENSE).
+By contributing, you agree that your contributions will be released under the [MIT License](LICENSE), except where they land inside a skill carrying Apache-2.0 material, in which case they are released under [Apache-2.0](LICENSE-APACHE) to match the surrounding work. `install.sh` lists those skills as `APACHE_SKILLS`, and `tests/test_license_shipping.py` keeps that list honest.
+
+If you change a file inside `skills/figure/nature-figure`, regenerate the Apache-2.0 section 4(b) modified-file list in [ATTRIBUTION.md](ATTRIBUTION.md) by diffing against the pinned upstream commit recorded there, excluding bytecode:
+
+```bash
+diff -rq -x __pycache__ -x '*.pyc' <upstream>/skills/nature-figure skills/figure/nature-figure
+```
+ Shipping a changed vendored file without that notice is a licence violation, not a documentation lapse.

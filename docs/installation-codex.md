@@ -23,7 +23,7 @@ cd Nature-Paper-Skills
 ./install.sh --agent codex
 ```
 
-Useful flags: `--set all` (install all 26 skills), `--dry-run` (preview), `--list` (print the selection), `--dest <dir>` (explicit target), `--ref <branch|tag|sha>` (download and install a specific ref, even when run from a clone), `--help`.
+Useful flags: `--set all` (install all 27 skills), `--dry-run` (preview), `--list` (print the selection), `--dest <dir>` (explicit target), `--ref <branch|tag|sha>` (download and install a specific ref, even when run from a clone), `--help`.
 
 Re-running the installer upgrades in place: each skill directory is removed and re-copied, so files deleted upstream do not linger.
 
@@ -32,7 +32,7 @@ Re-running the installer upgrades in place: each skill directory is removed and 
 If you would rather not run a script, paste this into Codex from a clone of this repository:
 
 ```text
-Install the recommended skills from this repository into ~/.codex/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, write-scientific-manuscript, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, claim-source-verification, review-article-architecture, draft-marker-discipline, data-availability, submission-audit, rebuttal-response, stats-reporting-audit, scientific-prose-style. Copy the full skill directories, not just SKILL.md, and delete any existing copy of a skill before re-copying it. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
+Install the recommended skills from this repository into ~/.codex/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, write-scientific-manuscript, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, claim-source-verification, review-article-architecture, draft-marker-discipline, data-availability, submission-audit, rebuttal-response, stats-reporting-audit, anti-defensive-writing, scientific-prose-style. Copy the full skill directories, not just SKILL.md, and delete any existing copy of a skill before re-copying it. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
 ```
 
 ## Install One Skill

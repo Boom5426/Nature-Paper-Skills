@@ -12,7 +12,7 @@ Drafting · structural revision · figure/text alignment · citation verificatio
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Focus](https://img.shields.io/badge/focus-Nature%20series-1f6feb)](docs/venue-routing.md)
 [![Workflow](https://img.shields.io/badge/workflow-claim--driven-blue)](docs/workflow-map.md)
-[![Skills](https://img.shields.io/badge/skills-26-8a63d2)](docs/skill-map.md)
+[![Skills](https://img.shields.io/badge/skills-27-8a63d2)](docs/skill-map.md)
 [![Codex](https://img.shields.io/badge/agent-Codex-0a7ea4)](docs/installation-codex.md)
 [![Claude Code](https://img.shields.io/badge/agent-Claude%20Code-cc785c)](docs/installation-claude.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -34,11 +34,13 @@ Drafting · structural revision · figure/text alignment · citation verificatio
 - 🔬 **Evidence-bounded**: the abstract and introduction never promise more than the results show
 - 📊 **Auditable stats and legends**: `stats-reporting-audit` guards independent-unit `n`, multiple comparisons, and figure-legend statistics
 - 📎 **Citation hygiene**: `citation-verifier` does a local scan plus severity grading before you submit
+- 🔧 **Figure audits that actually run**: `qa-contract.md`'s prose rules have matching commands, so type size, collisions, panel alignment, and source-data traceability are checked rather than asserted, and a tool that cannot check says so instead of passing
+- 🚪 **Many entry points**: `paper-workflow` is the fallback, not the only door; call any layer directly
 - 📦 **Directly copyable**: every skill is self-contained, scripts ship inside their directory, and Codex and Claude Code coexist
 
 ## 📦 Quick Start
 
-One command. No clone required. It detects whether you use Codex or Claude Code, installs the recommended 17-skill stack, and cleanly replaces any earlier copy.
+One command. No clone required. It detects whether you use Codex or Claude Code, installs the recommended 18-skill stack, and cleanly replaces any earlier copy.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
@@ -75,7 +77,7 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 # Install into the current project only, not your home directory (Claude Code)
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --local
 
-# All 26 skills, or preview without writing anything
+# All 27 skills, or preview without writing anything
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --set all
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --dry-run
 ```
@@ -129,20 +131,20 @@ Per-agent details: [docs/installation-claude.md](docs/installation-claude.md) ·
 ## 🔄 Default Workflow
 
 ```mermaid
-flowchart TD
-    A[paper-bootstrap] --> B[nature-portfolio-playbook]
-    B --> C["scientific-writing / manuscript-optimizer"]
-    C --> D[figure-planner]
-    D --> E["nature-figure / figure-style"]
-    E --> F[results-section-revision]
-    F --> G[stats-reporting-audit]
-    G --> H[citation-verifier]
-    H --> H2[claim-source-verification]
-    H2 --> I[data-availability]
-    I --> J[scientific-prose-style]
-    J --> K[submission-audit]
-    K --> L[rebuttal-response]
+flowchart LR
+    A["1. Start<br/>paper-bootstrap<br/>nature-portfolio-playbook"]
+    B["2. Structure and evidence<br/>manuscript-optimizer / scientific-writing<br/>write-scientific-manuscript<br/>results-section-revision"]
+    C["3. Figures<br/>figure-planner → nature-figure / figure-style<br/>scripts/ audits: type size · collisions · alignment · source data"]
+    D["4. Language<br/>anti-defensive-writing<br/>scientific-prose-style"]
+    E["5. Submit and revise<br/>submission-audit<br/>paper-reviewer → rebuttal-response"]
+    F["Integrity checks, run alongside rather than queued<br/>stats-reporting-audit · citation-verifier<br/>claim-source-verification · data-availability<br/>draft-marker-discipline"]
+    A --> B --> C --> D --> E
+    F -.check anytime.-> B
+    F -.check anytime.-> C
+    F -.check anytime.-> D
 ```
+
+Three constraints carry the information here. **Structure precedes language**: stage 2 before stage 4, because editing the wrong layer wastes the edit. **Integrity checks run alongside**, not as one stop on a line; whatever they find sends you back to stage 2 or 3. **Stage 4 is itself ordered**: `anti-defensive-writing` before `scientific-prose-style`, because removing defensive scaffolding rewrites paragraph openers and sentence boundaries, so the reverse order does that work twice.
 
 > `nature-figure` / `figure-style` in the diagram are the optional Figure Stack; install them per the TIP above.
 >
@@ -153,6 +155,73 @@ The default assumption is:
 - journal-first, not conference-first
 - `Nature`-series journals by default unless the user or project says otherwise
 - structure and evidence chain before sentence polish
+
+## 🚪 Entry points: not just `paper-workflow`
+
+`paper-workflow` is the **fallback** door, for when you are not sure which skill the job needs. Its job is to classify the request and name the chain, not to absorb every request. Any layer can be called directly.
+
+| What you want | Just say | Where it goes |
+|---|---|---|
+| Not sure what is next | "improve my paper", "pre-submission check" | `paper-workflow` classifies, then names the chain |
+| Start a new manuscript | "set up a new paper directory" | `paper-bootstrap` |
+| Pick a journal and article type | "Nature Methods or Nature Biotech?" | `nature-portfolio-playbook` |
+| Structure and evidence chain unstable | "this draft does not hold together" | `manuscript-optimizer` |
+| Correct but hard to follow | "this paragraph is awkward" | `write-scientific-manuscript` |
+| Decide what each figure proves | "how should these figures be arranged" | `figure-planner` |
+| Draw the figure | "make a comparison figure" | `nature-figure` |
+| Check a finished figure | "is anything wrong with this figure" | `figure-style` |
+| Results reads figure-by-figure | "Results is a list of numbers" | `results-section-revision` |
+| Statistical reporting | "check the statistics", "what counts as n" | `stats-reporting-audit` |
+| Bibliography hygiene | "check the references" | `citation-verifier` |
+| Does the source support the claim | "is this citation right for this sentence" | `claim-source-verification` |
+| Data availability statement | "write the data availability section" | `data-availability` |
+| Reads timid or over-caveated | "too many disclaimers", "make it more direct" | `anti-defensive-writing` |
+| Sentence-level polish | "polish this paragraph" | `scientific-prose-style` |
+| Pre-submission preflight | "full check before I submit" | `submission-audit` |
+| Reviewer response | "reply to the referees" | `rebuttal-response` |
+| Review or Perspective | "write a review article" | `review-article-architecture` (a separate path) |
+
+> One exception: a **general** manuscript request should enter through `paper-workflow`. A paper has four layers (structure, passage logic, venue style, punctuation), editing the wrong layer first wastes the edit, and one skill covers one layer. Name a skill or a specific job and go straight there.
+
+## 🔬 The figure chain, expanded
+
+Figures are the one layer with executable audits, so it is worth spelling out:
+
+```
+figure-planner          one claim per figure, panel roles, main vs supplement,
+   │                    legend and Results aligned. Draws nothing.
+   ▼
+nature-figure           routing protocol
+   ├ step 1  read the manifest plus the always-loaded contract.md / stance.md
+   ├ step 2  backend gate (blocking): Python or R, remembered
+   ├ step 3  load only the selected backend's fragment
+   ├ step 4  build: five-point contract -> stance -> backend fragment
+   ├ step 5  open any of the 17 references on demand
+   └ step 6  run the audits before delivery
+   ▼
+figure-style            correctness checklist plus the kernel.py helpers
+   ▼
+audit scripts           before rendering  validate_figure.py my_figure.py
+(skills/figure/         after export      audit_pdf_text.py panel_a.pdf --min-pt 5   <- per panel
+ nature-figure/         after assembly    audit_figure_collisions.py fig02.pdf       <- the composite
+ scripts/)              multi-panel       audit_panel_alignment.py fig02.layout.json
+                        data side         figure_source_data.py -> <figure>.qa.json
+                        numerics          figure_safety.py
+   ▼
+qa-contract.md          pre-submission checklist
+```
+
+**One exit-code contract**, shared by the four audit tools. `validate_figure.py` only ever returns 0/1/2, because a static source check always runs and can always answer; the other three also use 3 and 4:
+
+| Code | Meaning | A pass? |
+|---|---|---|
+| 0 | PASS, the check ran and the figure is acceptable | yes |
+| 1 | FAIL, the check ran and found a blocking problem | no |
+| 2 | ERROR, usage or I/O problem; nothing was audited | no |
+| 3 | NOT RUN, a required dependency is absent | no |
+| 4 | NOT AUDITABLE, the input cannot answer this question | no |
+
+Codes 2, 3, and 4 mean the figure is **unchecked**, not clean. A wrapper that branches on `returncode != 1` ships an unaudited figure, and an audit that cannot say "I could not check this" is more dangerous than no audit at all.
 
 ## 🧩 What Is In This Repo
 
@@ -175,6 +244,7 @@ The default assumption is:
 | `submission-audit` | Final manuscript preflight before submission or resubmission |
 | `rebuttal-response` | Turn reviewer comments into aligned edits and response letters |
 | `stats-reporting-audit` | Statistical-reporting audit (n, replication, multiplicity, legend stats) |
+| `anti-defensive-writing` | Rhetorical posture: unnecessary disclaimers, caveats in high-impact positions, paragraphs that open with a limitation. A limitation placed by an integrity check is load-bearing and is reshaped, never deleted |
 | `scientific-prose-style` | Sentence-level linting (em-dash budget, hedging, rhythm) |
 
 **Figure** `skills/figure/`
@@ -216,7 +286,7 @@ The default assumption is:
 
 **It used one skill instead of running the chain.** Say `use paper-workflow` explicitly, or phrase the request more generally (`improve this manuscript`). `paper-workflow` classifies the request and announces the chain before starting; if no chain was announced, a different skill matched, so name paper-workflow directly.
 
-**It told me to use a skill I do not have.** The default install is 17 skills. `nature-figure` and `figure-style` need `--figure` (and a plotting backend: matplotlib/seaborn or ggplot2); everything else comes with `--set all`.
+**It told me to use a skill I do not have.** The default install is 18 skills. `nature-figure` and `figure-style` need `--figure` (and a plotting backend: matplotlib/seaborn or ggplot2); everything else comes with `--set all`.
 
 **Where things were installed.** `~/.claude/skills/` for Claude Code, `~/.codex/skills/` for Codex, and `./.claude/skills/` with `--local`. Use `bash install.sh --list` to preview the set and `--dry-run` to see what would happen without writing anything.
 
@@ -253,14 +323,19 @@ Nature-Paper-Skills/
 │   ├── research/    # literature, analysis, evidence generation
 │   ├── review/      # reviewer-side evaluation
 │   └── optional/    # useful but non-default extensions
+│                    #   figure/nature-figure/scripts/ holds 6 dependency-free audit tools
+├── tests/           # 243 tests, `python3 -m unittest discover -s tests`
 ├── install.sh       # one-line installer for Codex and Claude Code
-├── ATTRIBUTION.md
+├── ATTRIBUTION.md   # per-component provenance, incl. the Apache-2.0 4(b) modified-file list (test-guarded)
 ├── CONTRIBUTING.md
+├── LICENSE          # MIT, for repository-original content
+├── LICENSE-APACHE   # full Apache-2.0 text for the vendored skills
+├── NOTICE
 ├── README.md
 └── README.en.md
 ```
 
-Scripts needed by a skill live inside that skill directory, so each skill stays installable as a self-contained unit.
+Scripts needed by a skill live inside that skill directory, so each skill stays installable as a self-contained unit. `install.sh` also copies `LICENSE-APACHE` and `NOTICE` into each of the 8 skill directories that carry Apache-2.0 material, so a `curl | bash` install arrives with its licence.
 
 ## 🎯 Scope
 
@@ -277,7 +352,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution rules, naming convention
 
 ## 🙏 Acknowledgements
 
-Parts of this repository were inspired by [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw), [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills), and the Claude Science skill pack. Thanks to everyone in the community who contributed code, docs, and tests. Per-component provenance and licensing are in [ATTRIBUTION.md](ATTRIBUTION.md).
+Parts of this repository were inspired by [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw), [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills), and the Claude Science skill pack.
+
+The figure layer's encoding rules draw on design observations from [ChenLiu-1996/figures4papers](https://github.com/ChenLiu-1996/figures4papers) (Chen Liu, Yale), a collection of production plotting scripts behind published figures. That repository publishes no LICENSE, so this one copies and distributes none of its code or prose; every recipe was written independently. Full statement in [THIRD_PARTY_NOTICES.md](skills/figure/nature-figure/THIRD_PARTY_NOTICES.md).
+
+Thanks to everyone in the community who contributed code, docs, and tests. Per-component provenance and licensing are in [ATTRIBUTION.md](ATTRIBUTION.md).
 
 ## 📄 License
 

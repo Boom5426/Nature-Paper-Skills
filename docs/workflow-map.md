@@ -17,7 +17,8 @@ The default manuscript path in this repository is:
 7. stats-reporting-audit for statistical-reporting integrity
 8. citation-verifier for bibliography hygiene, then claim-source-verification for claim-to-evidence support
 9. data-availability
-10. scientific-prose-style for a final sentence-level prose pass
+10. anti-defensive-writing to strip unnecessary disclaimers and caveats, after the integrity checks above
+11. scientific-prose-style for a final sentence-level prose pass
 11. submission-audit
 12. after review: paper-reviewer to inventory the reports, rebuttal-response to draft, paper-reviewer to grade the draft
 ```
@@ -37,7 +38,8 @@ Its failure mode is becoming a different Review, not overclaiming past its data.
 6. figure-planner, then nature-figure and figure-style
 7. review-article-architecture   drift audit, before any compression pass
 8. draft-marker-discipline       measure length; triage what remains open
-9. scientific-prose-style        sentence-level pass, last
+9. anti-defensive-writing       rhetorical posture: unnecessary disclaimers, timid framing
+10. scientific-prose-style       sentence-level pass, last
 10. submission-audit
 ```
 
@@ -56,6 +58,7 @@ harder to see, not easier.
 - Use `data-availability` when repository plans, accession identifiers, source-data coverage, or restricted-data wording are the bottleneck.
 - Use `figure-planner` to decide what each figure argues, then `nature-figure` to render it and `figure-style` to check correctness and legibility before export.
 - Use `stats-reporting-audit` when the bottleneck is statistical-reporting integrity: independent-unit `n`, pseudoreplication, multiple-comparison correction, or figure-legend statistics.
+- Use `anti-defensive-writing` when the draft reads hedged, over-caveated or timid: unnecessary disclaimers, a paragraph that opens with a limitation, repeated statements of what the text does not claim. Run it after the claim hierarchy is stable, because before that an unnecessary disclaimer and a real scope condition are indistinguishable. A limitation placed by `stats-reporting-audit`, `claim-source-verification`, `citation-verifier`, `data-availability` or `submission-audit` is load-bearing: it may be moved, stated once, or rewritten as positive scope, never deleted.
 - Use `scientific-prose-style` for a final sentence-level pass on already-stable prose (em-dash budget, hedging, sentence rhythm), not as a substitute for fixing an unstable claim first.
 - Use `citation-verifier` when the problem is the bibliography as an artifact: duplicate keys, missing fields, DOI syntax, cited-but-undefined, toolchain and style failures. Use `claim-source-verification` when the problem is whether a source supports the sentence citing it. They stack, in that order; a clean bibliography audit says nothing about claim support, and in one measured run 55 of 139 proposed sources were rejected with none of them fabricated.
 - Use `review-article-architecture` when the manuscript is a Review, survey, or Perspective rather than a research article, or whenever a piece written across many sessions may no longer match its brief. Use `manuscript-optimizer` for research articles.

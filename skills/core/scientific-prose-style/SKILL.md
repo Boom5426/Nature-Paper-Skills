@@ -17,6 +17,13 @@ paragraph whose job is unclear, fix that first with `manuscript-optimizer` or `s
 Re-punctuating a sentence whose scientific role is wrong does not make it readable, and polishing a
 drifted Review before its `review-article-architecture` drift audit makes the drift harder to see.
 
+One layer sits directly above this one. `anti-defensive-writing` owns authorial posture at the
+paragraph level: what a paragraph leads with, where a caveat sits, and whether a sentence exists to
+advance the argument or to pre-empt an objection. Run it first. Stripping defensive scaffolding
+rewrites paragraph openers and sentence boundaries, which is exactly what Rule 3 and Rule 5 below
+then have to settle, so running this skill first means doing that work twice. Rule 3 here calibrates
+hedges within a sentence; deciding whether the hedge should exist at all belongs upstairs.
+
 ## Rule 1 — Em-dash budget (the headline rule)
 
 The long em-dash (`—`) is the single most overused mark in generated scientific
@@ -100,4 +107,4 @@ Run this on any abstract/intro/section you write:
 
 ---
 
-*Provenance: adapted from the Claude Science `scientific-prose-style` skill (Apache-2.0). Cross-references to figure skills were repointed to this repo's `figure-planner`.*
+*Provenance: adapted from the Claude Science `scientific-prose-style` skill (Apache-2.0). Cross-references to figure skills were repointed to this repo's `figure-planner`, and a pointer to the `anti-defensive-writing` layer above this one was added.*

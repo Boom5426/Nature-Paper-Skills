@@ -25,8 +25,11 @@ def apply_figure_style(*, frame="open", font=None, sizes=(8, 7, 6), grid=False):
             for f in glob.glob(os.path.join(fdir, "*.ttf")):
                 if f not in known:
                     fm.fontManager.addfont(f)
-    except Exception:
-        pass
+    except OSError as exc:
+        # Not silent: a font directory that cannot be read changes which typeface
+        # every figure is drawn in, and that must be visible to the caller.
+        import warnings
+        warnings.warn(f"could not scan {fdir!r} for fonts: {exc}", RuntimeWarning, stacklevel=2)
     base, secondary, tick = sizes
     boxed = (frame == "boxed")
     rc = {
@@ -53,6 +56,7 @@ def apply_figure_style(*, frame="open", font=None, sizes=(8, 7, 6), grid=False):
         "axes.labelweight": "normal",
         "lines.linewidth": 1.2,
         "patch.linewidth": 0.6,
+        "svg.fonttype": "none",
         "pdf.fonttype": 42, "ps.fonttype": 42,
     }
     if font:
@@ -72,14 +76,40 @@ def set_frame(ax, style="open"):
     ax.tick_params(direction="out", length=0 if style == "none" else 3, width=0.6)
 
 
-def panel_letter(ax, letter, dx=-0.18, dy=1.02, case="lower", fontsize=None):
-    """§5.7: bold panel letter outside top-left of axes. case ∈ {'lower','upper'}."""
+def panel_letter(ax, letter, dx=-0.18, dy=None, case="lower", fontsize=None, pad_pt=2.0):
+    """§5.7: bold panel letter outside top-left of axes. case ∈ {'lower','upper'}.
+
+    The vertical offset is PHYSICAL: the letter's baseline box sits ``pad_pt``
+    points above the axes' top edge, applied as a ``ScaledTranslation`` on top of
+    ``ax.transAxes``. It therefore does not scale with panel height, so letters
+    stay aligned across a mosaic whose panels differ in height
+    (``subplot_mosaic('AAB\\nCCB')``, unequal ``height_ratios``). ``dx`` remains an
+    axes-fraction offset (horizontal placement is unchanged).
+
+    dy : deprecated. A number restores the pre-fix axes-fraction placement
+         (letter bottom at ``dy`` axes fractions), whose absolute height above
+         the panel scales with panel height; passing it emits a
+         DeprecationWarning rather than silently ignoring the argument.
+    """
     import matplotlib.pyplot as plt
+    import matplotlib.transforms as mtransforms
     if fontsize is None:
         fontsize = plt.rcParams.get("font.size", 8) + 1
     s = letter.lower() if case == "lower" else letter.upper()
-    ax.text(dx, dy, s, transform=ax.transAxes,
-            fontweight="bold", fontsize=fontsize, va="bottom", ha="left")
+    if dy is None:
+        transform = ax.transAxes + mtransforms.ScaledTranslation(
+            0.0, pad_pt / 72.0, ax.figure.dpi_scale_trans)
+        y = 1.0
+    else:
+        import warnings
+        warnings.warn(
+            "panel_letter(dy=...) places the letter in axes fractions, so its "
+            "height above the panel scales with panel height and letters "
+            "misalign across panels of different heights; use pad_pt (points) "
+            "instead.", DeprecationWarning, stacklevel=2)
+        transform, y = ax.transAxes, dy
+    return ax.text(dx, y, s, transform=transform,
+                   fontweight="bold", fontsize=fontsize, va="bottom", ha="left")
 
 
 def focal_palette(labels, focal, focal_color, other="muted", base_colors=None):
@@ -186,16 +216,110 @@ def two_tier_label(name, meta):
     return f"{name}\n{meta}"
 
 
-def end_of_line_labels(ax, xs, ys, labels, colors=None, dx=0.01, fontsize=None):
-    """§6.3 / §7.3: label each line series at its right end instead of a legend box."""
+def end_of_line_labels(ax, xs, ys, labels, colors=None, dx=0.01, fontsize=None,
+                       pad_px=2.0, max_expand=0.6):
+    """§6.3 / §7.3: label each line series at its right end instead of a legend box.
+
+    The room the labels need is RESERVED, not assumed (§3.1: "extend the limit
+    past any annotation"; §6.9: a label stays anchored to the row it names).
+    Placement is measured, then resolved one of two ways:
+
+    * **extend**: the x limit is grown until every rendered label lies inside
+      the axes, up to ``max_expand`` (a fraction of the original x span);
+    * **inside**: if that budget is not enough, every label is moved inside the
+      axes instead, right-aligned at its line end.
+
+    Either way no label crosses the axes' right edge, so it cannot land on a
+    neighbouring panel's letter or tick labels. Returns the list of ``Text``.
+
+    pad_px     : clearance kept between the label's right edge and the axes edge
+    max_expand : x-span growth allowed before switching to inside placement
+
+    If no renderer is available the labels cannot be measured; the labels are
+    then placed inside the axes and a warning is emitted; the function never
+    silently leaves a label to overrun.
+    """
+    import warnings
     import matplotlib.pyplot as plt
     if fontsize is None:
         fontsize = plt.rcParams["font.size"]
     if colors is None:
         colors = [None] * len(labels)
-    span = ax.get_xlim()[1] - ax.get_xlim()[0]
+    x0, x1 = ax.get_xlim()
+    span0 = x1 - x0
+    texts, ends = [], []
     for x, y, lab, c in zip(xs, ys, labels, colors):
-        ax.text(x[-1] + dx * span, y[-1], lab, color=c, va="center", ha="left", fontsize=fontsize)
+        if len(x) == 0:
+            continue
+        ends.append((x[-1], y[-1]))
+        texts.append(ax.text(x[-1] + dx * span0, y[-1], lab, color=c,
+                             va="center", ha="left", fontsize=fontsize))
+    if not texts:
+        return texts
+
+    def _place_inside():
+        span = ax.get_xlim()[1] - ax.get_xlim()[0]
+        for t, (xe, ye) in zip(texts, ends):
+            t.set_ha("right")
+            t.set_position((xe - dx * span, ye))
+
+    fig = ax.figure
+    fig.canvas.draw()
+    try:
+        renderer = fig.canvas.get_renderer()
+    except AttributeError:
+        _place_inside()
+        warnings.warn(
+            f"end_of_line_labels: backend {type(fig.canvas).__name__} exposes no "
+            "renderer, so label widths could not be measured; labels were placed "
+            "inside the axes. Re-run on an Agg-capable backend to reserve "
+            "outside room.", RuntimeWarning, stacklevel=2)
+        return texts
+
+    def _overflow():
+        """Pixels by which the labels stick out of the axes (>0 means they do)."""
+        boxes = [t.get_window_extent(renderer=renderer) for t in texts]
+        return max(max(b.x1 for b in boxes) + pad_px - ax.bbox.x1,
+                   ax.bbox.x0 + pad_px - min(b.x0 for b in boxes))
+
+    # Budget the growth on the axis' own scale, so a decade counts as a decade
+    # on a log axis and inverted limits are handled by sign, not by magnitude.
+    scale = ax.xaxis.get_transform()
+
+    def _scale_span(lo, hi):
+        a, b = scale.transform([lo, hi])
+        return abs(b - a)
+
+    budget = _scale_span(x0, x1) * (1 + max_expand)
+    fits = False
+    for _ in range(20):
+        if _overflow() <= 0.5:
+            fits = True
+            break
+        inv = ax.transData.inverted()
+        y_ref = ax.bbox.y0
+        over_right = max(t.get_window_extent(renderer=renderer).x1
+                         for t in texts) + pad_px - ax.bbox.x1
+        grow = (inv.transform((ax.bbox.x1 + max(over_right, 0.0), y_ref))[0]
+                - inv.transform((ax.bbox.x1, y_ref))[0])
+        lo, hi = ax.get_xlim()
+        widened = _scale_span(lo, hi + grow)
+        if not (widened > _scale_span(lo, hi)) or widened > budget:
+            break
+        ax.set_xlim(lo, hi + grow)
+        span = ax.get_xlim()[1] - ax.get_xlim()[0]
+        for t, (xe, ye) in zip(texts, ends):
+            t.set_position((xe + dx * span, ye))
+    if not fits:
+        ax.set_xlim(x0, x1)
+        _place_inside()
+        if _overflow() > 0.5:
+            warnings.warn(
+                "end_of_line_labels: the labels are wider than the axes, so they "
+                "fit neither outside nor inside; shorten the labels or widen the "
+                "panel. Placement is inside the axes but still overruns.",
+                RuntimeWarning, stacklevel=2)
+    return texts
 
 
 def panel_crops(fig, dpi=None, pad_px=6, bbox_inches=None, pad_inches=None):

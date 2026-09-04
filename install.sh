@@ -37,6 +37,7 @@ RECOMMENDED_SKILLS=(
   core/submission-audit
   core/rebuttal-response
   core/stats-reporting-audit
+  core/anti-defensive-writing
   core/scientific-prose-style
   venue/nature-portfolio-playbook
 )
@@ -45,6 +46,30 @@ FIGURE_SKILLS=(
   figure/nature-figure
   figure/figure-style
 )
+
+# Skills carrying Apache-2.0 material. Four are wholly vendored and declare
+# `license: Apache-2.0` in their SKILL.md; four carry merged Apache-2.0 fragments
+# inside otherwise MIT skills. Both cases oblige us to ship the licence text and the
+# NOTICE alongside the files, because `install.sh` distributes a skill directory on
+# its own, without the repository root. Kept in sync by tests/test_license_shipping.py.
+APACHE_SKILLS=(
+  figure/nature-figure
+  figure/figure-style
+  core/scientific-prose-style
+  core/stats-reporting-audit
+  core/figure-planner
+  core/data-availability
+  core/citation-verifier
+  core/scientific-writing
+)
+
+is_apache_skill() {
+  local rel="$1" a
+  for a in "${APACHE_SKILLS[@]}"; do
+    [ "$a" = "$rel" ] && return 0
+  done
+  return 1
+}
 
 AGENT=""
 DEST_OVERRIDE=""
@@ -90,7 +115,7 @@ Options:
   --agent <claude|codex|both>  Target agent. Default: auto-detect from ~/.claude and ~/.codex.
   --local                      Install into ./.claude/skills (current project only; Claude Code only).
   --dest <dir>                 Install into an explicit directory. Overrides --agent; conflicts with --local.
-  --set <recommended|all>      Which skills to install. Default: recommended (17 skills).
+  --set <recommended|all>      Which skills to install. Default: recommended (18 skills).
   --figure                     Add the figure stack (nature-figure, figure-style) to --set recommended.
                                Needs a plotting backend: Python matplotlib/seaborn or R ggplot2.
   --ref <branch|tag|sha>       Download and install from this ref. Forces a download even from a clone.
@@ -398,7 +423,11 @@ install_into() {
     [ -e "$dest/$name" ] && verb="replace"
 
     if [ "$DRY_RUN" -eq 1 ]; then
-      info "  would ${verb}  $name"
+      if is_apache_skill "$rel"; then
+        info "  would ${verb}  $name ${C_DIM}(+ LICENSE-APACHE, NOTICE)${C_RESET}"
+      else
+        info "  would ${verb}  $name"
+      fi
       installed=$((installed + 1))
       [ "$verb" = "replace" ] && replaced=$((replaced + 1))
       continue
@@ -410,9 +439,20 @@ install_into() {
     STAGING="$dest/.nps-staging-$name"
     rm -rf "$STAGING"
     cp -R "$src" "$STAGING"
+    # `cp -R` copies the working tree, which carries gitignored bytecode. A stale
+    # .pyc built for a different interpreter must not reach a user's install.
+    find "$STAGING" -name '__pycache__' -type d -prune -exec rm -rf {} +
     rm -rf "${dest:?}/$name"
     mv "$STAGING" "$dest/$name"
     STAGING=""
+
+    # Apache-2.0 sections 4(a) and 4(d): a recipient of the skill directory must get
+    # the licence text and the NOTICE. Not guarded by `|| true`: if the source tree
+    # is missing them the install is wrong and should stop, not ship silently.
+    if is_apache_skill "$rel"; then
+      cp "$SOURCE_DIR/LICENSE-APACHE" "$dest/$name/LICENSE-APACHE"
+      cp "$SOURCE_DIR/NOTICE" "$dest/$name/NOTICE"
+    fi
 
     if [ "$verb" = "replace" ]; then
       info "  ${C_GREEN}✓${C_RESET} $name ${C_DIM}(replaced)${C_RESET}"

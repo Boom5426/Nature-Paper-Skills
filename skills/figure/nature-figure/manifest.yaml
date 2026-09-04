@@ -51,6 +51,34 @@ axes:
       r:       static/fragments/backend/r.md
     multi: false
 
+qa_tooling:
+  purpose: |
+    Dependency-free preflight and audit tools. They exist to stop a figure
+    asserting more than its data supports, and to make the prose rules in
+    references/qa-contract.md executable. Run them before delivery, not instead
+    of reading the contract.
+  exit_codes: |
+    0 PASS, 1 FAIL, 2 ERROR (usage or I/O), 3 NOT RUN (dependency absent),
+    4 NOT AUDITABLE (the input cannot answer the question). 2, 3 and 4 are not
+    passes: a caller that treats "not 1" as success ships an unchecked figure.
+  scripts:
+    - condition: before rendering, to preflight a figure source file for size, font, export and axis-integrity problems
+      path: scripts/validate_figure.py
+      backend: python and R source
+    - condition: after export, to check that no printed text falls below the journal's minimum point size
+      path: scripts/audit_pdf_text.py
+      note: run it on the per-panel PDFs; a composite assembled with scaled placement reports NOT AUDITABLE by design
+    - condition: after export, to find text collisions, text crossed by strokes, and text clipped by the page
+      path: scripts/audit_figure_collisions.py
+      note: needs PyMuPDF; without it the tool reports NOT RUN rather than passing
+    - condition: multi-panel figures, to check that panels a reader perceives as aligned actually are
+      path: scripts/audit_panel_alignment.py
+      note: consumes a layout manifest; call require_matplotlib_panel_alignment() after the final draw
+    - condition: any figure whose values are interpolated, or whose value labels are positioned programmatically
+      path: scripts/figure_safety.py
+    - condition: loading the table behind a quantitative panel, and recording which rows were used and which were excluded
+      path: scripts/figure_source_data.py
+
 references:
   on_demand:
     - condition: convert a user request into core conclusion, evidence hierarchy, panel map, and review-risk checks
@@ -81,5 +109,13 @@ references:
       path: references/tutorials.md
     - condition: "radar, 3D sphere, fill_between, scatter patterns"
       path: references/chart-types.md
-    - condition: bundled figures4papers Python scripts and output previews for concrete pattern adaptation
+    - condition: locating a worked example for a claim shape, or judging an external example script before reusing it
       path: references/demos.md
+    - condition: "planning or auditing a multi-panel figure as an evidence chain: which panel does which inferential job, how figure order mirrors the manuscript's claim escalation, whether a panel is necessary"
+      path: references/multipanel-evidence-architecture.md
+    - condition: "the target is the flagship journal Nature: file formats, Extended Data, initial-review versus accepted-in-principle production files"
+      path: references/nature-article-requirements.md
+    - condition: reusing an example script, a preview image, or a user-provided plotting template with new data
+      path: references/asset-adaptation.md
+    - condition: planning, generating, revising, or auditing a graphical abstract with AI assistance
+      path: references/ai-graphical-abstract-workflow.md

@@ -12,7 +12,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Focus](https://img.shields.io/badge/focus-Nature%20series-1f6feb)](docs/venue-routing.md)
 [![Workflow](https://img.shields.io/badge/workflow-claim--driven-blue)](docs/workflow-map.md)
-[![Skills](https://img.shields.io/badge/skills-26-8a63d2)](docs/skill-map.md)
+[![Skills](https://img.shields.io/badge/skills-27-8a63d2)](docs/skill-map.md)
 [![Codex](https://img.shields.io/badge/agent-Codex-0a7ea4)](docs/installation-codex.md)
 [![Claude Code](https://img.shields.io/badge/agent-Claude%20Code-cc785c)](docs/installation-claude.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -34,11 +34,13 @@
 - 🔬 **证据边界优先**：Abstract / Introduction 不允许比下游证据更强
 - 📊 **统计与图注可审计**：`stats-reporting-audit` 守住独立实验单元 n、多重比较、图注统计
 - 📎 **引用卫生**：`citation-verifier` 本地扫描 + 严重度分级，先查后投
+- 🔧 **图形审计可执行**：`qa-contract.md` 的散文规则有了对应命令，字号、碰撞、面板对齐、源数据可追溯都能真跑一遍，而且工具会明确说「我查不了」而不是默认通过
+- 🚪 **多入口**：`paper-workflow` 是兜底，不是唯一入口；任何一层都能直接叫
 - 📦 **可直接复制**：每个 skill 自包含，脚本随目录分发，Codex 与 Claude Code 可并存
 
 ## 📦 快速开始
 
-一条命令，不用克隆。脚本会自动识别你用的是 Codex 还是 Claude Code，装好推荐的 17 个 skill，并干净地覆盖旧版本。
+一条命令，不用克隆。脚本会自动识别你用的是 Codex 还是 Claude Code，装好推荐的 18 个 skill，并干净地覆盖旧版本。
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
@@ -74,7 +76,7 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 # 只对当前项目生效，不写入 home 目录（Claude Code）
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --local
 
-# 装全部 26 个 skill；或先预览，不写任何文件
+# 装全部 27 个 skill；或先预览，不写任何文件
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --set all
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --dry-run
 ```
@@ -128,20 +130,20 @@ done
 ## 🔄 默认工作流
 
 ```mermaid
-flowchart TD
-    A[paper-bootstrap] --> B[nature-portfolio-playbook]
-    B --> C["scientific-writing / manuscript-optimizer"]
-    C --> D[figure-planner]
-    D --> E["nature-figure / figure-style"]
-    E --> F[results-section-revision]
-    F --> G[stats-reporting-audit]
-    G --> H[citation-verifier]
-    H --> H2[claim-source-verification]
-    H2 --> I[data-availability]
-    I --> J[scientific-prose-style]
-    J --> K[submission-audit]
-    K --> L[rebuttal-response]
+flowchart LR
+    A["① 立稿<br/>paper-bootstrap<br/>nature-portfolio-playbook"]
+    B["② 结构与证据<br/>manuscript-optimizer / scientific-writing<br/>write-scientific-manuscript<br/>results-section-revision"]
+    C["③ 图<br/>figure-planner → nature-figure / figure-style<br/>scripts/ 审计：字号 · 碰撞 · 对齐 · 源数据"]
+    D["④ 语言<br/>anti-defensive-writing<br/>scientific-prose-style"]
+    E["⑤ 投稿与返修<br/>submission-audit<br/>paper-reviewer → rebuttal-response"]
+    F["完整性审计（并行进行，不排队）<br/>stats-reporting-audit · citation-verifier<br/>claim-source-verification · data-availability<br/>draft-marker-discipline"]
+    A --> B --> C --> D --> E
+    F -.随时校验.-> B
+    F -.随时校验.-> C
+    F -.随时校验.-> D
 ```
+
+三条真正有信息量的约束：**结构在语言之前**（②在④之前，改错层就白改）；**完整性审计是并行的**，不是流水线上的一站，任何时候发现问题都回到②或③；**④之内也有序**，`anti-defensive-writing` 先于 `scientific-prose-style`，因为删掉防御性支架会重写段落开头和句界，反过来做就是做两遍。
 
 > 工作流图中的 `nature-figure` / `figure-style` 属可选 Figure Stack，需按上方 TIP 额外安装。
 >
@@ -152,6 +154,73 @@ flowchart TD
 - 以期刊稿为主，不以会议稿为主
 - 未明确 venue 时按 `Nature` 系列期刊导向处理
 - 先修结构与证据链，再做语句级润色
+
+## 🚪 入口：不止 paper-workflow 一个
+
+`paper-workflow` 是**兜底入口**，用在你自己也不确定下一步该用哪个的时候。它做的事是分类并报出整条链，不是把所有请求都揽过去。任何一层都可以直接进。
+
+| 你要做的事 | 直接这么说 | 进入 |
+|---|---|---|
+| 不确定下一步 | 「帮我优化论文」「投稿前检查」 | `paper-workflow` 分类后报链 |
+| 建新稿骨架 | 「起一个新稿的目录」 | `paper-bootstrap` |
+| 选期刊、定文章类型 | 「投 Nature Methods 还是 Nat Biotech」 | `nature-portfolio-playbook` |
+| 结构和证据链不稳 | 「这篇稿子逻辑乱」 | `manuscript-optimizer` |
+| 段落读不懂但结论没错 | 「这段话别扭」 | `write-scientific-manuscript` |
+| 定每张图要证明什么 | 「这几张图该怎么排」 | `figure-planner` |
+| 出图 | 「画一张对比图」「科研绘图」 | `nature-figure` |
+| 查一张已画好的图 | 「这张图有没有问题」 | `figure-style` |
+| Results 一图一段流水账 | 「Results 太散」 | `results-section-revision` |
+| 统计报告完整性 | 「检查统计」「n 怎么算」 | `stats-reporting-audit` |
+| 引用卫生 | 「查参考文献」 | `citation-verifier` |
+| 引用是否支撑论断 | 「这句的引用对吗」 | `claim-source-verification` |
+| 数据可用性声明 | 「写 data availability」 | `data-availability` |
+| 写得太怂、免责太多 | 「太啰嗦」「让语气更肯定」 | `anti-defensive-writing` |
+| 句子级润色 | 「润色一下这段」 | `scientific-prose-style` |
+| 投稿前预检 | 「投稿前全面检查」 | `submission-audit` |
+| 返修回复 | 「回复审稿人」 | `rebuttal-response` |
+| 写综述 / perspective | 「写一篇综述」 | `review-article-architecture`（不走上面那条链） |
+
+> 一条例外：**泛泛的**稿件请求先进 `paper-workflow`。因为论文有结构、段落逻辑、期刊风格、标点四层，改错层就白改，而单个技能只覆盖一层。点名了技能或具体活儿就直接去，不用绕。
+
+## 🔬 图形链路（展开）
+
+图形是本仓库唯一带可执行审计的一层，展开写清楚：
+
+```
+figure-planner          一图一主张、panel 角色、main vs supplement、图注与正文对齐
+   │                    不画图
+   ▼
+nature-figure           路由协议
+   ├ 步骤 1  读 manifest + 常驻的 contract.md / stance.md
+   ├ 步骤 2  后端门（阻塞）：Python 还是 R，记住偏好
+   ├ 步骤 3  只加载选中后端的 fragment
+   ├ 步骤 4  出图：五点契约 → 默认立场 → backend fragment
+   ├ 步骤 5  按需打开 17 份 references
+   └ 步骤 6  交付前跑审计
+   ▼
+figure-style            正确性 checklist + kernel.py helper
+   ▼
+审计脚本                 渲染前  validate_figure.py my_figure.py
+（skills/figure/         导出后  audit_pdf_text.py panel_a.pdf --min-pt 5   ← 逐 panel
+  nature-figure/         拼板后  audit_figure_collisions.py fig02.pdf       ← 合成图
+  scripts/）             多面板  audit_panel_alignment.py fig02.layout.json
+                         数据侧  figure_source_data.py → <figure>.qa.json
+                         数值侧  figure_safety.py
+   ▼
+qa-contract.md          投稿前清单
+```
+
+**退出码是统一契约**，四个审计工具共用。`validate_figure.py` 只会出 0/1/2，因为静态源码检查总能跑、总能给答案；另外三个还会用到 3 和 4：
+
+| 码 | 含义 | 算通过吗 |
+|---|---|---|
+| 0 | PASS，查了，没问题 | 是 |
+| 1 | FAIL，查了，有阻塞问题 | 否 |
+| 2 | ERROR，用法或 IO 错误，什么都没查 | 否 |
+| 3 | NOT RUN，依赖缺失，什么都没查 | 否 |
+| 4 | NOT AUDITABLE，输入回答不了这个问题 | 否 |
+
+2、3、4 表示这张图**没被检查**，不是干净。按 `returncode != 1` 分支的封装会交付一张没审过的图。一个不会说「我查不了」的审计工具，比没有审计更危险。
 
 ## 🧩 仓库里有什么
 
@@ -174,6 +243,7 @@ flowchart TD
 | `submission-audit` | 投稿前 / 返修前总预检 |
 | `rebuttal-response` | 审稿意见回复与改稿联动 |
 | `stats-reporting-audit` | 统计报告审计（n、重复性、多重比较、图注统计）|
+| `anti-defensive-writing` | 去掉防御性写作：多余免责、放在高权重位置的限定、以限制开头的段落。审计技能定下的限定是承重的，只改形式不删 |
 | `scientific-prose-style` | 句子级润色（em-dash 预算、hedging、句长节奏）|
 
 **图形技能** `skills/figure/`
@@ -252,14 +322,19 @@ Nature-Paper-Skills/
 │   ├── research/    # 文献、分析、证据生成
 │   ├── review/      # 审稿人视角评估
 │   └── optional/    # 有用但非默认的扩展
+│                    #   figure/nature-figure/scripts/ 内含 6 个零依赖审计工具
+├── tests/           # 243 个测试，`python3 -m unittest discover -s tests`
 ├── install.sh       # Codex / Claude Code 一条命令安装脚本
-├── ATTRIBUTION.md
+├── ATTRIBUTION.md   # 逐项来源，含 Apache-2.0 §4(b) 修改文件清单（有测试盯着）
 ├── CONTRIBUTING.md
+├── LICENSE          # 仓库自有内容 MIT
+├── LICENSE-APACHE   # vendored skill 的 Apache-2.0 全文
+├── NOTICE
 ├── README.md
 └── README.en.md
 ```
 
-脚本随 skill 目录分发，保证 skill 可独立复制和复用。
+脚本随 skill 目录分发，保证 skill 可独立复制和复用。`install.sh` 会把 `LICENSE-APACHE` 和 `NOTICE` 一并装进含 Apache-2.0 材料的 8 个 skill 目录，所以 `curl | bash` 装完手上是有许可证的。
 
 ## 🎯 适用范围
 
@@ -276,7 +351,11 @@ Nature-Paper-Skills/
 
 ## 🙏 致谢
 
-本仓库部分代码和灵感来源于 [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw)、[罗小罗团队 Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills) 与 Claude Science skill pack，感谢所有为本项目贡献代码、文档和测试的开发者社区成员。逐项来源与许可见 [ATTRIBUTION.md](ATTRIBUTION.md)。
+本仓库部分代码和灵感来源于 [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw)、[罗小罗团队 Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills) 与 Claude Science skill pack。
+
+图形层的编码规则参考了 [ChenLiu-1996/figures4papers](https://github.com/ChenLiu-1996/figures4papers)（Chen Liu，Yale）中真实论文出图脚本的设计观察。该仓库未公开 LICENSE，本仓库不复制也不分发其任何代码或文字，配方均为独立重写；完整声明见 [THIRD_PARTY_NOTICES.md](skills/figure/nature-figure/THIRD_PARTY_NOTICES.md)。
+
+感谢所有为本项目贡献代码、文档和测试的开发者社区成员。逐项来源与许可见 [ATTRIBUTION.md](ATTRIBUTION.md)。
 
 ## 📄 许可
 

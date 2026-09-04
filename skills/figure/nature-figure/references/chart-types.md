@@ -221,7 +221,15 @@ ax.plot(x, y_bottom, lw=3, color='#850c0a')
 
 ---
 
-## Log-Scale Bar Chart
+## Log-Scale Value Comparison
+
+Do not put filled bars on a log-scaled value axis. Bar length encodes a ratio, and
+a log axis makes the drawn length a function of the arbitrary lower limit rather
+than of the value; `figure-style` lists it as a correctness failure, not a style
+preference. Draw points with a median tick, or bars on a linear axis with the data
+rescaled to a stated unit.
+
+If a log axis is genuinely required, use point marks:
 
 ```python
 ax.set_yscale('log')

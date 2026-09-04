@@ -61,18 +61,53 @@ ax.set_xticklabels([])   # keeps tick marks, removes labels
 
 ---
 
-## Pattern 4: Dynamic y-axis tightening
+## Pattern 4: Y-axis limits by mark type
 
-Never use 0–100 when all values are in 80–95.
+The limit rule follows the mark, not the data range.
+
+**Bar length, stacked bars and area fills are ratio-scale encodings.** The reader
+reads length, so length must stay proportional to value: keep the zero baseline.
+Exactly two exceptions, each declared in the panel:
+
+1. A real null. The scale has a meaningful non-zero origin (AUROC 0.5, log fold
+   change 0, delta versus control 0). Put the baseline on the null and label it.
+2. An explicitly drawn axis break. The break must be visible, and no reference
+   line, threshold or annotation may sit inside the gap.
+
+**Points, lines and dot plots encode position, not length**, so they may tighten to
+the data. Budget headroom for labels before drawing, not by widening the limit after.
+
+**Percentages anchor to their true range**: a share of a whole spans 0 to 100.
 
 ```python
-margin = (values.max() - values.min()) * 0.1   # 10% padding
-ax.set_ylim([values.min() - margin, values.max() + margin])
+# Bars, stacked bars, area fills: zero baseline, headroom budgeted up front
+ax.bar(x, values, color=colors)
+ax.set_ylim(0, values.max() * 1.15)          # room for in-bar / above-bar labels
 
-# Manual ticks at clean round numbers
-ax.set_yticks([0.75, 0.80, 0.85, 0.90])
+# Bars on a scale with a real null: baseline on the null, and say so
+ax.bar(x, values - 0.5, bottom=0.5, color=colors)
+ax.set_ylim(0.5, 1.0)
+ax.set_ylabel('AUROC (0.5 = chance)')
+
+# Points, lines, dot plots: tighten to the data, headroom first
+span = values.max() - values.min()
+ax.set_ylim(values.min() - 0.15 * span, values.max() + 0.35 * span)
+ax.set_yticks([0.80, 0.85, 0.90])            # clean round numbers
 ax.tick_params(axis='y', labelsize=36, length=10, width=2)
 ```
+
+**What the old `margin = 0.1 * (max - min)` recipe cost.** On this skill's own
+tutorial data (`tutorials.md` Tutorial 1, `Metric 1` from 0.81 to 0.92) it sets
+`ylim = [0.799, 0.931]`. The shortest bar is then 0.011 long and the tallest
+0.121: a drawn ratio of 11.0 : 1 for a true ratio of 0.92 / 0.81 = 1.14 : 1, so
+the panel overstates the gap 9.7-fold. That 11 : 1 does not depend on the data.
+For a margin fraction `f` the drawn ratio is `(1 + f) / f` whatever the values
+are, so the bars encode the padding constant instead of the measurement. On a
+zero baseline the drawn ratio is 1.14 : 1 and matches the numbers.
+
+If the interesting range is genuinely narrow, change the mark rather than the
+axis. A dot plot with a 95% CI, a paired-slope plot, or a difference-from-reference
+panel shows a one-point gap at full resolution and stays honest.
 
 ---
 
