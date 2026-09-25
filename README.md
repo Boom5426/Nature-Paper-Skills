@@ -360,3 +360,8 @@ Nature-Paper-Skills/
 ## 📄 许可
 
 仓库自有内容为 [MIT](LICENSE)。部分 vendored skill（`nature-figure`、`figure-style`、`scientific-prose-style`、`stats-reporting-audit` 及若干合并片段）为 Apache-2.0，许可全文见 [LICENSE-APACHE](LICENSE-APACHE)，覆盖范围见 [NOTICE](NOTICE)。
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Boom5426/Nature-Paper-Skills&type=Date)](https://star-history.com/#Boom5426/Nature-Paper-Skills&Date)
+
