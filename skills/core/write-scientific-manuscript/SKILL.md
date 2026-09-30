@@ -25,6 +25,8 @@ This skill owns clarity and logic diagnosis. It carries no house style and no pu
   wastes the edit.
 - `scientific-writing` when a section needs drafting or rewriting into full paragraphs, or when the
   task names a citation style or a reporting guideline.
+- `anti-defensive-writing` after the passage logic is settled, when the text reads like an audit
+  report, a rebuttal or a self-critique.
 - `scientific-prose-style` last, for punctuation and rhythm. This file deliberately carries no
   em-dash rule; that skill owns it, and its cap is at most one em dash per paragraph and none in
   the abstract.
@@ -114,7 +116,7 @@ Preserve established field terminology even when it is less elegant than a newly
 - Distinguish an absence of evidence from evidence of absence.
 - Retain negative or mixed results and explain what they narrow.
 
-Never improve flow by deleting a scientifically important limitation or qualifier. Instead, place the qualifier where it constrains the claim without obscuring the main message.
+Never improve flow by deleting a scientifically important limitation or qualifier. Instead, place the qualifier where it constrains the claim without obscuring the main message. The reverse holds too: never resolve an ambiguity by adding a qualifier when a precise definition would remove it ("the four labels denote dataset regimes", not a sentence about what they do not mean).
 
 ## Revise in passes
 

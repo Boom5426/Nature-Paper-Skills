@@ -129,6 +129,23 @@ For each substantive claim, verify:
 - each revision-location statement says what changed there, for example: Results report the finding, Methods describe the analysis, Discussion revises the interpretation;
 - the overview, optional action list, section headings, detailed evidence, and closing revision paragraph preserve the same one-to-one mapping.
 
+### Manuscript edits made in reply
+
+The letter argues; the manuscript does not. A change made to the manuscript in reply to a reviewer is
+held to rule zero of `anti-defensive-writing`:
+
+- The change is a result, a precise definition, a clearer design statement, or a narrowed claim. It
+  is not added reassurance, a sentence about what the paper does not claim, or the letter's argument
+  restated.
+- A limitation goes into the manuscript only when it sets what a reported result means, and then
+  once, in positive form, in the closing scope paragraph of the Discussion or in the Methods sentence
+  where it acts.
+- The reasoning that persuades the reviewer stays in the letter. Wording calibrated for the letter,
+  such as "[remaining factors] could not be separated", is not pasted into the manuscript; the
+  manuscript states what was held constant and what varied.
+- Run the `anti-defensive-writing` detection pass on every revised passage before quoting it in the
+  letter.
+
 Use [final-audit.md](references/final-audit.md) for a whole-letter or submission-ready review.
 
 ## Match the requested output mode

@@ -122,6 +122,10 @@ class PdfObject:
     dictionary: bytes
     payload: bytes | None = None
     filters: bytes = b""
+    # Offset of the first payload byte in the file. Kept so that a /Length given
+    # as an indirect reference can re-slice the stream from the original bytes
+    # rather than trim a payload the endstream fallback has already rstripped.
+    stream_start: int | None = None
 
 
 def _skip_whitespace(data: bytes, pos: int) -> int:
@@ -233,7 +237,8 @@ def parse_objects(data: bytes) -> tuple[dict[int, PdfObject], list[str]]:
                 continue
             payload = data[stream.end() : end].rstrip(b"\r\n")
         filters = raw_value(dictionary, b"/Filter") or b""
-        objects[number] = PdfObject(number, dictionary, payload, filters)
+        objects[number] = PdfObject(number, dictionary, payload, filters,
+                                    stream.end())
 
     # Resolve streams whose /Length was an indirect reference.
     for obj in list(objects.values()):
@@ -248,7 +253,18 @@ def parse_objects(data: bytes) -> tuple[dict[int, PdfObject], list[str]]:
         declared = re.match(rb"[\x00\t\r\n\f ]*(\d+)", target.dictionary)
         if declared is None:
             continue
-        obj.payload = obj.payload[: int(declared.group(1))]
+        length = int(declared.group(1))
+        # Re-slice from the file. The endstream fallback strips trailing CR/LF,
+        # and a deflate stream whose last byte is 0x0A or 0x0D loses that byte,
+        # which then inflates as a truncated stream. Slicing by the declared
+        # length is exact; the payload is only trimmed if the file disagrees.
+        if obj.stream_start is not None:
+            candidate_end = obj.stream_start + length
+            trailer = data[candidate_end : candidate_end + 20].lstrip(WHITESPACE)
+            if trailer.startswith(b"endstream"):
+                obj.payload = data[obj.stream_start : candidate_end]
+                continue
+        obj.payload = obj.payload[:length]
 
     for obj in list(objects.values()):
         if obj.payload is None or not TYPE_OBJSTM.search(obj.dictionary):

@@ -189,18 +189,19 @@ Collapsing it into "established" is straightforward overclaiming.
 
 Use the same four states in the prose and in the artwork, with the same words.
 
-## 7. Negative Claims Name What Was Checked
+## 7. Negative Claims Name Their Scope
 
 A Review makes many claims of absence, and absence is unfalsifiable as usually
-written. Bound every one:
+written. Bound every one by naming its scope:
 
 Not: "no standard covers this."
-But: "absent from the public record as checked, namely <the standards catalogue,
-the evaluation programmes, the corpora> examined."
+But: "none of <the standards catalogue, the evaluation programmes, the corpora>
+covers this."
 
-Name the documents and programmes. This costs a clause and converts an
-unfalsifiable claim into a checkable one, which is the difference between a
-reviewer trusting the sentence and a reviewer having to take your word.
+Name the documents and programmes. This costs a clause and turns an
+unfalsifiable claim into a checkable one. Keep the scope in the sentence and the
+process out of it: "as checked" and "to our knowledge" add audit voice without
+adding scope.
 
 ## 8. Word Budget Measured By Section
 
@@ -257,7 +258,8 @@ attribution. When authorship is agreed, fill it in once, in one file.
 6. Draft, sourcing as you go rather than retrofitting citations
    (`claim-source-verification`).
 7. Measure word counts by section; label each disproportion by cause.
-8. Only then compress and polish (`scientific-prose-style`).
+8. Only then remove audit, defensive and self-critical writing
+   (`anti-defensive-writing`), then compress and polish (`scientific-prose-style`).
 
 ## Standing Rules
 
@@ -265,6 +267,6 @@ attribution. When authorship is agreed, fill it in once, in one file.
 2. **The thesis is defined once and called, never retyped.**
 3. **Nothing is deleted silently.** Superseded material is archived with a record
    of where it went. See `draft-marker-discipline`.
-4. **A negative claim names what was checked.**
+4. **A negative claim names its scope.**
 5. **Four status states, not two.** "Not established" is a finding.
 6. **No contributor name in the tree while authorship is open.**

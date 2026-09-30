@@ -88,7 +88,7 @@ vendored. `references/figure-delivery-bundle.md` and `THIRD_PARTY_NOTICES.md`
 are likewise original, distributed under this skill's Apache-2.0 terms.
 
 <!-- APACHE-MODIFIED-FILES:END -->
-- `skills/core/stats-reporting-audit` corresponds to the upstream `nature-statistics` skill, normalized to this repository's naming and cross-references.
+- `skills/core/stats-reporting-audit` corresponds to the upstream `nature-statistics` skill, normalized to this repository's naming and cross-references. Changed locally on 2026-09-30: workflow step 4 maps declared statistics back to reported results, step 8 reports precision as numbers rather than caveat sentences, the author-facing notes are kept out of the manuscript, `references/statistical-reporting.md` gained a descriptive variant and conditional Source Data wording, and the small-sample fixes in `references/common-failure-modes.md`, `references/reviewer-checklist.md` and `references/figure-statistics.md` were rewritten accordingly.
 - The following upstream material was merged into existing skills rather than added as standalone skills:
   - the FAIR/DataCite metadata checklist and Chinese-author alignment notes from `nature-data`, merged into `skills/core/data-availability/references/`;
   - the citation severity matrix and the volume-year versus DOI-year check from `nature-ref-verifier`, merged into `skills/core/citation-verifier`;
@@ -97,7 +97,7 @@ are likewise original, distributed under this skill's Apache-2.0 terms.
 ## Integrated From The Claude Science Skill Pack (Apache-2.0)
 
 - `skills/core/scientific-prose-style` was vendored from the Claude Science `scientific-prose-style` skill; figure cross-references were repointed to this repository's `figure-planner`, and a pointer to the `anti-defensive-writing` layer above it was added.
-- `skills/figure/figure-style` was vendored from the Claude Science `figure-style` skill; the render-then-verify loop and helper loading were de-coupled from the Operon host runtime so the skill runs in a plain install. The correctness checklist is unchanged. One correction was made to `kernel.py`: `apply_figure_style()` set `pdf.fonttype`/`ps.fonttype` to 42 but not `svg.fonttype`, so following the skill's own instruction to call it before plotting and then exporting SVG converted all text to bezier paths. `svg.fonttype = "none"` was added alongside the existing font settings.
+- `skills/figure/figure-style` was vendored from the Claude Science `figure-style` skill; the render-then-verify loop and helper loading were de-coupled from the Operon host runtime so the skill runs in a plain install. The correctness checklist is unchanged except rule 2.3, which since 2026-09-30 moves the fact that sets comparability into the caption and leaves methodological discussion to Methods, and rule 7.5's pointer to `figure-planner`. One correction was made to `kernel.py`: `apply_figure_style()` set `pdf.fonttype`/`ps.fonttype` to 42 but not `svg.fonttype`, so following the skill's own instruction to call it before plotting and then exporting SVG converted all text to bezier paths. `svg.fonttype = "none"` was added alongside the existing font settings.
 - The Nature-style color palette merged into `skills/core/figure-planner` derives from the Claude Science `nature-palette` skill (original source: github.com/Boom5426/Awesome-Virtual-Cell 配色.ipynb).
 
 ## Original To This Repository
@@ -170,15 +170,15 @@ This file is intentionally conservative. If you later want per-skill provenance,
 
 Source: https://github.com/Kiterlin/anti-defensive-writing
 
-- `skills/core/anti-defensive-writing` carries that project's `skill/anti-defensive-writing/SKILL.md`,
-  fetched 2026-08-22 at `main`. Everything between `## Core Rule` and `## Final Pass` is upstream
-  text, unmodified. Local additions: the frontmatter (restated for this repository's dispatcher,
-  with bilingual triggers), one pointer sentence under the H1, the `## Local integration` section
-  (chain position inside `paper-workflow`, the boundary against the integrity audits and against
-  `scientific-prose-style`, a worked Methods example, and the reporting requirement), and
-  `## Provenance`. Upstream's Codex packaging files were not carried over. The upstream MIT licence
-  travels with the skill as `skills/core/anti-defensive-writing/LICENSE`, and the fetch record and
-  refresh procedure are in that directory's `UPSTREAM.md`.
+- `skills/core/anti-defensive-writing` was adapted from that project's
+  `skill/anti-defensive-writing/SKILL.md`, fetched 2026-08-22 at `main`. On 2026-09-30 the body was
+  rewritten from this repository's manuscript-revision history (rule zero, the audit, defensive,
+  self-critical and commentary voices, What stays, the placement table, modes, the detection pass and
+  `references/worked-examples.md`). The core rule and three upstream examples, reproduced unmodified
+  in `references/worked-examples.md`, remain from upstream. Upstream's Codex packaging files were not
+  carried over. The upstream MIT licence travels with the skill as
+  `skills/core/anti-defensive-writing/LICENSE`, and the fetch record is in that directory's
+  `UPSTREAM.md`.
 
 ## Third-Party Material Of Unresolved License
 

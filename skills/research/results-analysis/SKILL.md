@@ -126,8 +126,8 @@ See `references/visualization-best-practices.md` for the visualization guide.
 ### Ablation Study
 [Validate contributions of each component]
 
-### Statistical Significance
-[Report statistical test results]
+### Statistical Reporting
+[Effect sizes with intervals and n; inferential tests only where the design supports them, with the policy declared once in Methods]
 
 ### Qualitative Analysis
 [Case studies, visualization examples]
@@ -137,7 +137,7 @@ See `references/visualization-best-practices.md` for the visualization guide.
 - Clearly state the hypothesis each experiment validates
 - Guide readers to observe key phenomena: "Figure X shows..."
 - Report complete statistical information
-- Honestly report limitations
+- Report null and negative results plainly, as findings; state the scope of the work once, in the Discussion
 
 See `references/results-writing-guide.md` for the complete writing guide.
 
@@ -159,14 +159,14 @@ See `references/results-writing-guide.md` for the complete writing guide.
 ❌ **Wrong approach:**
 - Reporting only the best results (cherry-picking)
 - Confusing standard deviation and standard error
-- Not reporting statistical significance
-- Not correcting for multiple comparisons
+- Claiming a difference without its effect size, interval and n
+- Reporting several inferential tests without a multiplicity policy
 
 ✅ **Correct approach:**
 - Report all experimental results
 - Clearly specify whether standard deviation or standard error is used
-- Perform appropriate statistical tests
-- Use Bonferroni or similar correction methods
+- Perform statistical tests where the design supports them, with the unit of replication stated
+- State one multiplicity policy (for example Holm or Benjamini-Hochberg) when several tests are reported
 
 ### Visualization Errors
 
@@ -289,7 +289,7 @@ See the guides in the `references/` directory for detailed methods and best prac
 
 ❌ **Prohibited:**
 - Cherry-picking best results
-- Ignoring statistical significance
+- Claiming a difference the effect size and interval do not support
 - Hiding negative results
 - Not reporting experimental setup
 
@@ -312,7 +312,7 @@ See the guides in the `references/` directory for detailed methods and best prac
 ✅ **Recommended:**
 - Objectively describe results
 - Provide sufficient detail
-- Honestly report limitations
+- Report null and negative results plainly, as findings
 - Guide reader attention
 
 ❌ **Prohibited:**

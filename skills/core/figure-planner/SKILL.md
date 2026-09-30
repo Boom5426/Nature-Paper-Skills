@@ -44,7 +44,7 @@ Assign each panel one primary role before writing the legend or Results paragrap
 - ranking or benchmark comparison
 - translational or practical consequence
 - case illustration
-- failure mode or limitation
+- null or negative result, stated as a finding
 
 Do not let one panel pretend to do three jobs at once.
 
@@ -75,6 +75,9 @@ Move to the supplement:
 - extended cases
 - secondary ablations
 - additional examples that support but do not define the main claim
+- interface, compatibility or eligibility matrices (which methods accept which inputs, which cohorts
+  pass a check): an SI table or one Methods sentence. They explain why a bar is missing; a main panel
+  answers a scientific question
 
 ## Legend Rules
 
@@ -85,6 +88,19 @@ Each legend should:
 - preserve the key quantitative anchors omitted from the compressed main text
 - stay consistent with panel letters, metrics, datasets, and baselines
 - avoid interpretation that is stronger than the plotted evidence
+- carry no interpretation defences ("not selected by", "listed for completeness", "should not be
+  compared"); state the fact that sets comparability instead (a different panel, a different n)
+- explain a counterintuitive value positively, by saying what the quantity is (for example, an
+  inclusion-exclusion overlap can be slightly negative)
+- name a Source Data file only if one is supplied
+
+## Figure Arc
+
+Across a paper, Figure 1 renders the paper's one-sentence pitch as data: scope, not architecture.
+Later figures carry mechanism, evidence, robustness and application. Judge each panel against the
+paper's pitch as well as its own figure's claim, and move content between figures when that is where
+the story needs it. `figure-style` rule 7.5 points here (`figure-style` is part of the figure stack,
+installed with `--figure`).
 
 ## Visual Hygiene Pass
 

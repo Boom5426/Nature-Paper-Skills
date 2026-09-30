@@ -102,6 +102,8 @@ Do not write project memory for:
 - Carrying conference-style structure into a broad-impact journal manuscript by default
 - Writing directly from remembered experiment outcomes instead of refreshing `result_summary.md` and `paper_handoff.md`
 - Saving local clutter into memory instead of only the stable constraints
+- Carrying process status from `notes/` ("locked", "frozen", "verified", gate verdicts) into
+  manuscript prose; the notes record how the work was run, the manuscript states what it found
 
 ## Output Standard
 

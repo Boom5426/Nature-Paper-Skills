@@ -102,9 +102,9 @@ class DocumentedCountTests(unittest.TestCase):
         total = len(skill_paths())
         patterns = [
             ("README.md", rf"skills-{total}-"),
-            ("README.en.md", rf"skills-{total}-"),
-            ("README.md", rf"{total} 个 skill"),
-            ("README.en.md", rf"{total} skills"),
+            ("README.zh-CN.md", rf"skills-{total}-"),
+            ("README.zh-CN.md", rf"{total} 个 skill"),
+            ("README.md", rf"{total} skills"),
         ]
         for doc, pattern in patterns:
             with self.subTest(doc=doc, pattern=pattern):
@@ -114,8 +114,8 @@ class DocumentedCountTests(unittest.TestCase):
     def test_claimed_recommended_counts_match_the_installer(self) -> None:
         count = len(bash_array("RECOMMENDED_SKILLS"))
         for doc, pattern in [
-            ("README.md", rf"推荐的 {count} 个 skill"),
-            ("README.en.md", rf"recommended {count}-skill stack"),
+            ("README.zh-CN.md", rf"推荐的 {count} 个 skill"),
+            ("README.md", rf"recommended {count}-skill stack"),
             ("install.sh", rf"recommended \({count} skills\)"),
         ]:
             with self.subTest(doc=doc):

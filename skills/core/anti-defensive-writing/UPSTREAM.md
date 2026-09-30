@@ -9,20 +9,20 @@
 | Upstream SKILL.md size at fetch | 6,458 bytes |
 | License | MIT (Copyright (c) 2026 Kiterlin), see `LICENSE` |
 
-## What was changed on install
+## What was changed locally
 
-1. **Frontmatter replaced.** Upstream ships a Codex-style `name` + `description`. The local
-   frontmatter keeps the same skill name, restates the description in the form the local dispatcher
-   matches on, adds bilingual trigger phrases, and declares `license: MIT`.
-2. **One pointer sentence added** under the H1, directing the reader to the Local integration
-   section before applying the rules.
-3. **`## Local integration` appended**: chain position inside `paper-workflow`, the boundary against
-   the integrity audits (`stats-reporting-audit`, `claim-source-verification`, `citation-verifier`,
-   `data-availability`, `submission-audit`), the boundary against `scientific-prose-style`, a
-   worked Methods example, and a reporting requirement.
-4. **`## Provenance` appended.**
+On install (2026-08-22): the frontmatter was restated for this repository's dispatcher with bilingual
+triggers and `license: MIT`, and `## Local integration` (chain position, boundary against the
+integrity audits and against `scientific-prose-style`, a worked Methods example, a reporting
+requirement) and `## Provenance` were appended. The upstream body was kept verbatim.
 
-Everything between `## Core Rule` and `## Final Pass` is upstream text, unmodified.
+On 2026-09-30 the body was rewritten from this repository's manuscript-revision history, and it no
+longer carries upstream text verbatim. What remains from upstream is the core rule (advance the claim
+directly, keep necessary limitations, prefer positive scope) and the three examples reproduced
+unmodified at the end of `references/worked-examples.md`. Local additions: rule zero (do not add
+defensive text while editing), the four voices (audit, defensive, self-critical, commentary), What
+stays, the placement table, the six-way classification, the edit, proposal and light-touch modes, the
+detection pass, and `references/worked-examples.md`.
 
 ## Files not carried over
 
@@ -33,5 +33,5 @@ These describe Codex packaging and installation and have no function under the l
 
     curl -sL https://raw.githubusercontent.com/Kiterlin/anti-defensive-writing/main/skill/anti-defensive-writing/SKILL.md
 
-Diff the body against the section range above before re-adopting; keep the local frontmatter and the
-two appended sections.
+The local body is no longer a patch on upstream. To adopt an upstream change, read the upstream diff
+and merge any new idea into the local structure by hand.

@@ -65,7 +65,7 @@ Avoid legends that only say:
 Prefer:
 
 ```text
-Symbols indicate adjusted p values from AUTHOR_INPUT_NEEDED test with AUTHOR_INPUT_NEEDED correction for the comparisons shown: *p < 0.05, **p < 0.01, ***p < 0.001. Exact p values and sample sizes are provided in Source Data. n denotes independent AUTHOR_INPUT_NEEDED.
+Symbols indicate adjusted p values from AUTHOR_INPUT_NEEDED test with AUTHOR_INPUT_NEEDED correction for the comparisons shown: *p < 0.05, **p < 0.01, ***p < 0.001. Exact p values and sample sizes are provided in AUTHOR_INPUT_NEEDED (Source Data only if a Source Data file is supplied). n denotes independent AUTHOR_INPUT_NEEDED.
 ```
 
 Only use this after the relevant facts are supplied.

@@ -191,7 +191,8 @@ Disagreement is the one that goes wrong. State the fact, not the stance: `There 
 experiments`, never `We respectfully disagree`. Attack the premise, never the reader. Lead the evidence
 with a result that would have come out the other way if the referee were right. Concede the true
 fraction in its own sentence. Change the manuscript anyway, because the concern arose from text that
-permitted it.
+permitted it: make that text precise (a definition, a clearer design statement, a narrowed claim),
+not defensive. Reassurance and the letter's argument stay in the letter.
 
 ## Mode `grade`
 

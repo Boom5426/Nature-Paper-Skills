@@ -23,6 +23,8 @@ evidence boundaries, section and paragraph functions, figure-text logic, and ter
 
 - Use `scientific-writing` after the architecture is stable to draft or rewrite full prose.
 - Use `write-scientific-manuscript` to repair paragraph-level clarity and local reasoning.
+- Use `anti-defensive-writing` once the claims are stable, to remove audit, defensive and
+  self-critical writing from the main text and SI.
 - Use `scientific-prose-style` last for punctuation and rhythm.
 - Use `results-section-revision` only when the claims are stable and Results needs local flow repair.
 - Use `review-article-architecture` instead for a Review, survey, or Perspective.
@@ -175,6 +177,8 @@ Do not default to preserving the original sentence or paragraph structure.
 
 Assign every figure and panel one primary role: claim-supporting evidence, definition or
 methodological bridge, validation in a new setting, practical consequence, or case illustration.
+A panel that documents an interface, compatibility or eligibility check (which methods accept which
+inputs) has none of these roles; it belongs in an SI table or one Methods sentence.
 
 Check that:
 
@@ -273,7 +277,8 @@ Answer these questions instead of replaying the Results:
 
 Use `main answer → scientific interpretation → broader implication → limitations → future
 implication`. Clearly label mechanism evidence versus mechanistic hypothesis. State limitations
-once, where they constrain the claim, rather than appending defensive caveats to every result.
+once, as the scope of the research, in one closing Discussion paragraph (or where a limit sets a
+reported value), rather than appending defensive caveats to every result.
 
 ### Figures and legends
 
@@ -336,7 +341,8 @@ Before accepting any revised paragraph, answer:
 
 If question 1, 2, or 3 has no clear answer, restructure the paragraph. If question 4 is yes, narrow
 the claim or obtain evidence. If question 5 is no, add the missing bridge. If question 6 is yes,
-delete the excess.
+delete the excess: repetition, reassurance and process narration go; numbers, n, controls and null
+results are never "excess".
 
 ## Output standard
 

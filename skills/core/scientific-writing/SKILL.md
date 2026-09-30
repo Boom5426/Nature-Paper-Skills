@@ -55,7 +55,7 @@ python ~/.codex/skills/nature-figure/scripts/generate_openrouter_schematic.py \
 # Claude Code (project-local install): replace ~/.codex/skills with .claude/skills
 ```
 
-Requires `OPENROUTER_API_KEY`. Iterate on the panel map and title until the figure is publication-ready. See `nature-figure`'s `references/openrouter-image-generation.md` for full options.
+Requires `OPENROUTER_API_KEY`. Iterate on the panel map and title until the layout is right, then treat the output as a draft: Nature Portfolio journals do not accept images made with generative AI, so the submitted figure is redrawn by hand or in code. See `nature-figure`'s `references/openrouter-image-generation.md` for full options.
 
 **When to add figures:**
 - Study design and methodology flowcharts (CONSORT, PRISMA, STROBE)
@@ -77,8 +77,8 @@ For detailed guidance on creating figures, refer to the `nature-figure` skill.
 **IMRAD Format**: Guide papers through the standard Introduction, Methods, Results, And Discussion structure used across most scientific disciplines. This includes:
 - **Introduction**: Establish research context, identify gaps, state objectives
 - **Methods**: Detail study design, populations, procedures, and analysis approaches
-- **Results**: Present findings objectively without interpretation
-- **Discussion**: Interpret results, acknowledge limitations, propose future directions
+- **Results**: Present findings with the brief interpretation each one needs; broader meaning waits for the Discussion
+- **Discussion**: Interpret results, state the scope of the work once in a closing paragraph, propose future directions
 
 For detailed guidance on IMRAD structure, refer to `references/imrad_structure.md`.
 
@@ -131,13 +131,13 @@ If these sections answer different versions of the story, the manuscript will fe
 **Results Presentation**: Present findings with:
 - Logical flow from primary to secondary outcomes
 - Integration with figures and tables
-- Statistical significance with effect sizes
-- Objective reporting without interpretation
+- Effect sizes with intervals and n, and statistics where the design supports them
+- Findings stated positively, each with the interpretation it needs
 
 **Discussion Construction**: Synthesize findings by:
 - Relating results to research questions
 - Comparing with existing literature
-- Acknowledging limitations honestly
+- Stating the scope of the work once, in a closing paragraph, rather than itemizing limitations
 - Proposing mechanistic explanations
 - Suggesting practical implications and future research
 
@@ -342,7 +342,7 @@ When revising an existing manuscript section rather than drafting from scratch:
 2. For all major claims in the Abstract, Introduction, Results topic sentences, and Discussion, write:
    - `Claim: ... | Evidence: ... | Status: supported / partial / missing`
 3. If a claim is marked `partial` or `missing`, do one of three things only:
-   - weaken it
+   - narrow it to what the evidence supports, stated positively (not hedged, not followed by a disclaimer)
    - add the missing evidence
    - move it into motivation, interpretation, or future work
 4. Only after this pass, rewrite into full journal prose.
@@ -358,10 +358,10 @@ Before treating a section as finished, ask:
 - Is the contribution actually clear?
 - Is every major claim readable and self-contained?
 - Does the empirical evidence directly support the claim I am making?
-- Is an important baseline, ablation, or caveat missing?
+- Is an important baseline, ablation, or control missing?
 - Would a skeptical reviewer call the method, framework, or resource insufficiently justified?
 
-If the answer is not clearly defensible from the manuscript itself, revise the section before polishing style.
+If the answer is not clearly defensible from the manuscript itself, revise the section before polishing style. The revision is evidence, a precise definition or a narrowed claim, never an added caveat or reassurance; see rule zero of `anti-defensive-writing`.
 
 ### 8. Journal-Specific Formatting
 
@@ -369,7 +369,7 @@ Adapt manuscripts to journal requirements:
 - Follow author guidelines for structure, length, and format
 - Apply journal-specific citation styles
 - Meet figure/table specifications (resolution, file formats, dimensions)
-- Include required statements (funding, conflicts of interest, data availability, ethical approval)
+- Include required statements: funding, competing interests, author contributions (initials matching the byline), data availability and code availability (naming the repositories actually used), ethical approval, and, for Nature Portfolio journals, a generative-AI statement in the Methods scoped to actual use (tools, what they were used for, authors' responsibility; AI-generated images are not accepted)
 - Adhere to word limits for each section
 - Format according to template requirements when provided
 

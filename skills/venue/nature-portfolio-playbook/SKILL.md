@@ -83,8 +83,12 @@ Run this before calling a draft submission-ready:
    - ensure unprocessed source images and raw blot/gel material can be produced if requested
    - remove any figure-preparation habit that could look like selective enhancement
 5. AI and attribution
-   - disclose qualifying use of generative AI tools where the journal requires it
-   - do not treat AI-made images or undisclosed AI-written content as safe by default
+   - Nature Portfolio asks for a Methods statement when generative AI helped write the manuscript;
+     AI-assisted copy editing alone need not be declared
+   - keep it to two sentences scoped to actual use, neither wider nor narrower: the tools and what
+     they were used for, then the authors' review and responsibility
+   - images made with generative AI are not accepted; an AI-drafted schematic is redrawn by hand or
+     in code before submission
 6. Related-manuscript and preprint disclosures
    - disclose preprints, overlapping submissions, related manuscripts, and conference-proceedings history when relevant
 

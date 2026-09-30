@@ -26,7 +26,7 @@ Examples:
 - effect sizes or uncertainty are absent for key results
 - software/package/version is missing
 - p-value thresholds are used without exact values or clear correction status
-- small-sample limitation is not acknowledged
+- a small-sample estimate is reported without its interval and n
 
 ### P2 — clarity or polish improvement
 

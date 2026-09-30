@@ -42,7 +42,7 @@ Thanks for contributing. This repository is intentionally narrow: it is a journa
 - Prefer explicit workflow guidance over generic advice.
 - Keep Markdown concise and scannable.
 - Preserve the repository's existing tone: direct, opinionated, and evidence-bounded.
-- When you add user-facing functionality, update both [README.md](README.md) and [README.en.md](README.en.md).
+- When you add user-facing functionality, update both [README.md](README.md) (English, the default) and [README.zh-CN.md](README.zh-CN.md) (Simplified Chinese).
 
 ## Adding Or Updating A Skill
 

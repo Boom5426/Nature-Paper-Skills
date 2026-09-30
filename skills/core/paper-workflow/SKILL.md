@@ -31,11 +31,11 @@ Default assumption: unless a conference venue is named, the manuscript follows t
 
 | Input | Class | Chain |
 |---|---|---|
-| One sentence or one paragraph | `passage` | `write-scientific-manuscript`, then `anti-defensive-writing` if the passage is hedged or over-caveated, then `scientific-prose-style` |
+| One sentence or one paragraph | `passage` | `write-scientific-manuscript`, then `anti-defensive-writing` if the passage is hedged, over-caveated or written in an audit or self-critical voice, then `scientific-prose-style` |
 | One section to draft or rewrite in prose | `section` | `scientific-writing`, `write-scientific-manuscript`, `anti-defensive-writing`, then `scientific-prose-style` |
 | A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision`, `anti-defensive-writing`, then `scientific-prose-style` |
 | A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, `scientific-writing`, `write-scientific-manuscript`, `anti-defensive-writing`, then `scientific-prose-style` |
-| Reads hedged, over-caveated, apologetic, or timid; too many disclaimers; a paragraph opens with a limitation | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
+| Reads like an audit report, a rebuttal or a self-critique; hedged, over-caveated or apologetic; a paragraph opens with a limitation; the SI or data statements confess what could not be found | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
 | A Review, survey, or Perspective | `review-article` | `review-article-architecture` first, then the Review path below |
 | A long draft carried across many sessions | `long-draft` | `draft-marker-discipline` then `review-article-architecture` drift audit |
 | Near submission or resubmission | `preflight` | `submission-audit`, `citation-verifier`, `claim-source-verification`, `stats-reporting-audit`, `data-availability` |
@@ -91,9 +91,10 @@ Every skill sits at one layer. This is why the chains are ordered.
    ambiguous referents, noun chains, incomplete comparisons, coined terminology.
    `write-scientific-manuscript`.
 4. **Rhetorical posture**: does the text advance its claim, or negotiate with an imagined critic?
-   Unnecessary disclaimers, caveats in high-impact positions, paragraphs that open with a limitation,
-   repeated statements of what the text does not claim, reflexive `not X but Y`, self-undermining
-   contribution statements. `anti-defensive-writing`. It runs after the claim hierarchy is settled,
+   Audit voice (project process in the paper), defensive voice (arguing with an imagined reviewer),
+   self-critical voice (the paper grading itself), caveats in high-impact positions, paragraphs that
+   open with a limitation, reflexive `not X but Y`. `anti-defensive-writing`, which also covers the SI,
+   legends and data statements. It runs after the claim hierarchy is settled,
    because before that an unnecessary disclaimer and a real scope condition are indistinguishable:
    the claim they qualify is still moving.
 5. **Sentence**: em-dash budget, hedging, sentence rhythm, paragraph openers.
@@ -102,11 +103,14 @@ Every skill sits at one layer. This is why the chains are ordered.
 Integrity checks run alongside, not in sequence: `citation-verifier`, `claim-source-verification`,
 `stats-reporting-audit`, `draft-marker-discipline`.
 
-Layer 4 has a boundary the other layers do not: **a limitation placed by an integrity check is
-load-bearing and stays.** `anti-defensive-writing` may move it out of a high-impact position, state
-it once instead of at every mention, or rewrite it as positive scope, but it must not delete it. The
-same holds for a scope condition the Methods needs to stay reproducible. A defensive-writing pass
-that silently removes a mandated caveat is a reporting failure, not a style improvement.
+Layer 4 has a boundary the other layers do not: **a load-bearing statement stays.** Load-bearing is
+decided by what a sentence states, not by which skill added it: the unit of replication and n, no P
+values, blinding and exclusions, an access route, the count behind a reporting decision, an
+estimator's assumptions, a null result, and any scope condition the Methods needs to stay
+reproducible. `anti-defensive-writing` may move such a statement out of a high-impact position, state
+it once instead of at every mention, or rewrite it as positive scope, but it must not delete it. A
+pass that silently removes one is a reporting failure, not a style improvement. Audit-voice wording
+added by an integrity check ("as checked", "could not be identified") is not protected.
 
 ## Default journal path
 
@@ -121,9 +125,10 @@ that silently removes a mandated caveat is a reporting failure, not a style impr
 7. `stats-reporting-audit`
 8. `citation-verifier`, then `claim-source-verification`
 9. `data-availability`
-10. `anti-defensive-writing`, after the integrity checks above have placed every caveat they require
+10. `anti-defensive-writing`, after the integrity checks above have added the statements they require
 11. `scientific-prose-style`
-12. `submission-audit`
+12. `submission-audit`; anything it adds is held to rule zero of `anti-defensive-writing`, and that
+    skill's detection pass is rerun on the changed passages
 13. after external review: `paper-reviewer` to inventory the reports, `rebuttal-response` to draft and
     calibrate, then `paper-reviewer` again to grade the draft
 
@@ -154,14 +159,16 @@ Run step 7 before step 10, never after.
   science is settled but the passage is hard to follow.
 - `results-section-revision` when the remaining problem is local Results architecture rather than
   claim selection.
-- `anti-defensive-writing` when the text is accurate but timid: it keeps saying what it does not
-  claim, opens paragraphs with caveats, hedges what the evidence actually supports, or explains
-  itself to a critic who is not in the room. `scientific-prose-style` when the remaining problem is
+- `anti-defensive-writing` when the text is accurate but reads like an audit report, a rebuttal or a
+  self-critique: it reports project process instead of findings, keeps saying what it does not
+  claim, opens paragraphs with caveats, confesses what could not be found, or explains itself to a
+  critic who is not in the room. It covers the SI, legends and data statements as well as the main
+  text. `scientific-prose-style` when the remaining problem is
   punctuation, rhythm, em-dash budget, or hedge calibration inside a single sentence. They stack, in
   that order, because removing defensive scaffolding rewrites the paragraph openers and sentence
   boundaries the punctuation pass then settles. Neither one may overrule an integrity audit; see the
-  layer-4 boundary above. In a Methods section, most caveats are load-bearing, and the edit is
-  usually to convert a negation into positive scope and to state it once instead of at every
+  layer-4 boundary above. A Methods section is mostly load-bearing reproducibility detail, and the
+  edit is usually to convert a negation into positive scope and to state it once instead of at every
   mention.
 - `citation-verifier` when the bibliography as an artifact is the problem: duplicate keys, missing
   fields, DOI syntax, cited-but-undefined. `claim-source-verification` when the question is whether
@@ -184,8 +191,10 @@ Run step 7 before step 10, never after.
 - `paper-reviewer` when the question is what the reviewer asked or whether the reviewer would accept
   the answer. `rebuttal-response` when the question is what the authors may claim and how the letter,
   manuscript, and Supplementary Information stay consistent. They stack, in that order, and
-  `paper-reviewer` runs a second time at the end to grade the draft. Optional set, installed with
-  `--set all`.
+  `paper-reviewer` runs a second time at the end to grade the draft. `rebuttal-response` is in the
+  recommended set; `paper-reviewer` is in the optional set, installed with `--set all`. A manuscript
+  change made in reply to a reviewer follows rule zero of `anti-defensive-writing`: a result, a
+  precise definition or a narrowed claim, not an added caveat.
 
 ## Working principle
 

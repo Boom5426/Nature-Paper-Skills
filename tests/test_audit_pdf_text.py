@@ -131,6 +131,35 @@ class AuditCase(unittest.TestCase):
         )
 
 
+def content_whose_deflate_ends_in(last: int) -> tuple[bytes, bytes]:
+    """A 7 pt content stream whose zlib encoding ends in the byte `last`.
+
+    The trailing byte of a zlib stream is part of its Adler-32 checksum, so padding
+    the content with a comment of varying length reaches any final byte quickly.
+    """
+    for pad in range(4096):
+        content = TEXT_7PT + b"%" + b"x" * pad + b"\n"
+        encoded = zlib.compress(content)
+        if encoded[-1] == last:
+            return content, encoded
+    raise AssertionError(f"no padding gives a deflate stream ending in {last:#04x}")
+
+
+def indirect_length_pdf(encoded: bytes) -> bytes:
+    """One page whose flate content stream declares /Length as `6 0 R`."""
+    return build_pdf(
+        [
+            b"<< /Type /Catalog /Pages 2 0 R >>",
+            b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+            b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 100] "
+            b"/Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>",
+            b"<< /Length 6 0 R /Filter /FlateDecode >>\nstream\n" + encoded + b"\nendstream",
+            HELVETICA,
+            b"%d" % len(encoded),
+        ]
+    )
+
+
 # --------------------------------------------------------------------------- #
 # FIX 1: the transform must be applied
 # --------------------------------------------------------------------------- #
@@ -455,3 +484,26 @@ class MatrixMathTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class IndirectLengthTests(AuditCase):
+    """A stream whose /Length is an indirect reference is sliced by that length.
+
+    Without the declared length the parser falls back to the `endstream` marker and
+    strips trailing CR/LF, which also removes a deflate payload's own final 0x0A or
+    0x0D byte and leaves a truncated stream that no longer inflates.
+    """
+
+    def test_deflate_payload_ending_in_line_feed_is_read_whole(self) -> None:
+        _, encoded = content_whose_deflate_ends_in(0x0A)
+        result = self.audit(indirect_length_pdf(encoded))
+
+        self.assertAlmostEqual(result["minimum_effective_pt"], 7.0, places=6)
+        self.assertEqual(result["verdict"], "PASS")
+
+    def test_deflate_payload_ending_in_carriage_return_is_read_whole(self) -> None:
+        _, encoded = content_whose_deflate_ends_in(0x0D)
+        result = self.audit(indirect_length_pdf(encoded))
+
+        self.assertAlmostEqual(result["minimum_effective_pt"], 7.0, places=6)
+        self.assertEqual(result["verdict"], "PASS")

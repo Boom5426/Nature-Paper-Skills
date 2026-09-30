@@ -77,7 +77,8 @@ belongs to, and it selects the response action:
 - ethics or compliance
 
 Editorial issues usually need text or figure clarification. Evidence and statistics issues often
-need new support, a softened claim, or explicit limitation language. Ethics and compliance issues
+need new support or a narrowed claim; a scope statement enters the manuscript only when it sets what a
+reported result means, and then once. Ethics and compliance issues
 are usually `blocking` until the missing facts exist.
 
 ## 5. Outcome commitment
@@ -97,8 +98,9 @@ taken is unclear. If a claim was softened, say that it was softened.
 Concede when the reviewer correctly identifies an evidence gap, a claim stronger than the data,
 wording that invited a reasonable misreading, or a missing control, comparison, or limitation.
 
-Best move: narrow the claim to what the data support, add the missing evidence when feasible, and
-state the limitation explicitly. Conceding a claim boundary is cheaper than defending an
+Best move: narrow the claim to what the data support and add the missing evidence when feasible.
+Where the gap sets what a reported result means, state that scope once, in positive form, in the
+manuscript; the concession itself belongs in the letter. Conceding a claim boundary is cheaper than defending an
 indefensible one through two more review rounds.
 
 ## 7. When to clarify without new work

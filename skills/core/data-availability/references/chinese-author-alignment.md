@@ -29,8 +29,9 @@ author's Chinese description into a Nature-ready English availability route.
 ## Chinese-to-English conversion rules
 
 - Convert "本文所有数据均包含在正文和补充材料中" to a specific claim:
-  name Source Data files, Supplementary Tables, or repository records. If raw data are absent, say
-  so as a risk flag rather than pretending they are included.
+  name Source Data files, Supplementary Tables, or repository records. If raw data are absent, raise
+  it as a risk flag to the author rather than pretending they are included; the flag does not go
+  into the statement itself.
 - Convert "可向通讯作者合理索取" only after adding:
   why public sharing is impossible, who reviews requests, eligible requesters, required approvals
   or data-use agreement, and expected access route.

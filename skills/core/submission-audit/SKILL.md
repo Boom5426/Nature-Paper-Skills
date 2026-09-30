@@ -53,12 +53,17 @@ Do not use this skill for:
    - evidence gaps
    - unsupported mechanism language
    - venue-specific style drift
+   - Statistical analysis declares only statistics the paper reports (see `stats-reporting-audit`)
+   - voice: audit, defensive or self-critical writing in the main text, SI, legends and data
+     statements (run the `anti-defensive-writing` detection pass)
 6. Nature Portfolio preflight when relevant
    - reporting-summary readiness
    - data and code availability statements
    - accession IDs, repositories, and disclosure of sharing restrictions
    - image-integrity and raw-data readiness
-   - AI-use disclosure
+   - end matter: competing interests; author contributions whose initials match the byline; a
+     generative-AI statement in the Methods scoped to actual use, with no AI-generated images; code
+     availability consistent with the released repository
    - preprint, related-manuscript, and conference-proceedings disclosure
 7. Reviewer-side rejection pass
    - contribution sufficiency
@@ -66,6 +71,10 @@ Do not use this skill for:
    - empirical strength
    - evaluation completeness
    - design or framework soundness
+
+   A finding from this pass is fixed with evidence, a precise definition or a narrower claim, never
+   with an added caveat. Anything this audit adds to the manuscript is held to rule zero of
+   `anti-defensive-writing`, because this audit runs after the posture pass.
 
 ## Required Checks
 

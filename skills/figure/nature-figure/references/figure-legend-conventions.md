@@ -17,8 +17,8 @@ source wording.**
    of WSIs and patches in the pre-training dataset."*
 3. **Statistics written into the legend**: sample size `n=`, error type, and
    test — *"mean ± 95% CI (n = 1373) … one-way ANOVA with Tukey correction."*
-4. **Data-availability boilerplate** at the end: *"Source data are provided as a
-   Source Data file."*
+4. **Data-availability boilerplate** at the end, when a Source Data file is
+   supplied: *"Source data are provided as a Source Data file."* Omit it otherwise.
 
 ## Tense
 
@@ -64,7 +64,7 @@ than figures.
 
 ## 中文图注要点
 
-- 结构铁律:`图 N | 加粗名词短语总题` → `a/b/c` 现在时电报式分面 → 统计(n、误差、检验)写进图注 → "Source data are provided as a Source Data file." 套语。
+- 结构铁律:`图 N | 加粗名词短语总题` → `a/b/c` 现在时电报式分面 → 统计(n、误差、检验)写进图注 → 确有 Source Data 文件时才加 "Source data are provided as a Source Data file." 套语。
 - 时态:视觉事实用现在时,制作方法用过去时。
 - 自足:颜色/形状映射、样本量、关键数值(PDB/RMSD/单位)都写进图注,使其脱离正文可读。
 - 进阶:图注末句可给一句推断结论,但须确有面板支撑。

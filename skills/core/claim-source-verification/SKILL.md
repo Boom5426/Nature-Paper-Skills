@@ -219,9 +219,9 @@ honest summary of how much the verification pass actually did.
    volume. A remembered identifier is a fabricated one.
 2. **If a value cannot be sourced, the sentence carries a marker or the sentence
    goes.** There is no third option where it stays unmarked.
-3. **A negative claim names what was checked.** "No such evaluation exists"
-   becomes "absent from the public record as checked", naming the programmes and
-   documents examined.
+3. **A negative claim names its scope.** "No such evaluation exists" becomes
+   "None of <the named programmes and documents> reports such an evaluation": the
+   scope is in the sentence, and the audit phrasing ("as checked") is not.
 4. **An unverified edition year is left out, not guessed.** A standard with no
    year is a normal, correct entry. Guessing one to make an audit pass is
    fabrication with a green checkmark on it.

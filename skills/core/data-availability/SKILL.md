@@ -57,6 +57,18 @@ Do not use this skill for:
   - what metadata, source data, or derived data remain public
 - Do not merge data, code, protocols, and materials into one vague availability sentence unless the journal explicitly wants that.
 - Do not invent accession numbers, DOIs, repository names, reviewer links, or embargo terms.
+- List only the resources the analyses actually used, and say plainly where they came from ("All
+  response data were obtained from [collection], [DOI]"). Resources the study did not use are not
+  listed, and an identifier the source does not record is left out rather than confessed as "not
+  exposed" or "could not be identified"; flag such gaps to the author instead.
+- Promise nothing that does not exist: "on request", "Source Data files" or "will be released" appear
+  only when that route or file is real.
+- Name the public repositories actually used, for example a Hugging Face dataset for processed
+  inputs and a GitHub repository for code, and keep the Code availability statement consistent with
+  what the released repository contains.
+- A Supplementary Data table of sources has one row per resource used, no column that is identical
+  in every row, and publications taken from the manuscript's own bibliography so the two cannot
+  disagree. Generate it from the analysis tables where possible.
 
 ## Related Files
 

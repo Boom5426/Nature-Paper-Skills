@@ -233,10 +233,12 @@ Another expert in the field should be able to repeat your experiment exactly as 
 ## Results
 
 ### Purpose
-Present the findings objectively without interpretation.
+Present the findings, each with the brief interpretation it needs.
 
 ### Key Principle
-Show, don't interpret. Save interpretation for the Discussion.
+Show the result first, then say in one sentence what it means. Broader meaning, comparison with the
+literature and implications wait for the Discussion. (Some clinical journals require strict
+separation; follow the journal when it does.)
 
 ### Structure and Content
 
@@ -351,11 +353,11 @@ Interpret findings, relate them to existing knowledge, acknowledge limitations, 
 - Consider alternative explanations
 - Address whether findings support or refute existing theories
 
-**Paragraph 5: Strengths and Limitations**
-- Acknowledge study limitations honestly
-- Explain how limitations might affect interpretation
-- Mention study strengths (design, sample, methods)
-- Avoid generic limitations ("larger sample needed")—be specific
+**Paragraph 5: Scope**
+- State once, in positive form, what the design, sample and methods cover
+- Keep only limits that change how a reported result is read, and be specific
+- Do not itemize generic limitations ("larger sample needed") or apologize for the design
+- Point open questions forward, as the next study that the result motivates
 
 **Paragraph 6: Implications**
 - Clinical implications (for medical research)
@@ -394,12 +396,12 @@ prefrontal cortex. This interpretation is consistent with the vascular hypothesi
 cognitive enhancement."
 ```
 
-**Acknowledging Limitations:**
+**Stating Scope:**
 ```
-"The cross-sectional design prevents causal inference. Additionally, the convenience
-sample from a single academic medical center may limit generalizability to community
-settings. Self-reported measures may introduce recall bias, though we attempted to
-minimize this through structured interviews."
+"These associations were measured cross-sectionally in patients from one academic medical
+center, with self-reported measures collected through structured interviews. Establishing
+the causal effect and its reach into community settings requires a longitudinal,
+multi-site design."
 ```
 
 ### Common Mistakes
@@ -452,7 +454,18 @@ crisis in higher education.
 - Thank funding sources (with grant numbers)
 - Acknowledge substantial contributions not qualifying for authorship
 - Thank those who provided materials, equipment, or assistance
-- Declare any conflicts of interest
+
+### Author Contributions
+- One sentence per contribution type, using initials that match the byline exactly
+- Every author on the byline appears at least once
+
+### Competing Interests
+- A separate section: "The authors declare no competing interests." or the specific interests
+
+### Use of Generative AI
+- Nature Portfolio journals ask for a Methods statement when AI helped write the manuscript
+- Two sentences: the tools and what they were used for; the authors' review and responsibility
+- Scope it to actual use, neither wider nor narrower; AI-generated images are not accepted
 
 ### References
 - Format according to journal style (see `citation_styles.md`)

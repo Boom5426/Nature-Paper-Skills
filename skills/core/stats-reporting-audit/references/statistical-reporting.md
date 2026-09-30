@@ -57,7 +57,7 @@ Prefer:
 
 - `Treatment A was associated with a higher response than control (mean difference ..., 95% CI ..., p = ...).`
 - `The analysis used animals as the independent unit; cell-level measurements are shown to display within-animal variability.`
-- `The evidence is consistent with an increase, although the small sample size limits precision.`
+- `Treatment A increased the response by 0.12 (95% CI -0.01 to 0.25; n = 4 animals).` The interval and n carry the precision; no caveat sentence is needed.
 
 Avoid:
 
@@ -79,7 +79,17 @@ Use short factual labels:
 ## Ready-to-paste skeleton
 
 ```text
-Statistical analyses were performed using AUTHOR_INPUT_NEEDED. Data are presented as AUTHOR_INPUT_NEEDED unless otherwise stated. The independent experimental unit was AUTHOR_INPUT_NEEDED; technical replicates were averaged before inferential analysis where applicable. Comparisons between two groups were analysed using AUTHOR_INPUT_NEEDED. Comparisons among more than two groups were analysed using AUTHOR_INPUT_NEEDED, followed by AUTHOR_INPUT_NEEDED correction for multiple comparisons. Exact p values, test statistics and sample sizes are reported in the figure legends or Source Data where available. No data were excluded unless specified in the relevant Methods section.
+Statistical analyses were performed using AUTHOR_INPUT_NEEDED. Data are presented as AUTHOR_INPUT_NEEDED unless otherwise stated. The independent experimental unit was AUTHOR_INPUT_NEEDED; technical replicates were averaged before inferential analysis where applicable. Comparisons between two groups were analysed using AUTHOR_INPUT_NEEDED. Comparisons among more than two groups were analysed using AUTHOR_INPUT_NEEDED, followed by AUTHOR_INPUT_NEEDED correction for multiple comparisons. Exact p values, test statistics and sample sizes are reported in the figure legends. No data were excluded.
 ```
 
-Use the skeleton only after filling supplied facts. Keep placeholders if facts are missing.
+Use the skeleton only after filling supplied facts. Keep placeholders if facts are missing. Delete
+every sentence that declares a test the paper does not report. Name Source Data only if a Source
+Data file is actually supplied. If some data were excluded, replace the last sentence with the rule
+and the count.
+
+Descriptive variant, for designs that report effect sizes across replicate runs without inferential
+tests (for example, model comparisons across training seeds):
+
+```text
+The unit of replication for every paired comparison is the AUTHOR_INPUT_NEEDED, and n is AUTHOR_INPUT_NEEDED. For each paired quantity we report the mean difference over the AUTHOR_INPUT_NEEDED and, where relevant, the number with a consistent sign. No P values are reported and no multiplicity adjustment was applied; paired comparisons are interpreted from the magnitude of the effect and its consistency across AUTHOR_INPUT_NEEDED.
+```

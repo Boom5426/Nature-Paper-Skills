@@ -73,7 +73,7 @@ Risk:
 - Effect size and direction may be imprecise.
 
 Fix:
-- Use cautious wording and report the limitation directly.
+- Report the interval and n with the estimate, and scale the claim to them. Precision is shown by numbers, not by an added caveat sentence.
 
 ### Normality or equal-variance assumption not supportable
 
@@ -84,7 +84,7 @@ Risk:
 - Assumptions may be unverifiable or violated.
 
 Fix:
-- Add assumption checks, use robust/nonparametric alternatives, or describe the limitation.
+- Use a robust or nonparametric alternative, or state the model and its assumption once in Statistical analysis. Avoid formal normality tests on very small samples; they cannot support the assumption either way.
 
 ### Outlier handling is unclear
 

@@ -389,8 +389,12 @@ alternative explanations.
 - Discuss alternative explanations
 - Address contradictory findings from literature
 - Include appropriate specificity controls
-- Acknowledge and discuss limitations thoroughly
+- State the scope the evidence supports, once, in the Discussion's closing paragraph
 - Consider and test alternative hypotheses
+
+When this list is applied to the author's own manuscript (predict mode), the fix for each issue is
+evidence, a control or a narrowed claim, not an itemized list of limitations; see
+`anti-defensive-writing`.
 
 ## Figure and Data Presentation Issues
 

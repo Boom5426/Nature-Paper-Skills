@@ -97,7 +97,8 @@ Count the strings; >6 beyond axes/ticks means you're over. The ceiling counts
 floor, not budget.
 
 **2.3 Move to the caption:** n=, what's-held-fixed, abbreviation expansions,
-non-comparable footnotes, exclusion rationale, methodological caveats.
+the fact that sets comparability (a different panel, a different n), exclusion
+rules. Methodological discussion belongs in Methods, not the caption.
 
 **2.4 Titles are takeaways.** A reader seeing only the title knows what the
 panel shows. "Robust to gene dropout" passes; "Fewer genes" fails. Test: read it
@@ -288,7 +289,8 @@ each group gets one spanning header, not repeated per-panel titles.
 pitch as data — scope, not architecture. Subsequent figures cover mechanism,
 evidence, robustness, application. A panel is judged against the paper's pitch,
 not just its own figure's claim; content moves between figures if that's where
-the story needs it. (`figure-planner` runs this figure-arc review.)
+the story needs it. (`figure-planner` owns this figure-arc review, in its Figure
+Arc section.)
 
 **7.6 Don't re-decorate a passing panel.** Between revision rounds, a panel that
 already passes is not made more visually complex to fix nothing. Adding marks or

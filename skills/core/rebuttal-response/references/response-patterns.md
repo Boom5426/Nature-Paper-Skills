@@ -138,6 +138,10 @@ Do not end with a generic `The manuscript has been revised accordingly.` Do not 
 | feature-space harmonization | harmonization to the shared [exact output/input] space |
 | entered a stable regime | validation performance had stabilized or reached a plateau |
 
+These substitutions calibrate the letter. When the same point is revised in the manuscript, keep the
+positive part (what was varied, what was held constant, what was evaluated) and drop the trailing
+negation ("could not be separated", "may still differ"); see the manuscript-edit rule in `SKILL.md`.
+
 ## 7. Common response types
 
 ### Standardized benchmark versus individual optimization

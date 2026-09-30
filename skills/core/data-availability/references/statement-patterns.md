@@ -22,6 +22,8 @@ Use only when the supporting dataset is genuinely small and fully represented in
 All data supporting the findings of this study are included in the paper, its Supplementary Information, and Source Data files.
 ```
 
+Name Source Data files only if they are supplied.
+
 ## Reused Public Data
 
 ```text
@@ -62,3 +64,14 @@ Avoid these unless you can make them specific:
 - `All data are in the manuscript.` when that is not literally true
 - `Data are proprietary.` without naming the controller and access route
 - `N/A.` without explanation
+- `Source data are provided with this paper.` when no Source Data file is supplied
+- confessions such as `the accession is not exposed in the source metadata` or `no publication could be identified`; say where the data came from and flag the gap to the author
+
+## Code Availability
+
+```text
+The code for [data construction, training, evaluation and the analyses reported here] is available at [repository URL][, archived at DOI].
+```
+
+Describe what the repository contains now. If code is released on acceptance, say which parts and
+where, without promising more than will be released.

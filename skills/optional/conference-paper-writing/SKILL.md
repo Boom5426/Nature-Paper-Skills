@@ -329,10 +329,12 @@ Cite generously—reviewers likely authored relevant papers.
 
 **Step 8: Limitations Section (REQUIRED)**
 
-All major conferences require this. Counter-intuitively, honesty helps:
-- Reviewers are instructed not to penalize honest limitation acknowledgment
-- Pre-empt criticisms by identifying weaknesses first
-- Explain why limitations don't undermine core claims
+All major conferences require this. Write it as the scope of the work, not as a defence:
+- Reviewers are instructed not to penalize a clear statement of scope
+- State what the evaluation covers and which conditions it does not reach, specifically and once
+- Point each open question forward, as the experiment that would answer it
+- Do not argue in this section that the limitations leave the claims intact; the Results carry that
+  (see `anti-defensive-writing` for the audit, defensive and self-critical voices to avoid)
 
 **Step 9: Paper Checklist**
 
@@ -659,7 +661,7 @@ When cutting pages (e.g., NeurIPS 9 → AAAI 7):
 
 When expanding (e.g., ICML 8 → ICLR 9):
 - Add ablation studies reviewers requested
-- Expand limitations discussion
+- Sharpen the scope statement where the new space allows it
 - Include additional baselines
 - Add qualitative examples
 

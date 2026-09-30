@@ -37,11 +37,11 @@ If the input is partial, run a bounded audit and state which parts cannot be ass
 1. **Classify the task.** Decide whether the user wants audit, rewrite, draft, reviewer-response support, figure-statistics alignment, or data-backed reanalysis.
 2. **Extract the design.** Identify groups, treatments, time points, endpoints, blocking factors, repeated measures, randomization, blinding, exclusions, and missing-data handling.
 3. **Define `n` and replication.** Separate independent experimental units, biological replicates, technical replicates, repeated measures, cells/fields/subsamples, simulations, and pooled observations.
-4. **Map claims to analyses.** For each result claim, record the comparison/model, test family, assumptions, correction strategy, effect estimate, uncertainty, and exact p-value policy.
+4. **Map claims to analyses, both ways.** For each result claim, record the comparison/model, test family, assumptions, correction strategy, effect estimate, uncertainty, and exact p-value policy. Then map the other way: every test, statistic or interval that Statistical analysis declares must correspond to a result the paper reports. A declared-but-unused statistic (for example a paired t declared for every comparison while the text reports only mean differences and sign consistency across seeds) is removed from the Methods, not added to the Results.
 5. **Check common failure modes.** Use `references/common-failure-modes.md` when the text involves nested data, many comparisons, cell-level measurements, interaction claims, correlations, regression, outliers, small samples, or significance-only reasoning.
 6. **Check reporting completeness.** Use `references/statistical-reporting.md` to verify that Methods and Results give enough information for readers and reviewers to understand the analysis.
 7. **Align figure statistics.** Use `references/figure-statistics.md` when figure legends, panel labels, stars, error bars, box plots, violin plots, source data, or supplementary figure notes are involved.
-8. **Draft or revise.** Produce conservative, ready-to-paste text. Keep claims within the supplied design and evidence. Do not upgrade statistical association into mechanism or causality.
+8. **Draft or revise.** Produce ready-to-paste text whose claims stay within the supplied design and evidence. Do not upgrade statistical association into mechanism or causality. Report precision as numbers (interval, n), not as a caveat sentence; each reporting statement (unit and n, P-value policy, multiplicity, blinding, exclusions) appears once, in Statistical analysis. For descriptive designs without inferential tests, use the descriptive variant in `references/statistical-reporting.md`.
 9. **Run final QA.** Use `references/reviewer-checklist.md` before final delivery for severity labels, unresolved author questions, and reviewer-facing risk.
 
 ## Output format
@@ -70,6 +70,10 @@ AUTHOR_INPUT_NEEDED
 Reviewer-risk note
 - What a statistical reviewer may still challenge:
 ```
+
+The issue list and the reviewer-risk note are for the author. Neither goes into the manuscript; the
+manuscript receives only the ready-to-paste revision, written without audit or defensive voice (see
+`anti-defensive-writing`).
 
 For a clean drafting request with enough information, skip the long issue list and return:
 

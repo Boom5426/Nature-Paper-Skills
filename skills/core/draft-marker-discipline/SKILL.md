@@ -75,7 +75,7 @@ Five routes:
 | **B. Paid or restricted text** | Needs a purchased standard, a paywalled full text, or a vendor document. |
 | **C. Team or author decision** | Not a fact. Someone has to decide. |
 | **D. Proprietary data** | Needs data that exists but is not accessible. |
-| **E. The evidence does not exist** | The resolution is to say so in the text, with bounds. |
+| **E. The evidence does not exist** | The resolution is a sentence that states what the evidence is, with its provenance ("an estimate from <source>"), not a confession of what is missing. |
 
 Route E is a real outcome, not a failure. In one Review, a widely-quoted market
 share traced to a conference talk and a newspaper report with no survey behind

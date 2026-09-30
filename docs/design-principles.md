@@ -40,3 +40,17 @@ So a source is confirmed only when the sentence carrying the claim can be quoted
 A manuscript written across many sessions accumulates locally-good decisions whose sum is a different manuscript. Designate one file as authoritative over sections, display items, and terminology, and amend it before the manuscript, never after.
 
 The plan is not authoritative because it is better reasoned than a decision made later. It is authoritative because it does not change while you work, and because a rule that yields to any sufficiently good argument is not a rule. When the plan and a better idea conflict, raise the conflict.
+
+## 9. A Paper, Not An Audit Log
+
+A manuscript states what the work found. It does not narrate how the project was run and checked
+(locked, frozen, verified, post hoc), argue with a reviewer who is not in the room (does not
+establish, should not be read as, for completeness), or grade itself (could not be identified, not
+directly comparable, unused datasets listed). The Supplementary Information, legends and data
+statements follow the same rule.
+
+What stays is what a reader needs: numbers, definitions, reproducibility facts, the statistical
+statements a journal requires, the scope condition behind a reporting decision, and null results
+stated plainly. Most audit and defensive text is added while editing, so the rule binds editors
+first: a change adds no qualifier unless the sentence would otherwise be false. See
+`anti-defensive-writing`.

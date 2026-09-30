@@ -9,7 +9,7 @@ description: Use when revising a scientific manuscript Results section whose fig
 
 Use this skill for late-stage Results revision when the science is mostly stable but the writing architecture is not. It is narrower than `scientific-writing` and `manuscript-optimizer`: the job here is to repair subsection titles, bridge paragraphs, paragraph openings, and local argumentative flow.
 
-Use `scientific-writing` for general prose drafting or rewriting. Use `manuscript-optimizer` when the claim hierarchy, evidence chain, or figure logic is still unstable. Use this skill when the section is largely right but still reads like stitched figure captions rather than a controlled argument.
+Use `scientific-writing` for general prose drafting or rewriting. Use `manuscript-optimizer` when the claim hierarchy, evidence chain, or figure logic is still unstable. Use this skill when the section is largely right but still reads like stitched figure captions rather than a controlled argument. Run `anti-defensive-writing` after it when Results carries audit, defensive or self-critical writing.
 
 ## Quick Checks
 
@@ -67,3 +67,6 @@ At the start of a new paragraph, avoid vague pronouns unless the referent is unm
 - several paragraphs in a row with the same procedural opening
 - abstract nouns that blur what is actually being compared
 - summary sentences that restate the result but not its implication
+- provenance qualifiers inside Results ("post hoc", "added after the original evaluation", "locked")
+- implementation checks reported as findings ("verified", "confirmed to be orthogonal")
+- setup, safeguard, caveat, control and exception chained before the result; state the setup in one sentence, then the result

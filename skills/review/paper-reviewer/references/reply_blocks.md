@@ -111,7 +111,7 @@ These five names are plain descriptions for your own use. They never appear in t
 | We did a smaller version | `We ran this on the two datasets that carry labels, and not on the third, because no labels exist for it.` | What you did and what you did not do, in that order, in the first two sentences. Never let the shortfall surface in the location line. |
 | It is already in the paper | `This is in Table 3, and we have moved it into the Results text so it is easier to find. (page 9)` | Location first. Then change the manuscript anyway. |
 | We disagree | `There is no data leak in these experiments.` | See below. |
-| We cannot do it | `We cannot run the patient-cohort validation, because the cohort is under a data-use agreement that does not permit model training.` | Reason in the same sentence. Then the nearest thing you did instead. Then the limitation sentence you added to the manuscript. |
+| We cannot do it | `We cannot run the patient-cohort validation, because the cohort is under a data-use agreement that does not permit model training.` | Reason in the same sentence. Then the nearest thing you did instead. Then what changed in the manuscript: the narrowed claim, or one scope sentence where the gap sets what a reported result means. |
 
 Two of these deserve expansion.
 
@@ -125,7 +125,10 @@ Never write `as stated in the manuscript` in a tone that implies they should hav
 obtained; the requested experiment answers a different question; it needs a different study design
 rather than a revision; a regulatory, ethical, or data-sharing restriction applies; or the work exceeds
 the revision window and no claim in the paper depends on it. Cost and effort alone are never the reason.
-A `cannot` with no substitute and no limitation sentence added to the manuscript will not survive.
+A `cannot` with no substitute and no matching change in the manuscript (a narrowed claim, or one
+scope sentence where the gap sets what a reported result means) will not survive. The manuscript
+change follows rule zero of `anti-defensive-writing`: no added reassurance, and the letter's argument
+stays in the letter.
 
 Choosing which of the five is correct is a triage decision, and `rebuttal-response` owns it. This file
 only says how each one is written once chosen.
