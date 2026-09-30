@@ -314,6 +314,7 @@ and whether a passage belongs in the paper at all. They stack, in that order.
 Adapted from `Kiterlin/anti-defensive-writing` (MIT, https://github.com/Kiterlin/anti-defensive-writing).
 The core rule (advance the claim directly, keep necessary limitations, prefer positive scope) and the
 three examples marked as upstream in `references/worked-examples.md` come from upstream. On 2026-09-30
-the body was rewritten from this repository's manuscript-revision history: rule zero, the four
-voices, What stays, the placement table, the six-way classification, the modes, the detection pass and
-the remaining worked examples are local. See `LICENSE` and `UPSTREAM.md`.
+the body was rewritten from this repository's manuscript-revision history, and later that day the
+developer and commitment voices were added: rule zero, the six voices, What stays, the placement
+table, the seven-way classification, the modes, the detection pass and the remaining worked examples
+are local. See `LICENSE` and `UPSTREAM.md`.
