@@ -52,6 +52,19 @@ Results sentence carrying provenance qualifiers ("in a post hoc analysis added a
 evaluation, the primary arm of the original design ..."): state the result. If the order in which
 analyses were specified matters for interpretation, say so once in Methods.
 
+---
+
+> Support and reference assignments were determined using compound and acquisition identifiers
+> without inspecting response values.
+
+> Support and reference assignments were made from compound and acquisition identifiers alone.
+
+---
+
+> ... one pseudo-compound per candidate; gamma was fixed by n and not tuned.
+
+> ... one pseudo-compound per candidate, so gamma is set by n.
+
 ## Defensive voice
 
 > These ratios describe score separation on the reported runs. They neither test pairwise differences
@@ -128,6 +141,29 @@ Results interprets them once.
 
 An Introduction sentence carrying a claim, three regimes, a control, two exceptions and a reference
 value in one clause: split into two claims, then a closing sentence that states the consequence.
+
+---
+
+> Agreement across repeats should therefore not be interpreted as recovery of an
+> acquisition-independent biological truth.
+
+> Agreement across repeats therefore measures reproducibility within an acquisition design, which
+> can include shared technical effects.
+
+---
+
+> The implementation uses this covariance shrinkage rule without claiming that a fully specified
+> generative distribution or calibrated posterior intervals were established.
+
+> The rule is used as a point estimator; no posterior intervals are computed.
+
+---
+
+> Bold marks the better mean within each setting, not statistical significance.
+
+> Bold marks the better mean within each setting.
+
+(Significance is carried by the intervals printed in the same cells.)
 
 ## Self-critical voice
 
@@ -216,6 +252,81 @@ that states the scope of the research at a high level.
 An Introduction built on hypothetical scores and three rhetorical questions ("Is 0.8 near ...? Is
 0.4 poor ...?"): replaced by one sentence naming the three distinct questions the method answers.
 
+## Developer voice
+
+> Source data are provided in Supplementary Data 1 and 2, with larger row-level files in
+> `source_data/`.
+
+> Source data are provided in Supplementary Data 1 and 2.
+
+---
+
+> This file contains three supplementary figures, six supplementary tables and detailed methods. The
+> supplementary tables are editable LaTeX tables; numerical source data are supplied separately.
+
+> This file contains three supplementary figures, six supplementary tables and detailed methods.
+
+---
+
+> An index sheet in each workbook names the source file for every sheet. Row-level files with more
+> than 20,000 rows are provided as CSV files in `source_data/`.
+
+Deleted. The reader needs to know which Supplementary Data file holds the source data for which
+figure, not how the workbooks are organized.
+
+---
+
+> The fixed `Reactome_2022.gmt` collection contained 1,818 terms.
+
+> The Reactome 2022 gene-set collection contained 1,818 terms.
+
+---
+
+> For each compound, a fixed manifest selected exactly k distinct physical plates.
+
+> For each compound, exactly k distinct physical plates were selected.
+
+---
+
+> The training launcher fixed the official compound split, seeds 3407, 42 and 2025 and 40 epochs.
+
+> Training used the official compound split, seeds 3407, 42 and 2025 and 40 epochs.
+
+---
+
+> Inputs comprised molecular fingerprints and the control profile. Neither treated profiles nor plate
+> identity entered the predictors, and the strict loader excluded all-repeat aggregates and derived
+> treatment-profile fields.
+
+> Inputs comprised only molecular fingerprints and the control profile.
+
+---
+
+> A generative artificial intelligence assistant was used for English-language drafting, manuscript
+> organization and preparation of the LaTeX source.
+
+> A generative artificial intelligence assistant was used for English-language drafting, manuscript
+> organization and typesetting.
+
+## Commitment voice
+
+> The analysis code is deposited in a private GitHub repository at [URL]. Access for editorial
+> assessment and peer review can be arranged through the corresponding author, and a licensed,
+> versioned public release is planned before acceptance.
+
+> The analysis code is deposited in a GitHub repository at [URL].
+
+(The second sentence is deleted, not reworded. The author is told separately that a private
+repository with no present access route does not meet the journal's code policy, which is fixed by
+opening the repository or providing a reviewer link, not by a promise.)
+
+---
+
+> The benchmark will be extended to additional cell lines in future work.
+
+Deleted from the paper. If the extension matters to the reader, the closing scope paragraph states
+what remains to be tested, not what the authors will do.
+
 ## Looked defensive, kept
 
 These carry information a reader needs. They were moved or tightened, not deleted.
@@ -235,6 +346,18 @@ These carry information a reader needs. They were moved or tightened, not delete
   small positive mean with an interval spanning zero). The fix, "no stratum showed a reliable gain",
   adds precision; it is not a defensive qualifier.
 
+- "Validation across sites, platforms, batches and independently generated experiments will be
+  important for determining how well these targets transfer." A statement about what the field
+  should test, not a promise by the authors. Kept in the closing scope paragraph.
+- "These preprocessing quantities were computed once on the full table, before compound splitting;
+  the model standardizers were fitted on training data only." Discloses a preprocessing step that
+  saw every compound. Rewritten from "were not refitted separately within each subsequent compound
+  split" into a positive fact, and kept.
+- "The benchmark used the original test partition, which had also been evaluated during method
+  development; models, settings and endpoints were fixed before the reported scores were
+  computed." Tells the reader how adaptive the test evaluation was. Kept once, in Statistical
+  analysis.
+
 ## Whole-element fixes
 
 - **An audit panel in a main figure.** A matrix of which frameworks accept which inputs explains why
@@ -248,6 +371,16 @@ These carry information a reader needs. They were moved or tightened, not delete
   sentences and the main-text pointer to one.
 - **An end-matter statement.** A generative-AI disclosure written as a paragraph of assurances
   became two sentences: the tools and their use, and the authors' responsibility.
+
+- **A verdict column in a supplementary table.** A "Qualification" column graded every row: "positive
+  interval", "interval crosses zero", "point estimate within tolerance", "exploratory; small subset".
+  The intervals already carried each verdict, and the tolerance was a prespecified criterion that
+  belongs, once, in Supplementary Methods. The column became a plain "Note" column kept only for
+  facts needed to read a row ("pooled over three runs", "n counts conditions").
+- **A table note written by a generator.** The note "bold marks the better mean, not statistical
+  significance" and the table title came from the script that builds the table, and the manuscript
+  held a pasted copy. Editing only the pasted copy would have been reverted by the next rebuild; the
+  edit went into the generator, and the table was regenerated and pasted again.
 
 ## Upstream examples
 

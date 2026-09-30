@@ -61,8 +61,11 @@ Do not use this skill for:
   response data were obtained from [collection], [DOI]"). Resources the study did not use are not
   listed, and an identifier the source does not record is left out rather than confessed as "not
   exposed" or "could not be identified"; flag such gaps to the author instead.
-- Promise nothing that does not exist: "on request", "Source Data files" or "will be released" appear
-  only when that route or file is real.
+- Promise nothing: state the routes and files that exist now. "On request" and "Source Data files"
+  appear only when that route or file is real, and a future release or arranged access ("will be
+  released", "planned before acceptance", "can be arranged") is not stated at all.
+- Name the scientific content, not the repository layout: no folder paths (`source_data/`), file
+  mechanics or workbook instructions in the statement.
 - Name the public repositories actually used, for example a Hugging Face dataset for processed
   inputs and a GitHub repository for code, and keep the Code availability statement consistent with
   what the released repository contains.

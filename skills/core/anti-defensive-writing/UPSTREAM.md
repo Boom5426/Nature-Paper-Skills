@@ -24,6 +24,13 @@ defensive text while editing), the four voices (audit, defensive, self-critical,
 stays, the placement table, the six-way classification, the edit, proposal and light-touch modes, the
 detection pass, and `references/worked-examples.md`.
 
+Later on 2026-09-30, from a further manuscript revision: the developer voice (repository paths, file
+names, workbook and build notes, pipeline internals) and the commitment voice (promised releases and
+arranged access) were added, verdict columns in tables joined the self-critical voice, the detection
+pass now scans `\texttt{...}` and gained developer and commitment lines, the procedure now edits
+generated text at its generator and checks prose panel references, and reporting lists gaps that need
+the author.
+
 ## Files not carried over
 
 `skill.json`, `agents/openai.yaml`, `install.sh`, `README.md`, `README.zh-CN.md`, `assets/cover.png`.

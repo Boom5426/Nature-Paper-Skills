@@ -32,7 +32,7 @@ Drafting · structural revision · figure/text alignment · citation verificatio
 - 🎯 **One claim per figure**: `figure-planner` decides what each figure argues, `nature-figure` renders it, `figure-style` checks correctness
 - 🧱 **Structure before polish**: stabilize the evidence chain with a reverse outline first, then run sentence-level `scientific-prose-style`
 - 🔬 **Evidence-bounded**: the abstract and introduction never promise more than the results show
-- ✍️ **A paper, not an audit log**: `anti-defensive-writing` removes audit, defensive and self-critical writing from the main text, SI, legends and data statements, and the skills that edit prose add none; numbers, reproducibility facts and null results stay
+- ✍️ **A paper, not an audit log**: `anti-defensive-writing` removes audit, defensive, self-critical, developer-facing and commitment writing from the main text, SI, legends and data statements, and the skills that edit prose add none; numbers, reproducibility facts and null results stay
 - 📊 **Auditable stats and legends**: `stats-reporting-audit` guards independent-unit `n`, multiple comparisons, and figure-legend statistics
 - 📎 **Citation hygiene**: `citation-verifier` does a local scan plus severity grading before you submit
 - 🔧 **Figure audits that actually run**: `qa-contract.md`'s prose rules have matching commands, so type size, collisions, panel alignment, and source-data traceability are checked rather than asserted, and a tool that cannot check says so instead of passing
@@ -176,7 +176,7 @@ The default assumption is:
 | Bibliography hygiene | "check the references" | `citation-verifier` |
 | Does the source support the claim | "is this citation right for this sentence" | `claim-source-verification` |
 | Data availability statement | "write the data availability section" | `data-availability` |
-| Reads like an audit report, a rebuttal or a self-critique | "de-audit", "too many disclaimers", "make it more direct" | `anti-defensive-writing` |
+| Reads like an audit report, a rebuttal, a self-critique or a repository README | "de-audit", "too many disclaimers", "make it more direct", "remove developer notes" | `anti-defensive-writing` |
 | Sentence-level polish | "polish this paragraph" | `scientific-prose-style` |
 | Pre-submission preflight | "full check before I submit" | `submission-audit` |
 | Reviewer response | "reply to the referees" | `rebuttal-response` |
@@ -245,7 +245,7 @@ Codes 2, 3, and 4 mean the figure is **unchecked**, not clean. A wrapper that br
 | `submission-audit` | Final manuscript preflight before submission or resubmission |
 | `rebuttal-response` | Turn reviewer comments into aligned edits and response letters |
 | `stats-reporting-audit` | Statistical-reporting audit (n, replication, multiplicity, legend stats) |
-| `anti-defensive-writing` | Rhetorical posture: removes audit, defensive and self-critical writing from the main text, SI, legends and data statements, and adds none while editing. Numbers, reproducibility facts, mandated statistical statements and null results are load-bearing and are reshaped, never deleted |
+| `anti-defensive-writing` | Rhetorical posture: removes audit, defensive, self-critical, developer-facing and commitment writing from the main text, SI, legends and data statements, and adds none while editing. Numbers, reproducibility facts, mandated statistical statements and null results are load-bearing and are reshaped, never deleted |
 | `scientific-prose-style` | Sentence-level linting (em-dash budget, hedging, rhythm) |
 
 **Figure** `skills/figure/`
@@ -308,7 +308,7 @@ Codes 2, 3, and 4 mean the figure is **unchecked**, not clean. A wrapper that br
 - decide venue fit and article type before optimizing around the wrong target
 - a source must support the claim, not merely exist and carry correct metadata
 - governing document over good ideas: raise the conflict, do not resolve it by editing
-- write findings, not an audit log, a rebuttal or a self-critique; the SI and data statements follow the same rule
+- write findings, not an audit log, a rebuttal, a self-critique, repository notes or promises; the SI and data statements follow the same rule
 
 See [workflow-map](docs/workflow-map.md) · [skill-map](docs/skill-map.md) · [venue-routing](docs/venue-routing.md) · [design-principles](docs/design-principles.md).
 

@@ -31,11 +31,11 @@ Default assumption: unless a conference venue is named, the manuscript follows t
 
 | Input | Class | Chain |
 |---|---|---|
-| One sentence or one paragraph | `passage` | `write-scientific-manuscript`, then `anti-defensive-writing` if the passage is hedged, over-caveated or written in an audit or self-critical voice, then `scientific-prose-style` |
+| One sentence or one paragraph | `passage` | `write-scientific-manuscript`, then `anti-defensive-writing` if the passage is hedged, over-caveated or written in an audit, self-critical, developer or commitment voice, then `scientific-prose-style` |
 | One section to draft or rewrite in prose | `section` | `scientific-writing`, `write-scientific-manuscript`, `anti-defensive-writing`, then `scientific-prose-style` |
 | A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision`, `anti-defensive-writing`, then `scientific-prose-style` |
 | A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, `scientific-writing`, `write-scientific-manuscript`, `anti-defensive-writing`, then `scientific-prose-style` |
-| Reads like an audit report, a rebuttal or a self-critique; hedged, over-caveated or apologetic; a paragraph opens with a limitation; the SI or data statements confess what could not be found | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
+| Reads like an audit report, a rebuttal or a self-critique; hedged, over-caveated or apologetic; a paragraph opens with a limitation; the SI or data statements confess what could not be found; the text names folders, files or build steps, or promises a future release | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
 | A Review, survey, or Perspective | `review-article` | `review-article-architecture` first, then the Review path below |
 | A long draft carried across many sessions | `long-draft` | `draft-marker-discipline` then `review-article-architecture` drift audit |
 | Near submission or resubmission | `preflight` | `submission-audit`, `citation-verifier`, `claim-source-verification`, `stats-reporting-audit`, `data-availability` |
@@ -92,7 +92,8 @@ Every skill sits at one layer. This is why the chains are ordered.
    `write-scientific-manuscript`.
 4. **Rhetorical posture**: does the text advance its claim, or negotiate with an imagined critic?
    Audit voice (project process in the paper), defensive voice (arguing with an imagined reviewer),
-   self-critical voice (the paper grading itself), caveats in high-impact positions, paragraphs that
+   self-critical voice (the paper grading itself), developer voice (the repository in the paper),
+   commitment voice (promises of a future release), caveats in high-impact positions, paragraphs that
    open with a limitation, reflexive `not X but Y`. `anti-defensive-writing`, which also covers the SI,
    legends and data statements. It runs after the claim hierarchy is settled,
    because before that an unnecessary disclaimer and a real scope condition are indistinguishable:
@@ -161,8 +162,8 @@ Run step 7 before step 10, never after.
   claim selection.
 - `anti-defensive-writing` when the text is accurate but reads like an audit report, a rebuttal or a
   self-critique: it reports project process instead of findings, keeps saying what it does not
-  claim, opens paragraphs with caveats, confesses what could not be found, or explains itself to a
-  critic who is not in the room. It covers the SI, legends and data statements as well as the main
+  claim, opens paragraphs with caveats, confesses what could not be found, explains itself to a
+  critic who is not in the room, documents the repository, or promises what does not exist yet. It covers the SI, legends and data statements as well as the main
   text. `scientific-prose-style` when the remaining problem is
   punctuation, rhythm, em-dash budget, or hedge calibration inside a single sentence. They stack, in
   that order, because removing defensive scaffolding rewrites the paragraph openers and sentence

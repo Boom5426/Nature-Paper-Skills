@@ -73,5 +73,7 @@ Avoid these unless you can make them specific:
 The code for [data construction, training, evaluation and the analyses reported here] is available at [repository URL][, archived at DOI].
 ```
 
-Describe what the repository contains now. If code is released on acceptance, say which parts and
-where, without promising more than will be released.
+Describe what the repository contains now and where it is. Do not promise a later release or an
+access arrangement. If the repository is private and the journal requires access for editors and
+reviewers, the author opens it or provides a reviewer link before submission; flag that to the
+author instead of writing a promise.

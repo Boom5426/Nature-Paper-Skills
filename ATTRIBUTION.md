@@ -173,7 +173,7 @@ Source: https://github.com/Kiterlin/anti-defensive-writing
 - `skills/core/anti-defensive-writing` was adapted from that project's
   `skill/anti-defensive-writing/SKILL.md`, fetched 2026-08-22 at `main`. On 2026-09-30 the body was
   rewritten from this repository's manuscript-revision history (rule zero, the audit, defensive,
-  self-critical and commentary voices, What stays, the placement table, modes, the detection pass and
+  self-critical, commentary, developer and commitment voices, What stays, the placement table, modes, the detection pass and
   `references/worked-examples.md`). The core rule and three upstream examples, reproduced unmodified
   in `references/worked-examples.md`, remain from upstream. Upstream's Codex packaging files were not
   carried over. The upstream MIT licence travels with the skill as

@@ -32,7 +32,7 @@
 - 🎯 **一图一主张**：`figure-planner` 先定每张图的论点，`nature-figure` 出图，`figure-style` 查正确性
 - 🧱 **结构先于润色**：先用 reverse outline 稳住证据链，再做句子级 `scientific-prose-style`
 - 🔬 **证据边界优先**：Abstract / Introduction 不允许比下游证据更强
-- ✍️ **写论文，不写审计报告**：`anti-defensive-writing` 去掉正文、SI、图注和数据声明里的审计、防御和自我批评式写作，改稿类 skill 也不再新增；数字、复现事实和阴性结果都保留
+- ✍️ **写论文，不写审计报告**：`anti-defensive-writing` 去掉正文、SI、图注和数据声明里的审计、防御、自我批评、面向开发人员和事前承诺式写作，改稿类 skill 也不再新增；数字、复现事实和阴性结果都保留
 - 📊 **统计与图注可审计**：`stats-reporting-audit` 守住独立实验单元 n、多重比较、图注统计
 - 📎 **引用卫生**：`citation-verifier` 本地扫描 + 严重度分级，先查后投
 - 🔧 **图形审计可执行**：`qa-contract.md` 的散文规则有了对应命令，字号、碰撞、面板对齐、源数据可追溯都能真跑一遍，而且工具会明确说「我查不了」而不是默认通过
@@ -175,7 +175,7 @@ flowchart LR
 | 引用卫生 | 「查参考文献」 | `citation-verifier` |
 | 引用是否支撑论断 | 「这句的引用对吗」 | `claim-source-verification` |
 | 数据可用性声明 | 「写 data availability」 | `data-availability` |
-| 读起来像审计报告、答辩信或自我批评 | 「去审计」「太多免责」「让语气更肯定」 | `anti-defensive-writing` |
+| 读起来像审计报告、答辩信、自我批评或代码仓库说明 | 「去审计」「太多免责」「让语气更肯定」「删掉面向开发人员的内容」 | `anti-defensive-writing` |
 | 句子级润色 | 「润色一下这段」 | `scientific-prose-style` |
 | 投稿前预检 | 「投稿前全面检查」 | `submission-audit` |
 | 返修回复 | 「回复审稿人」 | `rebuttal-response` |
@@ -244,7 +244,7 @@ qa-contract.md          投稿前清单
 | `submission-audit` | 投稿前 / 返修前总预检 |
 | `rebuttal-response` | 审稿意见回复与改稿联动 |
 | `stats-reporting-audit` | 统计报告审计（n、重复性、多重比较、图注统计）|
-| `anti-defensive-writing` | 去掉审计、防御和自我批评式写作，正文、SI、图注、数据声明一起查；编辑时不新增免责。数字、复现事实、统计规范要求的声明和阴性结果都保留，只改形式不删 |
+| `anti-defensive-writing` | 去掉审计、防御、自我批评、面向开发人员和事前承诺式写作，正文、SI、图注、数据声明一起查；编辑时不新增免责。数字、复现事实、统计规范要求的声明和阴性结果都保留，只改形式不删 |
 | `scientific-prose-style` | 句子级润色（em-dash 预算、hedging、句长节奏）|
 
 **图形技能** `skills/figure/`
@@ -307,7 +307,7 @@ qa-contract.md          投稿前清单
 - venue 与 article type 要前置决策，不要末期再救火
 - 文献存在且元数据正确，不等于它支持那句话
 - 权威文档高于好想法：冲突要提出，不能靠改稿子解决
-- 写结论，不写审计记录、答辩信或自我批评；SI 和数据声明同样适用
+- 写结论，不写审计记录、答辩信、自我批评、仓库说明或承诺；SI 和数据声明同样适用
 
 详见 [workflow-map](docs/workflow-map.md) · [skill-map](docs/skill-map.md) · [venue-routing](docs/venue-routing.md) · [design-principles](docs/design-principles.md)。
 

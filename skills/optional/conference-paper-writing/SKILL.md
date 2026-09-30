@@ -334,7 +334,7 @@ All major conferences require this. Write it as the scope of the work, not as a 
 - State what the evaluation covers and which conditions it does not reach, specifically and once
 - Point each open question forward, as the experiment that would answer it
 - Do not argue in this section that the limitations leave the claims intact; the Results carry that
-  (see `anti-defensive-writing` for the audit, defensive and self-critical voices to avoid)
+  (see `anti-defensive-writing` for the audit, defensive, self-critical, developer and commitment voices to avoid)
 
 **Step 9: Paper Checklist**
 
