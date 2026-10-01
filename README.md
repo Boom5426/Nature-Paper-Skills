@@ -4,7 +4,7 @@
 
 **Agent skills for `Nature`-series journal manuscripts**
 
-Drafting · structural revision · figure/text alignment · citation verification · pre-submission preflight · rebuttal
+Drafting · structural revision · manuscript audit · figure/text alignment · citation verification · submission preflight · rebuttal
 `journal-first` · `claim-driven` · evidence-bounded
 
 <br/>
@@ -32,12 +32,26 @@ Drafting · structural revision · figure/text alignment · citation verificatio
 - 🎯 **One claim per figure**: `figure-planner` decides what each figure argues, `nature-figure` renders it, `figure-style` checks correctness
 - 🧱 **Structure before polish**: stabilize the evidence chain with a reverse outline first, then run sentence-level `scientific-prose-style`
 - 🔬 **Evidence-bounded**: the abstract and introduction never promise more than the results show
-- ✍️ **A paper, not an audit log**: `anti-defensive-writing` removes audit, defensive, self-critical, developer-facing and commitment writing from the main text, SI, legends and data statements, and the skills that edit prose add none; numbers, reproducibility facts and null results stay
+- ✍️ **A paper, not an audit log**: `anti-defensive-writing` removes audit, defensive, self-critical, commentary, developer-facing, and commitment voices from the main text, SI, legends, figures, and data/code statements; numbers, reproducibility facts, and null results stay
 - 📊 **Auditable stats and legends**: `stats-reporting-audit` guards independent-unit `n`, multiple comparisons, and figure-legend statistics
 - 📎 **Citation hygiene**: `citation-verifier` does a local scan plus severity grading before you submit
 - 🔧 **Figure audits that actually run**: `qa-contract.md`'s prose rules have matching commands, so type size, collisions, panel alignment, and source-data traceability are checked rather than asserted, and a tool that cannot check says so instead of passing
 - 🚪 **Many entry points**: `paper-workflow` is the fallback, not the only door; call any layer directly
 - 📦 **Directly copyable**: every skill is self-contained, scripts ship inside their directory, and Codex and Claude Code coexist
+
+## 🧐 Manuscript Audit Layer
+
+Good writing is not enough if a manuscript still reads like a project log, rebuttal, self-review, or repository README. The audit layer checks the whole submission—main text, Supplementary Information, legends, table notes, figure content, and data/code statements—before submission.
+
+| Check | What it catches | Safe outcome |
+|---|---|---|
+| Rhetorical posture | Six voices: audit, defensive, self-critical, commentary, developer, and commitment | Restate facts in reader-facing language; keep load-bearing content |
+| Claims and citations | Claims stronger than the results; sources that exist but do not support the cited sentence | Narrow the claim or replace the evidence |
+| Statistical reporting | Wrong independent-unit `n`, missing replication or multiplicity details, incomplete legend statistics | Report each required fact once, where it acts |
+| Availability and submission | Future-release promises, missing current access routes, incomplete preflight items | State what exists now and flag unresolved gaps to the author |
+| Figure QA | Unreadable type, collisions, panel misalignment, missing source-data traceability | Require an actual PASS; unchecked is not clean |
+
+`anti-defensive-writing` uses a seven-way classification to separate necessary design and reproducibility statements, reporting requirements, and null results from reassurance, internal project language, self-criticism, and future commitments. It never improves tone by deleting numbers, controls, mandated statements, or negative results.
 
 ## 📦 Quick Start
 
@@ -298,7 +312,6 @@ Codes 2, 3, and 4 mean the figure is **unchecked**, not clean. A wrapper that br
 </details>
 
 ## 🧭 Design Principles
-
 - claim-driven, not panel-driven
 - one main claim per figure unless a stronger split is clearly necessary
 - figure legends are the second layer of result narration
@@ -326,7 +339,7 @@ Nature-Paper-Skills/
 │   ├── review/      # reviewer-side evaluation
 │   └── optional/    # useful but non-default extensions
 │                    #   figure/nature-figure/scripts/ holds 6 dependency-free audit tools
-├── tests/           # 243 tests, `python3 -m unittest discover -s tests`
+├── tests/           # 245 tests, `python3 -m unittest discover -s tests`
 ├── install.sh       # one-line installer for Codex and Claude Code
 ├── ATTRIBUTION.md   # per-component provenance, incl. the Apache-2.0 4(b) modified-file list (test-guarded)
 ├── CONTRIBUTING.md
@@ -363,3 +376,7 @@ Thanks to everyone in the community who contributed code, docs, and tests. Per-c
 ## 📄 License
 
 Repository-original content is [MIT](LICENSE). Some vendored skills (`nature-figure`, `figure-style`, `scientific-prose-style`, `stats-reporting-audit`, and several merged fragments) are Apache-2.0: full text in [LICENSE-APACHE](LICENSE-APACHE), coverage in [NOTICE](NOTICE).
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Boom5426/Nature-Paper-Skills&type=Date)](https://star-history.com/#Boom5426/Nature-Paper-Skills&Date)
