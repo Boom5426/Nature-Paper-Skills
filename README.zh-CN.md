@@ -4,7 +4,7 @@
 
 **面向 `Nature` 系列期刊稿件的 agent skill 仓库**
 
-从初稿搭建 · 结构修订 · 图文对齐 · 引用核验 · 投稿前预检 到 返修回复的全链路
+从初稿搭建 · 结构修订 · 稿件审计 · 图文对齐 · 引用核验 · 投稿前预检 到 返修回复的全链路
 `journal-first` · `claim-driven` · 证据边界优先
 
 <br/>
@@ -32,12 +32,26 @@
 - 🎯 **一图一主张**：`figure-planner` 先定每张图的论点，`nature-figure` 出图，`figure-style` 查正确性
 - 🧱 **结构先于润色**：先用 reverse outline 稳住证据链，再做句子级 `scientific-prose-style`
 - 🔬 **证据边界优先**：Abstract / Introduction 不允许比下游证据更强
-- ✍️ **写论文，不写审计报告**：`anti-defensive-writing` 去掉正文、SI、图注和数据声明里的审计、防御、自我批评、面向开发人员和事前承诺式写作，改稿类 skill 也不再新增；数字、复现事实和阴性结果都保留
+- ✍️ **写论文，不写审计报告**：`anti-defensive-writing` 去掉正文、SI、图注、图中内容及数据/代码声明里的审计式、防御式、自我批评式、评论式、开发者式和承诺式声音；数字、复现事实和阴性结果都保留
 - 📊 **统计与图注可审计**：`stats-reporting-audit` 守住独立实验单元 n、多重比较、图注统计
 - 📎 **引用卫生**：`citation-verifier` 本地扫描 + 严重度分级，先查后投
 - 🔧 **图形审计可执行**：`qa-contract.md` 的散文规则有了对应命令，字号、碰撞、面板对齐、源数据可追溯都能真跑一遍，而且工具会明确说「我查不了」而不是默认通过
 - 🚪 **多入口**：`paper-workflow` 是兜底，不是唯一入口；任何一层都能直接叫
 - 📦 **可直接复制**：每个 skill 自包含，脚本随目录分发，Codex 与 Claude Code 可并存
+
+## 🧐 稿件审计层
+
+只把句子写顺还不够。若稿件仍像项目日志、答辩信、自我审查或仓库说明，它就没有真正变成论文。审计层在投稿前覆盖正文、补充材料、图注、表注、图中内容，以及数据/代码声明。
+
+| 审计 | 发现什么 | 安全处理 |
+|---|---|---|
+| 修辞姿态 | 六种 voice：审计式、防御式、自我批评式、评论式、开发者式、承诺式 | 改为面向读者的事实表达；保留承载证据的内容 |
+| 论断与引用 | 结论强于结果；文献存在但不支持被引用的句子 | 收窄论断或更换证据 |
+| 统计报告 | 独立实验单元 `n` 错误、重复与多重比较信息缺失、图注统计不完整 | 每项必要事实只在真正起作用的位置报告一次 |
+| 可用性与投稿 | 未来公开承诺、当前访问路径缺失、投稿预检项不完整 | 只陈述现状，并把无法靠改写解决的缺口报告给作者 |
+| 图形 QA | 字号不可读、元素碰撞、面板错位、源数据不可追溯 | 必须得到真实 PASS；未检查不等于通过 |
+
+`anti-defensive-writing` 用七类处置区分必要的设计与复现信息、报告要求和阴性结果，以及可以删除或改写的安抚性解释、内部项目语言、自我批评和未来承诺。它不会通过删除数字、对照、规范要求或阴性结果来改善语气。
 
 ## 📦 快速开始
 
@@ -286,7 +300,7 @@ qa-contract.md          投稿前清单
 
 **它只用了一个 skill，没跑完整条链。** 直接说 `用 paper-workflow` 或者把请求说得更泛一点（`帮我优化这篇论文`）。`paper-workflow` 会先分类再报出要跑的链；如果它没报链就直接开工，说明匹配到了别的 skill，点名让它走 paper-workflow。
 
-**它让我用某个 skill，但我这儿没有。** 默认只装 17 个。`nature-figure` 和 `figure-style` 要 `--figure`（需要 matplotlib/seaborn 或 ggplot2），其余的用 `--set all`。
+**它让我用某个 skill，但我这儿没有。** 默认只装 18 个。`nature-figure` 和 `figure-style` 要 `--figure`（需要 matplotlib/seaborn 或 ggplot2），其余的用 `--set all`。
 
 **装到哪儿了。** Claude Code 是 `~/.claude/skills/`，Codex 是 `~/.codex/skills/`，`--local` 是当前项目的 `./.claude/skills/`。`bash install.sh --list` 可以先看要装什么，`--dry-run` 可以看会发生什么但不写盘。
 
@@ -297,7 +311,6 @@ qa-contract.md          投稿前清单
 </details>
 
 ## 🧭 设计原则
-
 - claim-driven，而不是 panel-driven
 - 一张主图尽量只承载一个主结论
 - 图注是结果叙述的第二层，不是只解释坐标轴
@@ -325,7 +338,7 @@ Nature-Paper-Skills/
 │   ├── review/      # 审稿人视角评估
 │   └── optional/    # 有用但非默认的扩展
 │                    #   figure/nature-figure/scripts/ 内含 6 个零依赖审计工具
-├── tests/           # 243 个测试，`python3 -m unittest discover -s tests`
+├── tests/           # 245 个测试，`python3 -m unittest discover -s tests`
 ├── install.sh       # Codex / Claude Code 一条命令安装脚本
 ├── ATTRIBUTION.md   # 逐项来源，含 Apache-2.0 §4(b) 修改文件清单（有测试盯着）
 ├── CONTRIBUTING.md
@@ -366,4 +379,3 @@ Nature-Paper-Skills/
 ## ⭐ Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Boom5426/Nature-Paper-Skills&type=Date)](https://star-history.com/#Boom5426/Nature-Paper-Skills&Date)
-
