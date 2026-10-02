@@ -11,3 +11,7 @@ refer/
 # relative ./figures/ path, so executing one from the repo root drops artefacts here.
 figures/
 .figure-scratch/
+
+# Generated tutorial and behavior-evaluation outputs
+examples/first-run/revised.md
+evals/runs/

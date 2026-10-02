@@ -47,12 +47,12 @@ Before finalizing any document:
 **Example command (via the `nature-figure` skill, once installed):**
 ```bash
 export OPENROUTER_API_KEY="sk-or-..."
-python ~/.codex/skills/nature-figure/scripts/generate_openrouter_schematic.py \
+python ~/.agents/skills/nature-figure/scripts/generate_openrouter_schematic.py \
   --title "Your method" \
   --panel-map "left: problem; center: proposed mechanism; right: validated outcome" \
   --outdir figures --basename schematic --resolution 2K
-# Claude Code (global install): replace ~/.codex/skills with ~/.claude/skills
-# Claude Code (project-local install): replace ~/.codex/skills with .claude/skills
+# Claude Code (global install): replace ~/.agents/skills with ~/.claude/skills
+# Claude Code (project-local install): replace ~/.agents/skills with .claude/skills
 ```
 
 Requires `OPENROUTER_API_KEY`. Iterate on the panel map and title until the layout is right, then treat the output as a draft: Nature Portfolio journals do not accept images made with generative AI, so the submitted figure is redrawn by hand or in code. See `nature-figure`'s `references/openrouter-image-generation.md` for full options.

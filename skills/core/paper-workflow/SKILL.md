@@ -1,75 +1,98 @@
 ---
 name: paper-workflow
 description: >-
-  Entry point for any manuscript request that does not name a specific skill. Load this FIRST
-  whenever the ask is general, then run the chain it prescribes. Covers optimize my paper, improve
-  the manuscript, polish this draft, make this better, clean it up, help with my paper, review my
-  writing, get this ready to submit, work on the paper, make it more direct, less defensive, cut
-  the hedging, too many caveats, and the Chinese equivalents 优化论文,
-  改论文, 润色论文, 帮我看看论文, 论文写作, 学术写作, 把论文弄好, 论文修改, 投稿前检查,
-  防御性写作, 太多免责, 写得太怂, 太啰嗦, 让语气更肯定.
-  Also decides which skill applies and how to sequence manuscript work from project setup through
-  submission and rebuttal, including the separate path for a Review, survey, or Perspective.
-  A general manuscript request is never served well by one skill alone; this file decides which
-  chain to run.
+  Route general manuscript requests such as improve my paper, revise this draft,
+  优化论文, 润色论文 or 投稿前检查. Identify the article type, requested scope and
+  available evidence, then choose the necessary writing or checking steps.
+  Use direct specialist skills for a named, narrow task. Do not route ordinary
+  emails, code documentation or non-manuscript writing through this workflow.
 ---
 
 # Paper Workflow: Dispatcher
 
-This is the entry point, not a menu. A request such as `优化一下论文` or `improve my manuscript`
+Use this dispatcher when the author has not identified a specific writing task. A request such as `优化一下论文` or `improve my manuscript`
 names a goal, not a layer. Manuscript work happens at distinct layers, and editing the wrong layer
 first wastes the edit: a paragraph whose scientific role is wrong should never be polished, and a
 sentence whose claim is unstable should never be re-punctuated.
 
-**Do not answer a general manuscript request by loading a single specialist skill.** Classify the
-request, then run the whole chain for that class.
+Classify the request before editing. Check the relevant layers in scientific-to-stylistic order,
+then load and apply only the specialists needed to resolve observed problems. A single specialist
+may be sufficient after diagnosis; a general request does not itself require repeated rewriting.
 
 Default assumption: unless a conference venue is named, the manuscript follows the journal-oriented
 `Nature`-style path.
 
-## Step 1: Classify by what was actually handed over
+## Step 1: Establish the task and classify the input
+
+Identify the active source, article type, requested scope and output before choosing a route.
+Use supplied context; ask only when an ambiguity would change the work. A request to inspect,
+review, diagnose or suggest produces findings, not file edits. A request to revise authorizes
+edits within its stated scope. Explicitly frozen decisions and numerical results remain fixed.
+
+Work with the material provided. Do not demand project-state files for a paragraph edit.
+For whole-paper work, reuse existing results and decision records; create lightweight notes
+only when they prevent cross-session drift. If the input is a PDF, determine whether editable
+source exists; do not promise Word track changes, PDF layout editing or LaTeX compilation
+without a working toolchain. For missing evidence, identify the affected claim and continue
+with independent edits. Never fabricate the missing result or citation.
+
+The table gives candidate steps in order, not mandatory rewrite passes.
 
 | Input | Class | Chain |
 |---|---|---|
 | One sentence or one paragraph | `passage` | `write-scientific-manuscript`, then `anti-defensive-writing` if the passage is hedged, over-caveated or written in an audit, self-critical, developer or commitment voice, then `scientific-prose-style` |
-| One section to draft or rewrite in prose | `section` | `scientific-writing`, `write-scientific-manuscript`, `anti-defensive-writing`, then `scientific-prose-style` |
+| One section to draft or rewrite in prose | `section` | `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
 | A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision`, `anti-defensive-writing`, then `scientific-prose-style` |
-| A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, `scientific-writing`, `write-scientific-manuscript`, `anti-defensive-writing`, then `scientific-prose-style` |
+| A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
 | Reads like an audit report, a rebuttal or a self-critique; hedged, over-caveated or apologetic; a paragraph opens with a limitation; the SI or data statements confess what could not be found; the text names folders, files or build steps, or promises a future release | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
 | A Review, survey, or Perspective | `review-article` | `review-article-architecture` first, then the Review path below |
-| A long draft carried across many sessions | `long-draft` | `draft-marker-discipline` then `review-article-architecture` drift audit |
+| A draft carried across many sessions | `long-draft` | Reconcile current source and decisions with `draft-marker-discipline` if markers/state are relevant; research articles use `manuscript-optimizer`, Reviews/surveys/Perspectives use `review-article-architecture`. Length alone never selects the Review route |
 | Near submission or resubmission | `preflight` | `submission-audit`, `citation-verifier`, `claim-source-verification`, `stats-reporting-audit`, `data-availability` |
-| Reviewer comments exist | `response` | `paper-reviewer` to inventory every ask, `rebuttal-response` to draft and calibrate, then `paper-reviewer` again to grade the draft. `paper-reviewer` is not in the default recommended set; install it with `--set all` |
-| A manuscript to referee, or a request to predict what reviewers will attack | `referee` | `paper-reviewer`, installed with `--set all` |
+| Reviewer comments exist | `response` | `paper-reviewer` to inventory every ask, `rebuttal-response` to draft and calibrate, then `paper-reviewer` again to grade the draft. `paper-reviewer` and `rebuttal-response` are both in the recommended set |
+| A manuscript to referee, or a request to predict what reviewers will attack | `referee` | `paper-reviewer` (recommended set) |
 | Figures are the bottleneck | `figure` | `figure-planner`, then `nature-figure` to render, then `figure-style` to check. The last two are the figure stack, installed with `--figure` |
 | No draft yet, project new or messy | `bootstrap` | `paper-bootstrap` then `nature-portfolio-playbook` |
 
 When two classes with different chains both fit, ask one question. That is the one case worth a
 clarifying question; guessing wastes more time than asking.
 
-## Step 2: Announce the chain, then run it in order
+## Step 2: Announce the scope and execute the necessary steps
 
-State the chain in one line before starting, so the author can redirect early:
+State the chosen scope and sequence in one short line. For example:
 
-> Running the `manuscript` chain: structure (`manuscript-optimizer`), prose (`scientific-writing`),
-> passage logic (`write-scientific-manuscript`), posture (`anti-defensive-writing`), then sentence
-> pass (`scientific-prose-style`).
+> I will check the claim/evidence structure, revise the affected Results paragraphs,
+> and check the changes against the figures and original numbers.
 
-Load each skill in sequence and apply it. Do not skip a link because the previous one already
-improved the text. Each layer catches a different defect class, and a later layer cannot see the
-defect an earlier one owns.
+Check the layers in order, but distinguish checking a layer from rewriting it. If a layer is
+already sound, preserve it. Do not reopen settled structure during a sentence edit. Apply a
+posture edit only after the relevant claim is stable. When a requested comprehensive preflight
+cannot check a category, report that category as unchecked and explain what input is missing.
+
+Finish each edit with a focused check of the changed text and its dependent figure references,
+comparisons, terminology and citations. Do not repeatedly rewrite stable prose to satisfy a chain.
+
+## Output contract
+
+- Revision: deliver the revised text/file first, then at most 3–5 material changes and any
+  unresolved author decisions. A short passage normally needs only the replacement and a brief reason.
+- Diagnosis: give prioritized findings with locations, reasons and concrete remedies; stop before edits.
+- Preflight: distinguish blocking issues, useful improvements and unchecked categories. Do not
+  turn missing tools or unread sources into a clean bill of health.
+- Rebuttal: preserve every reviewer ask and original numbering; link replies to actual manuscript
+  changes and completed evidence. A proposed experiment is not a completed experiment.
+- Never claim an export, render, citation lookup, experiment or file modification was performed
+  unless it was performed. Keep detailed process notes outside the manuscript.
 
 ## Step 3: Stop rules
 
-Stop the chain and report why when:
+Stop or narrow the affected work and explain why when:
 
 - an upstream layer finds a problem that invalidates downstream work, such as a claim the evidence
   does not support. Fix or surface it before polishing;
-- the request was narrow. `帮我把这句话改短` is a `passage` job, not a licence to restructure the
-  paper;
+- the requested scope is complete. `帮我把这句话改短` ends after the passage edit and its local check;
 - a later layer would undo a decision the author explicitly approved.
 
-Never run `preflight` on a draft still in `manuscript` class. Auditing unstable text produces
+Run a full `preflight` once the draft is stable; if the author requests it earlier, identify instability and check only categories that can be assessed. Auditing unstable text produces
 findings that evaporate on the next revision.
 
 Never run `scientific-prose-style` on a drifted Review before the drift audit. Polishing a drifted
@@ -81,7 +104,7 @@ one.
 
 ## The layers
 
-Every skill sits at one layer. This is why the chains are ordered.
+Use these layers to diagnose problems and preserve dependency order.
 
 1. **Structure**: is there a defensible claim hierarchy and evidence chain?
    `manuscript-optimizer` for research articles, `review-article-architecture` for Reviews.
@@ -114,6 +137,8 @@ pass that silently removes one is a reporting failure, not a style improvement. 
 added by an integrity check ("as checked", "could not be identified") is not protected.
 
 ## Default journal path
+
+Use this as a coverage map over the life of a paper; run only the steps applicable to the current request.
 
 1. `paper-bootstrap`
 2. `nature-portfolio-playbook` when venue fit or article type is uncertain
@@ -193,7 +218,7 @@ Run step 7 before step 10, never after.
   the answer. `rebuttal-response` when the question is what the authors may claim and how the letter,
   manuscript, and Supplementary Information stay consistent. They stack, in that order, and
   `paper-reviewer` runs a second time at the end to grade the draft. `rebuttal-response` is in the
-  recommended set; `paper-reviewer` is in the optional set, installed with `--set all`. A manuscript
+  recommended set; `paper-reviewer` is in the recommended set. A manuscript
   change made in reply to a reviewer follows rule zero of `anti-defensive-writing`: a result, a
   precise definition or a narrowed claim, not an added caveat.
 
@@ -205,12 +230,12 @@ before attempting heavy revision.
 
 ## Common mistakes
 
-- answering a general manuscript request with whichever single skill matched the wording best
+- editing a general manuscript request without first identifying the actual problem layer
+- treating the coverage map as a requirement to rewrite every section on every request
 - polishing sentences before the claim hierarchy is stable
 - running a defensive-writing pass before the claim hierarchy is stable, which strips real scope
   conditions along with the disclaimers
-- letting a defensive-writing pass delete a limitation that a statistics, citation, or data audit put
-  there, instead of moving it out of a high-impact position and stating it once
+- letting a posture edit delete scientifically necessary limitations, numerical results or reproducibility facts
 - running a submission audit on a draft still being restructured
 - polishing a Review before its drift audit
 - using conference-style writing skills by default for journal manuscripts

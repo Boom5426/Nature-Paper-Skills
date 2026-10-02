@@ -1,76 +1,38 @@
-# Workflow Map
+# Workflow map
 
-> **The authoritative routing logic lives in `skills/core/paper-workflow/SKILL.md`, not here.**
-> That file is what the model loads; this page is its human-readable summary. When the two
-> disagree, the skill wins and this page should be corrected. A routing rule added only to this
-> page changes nothing, because files under `docs/` are never loaded into the model's context.
+The agent-facing routing rules live in [paper-workflow](../skills/core/paper-workflow/SKILL.md). This page summarizes them for users.
 
-The default manuscript path in this repository is:
+## Choose scope first
 
-```text
-1. paper-bootstrap
-2. nature-portfolio-playbook
-3. refresh project_truth / result_summary / paper_handoff
-4. manuscript-optimizer or scientific-writing, then write-scientific-manuscript for passage-level clarity
-5. figure-planner, then nature-figure to produce the figure and figure-style to check it
-6. results-section-revision when Results is scientifically stable but still reads as jumpy or figure-by-figure
-7. stats-reporting-audit for statistical-reporting integrity
-8. citation-verifier for bibliography hygiene, then claim-source-verification for claim-to-evidence support
-9. data-availability
-10. anti-defensive-writing to strip audit, defensive, self-critical, developer-facing and commitment writing, after the integrity checks above
-11. scientific-prose-style for a final sentence-level prose pass
-11. submission-audit
-12. after review: paper-reviewer to inventory the reports, rebuttal-response to draft, paper-reviewer to grade the draft
-```
+Identify the active manuscript, article type, requested unit, editing permission and available evidence. A paragraph does not require whole-project setup. A diagnosis request does not authorize rewriting. Existing project decisions and explicit venue instructions take precedence over defaults.
 
-## Review, Survey, And Perspective Path
+## Scientific-to-stylistic order
 
-A Review is not a short research article and does not follow the path above.
-Its failure mode is becoming a different Review, not overclaiming past its data.
+| Layer | Question | Specialist when needed |
+|---|---|---|
+| Structure | Do the question, claims and evidence support one another? | `manuscript-optimizer` for research; `review-article-architecture` for Reviews |
+| Section prose | Does this section need drafting or substantial rewriting? | `scientific-writing`; `results-section-revision` for stable but fragmented Results |
+| Passage logic | Are comparisons, references and reasoning followable? | `write-scientific-manuscript` |
+| Posture | Is the manuscript reporting findings in reader-facing language? | `anti-defensive-writing` |
+| Sentence style | Is the remaining issue rhythm, punctuation or wording? | `scientific-prose-style` |
 
-```text
-1. review-article-architecture   establish the governing plan document first
-2. nature-portfolio-playbook     venue and article-type fit
-3. draft-marker-discipline       set up the marker system before drafting starts
-4. scientific-writing            draft, sourcing in step with the prose
-5. citation-verifier             bibliography hygiene, then
-   claim-source-verification     adversarially verify that each source supports its claim
-6. figure-planner, then nature-figure and figure-style
-7. review-article-architecture   drift audit, before any compression pass
-8. draft-marker-discipline       measure length; triage what remains open
-9. anti-defensive-writing       rhetorical posture: audit, defensive, self-critical, developer and commitment voice
-10. scientific-prose-style       sentence-level pass, last
-10. submission-audit
-```
+Check relevant layers in this order, and edit only layers with observed problems. A layer that is sound does not need a rewrite. A posture edit follows stabilization of its claim. Stop after the requested scope and a focused consistency check are complete.
 
-Run step 7 before step 9, never after. Polishing a drifted draft makes the drift
-harder to see, not easier.
+## Integrity checks
 
-## Routing Rule
+Statistics, citation metadata, live source existence, claim support and availability are distinct. Run those needed for the task, and cover all applicable categories in a comprehensive preflight. An unavailable source or tool is an unchecked category. Necessary limitations, independent-unit n, measurement values, negative results and reproducibility facts survive every style pass.
 
-- Use `scientific-writing` when the section mostly needs to be drafted or rewritten in prose,
-  or when the task names a citation style or reporting guideline.
-- Use `write-scientific-manuscript` when the science is settled but a passage is hard to follow:
-  buried topic sentences, missing logical bridges, ambiguous referents, noun chains, incomplete
-  comparisons, or terminology coined where an ordinary word would do.
-- Use `manuscript-optimizer` when the paper's story, evidence chain, figure logic, or terminology may be unstable.
-- Use `results-section-revision` when the remaining problem is local Results architecture rather than claim selection.
-- Use `data-availability` when repository plans, accession identifiers, source-data coverage, or restricted-data wording are the bottleneck.
-- Use `figure-planner` to decide what each figure argues, then `nature-figure` to render it and `figure-style` to check correctness and legibility before export.
-- Use `stats-reporting-audit` when the bottleneck is statistical-reporting integrity: independent-unit `n`, pseudoreplication, multiple-comparison correction, or figure-legend statistics.
-- Use `anti-defensive-writing` when the draft or its SI reads like an audit report, a rebuttal, a self-critique or a repository README: process status in Results, repeated reassurance, statements of what the text does not claim, confessions of what could not be found, a paragraph that opens with a limitation, folder paths and file names, promises of a future release. Run it after the claim hierarchy is stable, because before that an unnecessary disclaimer and a real scope condition are indistinguishable. A limitation placed by `stats-reporting-audit`, `claim-source-verification`, `citation-verifier`, `data-availability` or `submission-audit` is load-bearing: it may be moved, stated once, or rewritten as positive scope, never deleted.
-- Use `scientific-prose-style` for a final sentence-level pass on already-stable prose (em-dash budget, hedging, sentence rhythm), not as a substitute for fixing an unstable claim first.
-- Use `citation-verifier` when the problem is the bibliography as an artifact: duplicate keys, missing fields, DOI syntax, cited-but-undefined, toolchain and style failures. Use `claim-source-verification` when the problem is whether a source supports the sentence citing it. They stack, in that order; a clean bibliography audit says nothing about claim support, and in one measured run 55 of 139 proposed sources were rejected with none of them fabricated.
-- Use `review-article-architecture` when the manuscript is a Review, survey, or Perspective rather than a research article, or whenever a piece written across many sessions may no longer match its brief. Use `manuscript-optimizer` for research articles.
-- Use `draft-marker-discipline` before a batch pass over open markers, before quoting a manuscript's length, before removing superseded material from the tree, and before making the same edit across many files with a script.
+## Special paths
 
-## Working Principle
+- **Research article across many sessions:** reconcile current results and decisions; use `manuscript-optimizer` where the argument has drifted. Length does not select the Review route.
+- **Review/survey/Perspective:** establish the governing plan with `review-article-architecture`, source alongside drafting, then check plan drift before compression/polish.
+- **Figures:** `figure-planner` establishes claims and panel roles. `nature-figure` and `figure-style` produce/check figures when installed with `--figure`; a plan alone is not a rendered or audited figure.
+- **Rebuttal:** `paper-reviewer` inventories the original asks, `rebuttal-response` drafts against completed evidence and manuscript edits, and `paper-reviewer` checks coverage. Both are in the recommended set.
+- **Reference existence:** `reference-audit-guide` ships live API checkers in `--set all`. A local bibliography check is not a substitute.
+- **Conference/presentation/research extensions:** install `--set all` and invoke for the specific task.
 
-Do not polish sections written from stale memory.
+## What you receive
 
-After experimental, statistical, or figure updates, refresh:
-- `notes/project_truth.md`
-- `notes/result_summary.md`
-- `notes/paper_handoff.md`
+A revision returns the revised material first, then a few material changes and unresolved author decisions. A diagnosis gives locations and remedies. Detailed working notes stay outside the manuscript. Do not describe a proposed experiment, pending manuscript edit or unperformed check as completed.
 
-before attempting heavy manuscript revision.
+[Task recipes](task-recipes.md) · [Input/output compatibility](compatibility.md) · [Figure checks](figure-workflow.md)

@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "entry_skill": "skills/core/paper-workflow/SKILL.md",
+  "cases": [
+    {"id": "passage", "input": "evals/cases/passage.md", "rubric": ["First sentence remains byte-for-byte unchanged", "Both intervals, effects, units and figure references remain", "No whole-paper restructuring or new evidence", "No files created"]},
+    {"id": "long-article", "input": "evals/cases/long-article.md", "rubric": ["Uses research-article reasoning, not Review architecture", "Flags unsupported survival and mechanism claims", "Does not demand an expanded research program", "Diagnosis only; no rewrite or file edits"]},
+    {"id": "rebuttal", "input": "evals/cases/rebuttal.md", "rubric": ["Preserves reviewer numbering 1 and 2", "Does not invent an independent cohort or scheduled experiment", "Correctly defines n as 12 independent cultures", "Distinguishes proposed Methods wording from completed manuscript edits"]},
+    {"id": "figure-unavailable", "input": "evals/cases/figure-unavailable.md", "rubric": ["Delivers a useful two-panel plan", "Distinguishes percentages from percentage points", "Does not invent individual data, P values or covariance", "Explicitly leaves rendering and visual QA unperformed"]}
+  ]
+}

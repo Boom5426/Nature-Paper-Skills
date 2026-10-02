@@ -40,6 +40,7 @@ RECOMMENDED_SKILLS=(
   core/anti-defensive-writing
   core/scientific-prose-style
   venue/nature-portfolio-playbook
+  review/paper-reviewer
 )
 
 FIGURE_SKILLS=(
@@ -79,6 +80,11 @@ WITH_FIGURE=0
 PROJECT_LOCAL=0
 DRY_RUN=0
 LIST_ONLY=0
+ON_CONFLICT="backup"
+DOCTOR=0
+RESTORE=""
+SOURCE_COMMIT=""
+PYTHON_BIN=""
 SOURCE_DIR=""
 SOURCE_LABEL=""
 TMP_DIR=""
@@ -107,19 +113,23 @@ die()  { printf '%s\n' "${E_RED}error:${E_RESET} $*" >&2; exit 1; }
 usage() {
   cat <<'EOF'
 Nature-Paper-Skills installer
+Requires Bash and Python 3.9+ (standard library); remote sources also need curl and tar.
 
 Usage:
   install.sh [options]
 
 Options:
   --agent <claude|codex|both>  Target agent. Default: auto-detect from ~/.claude and ~/.codex.
-  --local                      Install into ./.claude/skills (current project only; Claude Code only).
+  --local                      Install into .agents/skills (Codex) or .claude/skills (Claude Code).
   --dest <dir>                 Install into an explicit directory. Overrides --agent; conflicts with --local.
-  --set <recommended|all>      Which skills to install. Default: recommended (18 skills).
+  --set <recommended|all>      Which skills to install. Default: recommended (19 skills).
   --figure                     Add the figure stack (nature-figure, figure-style) to --set recommended.
                                Needs a plotting backend: Python matplotlib/seaborn or R ggplot2.
   --ref <branch|tag|sha>       Download and install from this ref. Forces a download even from a clone.
                                Default: install from your clone, or from main when there is no clone.
+  --doctor                     Check installed files, versions, drift and optional dependencies.
+  --restore <backup-id>        Restore replaced skills; preserve the current copies first.
+  --on-conflict <backup|keep|error>  Handle local edits or unmanaged skills. Default: backup.
   --list                       Print the skills that would be installed, then exit.
   --dry-run                    Show what would happen without writing anything.
   -h, --help                   Show this help.
@@ -191,6 +201,14 @@ parse_args() {
         REF="${1#*=}"
         require_value --ref "$REF" "a branch, tag, or commit"
         SOURCE_PINNED=1; shift ;;
+      --doctor) DOCTOR=1; shift ;;
+      --restore|--on-conflict)
+        [ $# -ge 2 ] || die "$1 needs a value"
+        require_value "$1" "$2" "a value"
+        if [ "$1" = "--restore" ]; then RESTORE="$2"; else ON_CONFLICT="$2"; fi
+        shift 2 ;;
+      --restore=*) RESTORE="${1#*=}"; require_value --restore "$RESTORE" "a backup ID"; shift ;;
+      --on-conflict=*) ON_CONFLICT="${1#*=}"; shift ;;
       --figure) WITH_FIGURE=1; shift ;;
       --local) PROJECT_LOCAL=1; shift ;;
       --list) LIST_ONLY=1; shift ;;
@@ -211,9 +229,8 @@ parse_args() {
   if [ "$PROJECT_LOCAL" -eq 1 ] && [ "$DEST_SET" -eq 1 ]; then
     die "--local and --dest are mutually exclusive"
   fi
-  if [ "$PROJECT_LOCAL" -eq 1 ] && { [ "$AGENT" = "codex" ] || [ "$AGENT" = "both" ]; }; then
-    die "Codex reads only ~/.codex/skills, so --local cannot cover it; use --agent claude with --local, or drop --local"
-  fi
+  case "$ON_CONFLICT" in backup|keep|error) ;; *) die "--on-conflict must be backup, keep, or error" ;; esac
+  if [ "$DOCTOR" -eq 1 ] && [ -n "$RESTORE" ]; then die "--doctor and --restore are mutually exclusive"; fi
 }
 
 # Locate a checkout that contains skills/. Prefer the directory this script lives in
@@ -244,6 +261,10 @@ resolve_source() {
     if [ -d "$script_dir/skills" ]; then
       SOURCE_DIR="$script_dir"
       SOURCE_LABEL="local checkout at $SOURCE_DIR"
+      if command -v git >/dev/null 2>&1 && git -C "$SOURCE_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        SOURCE_COMMIT="$(git -C "$SOURCE_DIR" rev-parse HEAD)"
+        if [ -n "$(git -C "$SOURCE_DIR" status --porcelain)" ]; then SOURCE_LABEL="$SOURCE_LABEL (modified)"; SOURCE_COMMIT="${SOURCE_COMMIT}+dirty"; fi
+      fi
       note "source: $SOURCE_LABEL"
       return
     fi
@@ -256,7 +277,16 @@ resolve_source() {
   # would abort the headline `curl | bash` install on every Mac.
   TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/nature-paper-skills.XXXXXXXX")" \
     || die "could not create a temporary directory"
-  local url="https://codeload.github.com/${REPO}/tar.gz/${REF}"
+  local resolved_ref="$REF" encoded_ref api_json
+  encoded_ref="$("$PYTHON_BIN" -c 'import sys,urllib.parse; print(urllib.parse.quote(sys.argv[1],safe=""))' "$REF")"
+  if api_json="$(curl -fsSL "https://api.github.com/repos/${REPO}/commits/${encoded_ref}" 2>/dev/null)"; then
+    SOURCE_COMMIT="$(printf '%s' "$api_json" | "$PYTHON_BIN" -c 'import json,sys; print(json.load(sys.stdin)["sha"])')"
+    resolved_ref="$SOURCE_COMMIT"
+  else
+    note "Commit lookup unavailable; recording requested ref $REF and file hashes. Use a full commit SHA to pin."
+    if [[ "$REF" =~ ^[0-9a-f]{40}$ ]]; then SOURCE_COMMIT="$REF"; fi
+  fi
+  local url="https://codeload.github.com/${REPO}/tar.gz/${resolved_ref}"
   local tarball="$TMP_DIR/source.tar.gz"
   SOURCE_LABEL="${REPO}@${REF}"
   note "source: downloading ${SOURCE_LABEL}"
@@ -306,10 +336,6 @@ resolve_dests() {
     return
   fi
 
-  if [ "$PROJECT_LOCAL" -eq 1 ]; then
-    DESTS=("$PWD/.claude/skills")
-    return
-  fi
 
   local home
   home="$(home_or_die)"
@@ -318,7 +344,7 @@ resolve_dests() {
   if [ -z "$agent" ]; then
     local has_claude=0 has_codex=0
     [ -d "$home/.claude" ] && has_claude=1
-    [ -d "$home/.codex" ] && has_codex=1
+    { [ -d "$home/.codex" ] || command -v codex >/dev/null 2>&1; } && has_codex=1
     if [ "$has_claude" -eq 1 ] && [ "$has_codex" -eq 1 ]; then
       agent="both"
     elif [ "$has_claude" -eq 1 ]; then
@@ -336,10 +362,18 @@ resolve_dests() {
     fi
   fi
 
+  if [ "$PROJECT_LOCAL" -eq 1 ]; then
+    case "$agent" in
+      claude) DESTS=("$PWD/.claude/skills") ;;
+      codex) DESTS=("$PWD/.agents/skills") ;;
+      both) DESTS=("$PWD/.claude/skills" "$PWD/.agents/skills") ;;
+    esac
+    return
+  fi
   case "$agent" in
     claude) DESTS=("$home/.claude/skills") ;;
-    codex)  DESTS=("$home/.codex/skills") ;;
-    both)   DESTS=("$home/.claude/skills" "$home/.codex/skills") ;;
+    codex)  DESTS=("$home/.agents/skills") ;;
+    both)   DESTS=("$home/.claude/skills" "$home/.agents/skills") ;;
     *) die "internal error: unresolved agent '$agent'" ;;
   esac
 }
@@ -372,160 +406,35 @@ prompt_for_agent() {
   esac
 }
 
-# Every check here is a pure read, so run them all against every destination before
-# the first write. The recommended list is hard-coded in this script while --ref can
-# swap the source tree underneath it, and checking inside the copy loop would abort
-# partway through, leaving some skills upgraded and the rest at their old version.
-preflight() {
-  local dest="$1"; shift
-  local skills=("$@")
-  local rel name src
-  local missing=""
-
-  for rel in "${skills[@]}"; do
-    src="$SOURCE_DIR/skills/$rel"
-    if [ ! -d "$src" ] || [ ! -f "$src/SKILL.md" ]; then
-      missing="${missing}  skills/${rel}"$'\n'
-      continue
-    fi
-    name="${rel##*/}"
-    # We would delete this path, so make sure it is a skill and not something of the
-    # user's that happens to share the name.
-    if [ -e "$dest/$name" ] && { [ ! -d "$dest/$name" ] || [ ! -f "$dest/$name/SKILL.md" ]; }; then
-      die "$dest/$name exists and is not a skill (no SKILL.md); move it aside first (nothing was written)"
-    fi
-  done
-
-  if [ -n "$missing" ]; then
-    printf '%s\n' "${E_RED}error:${E_RESET} source (${SOURCE_LABEL}) is missing selected skills (nothing was written):" >&2
-    printf '%s' "$missing" >&2
-    exit 1
-  fi
-}
-
-install_into() {
-  local dest="$1"; shift
-  local skills=("$@")
-  local rel name src verb installed=0 replaced=0
-
-  info ""
-  info "${C_BOLD}→ ${dest}${C_RESET}"
-
-  if [ "$DRY_RUN" -eq 0 ]; then
-    mkdir -p "$dest"
-  fi
-
-  for rel in "${skills[@]}"; do
-    name="${rel##*/}"
-    src="$SOURCE_DIR/skills/$rel"
-
-    verb="install"
-    [ -e "$dest/$name" ] && verb="replace"
-
-    if [ "$DRY_RUN" -eq 1 ]; then
-      if is_apache_skill "$rel"; then
-        info "  would ${verb}  $name ${C_DIM}(+ LICENSE-APACHE, NOTICE)${C_RESET}"
-      else
-        info "  would ${verb}  $name"
-      fi
-      installed=$((installed + 1))
-      [ "$verb" = "replace" ] && replaced=$((replaced + 1))
-      continue
-    fi
-
-    # Copy to a staging directory first, then swap. Replacing in place would leave a
-    # half-copied skill loadable if the run is interrupted mid-copy; this way the
-    # only exposed window is the rename.
-    STAGING="$dest/.nps-staging-$name"
-    rm -rf "$STAGING"
-    cp -R "$src" "$STAGING"
-    # `cp -R` copies the working tree, which carries gitignored bytecode. A stale
-    # .pyc built for a different interpreter must not reach a user's install.
-    find "$STAGING" -name '__pycache__' -type d -prune -exec rm -rf {} +
-    rm -rf "${dest:?}/$name"
-    mv "$STAGING" "$dest/$name"
-    STAGING=""
-
-    # Apache-2.0 sections 4(a) and 4(d): a recipient of the skill directory must get
-    # the licence text and the NOTICE. Not guarded by `|| true`: if the source tree
-    # is missing them the install is wrong and should stop, not ship silently.
-    if is_apache_skill "$rel"; then
-      cp "$SOURCE_DIR/LICENSE-APACHE" "$dest/$name/LICENSE-APACHE"
-      cp "$SOURCE_DIR/NOTICE" "$dest/$name/NOTICE"
-    fi
-
-    if [ "$verb" = "replace" ]; then
-      info "  ${C_GREEN}✓${C_RESET} $name ${C_DIM}(replaced)${C_RESET}"
-      replaced=$((replaced + 1))
-    else
-      info "  ${C_GREEN}✓${C_RESET} $name"
-    fi
-    installed=$((installed + 1))
-  done
-
-  if [ "$replaced" -gt 0 ]; then
-    info "  ${C_DIM}${installed} skills, ${replaced} replaced${C_RESET}"
-  else
-    info "  ${C_DIM}${installed} skills${C_RESET}"
-  fi
-}
-
-# True when every figure skill is already present in every destination.
-figure_stack_present() {
-  local dest rel
-  for dest in "${DESTS[@]}"; do
-    for rel in "${FIGURE_SKILLS[@]}"; do
-      [ -f "$dest/${rel##*/}/SKILL.md" ] || return 1
-    done
-  done
-  return 0
-}
-
 main() {
   parse_args "$@"
+  local candidate
+  for candidate in python3 python; do
+    if command -v "$candidate" >/dev/null 2>&1 && "$candidate" -c 'import sys; sys.exit(sys.version_info < (3,9))' 2>/dev/null; then
+      PYTHON_BIN="$candidate"; break
+    fi
+  done
+  [ -n "$PYTHON_BIN" ] || die "Python 3.9+ is required for installation records and backups; no pip packages are needed"
   resolve_source
-
   local skills=() line
   while IFS= read -r line; do
     [ -n "$line" ] && skills+=("$line")
   done < <(selected_skills)
   [ "${#skills[@]}" -gt 0 ] || die "no skills selected"
-
-  if [ "$LIST_ONLY" -eq 1 ]; then
-    printf '%s\n' "${skills[@]}"
-    exit 0
-  fi
-
+  if [ "$LIST_ONLY" -eq 1 ]; then printf '%s\n' "${skills[@]}"; exit 0; fi
   resolve_dests
   [ "${#DESTS[@]}" -gt 0 ] || die "could not determine an install directory"
-
-  # Validate every destination before writing to any of them, so `--agent both`
-  # cannot fail on the second one after the first is already rewritten.
-  local dest
-  for dest in "${DESTS[@]}"; do
-    preflight "$dest" "${skills[@]}"
-  done
-  for dest in "${DESTS[@]}"; do
-    install_into "$dest" "${skills[@]}"
-  done
-
-  info ""
-  if [ "$DRY_RUN" -eq 1 ]; then
-    info "${C_BOLD}Dry run: nothing was written.${C_RESET}"
-    return
-  fi
-
-  info "${C_BOLD}Done.${C_RESET} Fully restart your agent so it picks up the new skills"
-  info "(quit and relaunch Claude Code or Codex, not just /clear), then paste:"
-  info ""
-  info "  Use paper-workflow to tell me which skill I should use next for this manuscript."
-  # Only offer the figure stack where it is actually absent: it survives a re-run
-  # without --figure, and claiming otherwise would contradict what is on disk.
-  if [ "$WITH_FIGURE" -eq 0 ] && [ "$SKILL_SET" = "recommended" ] && ! figure_stack_present; then
-    info ""
-    info "${C_DIM}The figure stack (nature-figure, figure-style) was not installed."
-    info "Add it with: --figure   (needs Python matplotlib/seaborn or R ggplot2)${C_RESET}"
-  fi
+  local manager="$SOURCE_DIR/scripts/manage_install.py"
+  [ -f "$manager" ] || die "This source predates installation management; run the install.sh shipped at that ref"
+  local args=(--source "$SOURCE_DIR" --repo "$REPO" --source-ref "$SOURCE_LABEL" --commit "$SOURCE_COMMIT" --on-conflict "$ON_CONFLICT")
+  local dest skill
+  for dest in "${DESTS[@]}"; do args+=(--dest "$dest"); done
+  for skill in "${skills[@]}"; do args+=(--skill "$skill"); done
+  for skill in "${APACHE_SKILLS[@]}"; do args+=(--apache "$skill"); done
+  [ "$DRY_RUN" -eq 0 ] || args+=(--dry-run)
+  [ "$DOCTOR" -eq 0 ] || args+=(--doctor)
+  [ -z "$RESTORE" ] || args+=(--restore "$RESTORE")
+  "$PYTHON_BIN" "$manager" "${args[@]}"
 }
 
 main "$@"

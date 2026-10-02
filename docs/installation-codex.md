@@ -1,77 +1,61 @@
-# Installation For Codex
+# Installation for Codex
 
-Codex reads skills from `~/.codex/skills/`. It has no project-local skill directory, so all installs are global.
-Codex installs coexist with Claude Code installs, which read `~/.claude/skills/` or `.claude/skills/`.
+Requires Codex, Bash and Python 3.9+ (no pip packages). Remote installs also use curl and tar. See [environment verification and file formats](compatibility.md).
 
-## One-Line Install
+## Install
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex
 ```
 
-With the figure stack:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex --figure
-```
-
-From a clone, the installer copies from your working tree instead of downloading:
+Default destination: `~/.agents/skills`. For the current project, run from that project and append `--local`; destination: `.agents/skills`.
 
 ```bash
 git clone https://github.com/Boom5426/Nature-Paper-Skills.git
 cd Nature-Paper-Skills
-./install.sh --agent codex
+bash install.sh --agent codex
+bash install.sh --agent codex --figure
+bash install.sh --agent codex --doctor
 ```
 
-Useful flags: `--set all` (install all 27 skills), `--dry-run` (preview), `--list` (print the selection), `--dest <dir>` (explicit target), `--ref <branch|tag|sha>` (download and install a specific ref, even when run from a clone), `--help`.
+From a clone, installation uses local files. To install into a different project, invoke this script by its absolute path while your terminal is in the intended project. `--local` follows the current working directory.
 
-Re-running the installer upgrades in place: each skill directory is removed and re-copied, so files deleted upstream do not linger.
+Older clients may use `~/.codex/skills`. Verify the client, then set `--dest ~/.codex/skills` if required. The installer does not delete or migrate that legacy path. Avoid conflicting copies.
 
-## Ask Codex To Install It
+[Official Codex skill locations](https://developers.openai.com/codex/build-skills).
 
-If you would rather not run a script, paste this into Codex from a clone of this repository:
+## First use
 
-```text
-Install the recommended skills from this repository into ~/.codex/skills/: paper-workflow, paper-bootstrap, nature-portfolio-playbook, scientific-writing, write-scientific-manuscript, manuscript-optimizer, results-section-revision, figure-planner, citation-verifier, claim-source-verification, review-article-architecture, draft-marker-discipline, data-availability, submission-audit, rebuttal-response, stats-reporting-audit, anti-defensive-writing, scientific-prose-style. Copy the full skill directories, not just SKILL.md, and delete any existing copy of a skill before re-copying it. When finished, list the installed directories and use paper-workflow to tell me which skill I should use next for my manuscript.
-```
+Open the skill selector or explicitly invoke $paper-workflow. Run the [first-revision example](../examples/first-run/README.md), then use your own active source and evidence. If the skill is absent, verify the scope and agent environment, refresh the skill list or reopen the session. Doctor confirms file integrity; it cannot confirm live session loading.
 
-## Install One Skill
+## Update, preserve and recover
 
-```bash
-mkdir -p ~/.codex/skills
-rm -rf ~/.codex/skills/paper-bootstrap
-cp -R skills/core/paper-bootstrap ~/.codex/skills/paper-bootstrap
-```
+Re-run the installer with the same selection. Existing copies are backed up. `--on-conflict keep` preserves local modifications; `--on-conflict error` stops before changes. `--doctor` lists version records and backup IDs. `--restore <backup-id>` restores replaced copies and backs up the current copies first. `--ref <full-commit-sha>` pins a source version; `--dry-run` previews writes.
 
-## Manual Install Of The Core Journal Stack
+See [installation management](installation-management.md) for recovery details and [CHANGELOG](../CHANGELOG.md) for behavior changes. Manual copying bypasses version records and recovery, so the installer is recommended. If copying manually, copy whole directories and the applicable root LICENSE-APACHE and NOTICE files.
 
-The recommended set is every skill in `skills/core/` plus `skills/venue/nature-portfolio-playbook`.
-Copy whole skill directories, not just `SKILL.md`, because some skills include local scripts.
+## Recommended profile
 
-```bash
-DEST=~/.codex/skills
-mkdir -p "$DEST"
-for s in skills/core/*/ skills/venue/nature-portfolio-playbook/; do
-  name=$(basename "$s")
-  rm -rf "$DEST/$name"         # replace rather than merge; see the note below
-  cp -R "$s" "$DEST/$name"
-done
-```
+19 skills; figure production/checking uses `--figure`, and all 27 skills use `--set all`.
 
-## Figure Stack (Optional)
-
-These produce and check publication figures. They need a plotting backend (Python matplotlib/seaborn or R ggplot2/patchwork/ComplexHeatmap). `nature-figure`'s optional AI-schematic route additionally needs an `OPENROUTER_API_KEY`; the Python/R plotting core works without it.
-
-```bash
-DEST=~/.codex/skills
-mkdir -p "$DEST"
-for s in skills/figure/*/; do
-  name=$(basename "$s")
-  rm -rf "$DEST/$name"
-  cp -R "$s" "$DEST/$name"
-done
-```
-
-## Note
-
-A plain `cp -R` over an existing skill directory merges into it rather than replacing it, so files removed in a newer version of the skill survive the upgrade and two versions end up mixed in one directory. Delete the target directory first, or use `install.sh`, which does this for you.
+<!-- recommended-skills -->
+- `paper-workflow`
+- `paper-bootstrap`
+- `scientific-writing`
+- `write-scientific-manuscript`
+- `manuscript-optimizer`
+- `results-section-revision`
+- `figure-planner`
+- `citation-verifier`
+- `claim-source-verification`
+- `review-article-architecture`
+- `draft-marker-discipline`
+- `data-availability`
+- `submission-audit`
+- `rebuttal-response`
+- `stats-reporting-audit`
+- `anti-defensive-writing`
+- `scientific-prose-style`
+- `nature-portfolio-playbook`
+- `paper-reviewer`
+<!-- /recommended-skills -->

@@ -212,11 +212,11 @@ Run the checker for the mechanical half: verbatim quoting, order, one reply per 
 phrases, bloat.
 
 ```bash
-python3 ~/.codex/skills/paper-reviewer/scripts/check_coverage.py \
+python3 ~/.agents/skills/paper-reviewer/scripts/check_coverage.py \
   --reviewer reviews/round1.txt --letter response/round1.md \
   [--ledger notes/review-ledger.md] [--manuscript manuscript.md] [--strict] [--json]
-# Claude Code (global install): replace ~/.codex/skills with ~/.claude/skills
-# Claude Code (project-local install): replace ~/.codex/skills with .claude/skills
+# Claude Code (global install): replace ~/.agents/skills with ~/.claude/skills
+# Claude Code (project-local install): replace ~/.agents/skills with .claude/skills
 ```
 
 It cannot judge whether a reply is responsive. A clean run is not a good letter.

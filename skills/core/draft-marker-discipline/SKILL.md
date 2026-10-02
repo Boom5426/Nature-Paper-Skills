@@ -136,7 +136,7 @@ of error.
 needs `detex` (Debian/Ubuntu: `texlive-binextra`) and nothing else.
 
 ```bash
-# Claude Code, global install; for Codex use ~/.codex/skills
+# Claude Code, global install; for Codex use ~/.agents/skills
 python3 ~/.claude/skills/draft-marker-discipline/scripts/prose_wordcount.py \
     --sections paper/sections --order 01-intro,02-methods,03-results
 python3 ~/.claude/skills/draft-marker-discipline/scripts/prose_wordcount.py \

@@ -62,9 +62,9 @@ class TestLicenseShipping(unittest.TestCase):
             )
 
     def test_installer_copies_the_licence_and_prunes_bytecode(self):
-        text = INSTALL.read_text()
-        self.assertIn('cp "$SOURCE_DIR/LICENSE-APACHE"', text)
-        self.assertIn('cp "$SOURCE_DIR/NOTICE"', text)
+        text = (ROOT / "scripts/manage_install.py").read_text()
+        self.assertIn('("LICENSE-APACHE", "NOTICE")', text)
+        self.assertIn('shutil.copy2(source / license_name, payload / license_name)', text)
         self.assertIn("__pycache__", text, "installs would ship gitignored bytecode")
 
     def test_third_party_notice_present_and_referenced(self):

@@ -41,9 +41,9 @@ Start with a local citation scan before any online verification.
 The helper script:
 
 ```bash
-python ~/.codex/skills/citation-verifier/scripts/scan_citations.py path/to/file_or_dir [...]
-# Claude Code (global install): replace ~/.codex/skills with ~/.claude/skills
-# Claude Code (project-local install): replace ~/.codex/skills with .claude/skills
+python ~/.agents/skills/citation-verifier/scripts/scan_citations.py path/to/file_or_dir [...]
+# Claude Code (global install): replace ~/.agents/skills with ~/.claude/skills
+# Claude Code (project-local install): replace ~/.agents/skills with .claude/skills
 ```
 
 Use it to find:

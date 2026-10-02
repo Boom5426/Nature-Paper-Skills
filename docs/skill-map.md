@@ -1,5 +1,7 @@
 # Skill Map
 
+Recommended: all 17 Core skills, the Venue skill and `paper-reviewer` (19 total). Add both Figure skills with `--figure`; install all 27 with `--set all`. Start with [task recipes](task-recipes.md) if you do not need the complete catalog.
+
 ## Core
 
 - `paper-workflow`: top-level router
@@ -17,7 +19,7 @@
 - `submission-audit`: pre-submission or pre-resubmission QA
 - `rebuttal-response`: author-side reviewer response workflow, claim calibration, and final letter audit
 - `stats-reporting-audit`: author-side statistical-reporting audit (independent-unit `n`, replication, multiple comparisons, figure-legend statistics)
-- `anti-defensive-writing`: rhetorical posture (audit, defensive, self-critical, developer-facing and commitment writing in the main text, SI, legends, table notes and data statements; caveats in high-impact positions; paragraphs opening with a limitation). Runs after the integrity checks have placed every caveat they require; a mandated limitation is load-bearing and is reshaped, never deleted
+- `anti-defensive-writing`: rhetorical posture (audit, defensive, self-critical, developer-facing and commitment writing in the main text, SI, legends, table notes and data statements; caveats in high-impact positions; paragraphs opening with a limitation). Runs after the relevant claim is stable; preserve scientifically necessary scope, numbers, reporting requirements and reproducibility facts. Apply only when the task needs this layer
 - `scientific-prose-style`: sentence-level prose linting (em-dash budget, hedging, sentence rhythm, paragraph openers)
 
 ## Venue

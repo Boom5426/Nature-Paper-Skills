@@ -7,26 +7,27 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
-      - name: Run the test suite
+      - name: Run unit and installation integration tests
         run: python -m unittest discover -s tests -v
-
-      - name: Check the installer is valid shell
+      - name: Check shell syntax
         run: bash -n install.sh
-
-      - name: Install every skill into a scratch directory
+      - name: Install all skills and verify the installation
         run: |
           bash install.sh --dest "${RUNNER_TEMP}/skills" --set all
-          test "$(ls -1 "${RUNNER_TEMP}/skills" | wc -l)" -eq "$(find skills -mindepth 2 -maxdepth 2 -type d | wc -l)"
-
-      - name: Re-run the installer to confirm it is idempotent
+          bash install.sh --dest "${RUNNER_TEMP}/skills" --set all --doctor
+      - name: Repeat installation and verify again
         run: |
           bash install.sh --dest "${RUNNER_TEMP}/skills" --set all
-          test "$(ls -1 "${RUNNER_TEMP}/skills" | wc -l)" -eq "$(find skills -mindepth 2 -maxdepth 2 -type d | wc -l)"
+          bash install.sh --dest "${RUNNER_TEMP}/skills" --set all --doctor
+      - name: Validate behavior evaluation assets
+        run: python scripts/check_behavior_assets.py

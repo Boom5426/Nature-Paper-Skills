@@ -87,9 +87,9 @@ class InstallerTests(unittest.TestCase):
         for doc in ("docs/installation-claude.md", "docs/installation-codex.md"):
             with self.subTest(doc=doc):
                 text = (REPO_ROOT / doc).read_text(encoding="utf-8")
-                listed = re.search(r"skills/:\s*(.*?)\.\s+Copy", text, re.S)
+                listed = re.search(r"<!-- recommended-skills -->(.*?)<!-- /recommended-skills -->", text, re.S)
                 self.assertIsNotNone(listed, f"{doc}: could not locate the skill list")
-                names = {name.strip() for name in listed.group(1).split(",")}
+                names = set(re.findall(r"`([a-z][a-z0-9-]+)`", listed.group(1)))
                 self.assertEqual(
                     names,
                     expected,
