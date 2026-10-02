@@ -133,7 +133,7 @@ class InstallationManagementTests(unittest.TestCase):
         (self.skill/'SKILL.md').write_text('New version')
         real_replace = manager.os.replace
         def fail_new_payload(src, dst):
-            if Path(src).parent.name.startswith('stage-') and Path(dst) == self.dest/'demo':
+            if Path(src).parent.name.startswith('stage-') and Path(dst).resolve() == (self.dest/'demo').resolve():
                 raise OSError('simulated disk failure')
             return real_replace(src,dst)
         with patch.object(sys, 'argv', self.args()[1:]), patch.object(manager.os, 'replace', side_effect=fail_new_payload):
