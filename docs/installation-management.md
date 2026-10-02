@@ -13,6 +13,27 @@ Use `--agent both` for both locations, including with `--local`. `--dest <direct
 
 For an older Codex setup using `~/.codex/skills`, first inspect its actual discovery behavior. You can retain that target explicitly with `--dest ~/.codex/skills`. Installing into a new path does not migrate or delete old copies. Avoid keeping conflicting versions with the same name in multiple discovered locations. The [current official Codex guide](https://developers.openai.com/codex/build-skills) describes `.agents/skills`; this project does not claim every historical client behaves identically.
 
+### Canonical copy with symlinks into the agent directory
+
+You can install once into a directory you own and link each skill into the agent directory, so that several agents share one version:
+
+```bash
+bash install.sh --dest ~/skill-store/nature-paper-skills --set all
+for d in ~/skill-store/nature-paper-skills/*/; do
+  [ -f "${d}SKILL.md" ] || continue
+  ln -sfn "${d%/}" ~/.claude/skills/"$(basename "$d")"
+done
+```
+
+The canonical directory is a normal managed destination. It holds `.nature-paper-skills/installed.json`, and `--doctor`, `--restore` and `--on-conflict` operate on it, so run updates and checks against that directory rather than against the agent directory. `--restore` preserves symlinks: a backup taken from a linked entry restores as a link.
+
+Two limits apply to the linked entries:
+
+- Doctor reports a symlinked skill as untracked or modified, and exits 1 for that destination. A linked directory fingerprints as a link rather than as the recorded files, and the agent directory normally carries no installation record of its own.
+- Installing into a destination that already contains a symlink moves that link into `backups/` and installs a real directory in its place. Keep the agent directory out of any `--dest` target while this layout is in use.
+
+Use this layout when one installed version must serve several agents, or when several skill packs share one agent directory and each pack should stay separate. The agent must resolve the links, and only one version of a given skill name may appear in the paths the agent reads.
+
 ## Inspect and update
 
 From a clone:
