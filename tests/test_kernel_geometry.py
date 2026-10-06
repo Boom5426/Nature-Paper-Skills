@@ -18,6 +18,8 @@ there; it is not a silent pass, the skip reason names the missing package.
 """
 
 import importlib.util
+import io
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -71,6 +73,43 @@ class KernelGeometryTest(unittest.TestCase):
     def renderer(self, fig):
         fig.canvas.draw()
         return fig.canvas.get_renderer()
+
+    def test_default_pdf_export_retains_requested_physical_width(self):
+        fig, ax = plt.subplots(figsize=(183 / 25.4, 80 / 25.4))
+        ax.plot([0, 1], [0, 1])
+        output = io.BytesIO()
+        fig.savefig(output, format="pdf")
+        box = re.search(rb"/MediaBox\s*\[\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*\]", output.getvalue())
+        self.assertIsNotNone(box)
+        x0, y0, x1, y1 = map(float, box.groups())
+        self.assertAlmostEqual((x1 - x0) * 25.4 / 72, 183, places=5)
+        self.assertAlmostEqual((y1 - y0) * 25.4 / 72, 80, places=5)
+
+    def test_singleton_sd_and_ci_are_refused_before_drawing(self):
+        for interval in ("sd", "ci95"):
+            fig, ax = plt.subplots()
+            with self.assertRaisesRegex(ValueError, "at least two"):
+                self.kernel.bar_with_points(ax, [0], [[7]], ["group"], ["blue"],
+                                            show_points=False, errorbar=interval)
+            self.assertEqual(len(ax.patches), 0)
+
+    def test_singleton_observation_is_visible(self):
+        fig, ax = plt.subplots()
+        self.kernel.bar_with_points(ax, [0], [[7]], ["group"], ["blue"], jitter=0)
+        self.assertEqual(len(ax.collections), 1)
+        np.testing.assert_array_equal(ax.collections[0].get_offsets(), [[0, 7]])
+
+    def test_two_observation_ci_uses_small_sample_t_interval(self):
+        try:
+            import scipy.stats
+        except ImportError:
+            self.skipTest("95% CI requires scipy; optional dependency CI installs it")
+        fig, ax = plt.subplots()
+        self.kernel.bar_with_points(ax, [0], [[0, 2]], ["group"], ["blue"],
+                                    show_points=False, errorbar="ci95")
+        segment = ax.containers[0].lines[2][0].get_segments()[0]
+        half_width = (segment[1, 1] - segment[0, 1]) / 2
+        self.assertAlmostEqual(half_width, 12.7062047364, places=6)
 
     def letter_offsets(self, mosaic, figsize):
         """Pixel gap between each panel letter's bottom and its axes' top edge."""

@@ -79,6 +79,34 @@ def regex_hits(patterns: Iterable[str], source: str, flags: int = re.IGNORECASE)
     return hits
 
 
+def extract_r_chunks(source: str) -> str:
+    """Keep executable R fences and line numbers in R Markdown/Quarto files."""
+    output: list[str] = []
+    fence = None
+    is_r = False
+    count = 0
+    for line in source.splitlines(keepends=True):
+        if fence:
+            if re.fullmatch(r"\s{0,3}" + re.escape(fence[0]) + "{" + str(len(fence)) + r",}\s*", line):
+                fence = None
+                is_r = False
+                output.append("\n")
+            else:
+                output.append(line if is_r else "\n")
+            continue
+        opening = re.match(r"^\s{0,3}(`{3,}|~{3,})\s*(.*)$", line)
+        if opening:
+            fence, info = opening.groups()
+            is_r = bool(re.match(r"(?:\{r(?:[\s,}]|$)|r\s*$)", info, re.I))
+            count += int(is_r)
+        output.append("\n")
+    if fence and is_r:
+        raise ValueError("Unclosed R code fence")
+    if not count:
+        raise ValueError("No fenced R code chunks found")
+    return "".join(output)
+
+
 def check_syntax(source: str, backend: str) -> Finding:
     if backend == "python":
         try:
@@ -1049,6 +1077,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         backend = detect_backend(args.source, args.backend)
         source = args.source.read_text(encoding="utf-8-sig")
+        if backend == "r" and args.source.suffix.lower() in {".rmd", ".qmd"}:
+            source = extract_r_chunks(source)
     except (OSError, UnicodeError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

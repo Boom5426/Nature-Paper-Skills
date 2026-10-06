@@ -2,6 +2,7 @@
 import importlib.util
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import sys
@@ -74,6 +75,62 @@ class InstallationManagementTests(unittest.TestCase):
         self.run_manager('--restore', backup.name)
         self.assertIn('Local note.', target.read_text())
         self.assertGreaterEqual(len(self.backups()), 2)
+
+    def make_restore_backup(self):
+        self.run_manager()
+        target = self.dest/'demo/SKILL.md'
+        target.write_text(target.read_text()+'Local note.\n')
+        self.run_manager()
+        return self.backups()[-1]
+
+    def link_current_skill(self, dest, relative=True):
+        canonical = self.base/(dest.name+'-canonical')/'demo'
+        canonical.parent.mkdir()
+        (dest/'demo').rename(canonical)
+        value = os.path.relpath(canonical, dest) if relative else str(canonical)
+        (dest/'demo').symlink_to(value, target_is_directory=True)
+        return canonical
+
+    def test_restore_refuses_relative_and_absolute_current_links(self):
+        backup = self.make_restore_backup()
+        canonical = self.link_current_skill(self.dest)
+        before = self.manifest()
+        count = len(self.backups())
+        for value in (os.readlink(self.dest/'demo'), str(canonical)):
+            # Alter only our scratch symlink, preserving its canonical directory.
+            if os.readlink(self.dest/'demo') != value:
+                alternate = self.dest/'alternate'
+                alternate.symlink_to(value, target_is_directory=True)
+                os.replace(alternate, self.dest/'demo')
+            result = self.run_manager('--restore', backup.name, code=2)
+            self.assertIn('Refusing to replace linked skill', result.stderr)
+            self.assertEqual(os.readlink(self.dest/'demo'), value)
+            self.assertTrue((self.dest/'demo/SKILL.md').is_file())
+            self.assertTrue((canonical/'SKILL.md').is_file())
+            self.assertEqual(self.manifest(), before)
+            self.assertEqual(len(self.backups()), count)
+
+    def test_restore_preflights_all_destinations_before_replacing_any(self):
+        backup = self.make_restore_backup()
+        second = self.base/'second'
+        shutil.copytree(self.dest, second)
+        self.link_current_skill(second)
+        before = (self.dest/'demo/SKILL.md').read_bytes()
+        manifest = self.manifest()
+        result = self.run_manager('--dest', str(second), '--restore', backup.name, code=2)
+        self.assertIn('Refusing to replace linked skill', result.stderr)
+        self.assertEqual((self.dest/'demo/SKILL.md').read_bytes(), before)
+        self.assertEqual(self.manifest(), manifest)
+        self.assertTrue((second/'demo').is_symlink())
+
+    def test_restore_refuses_linked_backup(self):
+        backup = self.make_restore_backup()
+        canonical = self.base/'backup-canonical'
+        (backup/'demo').rename(canonical)
+        (backup/'demo').symlink_to(os.path.relpath(canonical, backup), target_is_directory=True)
+        result = self.run_manager('--restore', backup.name, code=2)
+        self.assertIn('linked backup', result.stderr)
+        self.assertTrue((backup/'demo/SKILL.md').is_file())
 
     def test_keep_and_error_preserve_local_edits(self):
         self.run_manager()

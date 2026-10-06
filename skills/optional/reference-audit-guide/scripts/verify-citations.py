@@ -23,34 +23,20 @@ from dataclasses import dataclass, asdict
 import re
 from difflib import SequenceMatcher
 
-# 尝试导入 bibtexparser
-try:
-    import bibtexparser
-    from bibtexparser.bparser import BibTexParser
-except ImportError:
-    print("错误: 需要安装 bibtexparser")
-    print("运行: pip install bibtexparser")
-    sys.exit(1)
+from citation_io import load_bibtex, latex_citations, resolve_inputs
 
-# 尝试导入 API 客户端库
 try:
     from semanticscholar import SemanticScholar
 except ImportError:
-    print("警告: semanticscholar 未安装,将跳过 Semantic Scholar 验证")
-    print("运行: pip install semanticscholar")
-
+    SemanticScholar = None
 try:
     import arxiv
 except ImportError:
-    print("警告: arxiv 未安装,将跳过 arXiv 验证")
-    print("运行: pip install arxiv")
-
+    arxiv = None
 try:
     import requests
 except ImportError:
-    print("错误: 需要安装 requests")
-    print("运行: pip install requests")
-    sys.exit(1)
+    requests = None
 
 
 @dataclass
@@ -122,47 +108,18 @@ def parse_arguments():
         help='匹配阈值(0.0-1.0),默认 0.85'
     )
 
-    return parser.parse_args()
-
-
-def load_bibtex(file_path: str) -> List[Dict]:
-    """加载 BibTeX 文件"""
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            parser = BibTexParser(common_strings=True)
-            bib_database = bibtexparser.load(f, parser)
-            return bib_database.entries
-    except FileNotFoundError:
-        print(f"错误: 文件不存在: {file_path}")
-        sys.exit(1)
-    except Exception as e:
-        print(f"错误: 无法解析 BibTeX 文件: {e}")
-        sys.exit(1)
+    parser.add_argument('--bib', action='append', help='明确指定 .bib 文件；可重复')
+    parser.add_argument('--tex', help='明确指定一致性检查用的 .tex 文件')
+    args = parser.parse_args()
+    if args.api_only and args.format_only:
+        parser.error('--api-only 和 --format-only 不能同时使用')
+    if not 0 <= args.threshold <= 1:
+        parser.error('--threshold 必须在 0 到 1 之间')
+    return args
 
 
 def extract_latex_citations(tex_file: str) -> List[str]:
-    """从 LaTeX 文件中提取引用"""
-    try:
-        with open(tex_file, 'r', encoding='utf-8') as f:
-            content = f.read()
-
-        # 匹配 \cite{...} 命令
-        cite_pattern = r'\\cite(?:\[[^\]]*\])?\{([^}]+)\}'
-        citations = re.findall(cite_pattern, content)
-
-        # 展开多个引用
-        all_keys = []
-        for cite in citations:
-            keys = [k.strip() for k in cite.split(',')]
-            all_keys.extend(keys)
-
-        return list(set(all_keys))  # 去重
-    except FileNotFoundError:
-        print(f"错误: 文件不存在: {tex_file}")
-        sys.exit(1)
-    except Exception as e:
-        print(f"错误: 无法解析 LaTeX 文件: {e}")
-        sys.exit(1)
+    return latex_citations(Path(tex_file).read_text(encoding="utf-8-sig"))
 
 
 # ============================================================================
@@ -247,12 +204,26 @@ def check_citation_consistency(tex_keys: List[str], bib_keys: List[str]) -> Dict
 
 def verify_with_crossref(doi: str) -> Optional[Dict]:
     """通过 CrossRef API 验证 DOI"""
+    if requests is None:
+        return None
     try:
         url = f"https://api.crossref.org/works/{doi}"
         response = requests.get(url, timeout=10)
         if response.status_code == 200:
             data = response.json()
-            return data.get('message')
+            message = data.get('message') or {}
+            result = {
+                'title': next(iter(message.get('title') or []), ''),
+                'authors': [' '.join(filter(None, [a.get('given'), a.get('family')])) or a.get('name', '')
+                            for a in message.get('author', [])],
+                'doi': message.get('DOI', doi),
+            }
+            for key in ('published', 'published-print', 'published-online', 'issued', 'created'):
+                parts = message.get(key, {}).get('date-parts', [])
+                if parts and parts[0]:
+                    result['year'] = parts[0][0]
+                    break
+            return result
         return None
     except Exception as e:
         print(f"CrossRef API 错误: {e}")
@@ -261,6 +232,8 @@ def verify_with_crossref(doi: str) -> Optional[Dict]:
 
 def verify_with_arxiv(arxiv_id: str) -> Optional[Dict]:
     """通过 arXiv API 验证"""
+    if arxiv is None:
+        return None
     try:
         search = arxiv.Search(id_list=[arxiv_id])
         paper = next(search.results())
@@ -277,6 +250,8 @@ def verify_with_arxiv(arxiv_id: str) -> Optional[Dict]:
 
 def verify_with_semantic_scholar(title: str, authors: Optional[List[str]] = None) -> Optional[Dict]:
     """通过 Semantic Scholar API 验证"""
+    if SemanticScholar is None:
+        return None
     try:
         sch = SemanticScholar()
         results = sch.search_paper(title, limit=5)
@@ -484,7 +459,7 @@ def verify_citation(entry: Dict, args) -> VerificationResult:
             match_score=0.0,
             format_errors=format_errors,
             api_source=None,
-            message='仅格式检查'
+            message='格式检查失败' if format_errors else '格式检查通过（未核验来源）'
         )
 
     exists, api_source, api_data = verify_existence(entry)
@@ -497,7 +472,7 @@ def verify_citation(entry: Dict, args) -> VerificationResult:
             match_score=0.0,
             format_errors=format_errors,
             api_source=None,
-            message='❌ 论文不存在 - 无法通过任何 API 验证'
+            message='❌ 未能通过可用 API 验证；检查服务可用性并人工核查'
         )
 
     # Layer 3 & 4: 信息匹配和内容验证
@@ -522,6 +497,7 @@ def verify_citation(entry: Dict, args) -> VerificationResult:
 def print_summary(results: List[VerificationResult], verbose: bool = False):
     """打印验证摘要"""
     total = len(results)
+    denominator = total or 1
     verified = sum(1 for r in results if r.status == 'verified')
     partial = sum(1 for r in results if r.status == 'partial_match')
     low = sum(1 for r in results if r.status == 'low_match')
@@ -531,10 +507,11 @@ def print_summary(results: List[VerificationResult], verbose: bool = False):
     print("验证摘要")
     print("="*60)
     print(f"总引用数: {total}")
-    print(f"✅ 验证通过: {verified} ({verified/total*100:.1f}%)")
-    print(f"⚠️  部分匹配: {partial} ({partial/total*100:.1f}%)")
-    print(f"❌ 匹配度低: {low} ({low/total*100:.1f}%)")
-    print(f"❌ 验证失败: {failed} ({failed/total*100:.1f}%)")
+    print(f"✅ 验证通过: {verified} ({verified/denominator*100:.1f}%)")
+    print(f"⚠️  部分匹配: {partial} ({partial/denominator*100:.1f}%)")
+    print(f"❌ 匹配度低: {low} ({low/denominator*100:.1f}%)")
+    print(f"❌ 验证失败: {failed} ({failed/denominator*100:.1f}%)")
+    print(f"格式检查条目: {sum(r.status == 'format_checked' for r in results)}; 格式错误条目: {sum(bool(r.format_errors) for r in results)}")
     print("="*60)
 
     if verbose:
@@ -553,21 +530,22 @@ def print_summary(results: List[VerificationResult], verbose: bool = False):
 def generate_markdown_report(results: List[VerificationResult], output_file: str):
     """生成 Markdown 格式的验证报告"""
     total = len(results)
+    denominator = total or 1
     verified = sum(1 for r in results if r.status == 'verified')
     partial = sum(1 for r in results if r.status == 'partial_match')
     low = sum(1 for r in results if r.status == 'low_match')
     failed = sum(1 for r in results if r.status in ['failed', 'not_found'])
 
-    with open(output_file, 'w', encoding='utf-8') as f:
+    with open(output_file, 'x', encoding='utf-8') as f:
         f.write("# Citation Verification Report\n\n")
 
         # 总体统计
         f.write("## 总体统计\n\n")
         f.write(f"- **总引用数**: {total}\n")
-        f.write(f"- **✅ 验证通过**: {verified} ({verified/total*100:.1f}%)\n")
-        f.write(f"- **⚠️ 部分匹配**: {partial} ({partial/total*100:.1f}%)\n")
-        f.write(f"- **❌ 匹配度低**: {low} ({low/total*100:.1f}%)\n")
-        f.write(f"- **❌ 验证失败**: {failed} ({failed/total*100:.1f}%)\n\n")
+        f.write(f"- **✅ 验证通过**: {verified} ({verified/denominator*100:.1f}%)\n")
+        f.write(f"- **⚠️ 部分匹配**: {partial} ({partial/denominator*100:.1f}%)\n")
+        f.write(f"- **❌ 匹配度低**: {low} ({low/denominator*100:.1f}%)\n")
+        f.write(f"- **❌ 验证失败**: {failed} ({failed/denominator*100:.1f}%)\n\n")
 
         # 详细结果
         f.write("## 详细结果\n\n")
@@ -578,7 +556,8 @@ def generate_markdown_report(results: List[VerificationResult], output_file: str
             ('partial_match', '⚠️', '部分匹配'),
             ('low_match', '❌', '匹配度低'),
             ('failed', '❌', '验证失败'),
-            ('not_found', '❌', '论文不存在')
+            ('not_found', '❌', '未能核验'),
+            ('format_checked', 'ℹ️', '仅格式检查（未核验来源）')
         ]:
             status_results = [r for r in results if r.status == status]
             if status_results:
@@ -623,26 +602,28 @@ def main():
     """主函数"""
     args = parse_arguments()
 
-    # 加载 BibTeX 文件
-    print(f"正在加载 BibTeX 文件: {args.input_file}")
-    entries = load_bibtex(args.input_file)
-    print(f"找到 {len(entries)} 个引用条目")
-
-    # LaTeX 一致性检查
-    if args.check_latex:
-        tex_file = args.input_file.replace('.bib', '.tex')
-        if Path(tex_file).exists():
-            print(f"\n正在检查 LaTeX 引用一致性: {tex_file}")
+    try:
+        bib_files, tex_file = resolve_inputs(args.input_file, args.bib, args.tex, args.check_latex)
+        entries = [entry for path in bib_files for entry in load_bibtex(path)]
+        print(f"找到 {len(entries)} 个引用条目")
+        consistency_failed = False
+        keys = [entry['ID'] for entry in entries]
+        if len(keys) != len(set(keys)):
+            print("错误: 重复 citation key", file=sys.stderr)
+            consistency_failed = True
+        consistency = None
+        if tex_file:
             tex_keys = extract_latex_citations(tex_file)
-            bib_keys = [e['ID'] for e in entries]
-            consistency = check_citation_consistency(tex_keys, bib_keys)
-
-            if consistency['undefined']:
-                print(f"⚠️  未定义的引用 ({len(consistency['undefined'])}): {', '.join(consistency['undefined'])}")
-            if consistency['unused']:
-                print(f"⚠️  未使用的引用 ({len(consistency['unused'])}): {', '.join(consistency['unused'])}")
-            if not consistency['undefined'] and not consistency['unused']:
-                print("✅ LaTeX 引用与 BibTeX 完全一致")
+            if '*' in tex_keys:
+                tex_keys = [key for key in tex_keys if key != '*'] + keys
+            consistency = check_citation_consistency(tex_keys, keys)
+            for kind, label in [('undefined', '未定义的引用'), ('unused', '未使用的引用')]:
+                if consistency[kind]:
+                    print(f"{label}: {', '.join(sorted(consistency[kind]))}")
+            consistency_failed |= bool(consistency['undefined'])
+    except (OSError, ValueError, ImportError) as exc:
+        print(f"错误: {exc}", file=sys.stderr)
+        return 2
 
     # 验证每个引用
     print("\n开始验证引用...")
@@ -655,7 +636,7 @@ def main():
         results.append(result)
 
         # 简短状态输出
-        if result.status == 'verified':
+        if result.status == 'verified' or (result.status == 'format_checked' and not result.format_errors):
             print("✅")
         elif result.status == 'partial_match':
             print("⚠️")
@@ -667,11 +648,20 @@ def main():
 
     # 生成报告
     if args.output:
-        generate_markdown_report(results, args.output)
+        try:
+            generate_markdown_report(results, args.output)
+            if consistency:
+                with open(args.output, 'a', encoding='utf-8') as report:
+                    report.write("\n## LaTeX 一致性\n\n")
+                    report.write(f"- 未定义引用: {', '.join(sorted(consistency['undefined'])) or '无'}\n")
+                    report.write(f"- 未使用引用: {', '.join(sorted(consistency['unused'])) or '无'}\n")
+        except OSError as exc:
+            print(f"错误: {exc}", file=sys.stderr)
+            return 2
 
     # 返回退出码
-    failed_count = sum(1 for r in results if r.status in ['failed', 'not_found'])
-    return 0 if failed_count == 0 else 1
+    failed_count = sum(1 for r in results if r.status in ['failed', 'not_found', 'low_match'] or r.format_errors)
+    return 1 if failed_count or consistency_failed else 0
 
 
 if __name__ == '__main__':

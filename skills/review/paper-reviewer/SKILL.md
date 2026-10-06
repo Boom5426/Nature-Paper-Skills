@@ -1,19 +1,6 @@
 ---
 name: paper-reviewer
-description: >-
-  Referee-side skill for Nature Portfolio manuscripts, in four modes. Write a referee report:
-  methodology, statistics, reporting standards, reproducibility, and data and code availability.
-  Inventory a report you received: split it into every ask and sub-ask, in the referee's own words,
-  own numbering, and own order, so that each one can be answered separately and nothing is missed.
-  Grade a drafted reply the way an impatient referee reads it: one reply per ask, the referee's own
-  comment verbatim above its answer, the answer in the first sentence, no invented vocabulary, and
-  every reply landing somewhere in the manuscript. Use when the ask is review this manuscript, write
-  a referee report, what will reviewers attack, turn these reviewer comments into a checklist, answer
-  each comment one by one, did I miss a reviewer point, would this reply satisfy the reviewer,
-  审稿, 写审稿意见, 模拟审稿, 拆解审稿意见, 逐个回复, 逐条对照, 有没有漏回, 审稿人会不会接受,
-  以审稿人视角检查回复, 回复够不够直白. To choose the stance on each ask, calibrate a claim to the
-  evidence, and assemble and audit the whole letter, use `rebuttal-response`: this skill decides what
-  must be answered and what counts as an answer, that one decides what to say.
+description: "Referee-side skill for Nature Portfolio manuscripts: write a referee report, inventory every ask and sub-ask in received comments, grade drafted replies, and test reply readability. Check methodology, statistics, reporting, reproducibility and data/code availability. Preserve referee wording, numbering and order; require one reply per ask with a direct opening answer and a manuscript location or explicit no-change rationale. Use for review this manuscript, what will reviewers attack, turn comments into a checklist, answer each comment, did I miss a point, would this reply satisfy the reviewer, 审稿、写审稿意见、模拟审稿、拆解审稿意见、逐个回复、逐条对照、有没有漏回、审稿人会不会接受、以审稿人视角检查回复、回复够不够直白. Use rebuttal-response to choose response stances, calibrate claims and assemble or audit the whole letter."
 ---
 
 # Referee Reports and the Replies That Answer Them

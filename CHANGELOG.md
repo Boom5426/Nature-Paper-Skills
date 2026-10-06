@@ -2,12 +2,23 @@
 
 ## Unreleased
 
+### Usage fixes
+
+- Refuse overwriting paper notes and generated images/metadata; add explicit alternative note paths and unique default schematic names. Reject empty image responses and payloads.
+- Preserve PDF text graphics state across page content streams and `q`/`Q`; block incomplete page content instead of reporting PASS.
+- Reject malformed CSV quotes, preserve fixed figure export dimensions, show singleton observations and refuse undefined singleton SD/CI intervals.
+- Extract R Markdown/Quarto R chunks before source checks; exclude percentages and measurement units from figure-reference continuations.
+- Complete the optional citation checker CLI, support bibtexparser 1.x/2.x, normalize Crossref metadata, resolve literal LaTeX bibliographies and return failure for format/consistency errors. Reports and fixed bibliography copies refuse overwriting.
+- Escape paper-note YAML, deduplicate new graph edges and avoid manuscript-pointer errors for explicit no-change replies. Keyword misses are advisory.
+- Keep all skill descriptions within 1,024 characters; add usage regressions and CI jobs for optional helper dependencies with both bibtexparser versions.
+
 ### Installation safety
 
 - Refuse to replace per-skill symlinks under the default `backup` policy or `error`, before changing any selected destination.
 - Preserve live, broken and looping skill links under `--on-conflict keep` without adopting them into the installation record.
 - Identify linked entries in `--doctor` and direct checks to the canonical installation; linked targets are not automatically verified.
 - Retain support for symlinked destination roots and the existing backup/restore workflow for real skill directories.
+- Apply link protection to restore preflight, including linked backup entries and all selected destinations.
 
 ## 0.2.0 — 2026-10-02
 

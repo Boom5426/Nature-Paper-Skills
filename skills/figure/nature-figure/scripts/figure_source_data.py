@@ -170,7 +170,7 @@ def read_table(path: Path, delimiter: str | None = None) -> Table:
             f"cannot read {path.name}: it is not valid UTF-8 ({exc}). Re-export it as UTF-8."
         ) from exc
 
-    reader = csv.reader(io.StringIO(text, newline=""), delimiter=delimiter)
+    reader = csv.reader(io.StringIO(text, newline=""), delimiter=delimiter, strict=True)
     try:
         header = next(reader)
     except StopIteration:

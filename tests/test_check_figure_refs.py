@@ -85,6 +85,14 @@ class CheckFigureRefsCliTests(unittest.TestCase):
         for num in (7, 8):
             self.assertIn(f'Supplementary Fig. {num}:', result.stdout)
 
+    def test_percentages_and_measurements_after_reference_are_prose(self):
+        for quantity in ('95%', '95 %', r'95\%', '12 mm', '2 hours'):
+            with self.subTest(quantity=quantity):
+                result = self.run_script(f'Fig. 1, {quantity} is reported.')
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout.count('mentions='), 1, result.stdout)
+                self.assertIn('Fig. 1:', result.stdout)
+
     def test_panel_continuations_keep_one_mention(self):
         for phrase in ('Fig. 1a,b,c', 'Fig. 1a, b and c', 'Fig. 1A, B–D'):
             with self.subTest(phrase=phrase):

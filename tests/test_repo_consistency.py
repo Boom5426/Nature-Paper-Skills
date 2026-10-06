@@ -10,6 +10,7 @@ of YAML the skills actually use, so the suite runs on a bare Python install.
 """
 
 import re
+import json
 import unittest
 from pathlib import Path
 
@@ -71,6 +72,14 @@ class SkillFrontmatterTests(unittest.TestCase):
             with self.subTest(skill=path.parent.name):
                 description = frontmatter(path).get("description", "").lstrip(">-| ").strip()
                 self.assertTrue(description, f"{path}: description drives skill selection and must not be empty")
+
+    def test_descriptions_fit_the_1024_character_limit(self) -> None:
+        for path in skill_paths():
+            with self.subTest(skill=path.parent.name):
+                description = frontmatter(path)["description"].lstrip(">-| ").strip()
+                if description.startswith('"'):
+                    description = json.loads(description)
+                self.assertLessEqual(len(description), 1024, f"{path}: description exceeds the skill metadata limit")
 
 
 class InstallerTests(unittest.TestCase):

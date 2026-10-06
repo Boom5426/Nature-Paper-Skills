@@ -265,9 +265,13 @@ def restore(args, dests):
             if backup.name == "before.json":
                 continue
             name = safe_name(backup.name)
+            if backup.is_symlink():
+                raise ValueError(f"Refusing to restore a linked backup: {backup}")
             if not (backup / "SKILL.md").is_file():
                 raise ValueError(f"Backup is not a skill: {backup}")
             target = dest / name
+            if target.is_symlink():
+                raise ValueError(f"Refusing to replace linked skill: {target}; restore into an unlinked destination")
             if (target.exists() or target.is_symlink()) and not (target / "SKILL.md").is_file():
                 raise ValueError(f"Current target is not a skill: {target}")
             plans.append((dest, name, backup, before, current))
@@ -286,7 +290,7 @@ def restore(args, dests):
         for dest, name, backup, before, _ in plans:
             stage = Path(tempfile.mkdtemp(prefix="restore-", dir=dest / STATE))
             staged.append(stage)
-            copy_skill(backup, stage / name) if not backup.is_symlink() else (stage / name).symlink_to(os.readlink(backup), target_is_directory=True)
+            copy_skill(backup, stage / name)
         for (dest, name, backup, before, _), stage in zip(plans, staged):
             rescue = dest / STATE / "backups" / rescue_id
             rescue.mkdir(parents=True, exist_ok=True)

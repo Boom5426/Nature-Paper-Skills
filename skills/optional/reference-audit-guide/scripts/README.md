@@ -1,81 +1,42 @@
-# Citation Verification Scripts
+# Citation audit scripts
 
-## 状态说明
+These runnable helpers supplement the `citation-verifier` local workflow for batch metadata and bibliography checks. They do not read papers to verify cited claims; claim verification remains a separate source-reading step.
 
-**这些脚本是参考实现，不是主要工作流的一部分。**
-
-本目录中的Python脚本提供了基于API的引用验证实现，但**实际的引用验证工作流使用WebSearch和Google Scholar**，而不是这些脚本。
-
-## 为什么保留这些脚本？
-
-这些脚本作为**参考实现**保留，用于：
-
-1. **理解验证逻辑** - 展示引用验证的完整逻辑和步骤
-2. **学习API使用** - 了解如何使用CrossRef、arXiv、Semantic Scholar等API
-3. **高级用例** - 对于需要批量验证或自动化的场景，可以参考这些实现
-
-## 主要工作流
-
-**实际的引用验证应优先使用 `citation-verifier` skill 的本地优先工作流：**
-
-1. 使用 WebSearch 查找论文
-2. 在 Google Scholar 上验证
-3. 从 Google Scholar 获取 BibTeX
-4. 验证声明（如需要）
-5. 添加到 bibliography
-
-详见 `citation-verifier` 的 `SKILL.md`。
-
-## 脚本说明
-
-### verify-citations.py
-
-完整的引用验证脚本，包含：
-- 四层验证机制（格式、存在性、信息匹配、内容验证）
-- 多API支持（CrossRef、arXiv、Semantic Scholar）
-- 报告生成
-
-**用途**: 参考实现，了解完整的验证逻辑
-
-### api-clients.py
-
-API客户端库，包含：
-- CrossRefClient - DOI验证
-- ArXivClient - arXiv论文验证
-- SemanticScholarClient - 通用学术搜索
-- CitationAPIManager - 统一API管理
-
-**用途**: 参考实现，了解如何使用学术API
-
-### format-checker.py
-
-BibTeX和LaTeX格式检查工具，包含：
-- BibTeX格式验证
-- LaTeX引用检查
-- 格式错误报告
-
-**用途**: 参考实现，了解格式检查逻辑
-
-## 使用建议
-
-**对于日常论文写作**:
-- ✅ 使用 `citation-verifier` skill 的本地优先工作流
-- ✅ 使用 WebSearch 和 Google Scholar
-- ❌ 不要使用这些Python脚本
-
-**对于批量验证或自动化**:
-- 可以参考这些脚本的实现
-- 根据需要修改和使用
-- 注意API速率限制
-
-## 依赖安装
-
-如果需要运行这些脚本（仅用于参考或高级用例）：
+## Dependencies
 
 ```bash
-pip install bibtexparser requests semanticscholar arxiv
+python3 -m pip install 'bibtexparser>=1.4.4,<3' requests
 ```
 
-## 更多信息
+Both bibtexparser 1.x and 2.x are supported and tested. `semanticscholar` and `arxiv` are optional for their respective API searches. Offline format checks need only bibtexparser; `--help` does not require it.
 
-详见 `reference-audit-guide` skill 的 `SKILL.md` 文件。
+## Offline checks
+
+```bash
+python3 format-checker.py references.bib --strict --output new-format-report.md
+python3 verify-citations.py references.bib --format-only --output new-verification-report.md
+python3 format-checker.py paper.tex --check-latex
+python3 verify-citations.py paper.tex --check-latex --format-only
+```
+
+Literal `\bibliography{refs}` and `\addbibresource{refs.bib}` paths resolve relative to the input `.tex` file. Repeat `--bib` to supply explicit bibliography files when paths use custom macros. For a `.bib` input, `--check-latex` uses the sibling `.tex` unless `--tex` specifies another file. Requested missing files, empty bibliographies and unparsed entries fail; they are never treated as successful empty scans. Common citation commands such as `\cite`, `\citet`, `\citep` and `\autocite` are recognized, with comments excluded. This is a literal scanner, without custom macro expansion or recursive input handling.
+
+`format-checker.py` exits **0** for no errors, **1** for errors (or warnings under `--strict`), and **2** for input/dependency/output problems. `verify-citations.py` exits **1** for format errors, undefined/duplicate citation keys, low matches or failed verification, and **2** for input/dependency/output problems. A format-only success does not establish that the paper exists. Unused citations are warnings.
+
+## Metadata verification
+
+```bash
+python3 verify-citations.py references.bib --verbose --output new-api-report.md
+```
+
+Crossref DOI lookup is available with requests. Optional arXiv/Semantic Scholar searches provide fallback metadata. An unavailable service or failed search does not establish that a paper is nonexistent. Inspect partial matches and confirm claims against the source paper. `api-clients.py` provides additional client classes with rate limiting and retries.
+
+## Safe output and narrow automatic fixes
+
+Reports refuse to overwrite existing paths. Choose a new output path for each run. Automatic fixes require a separate destination and preserve the original bibliography:
+
+```bash
+python3 format-checker.py references.bib --fix-common --fixed-output new-fixed.bib
+```
+
+Only single-line braced/quoted DOI URL prefixes and numeric page-range separators are corrected. Author names, titles, years and scientific content are unchanged. Review the copy before adopting it; existing fixed-output files are refused.

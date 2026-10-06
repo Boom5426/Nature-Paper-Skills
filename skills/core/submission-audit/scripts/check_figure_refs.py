@@ -86,6 +86,10 @@ def parse_refs(text: str, start: int):
         following = sep.end()
         if following == len(text):
             return refs
+        # A quantity after the reference is prose, not another figure number.
+        if re.match(r"\d+(?:\.\d+)?\s*(?:\\?%|(?:percent|mm|cm|nm|mg|kg|ml|hours?|minutes?|seconds?)\b)",
+                    text[following:], re.I):
+            return refs
         if not text[following].isdigit():
             if not refs[-1][1] or not panel_continuation(text, following):
                 return refs  # ordinary prose after the reference

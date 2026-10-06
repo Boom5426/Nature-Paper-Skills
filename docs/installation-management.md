@@ -51,6 +51,8 @@ bash install.sh --agent codex --restore <backup-id>
 
 Restore puts back the skills present in that backup and preserves the current copies in a new backup. It does not remove skills first installed later. An old unmanaged copy remains unmanaged after restoration; doctor reports it as untracked. An intentionally restored modified copy may still be reported as modified relative to its old recorded baseline.
 
+Restore refuses per-skill symlinks in both current targets and backup entries before changing any selected destination. Relative links cannot safely be moved into a rescue backup. Restore real directories at their canonical destination; symlinked destination roots remain supported.
+
 ## Pinning a version
 
 `VERSION` and [CHANGELOG](../CHANGELOG.md) identify behavior changes. For reproducible installation, use a full commit SHA from [history](https://github.com/Boom5426/Nature-Paper-Skills/commits/main):

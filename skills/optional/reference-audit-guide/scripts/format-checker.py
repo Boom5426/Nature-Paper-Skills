@@ -23,15 +23,7 @@ from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
 
-# 尝试导入 bibtexparser
-try:
-    import bibtexparser
-    from bibtexparser.bparser import BibTexParser
-    BIBTEX_AVAILABLE = True
-except ImportError:
-    print("警告: bibtexparser 未安装,BibTeX 解析功能受限")
-    print("运行: pip install bibtexparser")
-    BIBTEX_AVAILABLE = False
+from citation_io import load_bibtex, latex_citations, resolve_inputs, fix_common_text
 
 
 class ErrorLevel(Enum):
@@ -92,7 +84,7 @@ def parse_arguments():
     parser.add_argument(
         '--fix-common',
         action='store_true',
-        help='自动修复常见格式问题'
+        help='修复单行 DOI URL 和页码分隔符；需 --fixed-output，保留原文件'
     )
 
     parser.add_argument(
@@ -107,7 +99,13 @@ def parse_arguments():
         help='只检查特定类型的条目(如 article, inproceedings)'
     )
 
-    return parser.parse_args()
+    parser.add_argument('--bib', action='append', help='明确指定 .bib 文件；可重复')
+    parser.add_argument('--tex', help='明确指定一致性检查用的 .tex 文件')
+    parser.add_argument('--fixed-output', help='修复后的新 .bib 路径；拒绝覆盖')
+    args = parser.parse_args()
+    if args.fix_common != bool(args.fixed_output):
+        parser.error('--fix-common 必须和 --fixed-output 一起使用')
+    return args
 
 
 def load_bibtex_file(file_path: str) -> List[Dict]:
@@ -123,18 +121,7 @@ def load_bibtex_file(file_path: str) -> List[Dict]:
         FileNotFoundError: 文件不存在
         ValueError: 文件格式错误
     """
-    if not BIBTEX_AVAILABLE:
-        raise ImportError("需要安装 bibtexparser: pip install bibtexparser")
-
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            parser = BibTexParser(common_strings=True)
-            bib_database = bibtexparser.load(f, parser)
-            return bib_database.entries
-    except FileNotFoundError:
-        raise FileNotFoundError(f"文件不存在: {file_path}")
-    except Exception as e:
-        raise ValueError(f"无法解析 BibTeX 文件: {e}")
+    return load_bibtex(file_path)
 
 
 def load_latex_file(file_path: str) -> str:
@@ -439,17 +426,7 @@ def extract_latex_citations(tex_content: str) -> List[str]:
     Returns:
         引用 key 列表
     """
-    # 匹配 \cite{...} 命令
-    cite_pattern = r'\\cite(?:\[[^\]]*\])?(?:\[[^\]]*\])?\{([^}]+)\}'
-    citations = re.findall(cite_pattern, tex_content)
-
-    # 展开多个引用
-    all_keys = []
-    for cite in citations:
-        keys = [k.strip() for k in cite.split(',')]
-        all_keys.extend(keys)
-
-    return list(set(all_keys))  # 去重
+    return latex_citations(tex_content)
 
 
 def check_latex_consistency(tex_keys: List[str], bib_keys: List[str]) -> List[FormatError]:
@@ -570,7 +547,7 @@ def generate_report(errors: List[FormatError], output_file: str):
     for error in errors:
         errors_by_level[error.level].append(error)
 
-    with open(output_file, 'w', encoding='utf-8') as f:
+    with open(output_file, 'x', encoding='utf-8') as f:
         f.write("# BibTeX/LaTeX 格式检查报告\n\n")
 
         # 总体统计
@@ -603,3 +580,41 @@ def generate_report(errors: List[FormatError], output_file: str):
                     f.write(f"**建议**: {error.suggestion}\n\n")
 
     print(f"\n报告已保存到: {output_file}")
+
+
+def main():
+    args = parse_arguments()
+    try:
+        bib_files, tex_file = resolve_inputs(args.input_file, args.bib, args.tex, args.check_latex)
+        entries = [entry for path in bib_files for entry in load_bibtex_file(path)]
+        if args.fix_common:
+            if len(bib_files) != 1:
+                raise ValueError('--fix-common 需要恰好一个 .bib 文件')
+            text = fix_common_text(bib_files[0].read_text(encoding='utf-8-sig'))
+            with open(args.fixed_output, 'x', encoding='utf-8') as output:
+                output.write(text)
+            entries = load_bibtex_file(args.fixed_output)
+            print(f'修复副本: {args.fixed_output}；原文件保留')
+        errors = check_consistency(entries)
+        for entry in entries:
+            if not args.entry_type or entry.get('ENTRYTYPE') == args.entry_type.lower():
+                errors.extend(check_entry_structure(entry))
+                errors.extend(check_field_formats(entry))
+        if tex_file:
+            keys = [entry['ID'] for entry in entries]
+            tex_keys = extract_latex_citations(load_latex_file(tex_file))
+            if '*' in tex_keys:
+                tex_keys = [key for key in tex_keys if key != '*'] + keys
+            errors.extend(check_latex_consistency(tex_keys, keys))
+        print_errors(errors, args.verbose)
+        if args.output:
+            generate_report(errors, args.output)
+        return int(any(error.level == ErrorLevel.ERROR or
+                       (args.strict and error.level == ErrorLevel.WARNING) for error in errors))
+    except (OSError, ValueError, ImportError) as exc:
+        print(f'错误: {exc}', file=sys.stderr)
+        return 2
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

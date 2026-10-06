@@ -10,6 +10,8 @@ import mimetypes
 import os
 import sys
 import time
+import uuid
+from contextlib import ExitStack
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -131,7 +133,7 @@ def media_extension(media_type: str | None, output_format: str | None) -> str:
 def decode_b64_image(value: str) -> bytes:
     if value.startswith("data:"):
         value = value.split(",", 1)[1]
-    return base64.b64decode(value)
+    return base64.b64decode(value, validate=True)
 
 
 def request_images(payload: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]:
@@ -167,27 +169,39 @@ def request_images(payload: dict[str, Any], args: argparse.Namespace) -> dict[st
 
 
 def save_outputs(response: dict[str, Any], payload: dict[str, Any], args: argparse.Namespace) -> None:
+    items = response.get("data")
+    if not isinstance(items, list) or not items:
+        raise ValueError("Image API returned no images")
     outdir = Path(args.outdir)
-    outdir.mkdir(parents=True, exist_ok=True)
-    basename = args.basename or time.strftime("openrouter_schematic_%Y%m%d_%H%M%S")
+    basename = args.basename or (time.strftime("openrouter_schematic_%Y%m%d_%H%M%S") + "_" + uuid.uuid4().hex[:12])
+    if basename in {".", ".."} or any(char in basename for char in "/\\"):
+        raise ValueError("--basename must be a filename component")
+    planned = []
+    for index, item in enumerate(items, start=1):
+        if not isinstance(item, dict):
+            raise ValueError(f"Invalid image response item {index}")
+        ext = media_extension(item.get("media_type"), args.output_format)
+        suffix = "" if len(items) == 1 else f"_{index:02d}"
+        planned.append((outdir / f"{basename}{suffix}{ext}", item))
+    metadata_path = outdir / f"{basename}_request_metadata.json"
+    for path in [p for p, _ in planned] + [metadata_path]:
+        if path.exists() or path.is_symlink():
+            raise FileExistsError(f"Refusing to overwrite: {path}; choose a new --basename")
 
-    saved: list[str] = []
-    for index, item in enumerate(response.get("data", []), start=1):
-        media_type = item.get("media_type")
-        ext = media_extension(media_type, args.output_format)
-        suffix = "" if len(response.get("data", [])) == 1 else f"_{index:02d}"
-        outpath = outdir / f"{basename}{suffix}{ext}"
-
+    # Fetch and validate every payload before creating any output files.
+    images = []
+    for index, (path, item) in enumerate(planned, start=1):
         if "b64_json" in item:
-            outpath.write_bytes(decode_b64_image(item["b64_json"]))
-            saved.append(str(outpath))
+            data = decode_b64_image(item["b64_json"])
         elif "url" in item:
             with urllib.request.urlopen(item["url"], timeout=args.timeout) as image_response:
-                outpath.write_bytes(image_response.read())
-            saved.append(str(outpath))
+                data = image_response.read()
         else:
-            raise SystemExit(f"No image bytes or URL in response item {index}: {item}")
-
+            raise ValueError(f"No image bytes or URL in response item {index}")
+        if not data:
+            raise ValueError(f"Empty image payload in response item {index}")
+        images.append((path, data))
+    saved = [str(path) for path, _ in images]
     metadata = {
         "api_url": API_URL,
         "request": payload,
@@ -195,9 +209,14 @@ def save_outputs(response: dict[str, Any], payload: dict[str, Any], args: argpar
         "created": response.get("created"),
         "saved_files": saved,
     }
-    metadata_path = outdir / f"{basename}_request_metadata.json"
-    metadata_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")
-
+    outdir.mkdir(parents=True, exist_ok=True)
+    # Exclusive creation also protects against a concurrent writer after preflight.
+    with ExitStack() as stack:
+        files = [stack.enter_context(path.open("xb")) for path, _ in images]
+        meta = stack.enter_context(metadata_path.open("x", encoding="utf-8"))
+        for handle, (_, data) in zip(files, images):
+            handle.write(data)
+        json.dump(metadata, meta, indent=2, ensure_ascii=False)
     print("Saved:")
     for path in saved:
         print(f"  {path}")
@@ -243,8 +262,12 @@ def main() -> int:
         print(json.dumps(payload, indent=2, ensure_ascii=False))
         return 0
 
-    response = request_images(payload, args)
-    save_outputs(response, payload, args)
+    try:
+        response = request_images(payload, args)
+        save_outputs(response, payload, args)
+    except (ValueError, OSError, TypeError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
     return 0
 
 

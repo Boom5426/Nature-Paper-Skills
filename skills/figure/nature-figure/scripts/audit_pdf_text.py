@@ -446,7 +446,7 @@ def walk_content(
     result: WalkResult,
 ) -> None:
     ctm = base_ctm
-    stack: list[Matrix] = []
+    stack: list[tuple[Matrix, str | None, float | None, int]] = []
     text_matrix = IDENTITY
     font_name: str | None = None
     font_size: float | None = None
@@ -465,9 +465,10 @@ def walk_content(
             continue
         operator = value
         if operator == "q":
-            stack.append(ctm)
+            stack.append((ctm, font_name, font_size, render_mode))
         elif operator == "Q":
-            ctm = stack.pop() if stack else ctm
+            if stack:
+                ctm, font_name, font_size, render_mode = stack.pop()
         elif operator == "cm":
             values = numbers(6)
             if values:
@@ -596,17 +597,22 @@ def audit_pdf(data: bytes, minimum_pt: float = 5.0) -> dict[str, object]:
             continue
         resources = raw_value(obj.dictionary, b"/Resources")
         mapping = xobject_map(resources, objects)
+        page_streams: list[bytes] = []
         for ref in content_refs(obj.dictionary):
             target = objects.get(ref)
             if target is None or target.payload is None:
-                warnings.append(f"page {number}: content stream {ref} is missing")
+                blocked.append(f"page {number}: content stream {ref} is missing")
                 continue
             decoded, note = decode_stream(target)
             if decoded is None:
                 blocked.append(f"page {number} content stream {ref}: {note}")
                 continue
             walked += 1
-            walk_content(decoded, IDENTITY, f"page {number}", mapping, form_numbers, result)
+            page_streams.append(decoded)
+        # A page's Contents array is one logical program; graphics and text
+        # state persist across its streams. Separate bytes to preserve tokens.
+        if page_streams:
+            walk_content(b"\n".join(page_streams), IDENTITY, f"page {number}", mapping, form_numbers, result)
 
     for number in sorted(form_numbers):
         obj = objects[number]

@@ -8,6 +8,7 @@ import sys
 import os
 import argparse
 import logging
+import json
 from datetime import datetime
 from pathlib import Path
 
@@ -33,20 +34,21 @@ def generate_note_content(paper_id, title, authors, domain, date):
         "智能体": ["智能体", "Agent"],
     }
     tags = ["论文笔记"] + domain_tags.get(domain, [domain])
-    tags_yaml = "\n".join(f'  - {tag}' for tag in tags)
+    scalar = lambda value: json.dumps(value, ensure_ascii=False)
+    tags_yaml = "\n".join(f'  - {scalar(tag)}' for tag in tags)
 
     return f'''---
-date: "{date}"
-paper_id: "{paper_id}"
-title: "{title}"
-authors: "{authors}"
-domain: "{domain}"
+date: {scalar(date)}
+paper_id: {scalar(paper_id)}
+title: {scalar(title)}
+authors: {scalar(authors)}
+domain: {scalar(domain)}
 tags:
 {tags_yaml}
 quality_score: "[SCORE]/10"
 related_papers: []
-created: "{date}"
-updated: "{date}"
+created: {scalar(date)}
+updated: {scalar(date)}
 status: analyzed
 ---
 
@@ -200,23 +202,27 @@ def main():
     parser.add_argument('--authors', type=str, default='[Authors]', help='论文作者')
     parser.add_argument('--domain', type=str, default='其他', help='论文领域')
     parser.add_argument('--vault', type=str, default=None, help='Obsidian vault 路径')
+    parser.add_argument('--output', type=Path, help='新笔记的输出路径；拒绝覆盖已有文件')
     args = parser.parse_args()
 
-    vault_root = get_vault_path(args.vault)
-    papers_dir = os.path.join(vault_root, "20_Research", "Papers")
     date = datetime.now().strftime("%Y-%m-%d")
     paper_title_safe = args.title
     for ch in ' /\\:*?"<>|':
         paper_title_safe = paper_title_safe.replace(ch, "_")
 
-    note_dir = os.path.join(papers_dir, args.domain)
-    os.makedirs(note_dir, exist_ok=True)
-
-    note_path = os.path.join(note_dir, f"{paper_title_safe}.md")
+    if args.output:
+        note_path = args.output
+    else:
+        vault_root = get_vault_path(args.vault)
+        note_path = Path(vault_root) / "20_Research" / "Papers" / args.domain / f"{paper_title_safe}.md"
+    note_path.parent.mkdir(parents=True, exist_ok=True)
     content = generate_note_content(args.paper_id, args.title, args.authors, args.domain, date)
 
-    with open(note_path, 'w', encoding='utf-8') as f:
-        f.write(content)
+    try:
+        with open(note_path, 'x', encoding='utf-8') as f:
+            f.write(content)
+    except FileExistsError:
+        parser.exit(1, f'拒绝覆盖已有笔记: {note_path}。请用 --output 指定新路径。\n')
 
     print(f"笔记已生成: {note_path}")
     print(f"请手动编辑笔记内容，替换占位符为实际分析结果")

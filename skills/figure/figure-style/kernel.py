@@ -50,7 +50,7 @@ def apply_figure_style(*, frame="open", font=None, sizes=(8, 7, 6), grid=False):
         "legend.frameon": False,
         "figure.dpi": 200,
         "savefig.dpi": 300,
-        "savefig.bbox": "tight",
+        "savefig.bbox": None,
         "axes.titleweight": "normal",
         "axes.titlelocation": "left",
         "axes.labelweight": "normal",
@@ -155,25 +155,33 @@ def bar_with_points(ax, x, ymat, labels, colors, jitter=0.08, show_points=True,
                'ci95' is the t-distribution 95% CI of the mean
                (half-width t_{0.975,n-1} · s/√n); correct at small n where the
                z-approximation (1.96·s/√n) is markedly too narrow.
+               SD/CI require at least two observations in every group.
     """
     import numpy as np
+    if errorbar not in (None, "sd", "ci95"):
+        raise ValueError("errorbar must be None, 'sd', or 'ci95'")
+    ymat = [np.asarray(y).reshape(-1) for y in ymat]
+    if any(y.size == 0 for y in ymat):
+        raise ValueError("Each group must contain at least one observation")
+    if errorbar and not show_points and any(y.size < 2 for y in ymat):
+        raise ValueError("SD and 95% CI require at least two observations per group")
     means = np.array([np.mean(y) for y in ymat], float)
     err = None
     if errorbar and not show_points:
         if errorbar == "sd":
-            err = np.array([np.std(y, ddof=1) if np.asarray(y).size > 1 else 0 for y in ymat])
+            err = np.array([np.std(y, ddof=1) for y in ymat])
         elif errorbar == "ci95":
             from scipy.stats import t
             def _hw(y):
                 n = np.asarray(y).size
-                return t.ppf(0.975, n - 1) * np.std(y, ddof=1) / np.sqrt(n) if n > 1 else 0
+                return t.ppf(0.975, n - 1) * np.std(y, ddof=1) / np.sqrt(n)
             err = np.array([_hw(y) for y in ymat])
     ax.bar(x, means, color=colors, width=0.7, edgecolor="none",
            yerr=err, error_kw={"elinewidth": 0.8, "capsize": 0})
     if show_points:
         for xi, ys in zip(x, ymat):
             ys = np.asarray(ys)
-            if ys.ndim and ys.size > 1:
+            if ys.size > 0:
                 jit = (np.random.rand(ys.size) - 0.5) * 2 * jitter
                 ax.scatter(np.full(ys.size, xi) + jit, ys, s=point_size, color="black",
                            alpha=point_alpha, zorder=3, linewidths=0)
@@ -337,11 +345,11 @@ def panel_crops(fig, dpi=None, pad_px=6, bbox_inches=None, pad_inches=None):
     falls back to one crop per axes keyed by index.
 
     ``bbox_inches`` mirrors ``Figure.savefig`` semantics: ``None`` means
-    *consult rcParams* (so under :func:`apply_figure_style` it resolves to
-    ``'tight'``); pass an explicit ``Bbox`` only if you saved with one. The
+    *consult rcParams* (under :func:`apply_figure_style` this keeps the fixed
+    canvas); pass ``'tight'`` or an explicit ``Bbox`` if you saved with one. The
     boxes are clamped to the saved image extent regardless.
 
-        >>> fig.savefig("fig.png")            # bbox_inches='tight' via rcParams
+        >>> fig.savefig("fig.png")            # fixed canvas via rcParams
         >>> from PIL import Image
         >>> for letter, box in panel_crops(fig).items():
         ...     Image.open("fig.png").crop(box).save(f"panel_{letter}.png")

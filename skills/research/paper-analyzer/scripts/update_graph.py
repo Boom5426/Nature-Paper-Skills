@@ -79,6 +79,7 @@ def main():
         existing_edges = {(edge["source"], edge["target"]) for edge in graph["edges"]}
         for related_id in args.related:
             if related_id and (args.paper_id, related_id) not in existing_edges:
+                existing_edges.add((args.paper_id, related_id))
                 graph["edges"].append({
                     "source": args.paper_id,
                     "target": related_id,

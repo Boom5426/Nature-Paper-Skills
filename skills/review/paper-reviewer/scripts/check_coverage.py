@@ -48,7 +48,7 @@ FOOTER = (
 BLOCKING_CODES = frozenset({
     "QUOTE_NOT_VERBATIM", "ORDER_MISMATCH", "MISSING_REPLY", "ORPHAN_REPLY",
     "KEY_DUPLICATE", "NO_LOCATION", "BLANKET_REPLY", "SUBITEM_UNSPLIT",
-    "PANEL_MISSING", "POINTER_UNRESOLVED", "PROMISED_NOT_LANDED",
+    "PANEL_MISSING", "PROMISED_NOT_LANDED",
     "NO_REPLY_BLOCKS",
 })
 
@@ -407,9 +407,11 @@ def check_body(block: Block, ledger: dict[str, dict[str, str]], findings: list[d
 
 def check_pointers(blocks: list[Block], manuscripts: list[tuple[str, str]],
                    findings: list[dict]) -> None:
-    """Reply content words that appear in no supplied manuscript file."""
+    """Advisory keyword heuristic for replies that do not declare no change."""
     names = ", ".join(name for name, _ in manuscripts)
     for block in blocks:
+        if NO_CHANGE_RE.search(block.reply):
+            continue
         tokens = distinctive(block.reply)
         if not tokens:
             continue
@@ -478,7 +480,7 @@ def main(argv: list[str]) -> int:
                          "enables PROMISED_NOT_LANDED and the severity bands")
     ap.add_argument("--manuscript", action="append", default=[], type=Path,
                     help="revised manuscript text; repeatable. Enables "
-                         "POINTER_UNRESOLVED.")
+                         "advisory POINTER_UNRESOLVED; no-change replies are exempt.")
     ap.add_argument("--strict", action="store_true",
                     help="let advisory findings fail the run too")
     ap.add_argument("--json", action="store_true",

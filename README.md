@@ -2,25 +2,82 @@
 
 # 🧬 Nature-Paper-Skills
 
-**Turn scientific drafts into clear, evidence-grounded journal manuscripts.**
+**From first draft to submission and rebuttal, build a clear, evidence-grounded manuscript.**
 
-Skills for Codex and Claude Code: structure, revision, figures, references, submission and rebuttal.
+27 skills for Codex and Claude Code, connecting structure, scientific writing, figures, citations and reviewer responses.
 Built for Nature-series life-science, computational-biology and methods papers.
+
+🧠 **Structure** · 📊 **Figures** · ✍️ **Writing** · 📚 **Citations** · 📨 **Rebuttals**
 
 [![Skills](https://img.shields.io/badge/skills-27-8a63d2)](docs/skill-map.md)
 [![CI](https://github.com/Boom5426/Nature-Paper-Skills/actions/workflows/ci.yml/badge.svg)](https://github.com/Boom5426/Nature-Paper-Skills/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT%20%2B%20Apache--2.0-green)](#license)
 [![Stars](https://img.shields.io/github/stars/Boom5426/Nature-Paper-Skills?style=social)](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
 
-**English** · [简体中文](README.zh-CN.md) · [Quick start](#quick-start) · [Choose a task](#choose-a-task) · [All skills](docs/skill-map.md)
+🌐 **English** · [简体中文](README.zh-CN.md)
+
+[🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [📚 All skills](docs/skill-map.md)
 
 </div>
 
-## See what changes
+---
 
-The writing layer removes project-log language and defensive scaffolding while retaining the facts that make a result interpretable.
+<a name="what-makes-the-workflow-useful"></a>
 
-| Before | After | What stays |
+## ✨ What makes the workflow useful
+
+- 🎯 **Build the argument before polishing sentences.** Connect the scientific question, contribution and evidence chain before refining the prose.
+- 📊 **Give every figure a job.** Define its main claim, organize panels and keep legends aligned with Results. The optional figure stack checks text size, collisions, alignment and source data.
+- ✍️ **Write for the journal reader.** Turn project-log language and defensive scaffolding into direct scientific prose while preserving measured values, necessary conditions and negative results.
+- 📚 **Check what a citation actually supports.** Treat bibliography consistency, reference existence and claim-to-source support as separate checks.
+- 📨 **Connect reviewer replies to manuscript changes.** Preserve the referee's numbering, answer each ask and tie the reply to completed evidence and the revised text.
+- 🧩 **Use the workflow at the scale you need.** Revise a whole paper, repair a Results section or work on one paragraph. The dispatcher selects the relevant layers and preserves settled material.
+
+<a name="workflow-at-a-glance"></a>
+
+## 🗺️ Workflow at a glance
+
+**One connected workflow, from the research question to the reviewer response.**
+
+```mermaid
+flowchart LR
+    A("🎯 Frame the paper<br/>Question · venue")
+    B("🧠 Build the argument<br/>Claims · evidence")
+    C("📊 Figures & Results<br/>Panels · legends")
+    D("✍️ Revise the prose<br/>Logic · style")
+    E("📨 Submit & respond<br/>Preflight · rebuttal")
+    I(["🔎 Check throughout<br/>Statistics · citations · data"])
+    A --> B --> C --> D --> E
+    I -.-> B
+    I -.-> C
+    I -.-> E
+    classDef frame fill:#eef2ff,stroke:#818cf8,color:#312e81;
+    classDef argument fill:#f5f0ff,stroke:#a78bfa,color:#4c1d95;
+    classDef figures fill:#ecfdf5,stroke:#34d399,color:#064e3b;
+    classDef prose fill:#fff7ed,stroke:#fb923c,color:#7c2d12;
+    classDef response fill:#eff6ff,stroke:#60a5fa,color:#1e3a8a;
+    classDef integrity fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:4 3;
+    class A frame;
+    class B argument;
+    class C figures;
+    class D prose;
+    class E response;
+    class I integrity;
+```
+
+Structure and evidence come before sentence polish. Statistics, citation support and data availability are checked at the relevant stages. Enter at the stage your task needs; a paragraph edit does not require the entire chain. Reviews, surveys and Perspectives have their own architecture route.
+
+The diagram includes figure production, available with `--figure`; the default installation already covers figure planning, manuscript revision and reviewer responses.
+
+[🗺️ Full workflow](docs/workflow-map.md) · [📚 All skills](docs/skill-map.md) · [✍️ Writing principles](docs/design-principles.md) · [📊 Figure workflow](docs/figure-workflow.md)
+
+<a name="see-what-changes"></a>
+
+## 🪄 See what changes
+
+The workflow connects manuscript revision, figure work and reviewer responses. These examples zoom in on the writing layer: direct scientific prose with the facts that make a result interpretable.
+
+| 📝 Before | ✨ After | 🔒 What stays |
 |---|---|---|
 | “We carefully verified that survival changed by 1 percentage point (95% CI −3 to 5), which should not be overinterpreted.” | “Survival changed by 1 percentage point (95% CI −3 to 5), with no clear evidence of improvement.” | The measured effect, interval and uncertainty |
 | “These orderings should not be read as a universal ranking across all settings.” | “These orderings hold for the tested settings.” | The scope of the comparison |
@@ -28,20 +85,27 @@ The writing layer removes project-log language and defensive scaffolding while r
 
 These are illustrative edits, not claims about a real study. A scientific limitation or reproducibility detail must remain wherever it is needed. See [worked examples](skills/core/anti-defensive-writing/references/worked-examples.md) and the [complete first-run example](examples/first-run/README.md).
 
-## Quick start
+<a name="quick-start"></a>
 
-**Requirements:** Codex or Claude Code, Bash, and Python 3.9+ (standard library only). Remote installation also uses `curl` and `tar`. On Windows, use an agent environment in WSL or Git Bash; this Bash command is not a PowerShell command. Check [environments and file formats](docs/compatibility.md) for verification status.
+## 🚀 Quick start
 
-Install the recommended 19-skill stack, including reviewer responses:
+<a name="1-install"></a>
+
+### 📥 1. Install
+
+In the Bash environment where you use Codex or Claude Code, install the recommended 19-skill stack, including reviewer responses. The installer needs Python 3.9+ with its standard library.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
 ```
 
-To choose explicitly, append `-s -- --agent codex` or `-s -- --agent claude` after `bash`.
-Read [install.sh](install.sh) first if you prefer, or [install from a clone](docs/installation-codex.md). Existing copies are backed up before replacement; [update and restore](docs/installation-management.md).
+To choose explicitly, append `-s -- --agent codex` or `-s -- --agent claude` after `bash`. Existing copies are backed up before replacement. More choices are in [Installation options](#installation-options).
 
-**Try one complete task.** Put your current manuscript and its supporting results in the agent's working folder, then ask:
+<a name="2-complete-your-first-revision"></a>
+
+### ✍️ 2. Complete your first revision
+
+Put your current manuscript and its supporting results in the agent's working folder, then ask:
 
 ```text
 Use paper-workflow. Revise the Results paragraph in draft.md using evidence.md.
@@ -49,34 +113,33 @@ Preserve measured values and figure references. Save a revised copy and briefly
 explain the material changes.
 ```
 
-For a ready-made input and a reference output, use [First successful revision](examples/first-run/README.md). In Codex CLI/IDE you can explicitly mention `$paper-workflow`; in Claude Code invoke `/paper-workflow`. If the skill is not visible, refresh the skill list or reopen the session; see [troubleshooting](docs/installation-management.md#troubleshooting).
+For ready-made inputs and a reference output, use [First successful revision](examples/first-run/README.md). In Codex CLI/IDE you can explicitly mention `$paper-workflow`; in Claude Code invoke `/paper-workflow`.
 
-You can then use ordinary requests such as “improve this manuscript” or name a specialist. The dispatcher diagnoses the task, states the scope, and applies the steps needed. You do not need to memorize skill names.
+You can then use ordinary requests such as “improve this manuscript” or name a specialist. The dispatcher diagnoses the task, states the scope and applies the steps needed. You do not need to memorize skill names.
 
-## Choose a task
+<a name="choose-a-task"></a>
+
+## 🧩 Choose a task
 
 | Your task | Provide | Expected result | Entry |
 |---|---|---|---|
-| Improve a whole manuscript | Current draft, relevant results/figures, target venue if decided | Revised draft, key changes, unresolved evidence gaps | `paper-workflow` |
-| Fix a paragraph | Passage, surrounding context, requested scope | Replacement passage with a brief explanation where useful | `write-scientific-manuscript` |
-| Remove audit/defensive writing | Main text, SI, legend or availability statement | Direct scientific prose retaining numbers and necessary conditions | `anti-defensive-writing` |
-| Plan or make figures | Scientific question, result table or existing figure | Panel plan; rendered files when data and tools are available | `figure-planner`; add `--figure` for production |
-| Check before submission | Final draft, SI, bibliography and venue | Prioritized findings with locations; unchecked categories identified | `submission-audit` |
-| Reply to reviewers | Original comments, manuscript, completed new evidence | Numbered response draft and matching manuscript changes | `paper-workflow` |
+| 🧬 Improve a whole manuscript | Current draft, relevant results/figures, target venue if decided | Revised draft, key changes, unresolved evidence gaps | `paper-workflow` |
+| ✍️ Fix a paragraph | Passage, surrounding context, requested scope | Replacement passage with a brief explanation where useful | `write-scientific-manuscript` |
+| 🪄 Remove audit/defensive writing | Main text, SI, legend or availability statement | Direct scientific prose retaining numbers and necessary conditions | `anti-defensive-writing` |
+| 📊 Plan or make figures | Scientific question, result table or existing figure | Panel plan; rendered files when data and tools are available | `figure-planner`; add `--figure` for production |
+| 🔎 Check before submission | Final draft, SI, bibliography and venue | Prioritized findings with locations; unchecked categories identified | `submission-audit` |
+| 📨 Reply to reviewers | Original comments, manuscript, completed new evidence | Numbered response draft and matching manuscript changes | `paper-workflow` |
 
 A request to **review or suggest** produces findings. A request to **revise** produces edits within the requested scope. Missing evidence is surfaced; it is never written into existence.
 
-## What makes the workflow useful
+For complete prompts and task setups, see [task examples](docs/task-recipes.md).
 
-- **Scientific reasoning before polish.** Check the question, contribution and evidence chain before changing sentences. Preserve settled text when it needs no repair.
-- **Figures carry claims.** Plan the role of each panel and keep legends and Results aligned. The optional figure stack includes executable checks for text size, collisions, alignment and source data.
-- **Write for the reader.** Remove audit, defensive, self-critical, commentary, developer-facing and future-commitment language from the manuscript. Preserve negative results, required reporting and reproducibility facts.
-- **Separate citation checks.** Bibliography consistency, live reference existence and claim-to-source support are different checks. A local bibliography scan does not prove a paper exists or supports a claim.
-- **Keep work proportional.** Diagnose relevant layers, edit those with problems, and check affected dependencies. Research articles and Reviews have different routes; a long research draft remains a research article.
+<a name="installation-options"></a>
 
-[Workflow](docs/workflow-map.md) · [Writing principles](docs/design-principles.md) · [Figure workflow and exit codes](docs/figure-workflow.md) · [Task examples](docs/task-recipes.md)
+## 📦 Installation options
 
-## Installation options
+<details>
+<summary><b>⚙️ Choose an agent, installation scope or skill set</b></summary>
 
 ```bash
 # From a clone; no source download unless --ref is supplied
@@ -93,9 +156,29 @@ bash install.sh --agent codex --doctor   # file/version/dependency checks
 
 **Default:** 19 writing, review and venue skills. **Figure add-on:** `nature-figure` and `figure-style`; needs Python plotting packages or an R plotting setup. **All:** 27 skills, adding literature/research tools and optional conference/presentation/reference-verification workflows. The core writing and data-plotting routes do not require an OpenRouter key; only the optional AI schematic draft route does. Follow the target journal's image policy.
 
-Agent-specific instructions: [Codex](docs/installation-codex.md) · [Claude Code](docs/installation-claude.md). Version history: [CHANGELOG](CHANGELOG.md). Pin an immutable commit with `--ref <full-commit-sha>`; the installer records the source and file hashes.
+</details>
 
-## Scope and limits
+<details>
+<summary><b>🛠️ Environment requirements and skill loading</b></summary>
+
+**Requirements:** Codex or Claude Code, Bash, and Python 3.9+ (standard library only; no extra pip packages for installation). Remote installation also uses `curl` and `tar`. On Windows, run in the agent's WSL or Git Bash environment; the command is for Bash, not PowerShell. See [environments and file formats](docs/compatibility.md) for verification status.
+
+If a skill is not visible, refresh the skill list or reopen the session, then check [troubleshooting](docs/installation-management.md#troubleshooting). Agent-specific instructions: [Codex](docs/installation-codex.md) · [Claude Code](docs/installation-claude.md).
+
+</details>
+
+<details>
+<summary><b>🔄 Inspect the installer, update, restore or pin a version</b></summary>
+
+Read [install.sh](install.sh) before running it if you prefer, or use the clone-based commands above. Existing copies are backed up before replacement; see [update and restore](docs/installation-management.md).
+
+Pin an immutable commit with `--ref <full-commit-sha>`; the installer records the source and file hashes. Version history: [CHANGELOG](CHANGELOG.md).
+
+</details>
+
+<a name="scope-and-limits"></a>
+
+## 🧭 Scope and limits
 
 This is a focused journal-writing workflow for life sciences, computational biology, methods, benchmarks and resources. Explicit venue and project instructions take precedence over its Nature-style defaults. It is independent of Nature Portfolio and does not predict acceptance.
 
@@ -103,17 +186,23 @@ Skills provide instructions and some helper scripts. They do not themselves supp
 
 Repository tests cover scripts, installation and consistency. [Behavior cases](evals/README.md) check task scope, evidence preservation and honest reporting of missing capabilities; their limitations and recorded runs are documented separately.
 
-## Contributing
+<a name="contributing"></a>
+
+## 🤝 Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Changes to user-facing behavior should include a task case or an example, and both READMEs should stay aligned. Component provenance is in [ATTRIBUTION.md](ATTRIBUTION.md).
 
-## Acknowledgements
+<a name="acknowledgements"></a>
+
+## 💙 Acknowledgements
 
 Parts of this repository were inspired by [OpenLAIR/dr-claw](https://github.com/OpenLAIR/dr-claw), [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills), and the Claude Science skill pack.
 
 The figure layer also draws on design observations from [ChenLiu-1996/figures4papers](https://github.com/ChenLiu-1996/figures4papers). None of that repository's code or prose is distributed here; see [THIRD_PARTY_NOTICES](skills/figure/nature-figure/THIRD_PARTY_NOTICES.md).
 
-## License
+<a name="license"></a>
+
+## ⚖️ License
 
 Original content is [MIT](LICENSE). Components carrying Apache-2.0 material retain [LICENSE-APACHE](LICENSE-APACHE) and [NOTICE](NOTICE), including in installer-managed copies. See [ATTRIBUTION](ATTRIBUTION.md) for coverage.
 
