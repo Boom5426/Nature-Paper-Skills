@@ -64,6 +64,10 @@ incomplete with exit 1 rather than producing a successful truncated summary.
 Ranges spanning more than 1,001 figure numbers are refused. This is a static
 text summary, not a check that figures or panels actually exist.
 
+An article such as `a control experiment` after a reference is treated as
+prose. For an ambiguous panel list ending in `a` immediately before prose,
+repeat the figure number (for example `Fig. 1b and 1a agree`) to make it explicit.
+
 ## Prose word counts
 
 `draft-marker-discipline/scripts/prose_wordcount.py` requires `detex`. Under

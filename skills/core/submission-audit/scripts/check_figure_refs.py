@@ -16,14 +16,16 @@ REF_PATTERN = re.compile(
     r")\s*(?=\d)",
     re.IGNORECASE,
 )
+# A bare "a" followed by prose is an article, not a range endpoint.
+PANEL_END = r"(?:[b-z]|a(?!\s+(?!and\b)[\w\\]))"
 REF_ITEM_PATTERN = re.compile(
     r"(?P<num>\d+)"
-    r"(?P<panels>[a-z](?:\s*[-–]\s*[a-z])?)?"
+    rf"(?P<panels>[a-z](?:\s*[-–]\s*{PANEL_END})?)?"
     r"(?:\s*[-–]\s*(?P<end>\d+))?"
     r"(?=\b|[)\].,;:]|$)",
     re.IGNORECASE,
 )
-PANEL_PATTERN = re.compile(r"[a-z](?:\s*[-–]\s*[a-z])?(?=\b|[)\].,;:]|$)", re.I)
+PANEL_PATTERN = re.compile(rf"[a-z](?:\s*[-–]\s*{PANEL_END})?(?=\b|[)\].,;:]|$)", re.I)
 SEPARATOR = re.compile(r"(?:\s*,\s*(?:(?:and|&)\s+)?|\s+(?:and|&)\s+)", re.I)
 
 
@@ -45,6 +47,13 @@ def expand_panels(raw: str) -> list[str]:
     return parts
 
 
+def panel_continuation(text: str, pos: int):
+    panel = PANEL_PATTERN.match(text, pos)
+    if panel and panel.group().lower() == "a" and re.match(r"\s+(?!and\b)[\w\\]", text[panel.end():], re.I):
+        return None
+    return panel
+
+
 def parse_refs(text: str, start: int):
     """Read explicit figures/ranges and panel continuations in one phrase."""
     refs, pos = [], start
@@ -61,21 +70,25 @@ def parse_refs(text: str, start: int):
             refs.extend((str(n), list(panels)) for n in range(num, last + 1))
             pos = item.end()
         else:
-            panel = PANEL_PATTERN.match(text, pos)
+            panel = panel_continuation(text, pos)
             if not panel or not refs or not refs[-1][1]:
                 raise ValueError(f"Cannot parse reference near {text[pos:pos + 24]!r}")
             refs[-1][1].extend(expand_panels(panel.group()))
             pos = panel.end()
-        if re.match(r"\s*[-–]", text[pos:]):
-            raise ValueError(f"Unsupported range near {text[pos:pos + 24]!r}")
+        tail = re.match(r"\s*[-–]\s*", text[pos:])
+        if tail:
+            endpoint = pos + tail.end()
+            if endpoint == len(text) or text[endpoint].isdigit() or panel_continuation(text, endpoint):
+                raise ValueError(f"Unsupported range near {text[pos:pos + 24]!r}")
         sep = SEPARATOR.match(text, pos)
         if not sep:
             return refs
         following = sep.end()
         if following == len(text):
             return refs
-        if not text[following].isdigit() and not PANEL_PATTERN.match(text, following):
-            return refs  # ordinary prose after the reference
+        if not text[following].isdigit():
+            if not refs[-1][1] or not panel_continuation(text, following):
+                return refs  # ordinary prose after the reference
         pos = following
 
 

@@ -106,6 +106,30 @@ class CheckFigureRefsCliTests(unittest.TestCase):
         self.assertIn('Fig. 1: mentions=1, whole_figure_refs=0, panels=a', result.stdout)
         self.assertIn('Fig. 2: mentions=1, whole_figure_refs=1, panels=-', result.stdout)
 
+    def test_articles_after_whole_figure_are_prose(self):
+        for phrase in ('Fig. 2, a control experiment.', 'Fig. 2 and a related experiment.',
+                       'Fig. 2 – a control experiment.', 'Fig. 2 - additional controls.'):
+            with self.subTest(phrase=phrase):
+                result = self.run_script(phrase)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn('Fig. 2: mentions=1, whole_figure_refs=1, panels=-', result.stdout)
+
+    def test_articles_after_panel_are_not_additional_panels(self):
+        for phrase in ('Fig. 1b, a control experiment.', 'Fig. 1b and a related experiment.',
+                       'Fig. 1b – a control experiment.'):
+            with self.subTest(phrase=phrase):
+                result = self.run_script(phrase)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn('Fig. 1: mentions=1, whole_figure_refs=0, panels=b', result.stdout)
+
+    def test_explicit_a_continuation_and_ranges_still_work(self):
+        for phrase in ('Fig. 1b, a and c.', 'Fig. 1b and a.', 'Fig. 1a-c show agreement.'):
+            with self.subTest(phrase=phrase):
+                result = self.run_script(phrase)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                panels = 'a,b' if phrase == 'Fig. 1b and a.' else 'a,b,c'
+                self.assertIn(f'panels={panels}', result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
