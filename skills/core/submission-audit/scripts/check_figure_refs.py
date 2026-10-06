@@ -7,11 +7,22 @@ from collections import defaultdict
 from pathlib import Path
 
 
+FIGURE_TOKEN = r"\d+(?:[a-z](?:[-–,][a-z])*)?"
 REF_PATTERN = re.compile(
-    r"(?P<kind>Extended\s+Data\s+Fig\.|Supplementary\s+Fig\.|Fig\.)\s*"
-    r"(?P<num>\d+)"
-    r"(?P<panels>(?:[a-z](?:[-,][a-z])*)?)"
+    r"(?P<kind>"
+    r"Extended\s+Data\s+(?:Figs?\.|Figures?)|"
+    r"Supplementary\s+(?:Figs?\.|Figures?)|"
+    r"(?:Figs?\.|Figures?)"
+    r")\s*"
+    rf"(?P<refs>{FIGURE_TOKEN}"
+    rf"(?:(?:\s*,\s*(?:and\s+)?|\s+(?:and|&)\s+){FIGURE_TOKEN})*)"
     r"(?=\b|[)\].,;:])",
+    re.IGNORECASE,
+)
+REF_ITEM_PATTERN = re.compile(
+    r"(?P<num>\d+)"
+    r"(?P<panels>(?:[a-z](?:[-–,][a-z])*)?)"
+    r"(?=\b|[)\].,;:]|\s)",
     re.IGNORECASE,
 )
 
@@ -19,7 +30,7 @@ REF_PATTERN = re.compile(
 def expand_panels(raw: str) -> list[str]:
     if not raw:
         return []
-    raw = raw.strip()
+    raw = raw.strip().replace("–", "-")
     parts: list[str] = []
     for chunk in raw.split(","):
         chunk = chunk.strip()
@@ -51,15 +62,16 @@ def main() -> None:
                     kind = "supp"
                 else:
                     kind = "main"
-                key = f"{kind}:{match.group('num')}"
-                grouped[key]["mentions"] = int(grouped[key]["mentions"]) + 1
-                panels = expand_panels(match.group("panels"))
-                if panels:
-                    cast = grouped[key]["panels"]
-                    assert isinstance(cast, set)
-                    cast.update(panels)
-                else:
-                    grouped[key]["whole"] = int(grouped[key]["whole"]) + 1
+                for item in REF_ITEM_PATTERN.finditer(match.group("refs")):
+                    key = f"{kind}:{item.group('num')}"
+                    grouped[key]["mentions"] = int(grouped[key]["mentions"]) + 1
+                    panels = expand_panels(item.group("panels"))
+                    if panels:
+                        cast = grouped[key]["panels"]
+                        assert isinstance(cast, set)
+                        cast.update(panels)
+                    else:
+                        grouped[key]["whole"] = int(grouped[key]["whole"]) + 1
 
     if not grouped:
         print("No figure references found.")

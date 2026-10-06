@@ -29,6 +29,28 @@ class CheckFigureRefsCliTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0)
         self.assertIn("Extended Data Fig. 2: mentions=1, whole_figure_refs=0, panels=a,b,c", result.stdout)
 
+    def test_reports_spelled_out_figure_references(self) -> None:
+        result = self.run_script(
+            "Figure 5a shows the main effect. Extended Data Figure 3b supports it.\n"
+        )
+
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("Fig. 5: mentions=1, whole_figure_refs=0, panels=a", result.stdout)
+        self.assertIn("Extended Data Fig. 3: mentions=1, whole_figure_refs=0, panels=b", result.stdout)
+
+    def test_reports_each_figure_in_plural_references(self) -> None:
+        result = self.run_script("Figs. 6a and 7b agree.\n")
+
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("Fig. 6: mentions=1, whole_figure_refs=0, panels=a", result.stdout)
+        self.assertIn("Fig. 7: mentions=1, whole_figure_refs=0, panels=b", result.stdout)
+
+    def test_expands_en_dash_panel_ranges(self) -> None:
+        result = self.run_script("Fig. 8a–c covers the ablation.\n")
+
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("Fig. 8: mentions=1, whole_figure_refs=0, panels=a,b,c", result.stdout)
+
     def test_reports_when_no_references_are_found(self) -> None:
         result = self.run_script("This paragraph has no figure citation.\n")
 
