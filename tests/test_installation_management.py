@@ -153,6 +153,183 @@ class InstallationManagementTests(unittest.TestCase):
         self.run_manager(code=2)
         self.assertEqual(list(elsewhere.iterdir()), [])
 
+    def test_linked_skill_is_rejected_by_default_before_any_destination_changes(self):
+        self.run_manager()
+        before = (self.dest/'demo/SKILL.md').read_text()
+        manifest_before = (self.dest/manager.STATE/'installed.json').read_bytes()
+        (self.skill/'SKILL.md').write_text('New upstream version')
+        blocked = self.base/'linked-agent'
+        blocked.mkdir()
+        link = blocked/'demo'
+        link.symlink_to(self.skill, target_is_directory=True)
+
+        result = self.run_manager('--dest', str(blocked), code=2)
+
+        self.assertIn('Refusing to replace linked skill', result.stderr)
+        self.assertIn(str(self.skill.resolve()), result.stderr)
+        self.assertIn('canonical installation', result.stderr)
+        self.assertEqual((self.dest/'demo/SKILL.md').read_text(), before)
+        self.assertEqual((self.dest/manager.STATE/'installed.json').read_bytes(), manifest_before)
+        self.assertTrue(link.is_symlink())
+        self.assertEqual(os.readlink(link), str(self.skill))
+        self.assertEqual((self.skill/'SKILL.md').read_text(), 'New upstream version')
+        self.assertFalse((blocked/manager.STATE).exists())
+        self.assertEqual(self.backups(), [])
+
+    def test_backup_and_error_policies_do_not_replace_relative_links(self):
+        self.dest.mkdir()
+        link = self.dest/'demo'
+        referent = '../source/skills/core/demo'
+        link.symlink_to(referent, target_is_directory=True)
+
+        for policy in ('backup', 'error'):
+            for dry_run in (False, True):
+                with self.subTest(policy=policy, dry_run=dry_run):
+                    flags = ('--dry-run',) if dry_run else ()
+                    result = self.run_manager('--on-conflict', policy, *flags, code=2)
+                    self.assertIn('Refusing to replace linked skill', result.stderr)
+                    self.assertTrue(link.is_symlink())
+                    self.assertEqual(os.readlink(link), referent)
+                    self.assertTrue((link/'SKILL.md').is_file())
+                    self.assertFalse((self.dest/manager.STATE).exists())
+
+    def test_keep_preserves_valid_link_without_adopting_it(self):
+        self.dest.mkdir()
+        link = self.dest/'demo'
+        link.symlink_to(self.skill, target_is_directory=True)
+        before = (self.skill/'SKILL.md').read_bytes()
+
+        result = self.run_manager('--on-conflict', 'keep')
+
+        self.assertIn('Kept linked skill', result.stdout)
+        self.assertIn('not verified', result.stdout)
+        self.assertTrue(link.is_symlink())
+        self.assertEqual((self.skill/'SKILL.md').read_bytes(), before)
+        self.assertFalse((self.dest/manager.STATE).exists())
+
+    def test_broken_link_is_protected_and_can_be_kept(self):
+        self.dest.mkdir()
+        link = self.dest/'demo'
+        missing = self.base/'missing-canonical/demo'
+        link.symlink_to(missing, target_is_directory=True)
+
+        rejected = self.run_manager(code=2)
+        self.assertIn('Refusing to replace linked skill', rejected.stderr)
+        kept = self.run_manager('--on-conflict', 'keep')
+        self.assertIn('Kept linked skill', kept.stdout)
+        self.assertTrue(link.is_symlink())
+        self.assertEqual(os.readlink(link), str(missing))
+        self.assertFalse(missing.exists())
+        self.assertFalse((self.dest/manager.STATE).exists())
+
+    def test_dry_run_keep_preserves_link_and_writes_nothing(self):
+        self.dest.mkdir()
+        link = self.dest/'demo'
+        link.symlink_to('../missing/demo', target_is_directory=True)
+
+        result = self.run_manager('--on-conflict', 'keep', '--dry-run')
+
+        self.assertIn('Would keep', result.stdout)
+        self.assertTrue(link.is_symlink())
+        self.assertEqual(os.readlink(link), '../missing/demo')
+        self.assertFalse((self.dest/manager.STATE).exists())
+
+    def test_kept_link_with_previous_copy_record_is_not_verified_as_managed_copy(self):
+        self.run_manager()
+        previous = self.base/'previous-copy'
+        (self.dest/'demo').rename(previous)
+        link = self.dest/'demo'
+        link.symlink_to(previous, target_is_directory=True)
+        manifest_before = (self.dest/manager.STATE/'installed.json').read_bytes()
+
+        self.run_manager('--on-conflict', 'keep')
+        result = self.run_manager('--doctor', code=1)
+
+        self.assertIn('LINKED (not verified here)', result.stdout)
+        self.assertNotIn('OK demo', result.stdout)
+        self.assertTrue(link.is_symlink())
+        self.assertEqual((self.dest/manager.STATE/'installed.json').read_bytes(), manifest_before)
+
+    def test_symlink_loop_has_a_safe_diagnostic(self):
+        self.dest.mkdir()
+        link = self.dest/'demo'
+        link.symlink_to('demo', target_is_directory=True)
+
+        rejected = self.run_manager(code=2)
+        self.assertIn('Refusing to replace linked skill', rejected.stderr)
+        self.run_manager('--on-conflict', 'keep')
+        doctor = self.run_manager('--doctor', code=1)
+        self.assertIn('INVALID_LINK', doctor.stdout)
+        self.assertTrue(link.is_symlink())
+        self.assertEqual(os.readlink(link), 'demo')
+        self.assertFalse((self.dest/manager.STATE).exists())
+
+    def test_doctor_labels_valid_link_without_verifying_it(self):
+        self.dest.mkdir()
+        link = self.dest/'demo'
+        link.symlink_to(self.skill, target_is_directory=True)
+
+        result = self.run_manager('--doctor', code=1)
+
+        self.assertIn('LINKED (not verified here)', result.stdout)
+        self.assertIn(str(self.skill.resolve()), result.stdout)
+        self.assertIn('canonical installation directory', result.stdout)
+        self.assertNotIn('OK demo', result.stdout)
+        self.assertFalse((self.dest/manager.STATE).exists())
+
+    def test_doctor_labels_broken_link_without_changing_it(self):
+        self.dest.mkdir()
+        link = self.dest/'demo'
+        link.symlink_to('../missing/demo', target_is_directory=True)
+
+        result = self.run_manager('--doctor', code=1)
+
+        self.assertIn('INVALID_LINK (not verified here)', result.stdout)
+        self.assertNotIn('OK demo', result.stdout)
+        self.assertTrue(link.is_symlink())
+        self.assertEqual(os.readlink(link), '../missing/demo')
+        self.assertFalse((self.dest/manager.STATE).exists())
+
+    def test_keep_link_still_installs_other_skills_without_recording_link_ownership(self):
+        other = self.source/'skills/core/other'
+        other.mkdir()
+        (other/'SKILL.md').write_text('---\nname: other\ndescription: Other.\n---\n')
+        self.dest.mkdir()
+        link = self.dest/'demo'
+        link.symlink_to(self.skill, target_is_directory=True)
+
+        self.run_manager('--on-conflict', 'keep', '--skill', 'core/other')
+
+        self.assertTrue(link.is_symlink())
+        self.assertTrue((self.dest/'other/SKILL.md').is_file())
+        self.assertEqual(set(self.manifest()['skills']), {'other'})
+
+    def test_linked_destination_root_is_still_supported(self):
+        self.dest.mkdir()
+        alias = self.base/'linked-root'
+        alias.symlink_to(self.dest, target_is_directory=True)
+
+        self.run_manager('--dest', str(alias))
+
+        self.assertTrue(alias.is_symlink())
+        self.assertFalse((self.dest/'demo').is_symlink())
+        self.assertTrue((alias/'demo/SKILL.md').is_file())
+        self.run_manager('--dest', str(alias), '--doctor')
+
+    def test_canonical_updates_remain_visible_through_agent_link(self):
+        self.run_manager()
+        agent = self.base/'agent'
+        agent.mkdir()
+        link = agent/'demo'
+        link.symlink_to(self.dest/'demo', target_is_directory=True)
+        (self.skill/'SKILL.md').write_text('Updated canonical version')
+
+        self.run_manager()
+
+        self.assertTrue(link.is_symlink())
+        self.assertEqual((link/'SKILL.md').read_text(), 'Updated canonical version')
+        self.run_manager('--doctor')
+
     def test_codex_and_claude_project_local_install(self):
         result = subprocess.run(['bash', str(ROOT/'install.sh'), '--agent', 'both', '--local'],
                                 cwd=self.base, text=True, capture_output=True)

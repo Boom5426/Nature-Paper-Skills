@@ -36,6 +36,8 @@ Each destination stores `.nature-paper-skills/installed.json`: ownership, compon
 
 A directory without `SKILL.md` is never replaced. Managed metadata cannot be a symlink. Install payloads are staged before replacement; ordinary copy/replace errors roll back replaced skills. Backups are not automatically expired. This is not a guarantee against a machine crash or concurrent installers: run one installer per destination at a time.
 
+During installation, per-skill symlinks are not converted into copies. The default `backup` policy and `error` stop during preflight if a selected skill entry is a symlink; no selected destination is changed. Use `--on-conflict keep` to leave linked entries untouched, including broken links, while updating other selected skills. Kept links are not adopted into the installation record. Update the canonical installation directory instead of its links. A symlink used for the entire `--dest` directory is still resolved as before.
+
 ## Restore
 
 `--doctor` lists backup IDs, and updates print the IDs containing replaced copies. Use the ID exactly as shown:
@@ -65,9 +67,10 @@ The remote script also accepts this flag. To reproduce a version predating the m
 | Python requirement error | Make Python 3.9+ available as `python3` or `python` in that environment |
 | Installer cannot identify an agent | Set `--agent codex`, `--agent claude`, or an explicit `--dest` |
 | Doctor reports missing/untracked/modified | Read the reported path; reinstall, retain your local edit, or restore the intended copy |
+| Installer refuses a linked skill, or doctor reports `LINKED`/`INVALID_LINK` | Inspect the displayed target; update/check its canonical installation directory, or use `--on-conflict keep` to retain the entry. A broken link must be repaired manually; doctor does not verify or adopt the target |
 | Agent cannot see a skill despite doctor succeeding | Open its skill selector; explicitly invoke `$paper-workflow` in Codex CLI/IDE or `/paper-workflow` in Claude Code. Refresh/reopen the session and verify the agent uses the same machine and scope |
 | Skill sends you to an unavailable figure/research tool | Add `--figure` or `--set all`; the default supports prose and reviewer replies |
 | A helper mentions the wrong path | Use the directory the installer printed; replace global example paths with your project-local or custom root |
 | Figure checks cannot run | Install the chosen plotting/checking dependencies; report unavailable checks, never a PASS |
 
-Doctor exit codes: **0** recorded selected/all managed files match; **1** missing, untracked or modified skills; **2** usage, malformed metadata or I/O errors. Optional dependency discovery is informational; it does not render a figure, check R package versions, test API access or prove the current agent has loaded a skill.
+Doctor exit codes: **0** recorded selected/all managed files match; **1** missing, untracked, modified or unverified linked skills; **2** usage, malformed metadata or I/O errors. Optional dependency discovery is informational; it does not render a figure, check R package versions, test API access or prove the current agent has loaded a skill.
