@@ -7,6 +7,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+from citation_syntax import iter_citations
+
 
 PLACEHOLDER_PATTERNS = [
     re.compile(r"\[CITATION NEEDED\]", re.IGNORECASE),
@@ -18,7 +20,6 @@ PLACEHOLDER_PATTERNS = [
 DOI_PATTERN = re.compile(r"\b10\.\d{4,9}/[-._;()/:A-Z0-9]+\b", re.IGNORECASE)
 ARXIV_PATTERN = re.compile(r"\barXiv:\s*\d{4}\.\d{4,5}(?:v\d+)?\b|https?://arxiv\.org/(?:abs|pdf)/\d{4}\.\d{4,5}(?:v\d+)?", re.IGNORECASE)
 PMID_PATTERN = re.compile(r"\bPMID:\s*\d+\b|\bpmid\s+\d+\b", re.IGNORECASE)
-CITE_PATTERN = re.compile(r"\\cite[t|p]?\{([^}]+)\}")
 BIB_ENTRY_PATTERN = re.compile(r"@\w+\s*\{\s*([^,\s]+)", re.IGNORECASE)
 
 
@@ -29,11 +30,11 @@ def iter_paths(paths: list[str]) -> list[Path]:
         if path.is_dir():
             for ext in (".md", ".txt", ".tex", ".bib"):
                 collected.extend(sorted(path.rglob(f"*{ext}")))
-        elif path.exists():
+        elif path.is_file():
             collected.append(path)
         else:
-            print(f"[warn] missing path: {path}", file=sys.stderr)
-    return collected
+            raise ValueError(f"Missing or non-file input: {path}")
+    return list(dict.fromkeys(collected))
 
 
 def scan_text_file(path: Path) -> dict[str, list[tuple[int, str]]]:
@@ -53,9 +54,7 @@ def scan_text_file(path: Path) -> dict[str, list[tuple[int, str]]]:
             findings["arxiv"].append((lineno, m.group(0)))
         for m in PMID_PATTERN.finditer(line):
             findings["pmid"].append((lineno, m.group(0)))
-        for m in CITE_PATTERN.finditer(line):
-            for key in [part.strip() for part in m.group(1).split(",") if part.strip()]:
-                findings["cite_keys"].append((lineno, key))
+    findings["cite_keys"].extend(iter_citations(text, tex=path.suffix.lower() == ".tex"))
     return findings
 
 
@@ -79,15 +78,19 @@ def scan_bib_keys(path: Path) -> tuple[list[tuple[int, str]], list[str]]:
     return keys, duplicates
 
 
-def main() -> None:
+def main() -> int:
     parser = argparse.ArgumentParser(description="Scan local manuscript files for citation hygiene issues.")
     parser.add_argument("paths", nargs="+", help="Files or directories to scan")
     args = parser.parse_args()
 
-    paths = iter_paths(args.paths)
+    try:
+        paths = iter_paths(args.paths)
+    except (ValueError, OSError) as exc:
+        print(f"error: {exc}; scan incomplete", file=sys.stderr)
+        return 2
     if not paths:
-        print("No files found.")
-        return
+        print("error: no supported files found; scan incomplete", file=sys.stderr)
+        return 2
 
     total_placeholders = 0
     total_dois = 0
@@ -98,7 +101,11 @@ def main() -> None:
     duplicate_keys: dict[str, list[str]] = {}
 
     for path in paths:
-        findings = scan_text_file(path)
+        try:
+            findings = scan_text_file(path)
+        except OSError as exc:
+            print(f"error: {exc}; scan incomplete", file=sys.stderr)
+            return 2
         bib_keys: list[tuple[int, str]] = []
         bib_dups: list[str] = []
         if path.suffix.lower() == ".bib":
@@ -143,7 +150,8 @@ def main() -> None:
     print(f"  pmid: {total_pmid}")
     print(f"  bib_keys: {total_bib_keys}")
     print(f"  files_with_duplicate_bib_keys: {len(duplicate_keys)}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

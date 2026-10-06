@@ -30,9 +30,15 @@ def read_manifest(dest):
 
 def write_json(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
-    temp = path.with_name(path.name + ".tmp")
-    temp.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    os.replace(temp, path)
+    # Exclusively create a fresh sibling; never open a pre-existing .tmp link.
+    fd, name = tempfile.mkstemp(prefix=f".{path.name}-", suffix=".tmp", dir=path.parent)
+    temp = Path(name)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            handle.write(json.dumps(value, indent=2, ensure_ascii=False) + "\n")
+        os.replace(temp, path)
+    finally:
+        temp.unlink(missing_ok=True)
 
 
 def fingerprint(root):
