@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Installation safety
+
+- Refuse to replace per-skill symlinks under the default `backup` policy or `error`, before changing any selected destination.
+- Preserve live, broken and looping skill links under `--on-conflict keep` without adopting them into the installation record.
+- Identify linked entries in `--doctor` and direct checks to the canonical installation; linked targets are not automatically verified.
+- Retain support for symlinked destination roots and the existing backup/restore workflow for real skill directories.
+
 ## 0.2.0 — 2026-10-02
 
 ### User workflow

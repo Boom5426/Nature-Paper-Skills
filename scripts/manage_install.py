@@ -86,6 +86,16 @@ def remove(path):
         shutil.rmtree(path)
 
 
+def linked_target(path):
+    """Resolve links for diagnostics only; never update or adopt the referent."""
+    referent = Path(os.path.abspath(path.parent / os.readlink(path)))
+    try:
+        return referent.resolve()
+    except (OSError, RuntimeError):
+        # Broken chains or loops still need a useful, non-mutating diagnostic.
+        return referent
+
+
 def install(args, dests):
     source = Path(args.source)
     selected = [(rel, safe_name(Path(rel).name)) for rel in args.skill]
@@ -105,6 +115,15 @@ def install(args, dests):
                     if not (source / license_name).is_file():
                         raise ValueError(f"Missing license: {license_name}")
             target = dest / name
+            if target.is_symlink():
+                if args.on_conflict != "keep":
+                    raise ValueError(
+                        f"Refusing to replace linked skill: {target} -> {linked_target(target)}; "
+                        "update the canonical installation instead, or use --on-conflict keep "
+                        "to leave the link untouched"
+                    )
+                plans.append((dest, manifest, rel, name, True))
+                continue
             exists = target.exists() or target.is_symlink()
             if exists and not (target / "SKILL.md").is_file():
                 raise ValueError(f"Target is not a skill; nothing replaced: {target}")
@@ -128,7 +147,11 @@ def install(args, dests):
             manifests[dest] = json.loads(json.dumps(old_manifests[dest]))
         for dest, _, rel, name, conflict in plans:
             if conflict and args.on_conflict == "keep":
-                print(f"Kept locally modified/unmanaged skill: {dest / name}")
+                target = dest / name
+                if target.is_symlink():
+                    print(f"Kept linked skill: {target} -> {linked_target(target)} (not verified)")
+                else:
+                    print(f"Kept locally modified/unmanaged skill: {target}")
                 continue
             state = dest / STATE
             state.mkdir(parents=True, exist_ok=True)
@@ -166,7 +189,8 @@ def install(args, dests):
             manifests[dest]["skills"][name] = record
             print(f"Installed: {target}" + (" (local changes backed up)" if conflict else ""))
         for dest in dests:
-            write_json(dest / STATE / "installed.json", manifests[dest])
+            if manifests[dest] != old_manifests[dest]:
+                write_json(dest / STATE / "installed.json", manifests[dest])
         for dest in dests:
             replaced = [name for d, name, existed, _ in changed if d == dest and existed]
             if replaced:
@@ -198,6 +222,13 @@ def doctor(args, dests):
         for name in names:
             safe_name(name)
             target, record = dest / name, manifest["skills"].get(name)
+            if target.is_symlink():
+                status = "LINKED" if (target / "SKILL.md").is_file() else "INVALID_LINK"
+                print(f"{status} (not verified here): {name}: {target} -> {linked_target(target)}")
+                print("Check --doctor at the canonical installation directory; "
+                      "this entry is not adopted or verified through the link.")
+                failed = True
+                continue
             if not (target / "SKILL.md").is_file():
                 status = "MISSING"
             elif not record:
