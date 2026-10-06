@@ -161,6 +161,37 @@ class InstallationManagementTests(unittest.TestCase):
             self.assertEqual(len(list(target.glob('*/SKILL.md'))),19)
             self.assertTrue((target/'paper-reviewer/SKILL.md').exists())
 
+    def test_existing_temporary_symlink_never_overwrites_its_target(self):
+        state = self.dest/manager.STATE
+        state.mkdir(parents=True)
+        external = self.base/'external.txt'
+        external.write_text('Preserve this file')
+        link = state/'installed.json.tmp'
+        link.symlink_to(external)
+        self.run_manager()
+        self.assertEqual(external.read_text(), 'Preserve this file')
+        self.assertTrue(link.is_symlink())
+        self.assertFalse((state/'installed.json').is_symlink())
+        self.run_manager('--doctor')
+
+    def test_dangling_temporary_symlink_does_not_create_external_file(self):
+        state = self.dest/manager.STATE
+        state.mkdir(parents=True)
+        external = self.base/'missing.txt'
+        (state/'installed.json.tmp').symlink_to(external)
+        self.run_manager()
+        self.assertFalse(external.exists())
+        self.run_manager('--doctor')
+
+    def test_failed_metadata_replace_preserves_record_and_cleans_temporary_file(self):
+        path = self.base/'record.json'
+        path.write_text('{"original": true}\n')
+        with patch.object(manager.os, 'replace', side_effect=OSError('disk failure')):
+            with self.assertRaises(OSError):
+                manager.write_json(path, {'new': True})
+        self.assertEqual(json.loads(path.read_text()), {'original': True})
+        self.assertEqual(list(self.base.glob('.record.json-*.tmp')), [])
+
 class RemoteInstallerTests(unittest.TestCase):
     """Exercise curl|bash and pinned-download plumbing with a local HTTP fixture substitute."""
     def setUp(self):

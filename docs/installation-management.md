@@ -28,6 +28,8 @@ Re-running the installer updates the selected set. Keep using `--figure` or `--s
 
 Each destination stores `.nature-paper-skills/installed.json`: ownership, component versions, source ref/commit, and hashes of installed files. A local checkout records its commit and whether it has uncommitted changes. Remote installation resolves a ref to a commit when GitHub's API is available; if lookup fails, the requested ref and file hashes remain recorded, and the installer reports that the commit was not resolved. Do not treat an unresolved branch name as an immutable version.
 
+Metadata writes exclusively create a new temporary sibling and atomically replace the record. Existing predictable `.tmp` paths are not followed. See [helper input and failure boundaries](helper-script-boundaries.md) for file-write and scan behavior.
+
 ### Local changes and conflicts
 
 - Default `--on-conflict backup`: preserve the existing directory, including local changes, then install the selected version.
