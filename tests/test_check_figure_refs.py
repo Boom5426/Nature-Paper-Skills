@@ -63,6 +63,73 @@ class CheckFigureRefsCliTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0)
         self.assertIn("Supplementary Fig. 3: mentions=1, whole_figure_refs=1, panels=-", result.stdout)
 
+    def test_whitespace_does_not_change_figure_category(self):
+        for prefix in ('Extended  Data', 'Extended\tData', 'Extended\nData'):
+            with self.subTest(prefix=prefix):
+                result = self.run_script(prefix + ' Figure 2a.')
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn('Extended Data Fig. 2:', result.stdout)
+                self.assertFalse(result.stdout.startswith('Fig. 2:'))
+
+    def test_wrapped_list_keeps_all_figures(self):
+        result = self.run_script('Figs. 6a and\n7b.')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('Fig. 6:', result.stdout)
+        self.assertIn('Fig. 7:', result.stdout)
+
+    def test_numeric_ranges_and_lists_expand(self):
+        result = self.run_script('Figs. 1–3 and 5; Supplementary Figures 7-8.')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        for num in (1, 2, 3, 5):
+            self.assertIn(f'Fig. {num}: mentions=1, whole_figure_refs=1', result.stdout)
+        for num in (7, 8):
+            self.assertIn(f'Supplementary Fig. {num}:', result.stdout)
+
+    def test_panel_continuations_keep_one_mention(self):
+        for phrase in ('Fig. 1a,b,c', 'Fig. 1a, b and c', 'Fig. 1A, B–D'):
+            with self.subTest(phrase=phrase):
+                result = self.run_script(phrase + '.')
+                self.assertEqual(result.returncode, 0, result.stderr)
+                panels = 'a,b,c,d' if 'D' in phrase else 'a,b,c'
+                self.assertIn(f'Fig. 1: mentions=1, whole_figure_refs=0, panels={panels}', result.stdout)
+
+    def test_invalid_ranges_cannot_report_complete_scan(self):
+        for phrase in ('Fig. 1c-a', 'Figs. 3-1', 'Fig. 1a-2c', 'Fig. 1a-c-e'):
+            with self.subTest(phrase=phrase):
+                result = self.run_script(phrase)
+                self.assertEqual(result.returncode, 1)
+                self.assertIn('incomplete', result.stderr)
+
+    def test_prose_after_comma_or_and_is_not_a_panel(self):
+        result = self.run_script('Fig. 1a, because the effect persists. Fig. 2 and controls agree.')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('Fig. 1: mentions=1, whole_figure_refs=0, panels=a', result.stdout)
+        self.assertIn('Fig. 2: mentions=1, whole_figure_refs=1, panels=-', result.stdout)
+
+    def test_articles_after_whole_figure_are_prose(self):
+        for phrase in ('Fig. 2, a control experiment.', 'Fig. 2 and a related experiment.',
+                       'Fig. 2 – a control experiment.', 'Fig. 2 - additional controls.'):
+            with self.subTest(phrase=phrase):
+                result = self.run_script(phrase)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn('Fig. 2: mentions=1, whole_figure_refs=1, panels=-', result.stdout)
+
+    def test_articles_after_panel_are_not_additional_panels(self):
+        for phrase in ('Fig. 1b, a control experiment.', 'Fig. 1b and a related experiment.',
+                       'Fig. 1b – a control experiment.'):
+            with self.subTest(phrase=phrase):
+                result = self.run_script(phrase)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn('Fig. 1: mentions=1, whole_figure_refs=0, panels=b', result.stdout)
+
+    def test_explicit_a_continuation_and_ranges_still_work(self):
+        for phrase in ('Fig. 1b, a and c.', 'Fig. 1b and a.', 'Fig. 1a-c show agreement.'):
+            with self.subTest(phrase=phrase):
+                result = self.run_script(phrase)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                panels = 'a,b' if phrase == 'Fig. 1b and a.' else 'a,b,c'
+                self.assertIn(f'panels={panels}', result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

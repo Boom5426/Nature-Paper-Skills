@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 
@@ -70,13 +71,39 @@ DEFAULT_FILES = {
 }
 
 
-def main() -> None:
+def check_layout(root: Path) -> None:
+    """Check all entries before creating anything, including implicit parents."""
+    if root.exists() and not root.is_dir():
+        raise ValueError(f"Project root is not a directory: {root}")
+    for parent in root.parents:
+        if parent.exists() and not parent.is_dir():
+            raise ValueError(f"Project root parent is not a directory: {parent}")
+    for rel in [*DEFAULT_DIRS, *DEFAULT_FILES]:
+        target = root / rel
+        for path in [target, *target.parents]:
+            if path == root:
+                break
+            if path.is_symlink():
+                raise ValueError(f"Refusing linked project entry: {path}; inspect or repair it first")
+            if path.exists():
+                directory = path != target or rel in DEFAULT_DIRS
+                if not (path.is_dir() if directory else path.is_file()):
+                    expected = "directory" if directory else "file"
+                    raise ValueError(f"Expected a {expected}: {path}")
+
+
+def main() -> int:
     parser = argparse.ArgumentParser(description="Initialize a minimal paper-project directory layout.")
     parser.add_argument("root", help="Paper project root")
     parser.add_argument("--dry-run", action="store_true", help="Report planned changes without creating directories")
     args = parser.parse_args()
 
-    root = Path(args.root).expanduser().resolve()
+    try:
+        root = Path(args.root).expanduser().resolve()
+        check_layout(root)
+    except (ValueError, OSError, RuntimeError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
     print(f"root: {root}")
     created = []
     reused = []
@@ -98,7 +125,9 @@ def main() -> None:
         created.append(str(target))
         if not args.dry_run:
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text(content)
+            # Exclusive creation also protects files/links appearing after preflight.
+            with target.open("x", encoding="utf-8") as handle:
+                handle.write(content)
 
     print("created:")
     for path in created:
@@ -106,7 +135,12 @@ def main() -> None:
     print("reused:")
     for path in reused:
         print(f"  {path}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        sys.exit(main())
+    except OSError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        sys.exit(2)

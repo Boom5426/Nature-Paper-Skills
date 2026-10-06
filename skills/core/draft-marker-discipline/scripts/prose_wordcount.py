@@ -25,7 +25,7 @@ anything to ``detex``:
     ``\\TODO\\{.*?\\}`` stops at the first inner close brace. That exact mistake
     has truncated a marker in a real project and produced a fatal LaTeX error,
     so the brace matching here is deliberate and its failure is loud.
-  * whole-line comments.
+  * TeX comments, preserving escaped percent signs.
 
 ``\\input`` and ``\\include`` are resolved in Python FIRST, and ``detex`` is then
 run with ``-n`` so it does not follow them again. Without that, a root file that
@@ -35,6 +35,9 @@ That failure is silent and inflates the count by exactly the amount this script
 exists to remove.
 
 Requires ``detex`` (texlive-binextra on Debian/Ubuntu).
+Literal input paths are resolved relative to the root manuscript's directory,
+as when compiling from that directory. Missing inputs and cycles fail the count.
+Custom input macros and TEXINPUTS search paths are not expanded.
 
 Quote this script's command next to any word count you write down, so the
 number stays reproducible rather than remembered.
@@ -107,41 +110,62 @@ def strip_macro(text: str, name: str) -> str:
         i = k
 
 
-def resolve_inputs(path: pathlib.Path, seen: set | None = None) -> str:
-    """Return the file's text with \\input and \\include expanded, recursively."""
-    seen = seen if seen is not None else set()
+def strip_comments(text: str) -> str:
+    """Remove actual TeX comments before following inputs or stripping macros."""
+    out, i = [], 0
+    while i < len(text):
+        if text[i] == "\\" and i + 1 < len(text):
+            out.append(text[i:i + 2])
+            i += 2
+        elif text[i] == "%":
+            end = text.find("\n", i)
+            if end < 0:
+                break
+            i = end + 1
+            while i < len(text) and text[i] in " \t":
+                i += 1
+        else:
+            out.append(text[i])
+            i += 1
+    return "".join(out)
+
+
+def resolve_inputs(path: pathlib.Path, active: set | None = None,
+                   root: pathlib.Path | None = None) -> str:
+    """Expand literal inputs; repeated inclusion is valid, recursion is not."""
+    active = active if active is not None else set()
+    root = root if root is not None else path.resolve().parent
     real = path.resolve()
-    if real in seen:                      # a cyclic \input would not compile
-        return ""
-    seen.add(real)
-    text = read(path)
+    if real in active:
+        raise SystemExit(f"cyclic input at {path}; word count incomplete")
+    active.add(real)
 
     def sub(m: re.Match) -> str:
         name = m.group(1).strip()
         if not name:
-            return ""
-        child = (path.parent / name)
-        if child.suffix != ".tex":
-            child = child.with_suffix(".tex")
+            raise SystemExit(f"empty input in {path}; word count incomplete")
+        child = root / name
+        if not child.is_file() and not name.endswith(".tex"):
+            child = child.with_name(child.name + ".tex")
         if not child.is_file():
-            print(f"  warning: {path.name} inputs {name!r}, which does not exist",
-                  file=sys.stderr)
-            return ""
-        return "\n" + resolve_inputs(child, seen) + "\n"
+            raise SystemExit(f"{path} inputs missing {name!r}; word count incomplete")
+        return "\n" + resolve_inputs(child, active, root) + "\n"
 
-    return INPUT_RE.sub(sub, text)
+    try:
+        return INPUT_RE.sub(sub, strip_comments(read(path)))
+    finally:
+        active.remove(real)
 
 
 def prose(path: pathlib.Path, markers, floats, keep_floats: bool,
           follow_inputs: bool) -> int:
     """Words a reader reads in one .tex file."""
-    text = resolve_inputs(path) if follow_inputs else read(path)
+    text = resolve_inputs(path) if follow_inputs else strip_comments(read(path))
     if not keep_floats:
         for env in floats:
             e = re.escape(env)
             text = re.sub(r"\\begin\{" + e + r"\*?\}.*?\\end\{" + e + r"\*?\}",
                           "", text, flags=re.S)
-    text = re.sub(r"(?m)^\s*%.*$", "", text)
     for name in markers:
         text = strip_macro(text, name)
     # -n: do not follow \input/\include. They are already resolved above, and
@@ -217,12 +241,17 @@ def main(argv: list[str]) -> int:
                 raise SystemExit(f"{p} is not a file")
         paths = a.file
         labels = [p.name for p in paths]
+        extra_paths = []
     else:
         if not a.sections.is_dir():
             raise SystemExit(f"{a.sections} is not a directory")
         paths = resolve(a.sections, a.order)
         if not paths:
             raise SystemExit(f"no .tex files under {a.sections}")
+        extra_paths = list(dict.fromkeys(resolve(a.sections, a.extra))) if extra_stems else []
+        extra_ids = {p.resolve() for p in extra_paths}
+        paths = [p for p in paths if p.resolve() not in extra_ids]
+        extra_stems = [p.stem for p in extra_paths]
         labels = [p.stem for p in paths]
 
     width = max(len(x) for x in labels + extra_stems + ["body total"])
@@ -236,10 +265,7 @@ def main(argv: list[str]) -> int:
 
     if extra_stems:
         print()
-        for stem in extra_stems:
-            p = a.sections / (stem if stem.endswith(".tex") else stem + ".tex")
-            if not p.is_file():
-                raise SystemExit(f"{p} does not exist")
+        for p in extra_paths:
             n = prose(p, markers, floats, a.keep_floats, follow_inputs=False)
             print(f"  {p.stem:<{width}}  {n:6d}   (outside the body total)")
 

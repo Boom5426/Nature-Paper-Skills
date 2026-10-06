@@ -37,6 +37,8 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from citation_syntax import iter_citations
+
 # Fields insisted on before a reference is allowed to ship, per entry type.
 #
 # A field given as a tuple is satisfied by ANY member, which is how edited
@@ -85,41 +87,101 @@ def strip_comments(text: str) -> str:
     return "\n".join(l for l in text.splitlines() if not l.lstrip().startswith("%"))
 
 
-def parse_entries(raw: str):
-    """Yield (key, entry_type, {field: value}, raw_block).
+def braced_end(text: str, start: int, label: str) -> int:
+    """Find a complete brace group, respecting escaped braces."""
+    depth, i = 1, start + 1
+    while i < len(text):
+        if text[i] == "\\":
+            i += 2
+            continue
+        if text[i] == "{":
+            depth += 1
+        elif text[i] == "}":
+            depth -= 1
+            if not depth:
+                return i + 1
+        i += 1
+    raise ValueError(f"Unclosed braces in {label}")
 
-    Deliberately simple. A brace-counting scan handles a hand-maintained file
-    in one consistent style and avoids a dependency.
-    """
-    entries = []
-    for m in re.finditer(r"@(\w+)\s*\{", raw):
-        etype = m.group(1).lower()
-        start = m.end()  # just past the opening brace
-        depth = 1
-        i = start
-        while i < len(raw) and depth:
-            if raw[i] == "{":
-                depth += 1
-            elif raw[i] == "}":
-                depth -= 1
-            i += 1
-        block = raw[start : i - 1]
-        key = block.split(",", 1)[0].strip()
-        body = block.split(",", 1)[1] if "," in block else ""
-        fields = {}
-        for fm in re.finditer(r"(\w+)\s*=\s*\{", body):
-            fname = fm.group(1).lower()
-            fstart = fm.end()
-            d = 1
-            j = fstart
-            while j < len(body) and d:
-                if body[j] == "{":
-                    d += 1
-                elif body[j] == "}":
-                    d -= 1
-                j += 1
-            fields[fname] = " ".join(body[fstart : j - 1].split())
-        entries.append((key, etype, fields, block))
+
+def parse_fields(body: str, key: str) -> dict[str, str]:
+    """Accept braced/quoted values and numbers; reject unresolved expressions."""
+    fields, pos = {}, 0
+    while pos < len(body):
+        while pos < len(body) and body[pos].isspace():
+            pos += 1
+        if pos == len(body):
+            break
+        match = re.match(r"([\w-]+)\s*=\s*", body[pos:])
+        if not match:
+            raise ValueError(f"Cannot parse field in {key}: {body[pos:pos + 40]!r}")
+        name = match.group(1).lower()
+        pos += match.end()
+        if pos == len(body):
+            raise ValueError(f"Missing value for {key}.{name}")
+        start = pos
+        if body[pos] == "{":
+            pos = braced_end(body, pos, f"{key}.{name}")
+            value = body[start + 1:pos - 1]
+        elif body[pos] == '"':
+            pos += 1
+            depth = 0
+            while pos < len(body):
+                char = body[pos]
+                if char == "\\":
+                    pos += 2
+                    continue
+                if char == "{":
+                    depth += 1
+                elif char == "}":
+                    depth -= 1
+                elif char == '"' and not depth:
+                    break
+                pos += 1
+            if pos >= len(body) or depth:
+                raise ValueError(f"Unclosed quoted value in {key}.{name}")
+            value = body[start + 1:pos]
+            pos += 1
+        else:
+            number = re.match(r"\d+", body[pos:])
+            if not number:
+                raise ValueError(f"Unsupported value in {key}.{name}; use braces or quotes (string macros are not expanded)")
+            value = number.group()
+            pos += number.end()
+        if name in fields:
+            raise ValueError(f"Duplicate field {key}.{name}")
+        fields[name] = " ".join(value.split())
+        while pos < len(body) and body[pos].isspace():
+            pos += 1
+        if pos < len(body):
+            if body[pos] != ",":
+                raise ValueError(f"Expected a comma after {key}.{name}; concatenated values are not supported")
+            pos += 1
+    return fields
+
+
+def parse_entries(raw: str):
+    """Read brace-delimited entries; malformed/unsupported syntax fails loudly."""
+    entries, pos = [], 0
+    pattern = re.compile(r"@(\w+)\s*([({])")
+    while match := pattern.search(raw, pos):
+        etype = match.group(1).lower()
+        if match.group(2) != "{":
+            raise ValueError(f"Unsupported @{etype}(...) entry; use brace-delimited entries")
+        opening = match.end() - 1
+        pos = braced_end(raw, opening, f"@{etype} entry at offset {match.start()}")
+        block = raw[opening + 1:pos - 1]
+        if etype in {"comment", "preamble"}:
+            continue
+        if etype == "string":
+            raise ValueError("@string macros are not expanded; use explicit field values")
+        key, comma, body = block.partition(",")
+        key = key.strip()
+        if not comma or not key or re.search(r"[\s{}]", key):
+            raise ValueError(f"Missing or invalid citation key in @{etype} entry")
+        entries.append((key, etype, parse_fields(body, key), block))
+    if not entries and raw.strip() and not re.search(r"@(?:comment|preamble)\s*\{", raw, re.I):
+        raise ValueError("No parseable bibliography entries; check the input format")
     return entries
 
 
@@ -151,24 +213,14 @@ def expand(patterns) -> list[Path]:
         elif Path(pat).is_file():
             out.append(Path(pat))
         else:
-            print(f"  warning: no file matches {pat!r}", file=sys.stderr)
-    return out
+            raise ValueError(f"No file matches requested --tex input {pat!r}; scan incomplete")
+    return list(dict.fromkeys(out))
 
 
 def collect_cited(paths: list[Path]) -> set[str]:
     cited: set[str] = set()
     for p in paths:
-        body = strip_comments(read(p))
-        # Apply LaTeX's own line-continuation rule: an unescaped % swallows the
-        # rest of the line AND the leading whitespace of the next one. Long
-        # \citep{...} lists are wrapped this way, so skipping this makes the
-        # continuation marker look like part of a citation key.
-        body = re.sub(r"(?<!\\)%.*?\n[ \t]*", "", body)
-        for m in re.finditer(r"\\cite[a-zA-Z]*\s*(?:\[[^\]]*\])*\{([^}]*)\}", body):
-            for k in m.group(1).split(","):
-                k = k.strip()
-                if k:
-                    cited.add(k)
+        cited.update(key for _, key in iter_citations(read(p)))
     return cited
 
 
@@ -195,7 +247,11 @@ def main(argv: list[str]) -> int:
 
     raw_full = read(a.bib)
     raw = strip_comments(raw_full)
-    entries = parse_entries(raw)
+    try:
+        entries = parse_entries(raw)
+    except ValueError as exc:
+        print(f"BLOCKING: {a.bib}: {exc}")
+        return 1
 
     blocking = 0
     advisory = 0
@@ -286,8 +342,15 @@ def main(argv: list[str]) -> int:
 
     # ---- 5. cited vs defined ----------------------------------------------
     print("\n--- 5. cited vs defined ---")
-    tex_paths = expand(a.tex)
-    if not a.tex:
+    try:
+        tex_paths = expand(a.tex)
+    except ValueError as exc:
+        print(f"  BLOCKING  {exc}")
+        blocking += 1
+        tex_paths = None
+    if tex_paths is None:
+        print("  cited-vs-defined check incomplete; no completeness claim made")
+    elif not a.tex:
         print("  skipped: no --tex given")
     elif not tex_paths:
         # Silently skipping this check is exactly the failure it exists to

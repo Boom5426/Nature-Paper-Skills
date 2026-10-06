@@ -30,6 +30,14 @@
 
 Version labels are stored in VERSION. Use an immutable commit SHA for reproducible installation; this file does not imply that a matching Git tag or GitHub Release exists.
 
+## Pending helper fixes
+
+- Protect metadata temporary-file writes and preflight project layout conflicts.
+- Correct wrapped figure/citation parsing, numeric figure ranges and panel continuations.
+- Block malformed bibliography structures and incomplete requested citation scans.
+- Correct repeated/nested/commented inputs and exclude extras from body word totals.
+- Add regression coverage and [document helper inputs and failure boundaries](docs/helper-script-boundaries.md). These changes are unreleased; optional real-detex tests run when the dependency is available.
+
 ## Earlier history
 
 See [commits](https://github.com/Boom5426/Nature-Paper-Skills/commits/main) for the writing-posture, figure-audit, provenance and bilingual documentation changes preceding this version.
