@@ -114,8 +114,8 @@ Our Method 显著优于两个基线方法（p < 0.001）。
 ### 主要对比
 | 对比 | t-statistic | p-value | Cohen's d |
 |------|-------------|---------|-----------|
-| Our Method vs Baseline | t(8) = 5.67 | p < 0.001 | d = 3.59 |
-| Our Method vs BERT-base | t(8) = 3.21 | p = 0.012 | d = 2.03 |
+| Our Method vs Baseline | t(8) = 52.41 | p < 0.001 | d = 33.15 |
+| Our Method vs BERT-base | t(8) = 16.84 | p < 0.001 | d = 10.65 |
 
 ### 多重比较校正
 使用 Bonferroni 校正（α' = 0.017），所有对比仍然显著。
@@ -138,7 +138,7 @@ Table 1 shows the performance comparison of three models on the text classificat
 | BERT-base | 91.3 ± 0.18 | 90.7 ± 0.16 | 8.5 ± 0.12 |
 | **Our Method** | **93.5 ± 0.23** | **92.8 ± 0.21** | **5.2 ± 0.10** |
 
-With five independent runs per model as the unit (n = 5 per group), our method exceeded Baseline LSTM by 7.3 points (two-sample t-test, t(8) = 5.67, P < 0.001, Cohen's d = 3.59) and BERT-base by 2.2 points (t(8) = 3.21, P = 0.012, Cohen's d = 2.03); both differences remained significant after Bonferroni correction for three comparisons (α' = 0.017).
+With five independent runs per model as the unit (n = 5 per group), our method exceeded Baseline LSTM by 7.3 points (two-sample t-test, t(8) = 52.41, P < 0.001, Cohen's d = 33.15) and BERT-base by 2.2 points (t(8) = 16.84, P < 0.001, Cohen's d = 10.65); both differences remained significant after Bonferroni correction for three comparisons (α' = 0.017).
 ```
 
 #### visualization-specs.md
