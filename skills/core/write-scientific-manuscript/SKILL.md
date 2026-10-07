@@ -77,6 +77,37 @@ Build explicit bridges between adjacent claims. A valid sentence can still be mi
 
 Read [section-logic.md](references/section-logic.md) when restructuring a section, an abstract, or a full manuscript.
 
+## Paragraph boundaries and displayed mathematics
+
+Judge a paragraph by its scientific job, not its sentence count. A concise finding or definition
+can stand alone. A paragraph containing only "Full details are provided in Supplementary Note 2"
+usually belongs at the end of the related scientific paragraph, as a sentence or parenthetical
+reference. Retain its destination and any necessary scope; do not delete the reference merely to
+remove the navigation paragraph. Merge adjacent short paragraphs only when they serve the same job.
+Run-in Methods headings can mark distinct procedures and should not be removed just because the
+following text is short.
+
+A display does not itself start a new paragraph. Keep an introduction, the formula and its immediate
+symbol explanation together when they form one sentence or reasoning unit. In LaTeX, ordinary
+source line wrapping does not split a paragraph; a blank line or `\par` does. Preserve punctuation
+through the display and start a new paragraph when the explanation ends or a new concept begins.
+Do not remove every blank line around every formula: a new procedure after a display can be a
+legitimate paragraph boundary.
+
+For example, these fragments belong to one paragraph:
+
+```latex
+The response score is
+\[
+S(q,d)=-D(q,d),
+\]
+where $D$ denotes the response distance.
+```
+
+Equation numbering and page placement are typesetting choices handled by `scientific-writing`'s
+`references/latex-layout.md`. Source scans may identify navigation-only paragraphs or suspicious
+blank lines, but semantic review decides each change; do not batch-merge by length or regex alone.
+
 ## Prefer the simplest accurate language
 
 - Use familiar scientific words when they express the same meaning.

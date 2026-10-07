@@ -29,6 +29,16 @@ Use supplied context; ask only when an ambiguity would change the work. A reques
 review, diagnose or suggest produces findings, not file edits. A request to revise authorizes
 edits within its stated scope. Explicitly frozen decisions and numerical results remain fixed.
 
+Carry forward named protected passages and the requested edit depth. A light-touch request does
+not reopen approved Abstract, Introduction or Discussion prose. If a protected passage contains
+a material scientific error, report it with a concrete remedy; preserving its text is not a
+clean bill of health. Reuse supplied constraints rather than demanding a new state file.
+
+Treat the byline, correspondence and contribution roles as author decisions. Checking initials or
+aligning contribution formatting does not authorize adding/removing authors or changing their
+roles. Resolve initials against full names and current source; flag an ambiguous mapping rather
+than infer an identity or propagate a suspected correction into other metadata.
+
 Work with the material provided. Do not demand project-state files for a paragraph edit.
 For whole-paper work, reuse existing results and decision records; create lightweight notes
 only when they prevent cross-session drift. If the input is a PDF, determine whether editable
@@ -51,10 +61,12 @@ The table gives candidate steps in order, not mandatory rewrite passes.
 | Reviewer comments exist | `response` | `paper-reviewer` to inventory every ask, `rebuttal-response` to draft and calibrate, then `paper-reviewer` again to grade the draft. `paper-reviewer` and `rebuttal-response` are both in the recommended set |
 | A manuscript to referee, or a request to predict what reviewers will attack | `referee` | `paper-reviewer` (recommended set) |
 | Figures are the bottleneck | `figure` | `figure-planner`, then `nature-figure` to render, then `figure-style` to check. The last two are the figure stack, installed with `--figure` |
+| Equation numbering, float placement, SI table pagination or other LaTeX typesetting | `layout` | `scientific-writing` with `references/latex-layout.md`; use `write-scientific-manuscript` only if paragraph boundaries also need semantic repair. Placement alone does not select the figure-production chain |
 | No draft yet, project new or messy | `bootstrap` | `paper-bootstrap` then `nature-portfolio-playbook` |
 
-When two classes with different chains both fit, ask one question. That is the one case worth a
-clarifying question; guessing wastes more time than asking.
+An explicit mixed request can use the relevant steps from more than one class. Ask one question
+only when competing interpretations would change the authorized work; do not ask merely because
+numbering, paragraphs and floats need different specialists.
 
 ## Step 2: Announce the scope and execute the necessary steps
 

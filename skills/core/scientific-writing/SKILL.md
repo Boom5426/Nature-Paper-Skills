@@ -31,6 +31,12 @@ This skill should be used when:
 
 For title, abstract, cover-letter, or top-level logic decisions, read `references/editor-first-impression.md`.
 
+For LaTeX equation numbering, figure placement, table pagination or page-break requests, read
+`references/latex-layout.md`. A typesetting-only task uses the existing prose, figures and numerical
+content; it does not require a reverse outline, claim rewrite or figure-generation pass. Respect
+protected passages and author metadata. If paragraph boundaries also need repair, use
+`write-scientific-manuscript` for their scientific meaning before checking the rendered layout.
+
 ## Visual Enhancement with Scientific Figures
 
 When a manuscript would benefit from a schematic, workflow diagram, or conceptual figure, use this repository's `nature-figure` skill, which ships an OpenRouter AI-schematic route. It is not in the default recommended set because it needs a plotting backend or an `OPENROUTER_API_KEY`; install it from the Figure Stack (see the installation docs).
@@ -537,7 +543,7 @@ This skill includes comprehensive reference files covering specific aspects of s
 - `references/figures_tables.md`: Best practices for creating effective data visualizations
 - `references/reporting_guidelines.md`: Study-specific reporting standards and checklists
 - `references/writing_principles.md`: Core principles of effective scientific communication
-- `references/latex-layout.md`: LaTeX float placement and typesetting fixes (loose pages, stranded headings, figures that do not fill the page, "Float too large")
+- `references/latex-layout.md`: LaTeX equation numbering, float placement, SI tables and rendered-page verification; conditional fixes that preserve the active template and edit scope
 
 Load these references as needed when working on specific aspects of scientific writing.
 

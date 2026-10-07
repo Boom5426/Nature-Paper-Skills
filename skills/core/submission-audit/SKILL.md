@@ -65,6 +65,10 @@ Do not use this skill for:
      generative-AI statement in the Methods scoped to actual use, with no AI-generated images; code
      availability consistent with the released repository
    - preprint, related-manuscript, and conference-proceedings disclosure
+
+   Initials are checked against full names, not treated as unique identifiers. A missing or ambiguous
+   contribution mapping is a finding for the authors; it is not authorization to remove a byline
+   entry, change correspondence or assign a contribution role.
 7. Reviewer-side rejection pass
    - contribution sufficiency
    - writing clarity and reproducibility
@@ -88,6 +92,14 @@ Do not use this skill for:
 - If the target is `Nature Portfolio`, are the reporting-summary inputs, data/code statements, image-integrity materials, and disclosure items actually ready rather than merely planned?
 - If a submission form or portal draft already exists, do the title, abstract, keywords, availability statements, and related metadata still match the manuscript exactly?
 - Has the paper been pressure-tested against the main rejection dimensions: insufficient contribution, weak clarity, weak empirical effect, incomplete evaluation, and questionable design?
+
+For a supplied LaTeX manuscript with typesetting in scope, use `scientific-writing`'s
+`references/latex-layout.md` to check the numbered formulas, figure/caption placement, table parts
+and paragraph continuity in the rendered PDF. A navigation-only paragraph is assessed by function;
+a short scientific finding may be valid. Check the chosen numbering convention and existing labels,
+not a blanket requirement to number every display. Apply template, venue and project-specific
+placement rules to the relevant deliverable; separate figure legends or a genuinely long table
+can be intentional. If compilation or visual inspection is unavailable, identify it as unchecked.
 
 ## Finding Format
 

@@ -382,6 +382,49 @@ These carry information a reader needs. They were moved or tightened, not delete
   held a pasted copy. Editing only the pasted copy would have been reverted by the next rebuild; the
   edit went into the generator, and the table was regenerated and pasted again.
 
+## Paragraph continuity after a posture edit
+
+The posture pass can leave a navigation sentence as an isolated paragraph. This is
+a paragraph-function problem, not a reason to delete the scientific reference.
+
+Before:
+
+> Candidate centres span minority-specialist, balanced and majority-specialist responses.
+>
+> Full generator details are provided in Supplementary Note 2.
+
+After:
+
+> Candidate centres span minority-specialist, balanced and majority-specialist responses
+> (Supplementary Note 2).
+
+The destination is retained at the end of the relevant description. If the pointer
+also defines an essential condition, keep that condition in the text. Use
+`write-scientific-manuscript` for paragraph/equation continuity rather than treating
+all short paragraphs as defensive writing.
+
+---
+
+> The prespecified primary success rule was not met.
+
+Keep. This is an independent null finding, even if it is a one-sentence paragraph.
+Its brevity alone does not justify merging it with an unrelated positive result.
+
+---
+
+Before:
+
+> We carefully verified that survival changed by 1 percentage point across 12 independent
+> cultures (95% CI −3 to 5 percentage points). This should not be overinterpreted.
+
+After:
+
+> Survival changed by 1 percentage point across 12 independent cultures (95% CI −3 to 5
+> percentage points).
+
+The effect, interval, unit and replication count remain. No survival benefit is
+invented, and the null-compatible interval is not removed to make the text positive.
+
 ## Upstream examples
 
 From `Kiterlin/anti-defensive-writing` (MIT), unmodified:
