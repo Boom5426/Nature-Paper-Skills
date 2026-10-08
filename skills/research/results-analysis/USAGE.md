@@ -1,39 +1,32 @@
 # Results Analysis Workflow 使用指南
 
-本文档展示如何使用 Results Analysis Workflow 系统（Command → Agent → Skill）进行实验结果分析。
+本文档展示如何使用 `results-analysis` skill 进行实验结果分析。
 
-## 系统架构
+## 调用方式
 
-```
-/analyze-results (Command)
-    ↓
-data-analyst (Agent)
-    ↓
-results-analysis (Skill)
-```
+Claude Code 中用 `/results-analysis` 调用，Codex CLI/IDE 中用 `$results-analysis` 明确提及；也可以直接用自然语言描述任务。下文示例以 `/results-analysis` 为例。
 
 ## 快速开始
 
 ### 1. 基本使用
 
-最简单的使用方式是直接调用命令：
+最简单的使用方式是调用 skill 并给出结果文件：
 
 ```bash
-/analyze-results path/to/results.csv
+/results-analysis path/to/results.csv
 ```
 
-系统会自动：
-1. 触发 data-analyst agent
-2. Agent 使用 results-analysis skill 的方法论
-3. 生成分析报告和 Results 草稿
+Agent 会：
+1. 按 results-analysis skill 的方法论分析数据
+2. 生成分析报告和 Results 草稿
 
-### 2. 指定分析类型
+### 2. 说明分析重点
 
 ```bash
-/analyze-results experiments/comparison/ comparison
+/results-analysis experiments/comparison/ comparison
 ```
 
-支持的分析类型：
+skill 没有固定参数，路径后面的词只是给 agent 的提示，也可以换成一句话。常用的分析重点：
 - `full` - 完整分析（默认）
 - `comparison` - 模型对比
 - `ablation` - 消融实验
@@ -63,15 +56,15 @@ run,accuracy,f1_score,training_time
 5,86.1,85.7,2.5
 ```
 
-### Step 1: 执行分析命令
+### Step 1: 调用 skill
 
 ```bash
-/analyze-results experiments/ comparison
+/results-analysis experiments/ comparison
 ```
 
 ### Step 2: Agent 执行分析
 
-data-analyst agent 会：
+Agent 会：
 
 1. **读取数据**
    - 定位所有 CSV 文件
@@ -168,7 +161,7 @@ With five independent runs per model as the unit (n = 5 per group), our method e
 ### 消融实验分析
 
 ```bash
-/analyze-results experiments/ablation/ ablation
+/results-analysis experiments/ablation/ ablation
 ```
 
 Agent 会分析各组件的贡献：
@@ -189,7 +182,7 @@ Layer Norm 对性能贡献最大（-2.7%），其次是 Attention（-2.3%）。
 ### 只生成可视化规格
 
 ```bash
-/analyze-results experiments/ visualization
+/results-analysis experiments/ visualization
 ```
 
 Agent 只生成可视化规格，不进行统计分析。
@@ -252,11 +245,7 @@ run,metric1,metric2
 
 ## 总结
 
-Results Analysis Workflow 提供了从实验数据到论文 Results 部分的完整流程：
-
-1. **Command** (`/analyze-results`) - 用户友好的入口
-2. **Agent** (`data-analyst`) - 自动化分析执行
-3. **Skill** (`results-analysis`) - 学术标准方法论
+`results-analysis` skill 提供了从实验数据到论文 Results 部分的完整流程。
 
 遵循这个工作流可以确保：
 - 统计分析的正确性
