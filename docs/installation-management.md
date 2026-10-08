@@ -13,6 +13,48 @@ Use `--agent both` for both locations, including with `--local`. `--dest <direct
 
 For an older Codex setup using `~/.codex/skills`, first inspect its actual discovery behavior. You can retain that target explicitly with `--dest ~/.codex/skills`. Installing into a new path does not migrate or delete old copies. Avoid keeping conflicting versions with the same name in multiple discovered locations. The [current official Codex guide](https://developers.openai.com/codex/build-skills) describes `.agents/skills`; this project does not claim every historical client behaves identically.
 
+### Manual layout: one canonical copy, linked into the agent directory
+
+This is a manual layout for one installed version shared by several agents. The installer manages the canonical directory; the links in the agent directories are yours to create, check and repair. Run updates, `--doctor` and restores against the canonical directory.
+
+```bash
+CANONICAL=~/skill-store/nature-paper-skills
+bash install.sh --dest "$CANONICAL" --set all
+
+AGENT_DIR=~/.claude/skills   # Codex: ~/.agents/skills
+mkdir -p "$AGENT_DIR"
+conflicts=0
+for d in "$CANONICAL"/*/; do
+  [ -f "${d}SKILL.md" ] || continue
+  name=$(basename "$d")
+  target="$AGENT_DIR/$name"
+  if [ -L "$target" ]; then
+    [ "$(readlink "$target")" = "${d%/}" ] && continue
+    echo "conflict: $target points to $(readlink "$target")" >&2
+    conflicts=$((conflicts + 1))
+    continue
+  fi
+  if [ -e "$target" ]; then
+    echo "conflict: $target exists and is not a link to the canonical copy" >&2
+    conflicts=$((conflicts + 1))
+    continue
+  fi
+  ln -s "${d%/}" "$target"
+done
+if [ "$conflicts" -gt 0 ]; then
+  echo "$conflicts entry or entries left untouched; resolve them yourself" >&2
+  exit 1
+fi
+```
+
+The loop creates missing entries, skips a link that already points at the canonical copy, and reports anything else instead of replacing it, so it is safe on a fresh and on an existing agent directory. Targets are absolute, so a link keeps resolving when its entry is moved, and updating the canonical directory does not require recreating the links. An earlier copy-based install leaves real directories in the agent directory; the loop reports those as conflicts rather than replacing them.
+
+Ownership and limits:
+
+- Run `--doctor` against the canonical directory. Pointed at an agent directory, it reports each linked entry as `LINKED` or `INVALID_LINK`, says it is not verified there, and exits 1; that describes the installation record of the directory you pointed it at, not the state of the canonical installation.
+- An installer run aimed at a directory that holds these links stops during preflight unless `--on-conflict keep` is set, and a restore refuses per-skill symlinks in targets and backup entries. See the notes under Local changes and conflicts and Restore.
+- One canonical copy can serve several agents, but the layout does not resolve a name collision between packs: when two packs provide the same skill name, the agent still discovers only one of them.
+
 ## Inspect and update
 
 From a clone:
