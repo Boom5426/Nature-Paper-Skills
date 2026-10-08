@@ -6,6 +6,14 @@
 
 Use the code block's top-right copy button, then paste the instruction into your agent conversation:
 
+**Full research workflow: all 27 skills**
+
+```text
+Read and follow https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md to install all 27 Nature Paper Skills for this environment, using the all profile, and verify the result.
+```
+
+**Manuscript writing and review: 19 skills**
+
 ```text
 Read and follow https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md to install the recommended 19 Nature Paper Skills for this environment, and verify the result.
 ```
@@ -114,6 +122,14 @@ when testing the installed workflow.
 ## 中文说明
 
 点击下方代码块右上角的复制按钮，再粘贴到代理对话中：
+
+**完整科研流程：全部 27 个技能**
+
+```text
+读取并执行 https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md，为当前环境安装 Nature Paper Skills 全部 27 个技能（all 完整集），并验证结果。
+```
+
+**论文写作与审稿：19 个技能**
 
 ```text
 读取并执行 https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md，为当前环境安装 Nature Paper Skills 推荐的 19 个技能，并验证结果。

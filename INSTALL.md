@@ -4,9 +4,21 @@ This document is for the agent receiving an installation request. Handle source
 retrieval, installation and verification yourself. The user should not need to
 run commands, build a ZIP, upload files or explicitly mention a creator skill.
 
-Default: the **recommended 19 skills** defined by `RECOMMENDED_SKILLS` in
-`install.sh`. Include the two figure skills only when requested; use all 27 only
-when requested. Preserve complete skill directories, resources and licenses.
+Follow the profile explicitly requested by the user. The README offers all 27
+first for the full research workflow and 19 for manuscript writing and review.
+Preserve complete skill directories, resources and licenses.
+
+| User request | Profile flags for installer and builder | Selection |
+|---|---|---|
+| All skills, full workflow, or 27 skills | `--set all` | Every `skills/*/*/SKILL.md` directory (27) |
+| Recommended, writing/review, or 19 skills | `--set recommended` | `RECOMMENDED_SKILLS` in `install.sh` (19) |
+| Recommended plus figures, or 21 skills | `--set recommended --figure` | `RECOMMENDED_SKILLS` plus `FIGURE_SKILLS` (21) |
+| No profile specified | `--set recommended` | Existing installer default (19) |
+
+Pass the selected flags to installation, doctor and packaging. A request for 27
+must use `--set all`; do not silently substitute the 19-skill default. Installing
+skill files does not install the optional runtimes or dependencies used by their
+scripts; check those when the corresponding task is requested.
 
 ## 1. Identify the installation environment
 
@@ -23,14 +35,15 @@ environment as part of installation.
 ## 2. Local Codex or Claude Code
 
 Use the repository's installer; it retains licensing, installation records and
-recovery information. Run from the retrieved checkout:
+recovery information. For a full 27-skill request, run from the retrieved checkout:
 
 ```bash
-bash install.sh --agent codex --on-conflict keep
-bash install.sh --agent codex --doctor
+bash install.sh --agent codex --set all --on-conflict keep
+bash install.sh --agent codex --set all --doctor
 ```
 
-For Claude Code, substitute `--agent claude`. A requested project installation
+For 19 skills, replace `--set all` with `--set recommended` in both commands;
+for 21, also add `--figure`. For Claude Code, substitute `--agent claude`. A requested project installation
 uses `--local`, run from the intended project with an explicit path to the script.
 An explicit destination uses `--dest` for both installation and doctor.
 
@@ -46,8 +59,11 @@ is available as `scripts/manage_install.py`. Read its CLI before invoking it:
 
 - Use `--source` with the retrieved checkout and `--dest` with the Windows
   client's actual skill directory.
-- Derive repeated `--skill` arguments from the selected arrays in `install.sh`
-  and repeated `--apache` arguments from `APACHE_SKILLS`; do not omit the latter.
+- Derive repeated `--skill` arguments from the selected profile: enumerate all
+  `skills/*/*/SKILL.md` directories for 27, use `RECOMMENDED_SKILLS` for 19,
+  or add `FIGURE_SKILLS` for 21. Pass each skill's category/name relative path.
+- Derive repeated `--apache` arguments from `APACHE_SKILLS` in `install.sh`;
+  do not omit these license-shipping arguments.
 - Pass `--repo`, `--source-ref`, and the known source `--commit` for provenance,
   plus `--on-conflict keep`. Do not claim an unknown commit is known.
 - Run the same manager with `--source`, `--dest` and `--doctor` afterward.
@@ -77,8 +93,9 @@ If the account provides a supported registration flow:
    imported workspace listing when available. Do not invent a listing URL or ID.
 2. If the supported flow can create from repository resources, retrieve the
    complete source. Use `scripts/build_chatgpt_plugin.py` yourself, with a new,
-   explicit output directory, when execution is available. Its default output
-   includes one `nature-paper-workflow` entry retaining the 19 specialists under
+   explicit output directory and the selected profile flags, when execution is
+   available. Use `--set all` for a 27-skill request. Its output includes one
+   `nature-paper-workflow` entry retaining every selected specialist under
    `resources/`, as well as a skills-only plugin and marketplace tree.
 3. Preserve the entry's `SKILL.md`, every specialist resource, scripts,
    references, templates, assets and licenses. Follow the actual tool's schema;

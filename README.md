@@ -93,9 +93,17 @@ These are illustrative edits, not claims about a real study. A scientific limita
 
 ### 📥 1. Install
 
-Install the recommended 19-skill stack, including reviewer responses, using the entry for your app. Local installation needs Bash and Python 3.9+; remote installation also needs curl and tar.
+Choose all 27 skills for the full research workflow, or 19 for manuscript writing and review. The complete set adds figure production, literature research, results analysis, reference auditing, conference writing and presentations. Local installation needs Bash and Python 3.9+; remote installation also needs curl and tar.
 
 **Let the agent handle installation:** use the code block's top-right copy button, then paste the instruction into your agent chat:
+
+**Full research workflow: all 27 skills**
+
+```text
+Read and follow https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md to install all 27 Nature Paper Skills for this environment, using the all profile, and verify the result.
+```
+
+**Manuscript writing and review: recommended 19-skill stack**
 
 ```text
 Read and follow https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md to install the recommended 19 Nature Paper Skills for this environment, and verify the result.
@@ -117,8 +125,10 @@ No explicit creator selection is required. [INSTALL.md](INSTALL.md) chooses the 
 On Linux/macOS, run:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex --set all
 ```
+
+This command installs all 27. Use `--set recommended` for the 19-skill stack.
 
 On Windows, follow the [Windows instructions](docs/installation-codex.md#windows-desktop-app), choosing the native agent or WSL2 route used by your app.
 
@@ -136,8 +146,10 @@ If using the built-in `skill-installer`, specify a directory containing `SKILL.m
 Run in the same machine and user environment as Claude Code:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --set all
 ```
+
+This command installs all 27. Use `--set recommended` for the 19-skill stack.
 
 The default destination is `~/.claude/skills`. Refresh/reopen Claude Code and invoke `/paper-workflow`. See [Claude Code setup](docs/installation-claude.md) for requirements and verification status.
 
@@ -148,7 +160,7 @@ The default destination is `~/.claude/skills`. Refresh/reopen Claude Code and in
 <details>
 <summary><b>ChatGPT Work on the web</b></summary>
 
-Use the **same copyable instruction above**. The agent handles retrieval and any supported installation flow; you do not need to select `@skill-creator`, run Python or upload a ZIP.
+Use **either copyable instruction above**. The agent handles retrieval and any supported installation flow; you do not need to select `@skill-creator`, run Python or upload a ZIP.
 
 **Automatic web installation is unverified.** It requires this account to expose a supported save/register flow. A download or a skill directory inside a web task does not confirm availability in a new chat. The agent should report the missing capability if registration is unavailable.
 

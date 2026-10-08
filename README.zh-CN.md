@@ -93,9 +93,17 @@ flowchart LR
 
 ### 📥 1. 安装
 
-按使用的应用选择入口，安装推荐的 19 个 skill，包含审稿回复所需技能。本地安装需要 Bash 和 Python 3.9+；远程安装还需要 curl 和 tar。
+完整科研流程选择 27 个技能；只做论文写作和审稿，可选 19 个。完整集增加实际绘图、文献研究、结果分析、参考文献核验、会议论文与学术演示。本地安装需要 Bash 和 Python 3.9+；远程安装还需要 curl 和 tar。
 
 **让代理自动安装：** 点击下方代码块右上角的复制按钮，再粘贴到代理对话中：
+
+**完整科研流程：全部 27 个 skill**
+
+```text
+读取并执行 https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md，为当前环境安装 Nature Paper Skills 全部 27 个技能（all 完整集），并验证结果。
+```
+
+**论文写作与审稿：推荐的 19 个 skill**
 
 ```text
 读取并执行 https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md，为当前环境安装 Nature Paper Skills 推荐的 19 个技能，并验证结果。
@@ -117,8 +125,10 @@ flowchart LR
 Linux/macOS 运行：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex --set all
 ```
+
+此命令安装全部 27 个；需要 19 个写作与审稿技能时，将 `--set all` 换成 `--set recommended`。
 
 Windows 请按 [Windows 安装说明](docs/installation-codex.md#windows-desktop-app)，选择 App 实际使用的原生 agent 或 WSL2 路径。
 
@@ -136,8 +146,10 @@ Windows 请按 [Windows 安装说明](docs/installation-codex.md#windows-desktop
 在 Claude Code 所用的机器和用户环境中运行：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --set all
 ```
+
+此命令安装全部 27 个；需要 19 个写作与审稿技能时，将 `--set all` 换成 `--set recommended`。
 
 默认安装到 `~/.claude/skills`。刷新或重新打开 Claude Code，再调用 `/paper-workflow`。环境要求和验证范围见 [Claude Code 安装指南](docs/installation-claude.md)。
 
@@ -148,7 +160,7 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 <details>
 <summary><b>网页版 ChatGPT Work</b></summary>
 
-使用上方**同一条复制指令**，让代理自行取得资源并执行当前环境支持的安装流程；无需你点选 `@skill-creator`、运行 Python 或上传 ZIP。
+使用上方**任一条复制指令**，让代理自行取得资源并执行当前环境支持的安装流程；无需你点选 `@skill-creator`、运行 Python 或上传 ZIP。
 
 **网页版自动安装尚未验证。** 当前账号须提供受支持的保存／注册流程；网页任务中下载了文件或生成了技能目录，不能证明新会话可调用。如果缺少注册能力，代理应直接说明原因。
 
