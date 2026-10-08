@@ -27,8 +27,25 @@ inside a web task is not evidence of a persistent local client installation.
 Determine the actual client, operating system, skill discovery location and
 available tools before writing files.
 
-Retrieve this repository into a fresh working directory, or use the checkout
-explicitly supplied by the user. Read `install.sh` and the relevant guide below.
+Retrieve the original files from the `main` branch of
+[the GitHub repository](https://github.com/Boom5426/Nature-Paper-Skills), or use
+an exact source ref or checkout explicitly supplied by the user. The installation
+entry is [this GitHub file page](https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md);
+access to `raw.githubusercontent.com` is optional.
+
+If webpage reading fails, use an available GitHub tool to retrieve complete file
+contents or clone the repository over GitHub HTTPS into a new, explicit directory:
+
+```bash
+git clone --depth 1 --single-branch --branch main https://github.com/Boom5426/Nature-Paper-Skills.git "<new-checkout-directory>"
+```
+
+Choose an unused destination. Read the retrieved `INSTALL.md` and `install.sh`,
+then the relevant guide below; obtain the complete selected skill directories
+before installation. Record the actual source commit when it can be resolved.
+Do not use search snippets, a cached README or memory as a substitute for the
+original installation files. If every supported retrieval path is blocked,
+report the inaccessible source and stop; do not attempt to bypass network policy.
 Do not commit, push, publish, delete existing skills or change the user's agent
 environment as part of installation.
 

@@ -9,13 +9,15 @@ Use the code block's top-right copy button, then paste the instruction into your
 **Full research workflow: all 27 skills**
 
 ```text
-Read and follow https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md to install all 27 Nature Paper Skills for this environment, using the all profile, and verify the result.
+Read and follow https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md to install all 27 Nature Paper Skills for this environment, using the all profile, and verify the result.
+If the page cannot be read, use an available GitHub tool or git clone to retrieve the main branch and read INSTALL.md from the repository root; do not substitute search snippets for the file.
 ```
 
 **Manuscript writing and review: 19 skills**
 
 ```text
-Read and follow https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md to install the recommended 19 Nature Paper Skills for this environment, and verify the result.
+Read and follow https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md to install the recommended 19 Nature Paper Skills for this environment, and verify the result.
+If the page cannot be read, use an available GitHub tool or git clone to retrieve the main branch and read INSTALL.md from the repository root; do not substitute search snippets for the file.
 ```
 
 The agent handles source retrieval, selects the available installation flow and
@@ -126,13 +128,15 @@ when testing the installed workflow.
 **完整科研流程：全部 27 个技能**
 
 ```text
-读取并执行 https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md，为当前环境安装 Nature Paper Skills 全部 27 个技能（all 完整集），并验证结果。
+读取并执行 https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md，为当前环境安装 Nature Paper Skills 全部 27 个技能（all 完整集），并验证结果。
+若页面读取失败，请使用可用的 GitHub 工具或 git clone 获取 main 分支源码，再读取根目录 INSTALL.md；不要用搜索摘要代替原文。
 ```
 
 **论文写作与审稿：19 个技能**
 
 ```text
-读取并执行 https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md，为当前环境安装 Nature Paper Skills 推荐的 19 个技能，并验证结果。
+读取并执行 https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md，为当前环境安装 Nature Paper Skills 推荐的 19 个技能，并验证结果。
+若页面读取失败，请使用可用的 GitHub 工具或 git clone 获取 main 分支源码，再读取根目录 INSTALL.md；不要用搜索摘要代替原文。
 ```
 
 无需指定 `@skill-creator`、执行 Python、制作或上传 ZIP。代理自行取得资源，

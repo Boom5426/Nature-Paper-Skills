@@ -100,13 +100,15 @@ flowchart LR
 **完整科研流程：全部 27 个 skill**
 
 ```text
-读取并执行 https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md，为当前环境安装 Nature Paper Skills 全部 27 个技能（all 完整集），并验证结果。
+读取并执行 https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md，为当前环境安装 Nature Paper Skills 全部 27 个技能（all 完整集），并验证结果。
+若页面读取失败，请使用可用的 GitHub 工具或 git clone 获取 main 分支源码，再读取根目录 INSTALL.md；不要用搜索摘要代替原文。
 ```
 
 **论文写作与审稿：推荐的 19 个 skill**
 
 ```text
-读取并执行 https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md，为当前环境安装 Nature Paper Skills 推荐的 19 个技能，并验证结果。
+读取并执行 https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md，为当前环境安装 Nature Paper Skills 推荐的 19 个技能，并验证结果。
+若页面读取失败，请使用可用的 GitHub 工具或 git clone 获取 main 分支源码，再读取根目录 INSTALL.md；不要用搜索摘要代替原文。
 ```
 
 无需指定 creator。[INSTALL.md](INSTALL.md) 让代理选择受支持的路径，自行取得资源并验证。网页版持久安装尚未验证，代理须确认账号注册能力后才能报告成功。

@@ -22,6 +22,7 @@
 - Add a standard-library web bundle builder: a single-entry `nature-paper-workflow` skill with bundled specialists, a skills-only plugin ZIP and a GitHub marketplace. Retain resources, licenses and file hashes, reuse the installer profiles, and refuse existing output paths.
 - Add a copyable agent installation instruction and `INSTALL.md`, without mandatory creator selection or user-run build/upload steps. Separate maintainer packaging and publication from web account registration; keep the latter explicitly unverified.
 - Offer the full 27-skill workflow first and the 19-skill writing/review stack as a separate copyable instruction. Carry explicit profile requests through local installation, native Python selection and web packaging; retain the installer's existing default.
+- Use the GitHub file page for copyable installation instructions, with GitHub-tool and HTTPS-clone fallbacks. Make raw-domain access optional and require original files rather than search snippets when web retrieval fails.
 - Refuse to replace per-skill symlinks under the default `backup` policy or `error`, before changing any selected destination.
 - Preserve live, broken and looping skill links under `--on-conflict keep` without adopting them into the installation record.
 - Identify linked entries in `--doctor` and direct checks to the canonical installation; linked targets are not automatically verified.

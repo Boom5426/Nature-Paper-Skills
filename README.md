@@ -100,13 +100,15 @@ Choose all 27 skills for the full research workflow, or 19 for manuscript writin
 **Full research workflow: all 27 skills**
 
 ```text
-Read and follow https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md to install all 27 Nature Paper Skills for this environment, using the all profile, and verify the result.
+Read and follow https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md to install all 27 Nature Paper Skills for this environment, using the all profile, and verify the result.
+If the page cannot be read, use an available GitHub tool or git clone to retrieve the main branch and read INSTALL.md from the repository root; do not substitute search snippets for the file.
 ```
 
 **Manuscript writing and review: recommended 19-skill stack**
 
 ```text
-Read and follow https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md to install the recommended 19 Nature Paper Skills for this environment, and verify the result.
+Read and follow https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md to install the recommended 19 Nature Paper Skills for this environment, and verify the result.
+If the page cannot be read, use an available GitHub tool or git clone to retrieve the main branch and read INSTALL.md from the repository root; do not substitute search snippets for the file.
 ```
 
 No explicit creator selection is required. [INSTALL.md](INSTALL.md) chooses the supported route and asks the agent to handle retrieval and verification. Persistent ChatGPT Work web installation remains unverified; account registration must be available before the agent reports success.
