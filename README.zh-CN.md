@@ -93,19 +93,76 @@ flowchart LR
 
 ### 📥 1. 安装
 
-在使用 Codex 或 Claude Code 的 Bash 环境中，一条命令安装推荐的 19 个 skill，包含审稿回复所需技能。安装器需要 Python 3.9+ 标准库。
+按使用的应用选择入口，安装推荐的 19 个 skill，包含审稿回复所需技能。本地安装需要 Bash 和 Python 3.9+；远程安装还需要 curl 和 tar。
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
+**让代理自动安装：** 点击下方代码块右上角的复制按钮，再粘贴到代理对话中：
+
+```text
+读取并执行 https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md，为当前环境安装 Nature Paper Skills 推荐的 19 个技能，并验证结果。
 ```
 
-要明确指定 agent，在 `bash` 后追加 `-s -- --agent codex` 或 `-s -- --agent claude`。更新前会备份已有技能。更多选择见[安装选项](#安装选项)。
+无需指定 creator。[INSTALL.md](INSTALL.md) 让代理选择受支持的路径，自行取得资源并验证。网页版持久安装尚未验证，代理须确认账号注册能力后才能报告成功。
+
+| 你使用的应用 | 从这里开始 |
+|---|---|
+| Codex：App、CLI 或 IDE | [Codex 安装](#install-codex-bash)；Windows 操作放在详细指南中 |
+| Claude Code | [Claude Code 安装](#install-claude-code) |
+| 网页版 ChatGPT Work | [网页版安装与可用性](#install-chatgpt-work-web)；自动安装尚未验证 |
+
+<a name="install-codex-bash"></a>
+
+<details>
+<summary><b>Codex</b></summary>
+
+Linux/macOS 运行：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex
+```
+
+Windows 请按 [Windows 安装说明](docs/installation-codex.md#windows-desktop-app)，选择 App 实际使用的原生 agent 或 WSL2 路径。
+
+默认安装到 `~/.agents/skills`。刷新技能列表或新建会话，再选择 `paper-workflow`；CLI/IDE 可显式调用 `$paper-workflow`。环境要求和验证范围见 [Codex 安装指南](docs/installation-codex.md)。
+
+如果使用内置 `skill-installer`，请指定包含 `SKILL.md` 的目录，例如 [`skills/core/paper-workflow`](https://github.com/Boom5426/Nature-Paper-Skills/tree/main/skills/core/paper-workflow)。仓库根目录是技能集合，不能作为单个 skill 安装；完整工作流需要哪些目录，见[技能地图](docs/skill-map.md)。
+
+</details>
+
+<a name="install-claude-code"></a>
+
+<details>
+<summary><b>Claude Code</b></summary>
+
+在 Claude Code 所用的机器和用户环境中运行：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude
+```
+
+默认安装到 `~/.claude/skills`。刷新或重新打开 Claude Code，再调用 `/paper-workflow`。环境要求和验证范围见 [Claude Code 安装指南](docs/installation-claude.md)。
+
+</details>
+
+<a name="install-chatgpt-work-web"></a>
+
+<details>
+<summary><b>网页版 ChatGPT Work</b></summary>
+
+使用上方**同一条复制指令**，让代理自行取得资源并执行当前环境支持的安装流程；无需你点选 `@skill-creator`、运行 Python 或上传 ZIP。
+
+**网页版自动安装尚未验证。** 当前账号须提供受支持的保存／注册流程；网页任务中下载了文件或生成了技能目录，不能证明新会话可调用。如果缺少注册能力，代理应直接说明原因。
+
+可靠分发需由维护者发布插件，或由工作区管理员导入 GitHub marketplace。见[网页版分发与验证](docs/installation-chatgpt-work.md)；打包命令属于维护者操作。
+
+</details>
+
+仓库安装器会备份已有副本。添加 `--figure` 安装绘图技能，或用 `--set all` 安装全部 27 个 skill；安装范围、预览、更新和恢复命令见[安装选项](#安装选项)。
 
 <a name="2-完成第一次修订"></a>
 
 ### ✍️ 2. 完成第一次修订
 
-将当前稿件和相关结果放进 agent 的工作目录，然后说：
+在本地 agent 中确认技能可见后，将当前稿件和相关结果放进工作目录，然后说：
 
 ```text
 用 paper-workflow。依据 evidence.md 中的证据修改 draft.md 的 Results 段落。
@@ -131,7 +188,7 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 
 要求“检查／给建议”时先交付诊断；要求“修改”时在授权范围内改稿。缺失的证据会指出，不会补写成已完成的实验。
 
-完整提示词与任务准备方式见[常用任务示例](docs/task-recipes.md)。
+完整提示词与任务准备方式见[常用任务示例](docs/task-recipes.md)。选择 `--set all` 还包含[可复算的统计示例](skills/research/results-analysis/USAGE.md)，其示例 helper 需要 SciPy。
 
 <a name="安装选项"></a>
 
@@ -160,7 +217,7 @@ bash install.sh --agent codex --doctor   # 检查文件、版本与依赖
 <details>
 <summary><b>🛠️ 环境要求与技能加载排错</b></summary>
 
-**需要准备：** Codex 或 Claude Code、Bash、Python 3.9+（安装只用标准库，无需额外 pip 包）。远程安装还需要 `curl` 和 `tar`。Windows 请在运行 agent 的 WSL 或 Git Bash 环境中执行；上面的命令适用于 Bash，不适用于 PowerShell。已验证范围见[环境与文件格式](docs/compatibility.md)。
+**本地安装器需要：** Codex 或 Claude Code、Bash、Python 3.9+（安装只用标准库，无需额外 pip 包）。远程安装还需要 `curl` 和 `tar`。Windows 操作见 [Codex Windows 安装说明](docs/installation-codex.md#windows-desktop-app)。[网页版 ChatGPT Work](#install-chatgpt-work-web)采用独立分发流程。已验证范围见[环境与文件格式](docs/compatibility.md)。
 
 如果找不到技能，刷新技能列表或重新打开会话，再看[排错说明](docs/installation-management.md#troubleshooting)。分 agent 安装说明：[Codex](docs/installation-codex.md) · [Claude Code](docs/installation-claude.md)。
 
@@ -170,6 +227,8 @@ bash install.sh --agent codex --doctor   # 检查文件、版本与依赖
 <summary><b>🔄 查看安装器、更新、恢复与固定版本</b></summary>
 
 可以先读 [install.sh](install.sh)，或按上方命令克隆后安装。更新前会备份已有技能，详见[更新与恢复](docs/installation-management.md)。
+
+多个 agent 共用一份安装副本时，可采用[手动软链接布局](docs/installation-management.md#manual-layout-one-canonical-copy-linked-into-the-agent-directory)。更新、检查与恢复都针对中央安装目录执行；已有 agent 条目会保留。
 
 通过 `--ref <完整提交SHA>` 固定版本；安装器会记录来源和文件哈希。版本变化见 [CHANGELOG](CHANGELOG.md)。
 

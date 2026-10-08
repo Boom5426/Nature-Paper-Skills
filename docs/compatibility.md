@@ -6,9 +6,11 @@
 |---|---|---|
 | Linux with Bash and Python 3.9+ | `bash install.sh` | Local integration suite executed; Ubuntu CI checks the suite |
 | macOS with Bash and Python 3.9+ | Same script, portable standard-library file handling | macOS added to CI; inspect the current run before treating it as passed |
-| Windows with WSL | Run the installer and agent inside the same WSL environment | No Windows/WSL runtime test recorded in this release |
-| Windows with Git Bash | Bash + Python; ensure Python and the agent resolve the same target path | No native Windows runtime test recorded; prefer WSL if path conventions differ |
+| Windows desktop app, native agent | Default agent uses PowerShell; the supplied installer requires Bash. See [Windows setup](installation-codex.md#windows-desktop-app) | Skill directories pass static validation; no native app install/discovery test recorded |
+| Windows with WSL2 | Run the installer and agent inside the same WSL distribution; changing the terminal alone does not switch the agent | No Windows/WSL runtime test recorded in this release |
+| Windows with Git Bash | Bash + Windows Python; ensure Python and the app resolve the same Windows user/target path | No native Windows runtime test recorded |
 | Windows PowerShell / CMD alone | Bash script cannot execute directly | Native installer is not supplied |
+| ChatGPT Work on the web | [Agent instruction](../INSTALL.md) checks available registration; published plugins or administrator-imported marketplaces provide distribution | Package structure and retained resources are tested locally; automatic registration, live import and new-chat invocation remain unverified. See [web distribution](installation-chatgpt-work.md) |
 | Hosted/cloud agent | Depends on its writable skill locations and persistence rules | Copying files to a local CLI directory does not install them in a hosted session |
 
 The installation manager uses only the Python standard library. Core prose tasks do not require a plotting library or an image-generation API key. A file installation check and a live agent invocation are separate checks. Codex and Claude Code may change discovery behavior; agent-specific guides link the official documentation.

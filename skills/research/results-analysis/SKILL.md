@@ -69,6 +69,10 @@ Select appropriate statistical tests based on data characteristics.
 - Specify the test method and significance level used
 - Report p-values and effect sizes
 - Consider multiple comparison issues
+- Recompute examples and report values from the same unrounded inputs; mean, sample SD, n,
+  test statistic, P and effect size must describe the same comparison and analysis unit.
+- For a mean across datasets, first form each run's mean, then estimate variation across runs;
+  averaging dataset SDs does not recover this uncertainty. Report only diagnostics actually run.
 
 See `references/statistical-methods.md` for the complete statistical methods guide.
 
@@ -245,6 +249,10 @@ After analysis, the following are generated:
 ## Examples and Templates
 
 ### Example Files
+
+The synthetic walkthrough in [USAGE.md](USAGE.md) includes complete CSV runs and
+`scripts/example_statistics.py` (requires SciPy). Run it with `--example usage` or
+`--example benchmark` to recompute the appropriate example; it prints JSON without writing files.
 
 Refer to the `examples/` directory for complete examples:
 

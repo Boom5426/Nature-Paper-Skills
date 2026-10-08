@@ -32,6 +32,8 @@ Re-run the installer with the same selection. Existing copies are backed up. `--
 
 See [installation management](installation-management.md) for recovery details and [CHANGELOG](../CHANGELOG.md) for behavior changes. Manual copying bypasses version records and recovery, so the installer is recommended. If copying manually, copy whole directories and the applicable root LICENSE-APACHE and NOTICE files.
 
+To share one installed copy across agents, use the [manual linked layout](installation-management.md#manual-layout-one-canonical-copy-linked-into-the-agent-directory). Update, check and restore its canonical directory; the linking loop preserves existing agent entries.
+
 ## Recommended profile
 
 19 skills; figure production/checking uses `--figure`, and all 27 skills use `--set all`.

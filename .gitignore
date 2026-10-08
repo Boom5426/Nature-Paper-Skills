@@ -15,3 +15,6 @@ figures/
 # Generated tutorial and behavior-evaluation outputs
 examples/first-run/revised.md
 evals/runs/
+
+# Generated ChatGPT Work skill/plugin bundles and marketplace trees
+/dist/chatgpt-work/

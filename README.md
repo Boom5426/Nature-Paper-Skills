@@ -93,19 +93,76 @@ These are illustrative edits, not claims about a real study. A scientific limita
 
 ### 📥 1. Install
 
-In the Bash environment where you use Codex or Claude Code, install the recommended 19-skill stack, including reviewer responses. The installer needs Python 3.9+ with its standard library.
+Install the recommended 19-skill stack, including reviewer responses, using the entry for your app. Local installation needs Bash and Python 3.9+; remote installation also needs curl and tar.
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash
+**Let the agent handle installation:** use the code block's top-right copy button, then paste the instruction into your agent chat:
+
+```text
+Read and follow https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/INSTALL.md to install the recommended 19 Nature Paper Skills for this environment, and verify the result.
 ```
 
-To choose explicitly, append `-s -- --agent codex` or `-s -- --agent claude` after `bash`. Existing copies are backed up before replacement. More choices are in [Installation options](#installation-options).
+No explicit creator selection is required. [INSTALL.md](INSTALL.md) chooses the supported route and asks the agent to handle retrieval and verification. Persistent ChatGPT Work web installation remains unverified; account registration must be available before the agent reports success.
+
+| Your app | Start here |
+|---|---|
+| Codex: app, CLI or IDE | [Install for Codex](#install-codex-bash); Windows instructions are in the detailed guide |
+| Claude Code | [Install for Claude Code](#install-claude-code) |
+| ChatGPT Work on the web | [Web installation and availability](#install-chatgpt-work-web); automatic installation is unverified |
+
+<a name="install-codex-bash"></a>
+
+<details>
+<summary><b>Codex</b></summary>
+
+On Linux/macOS, run:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex
+```
+
+On Windows, follow the [Windows instructions](docs/installation-codex.md#windows-desktop-app), choosing the native agent or WSL2 route used by your app.
+
+The default destination is `~/.agents/skills`. Refresh the skill list or start a new chat, then select `paper-workflow`; in CLI/IDE, explicitly invoke `$paper-workflow`. See [Codex setup](docs/installation-codex.md) for requirements and verification status.
+
+If using the built-in `skill-installer`, specify a directory containing `SKILL.md`, such as [`skills/core/paper-workflow`](https://github.com/Boom5426/Nature-Paper-Skills/tree/main/skills/core/paper-workflow). The repository root is a collection, not a single skill; see the [skill map](docs/skill-map.md) for the directories in a complete workflow.
+
+</details>
+
+<a name="install-claude-code"></a>
+
+<details>
+<summary><b>Claude Code</b></summary>
+
+Run in the same machine and user environment as Claude Code:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude
+```
+
+The default destination is `~/.claude/skills`. Refresh/reopen Claude Code and invoke `/paper-workflow`. See [Claude Code setup](docs/installation-claude.md) for requirements and verification status.
+
+</details>
+
+<a name="install-chatgpt-work-web"></a>
+
+<details>
+<summary><b>ChatGPT Work on the web</b></summary>
+
+Use the **same copyable instruction above**. The agent handles retrieval and any supported installation flow; you do not need to select `@skill-creator`, run Python or upload a ZIP.
+
+**Automatic web installation is unverified.** It requires this account to expose a supported save/register flow. A download or a skill directory inside a web task does not confirm availability in a new chat. The agent should report the missing capability if registration is unavailable.
+
+For reliable distribution, the maintainer publishes a plugin or a workspace administrator imports its GitHub marketplace. See [web distribution and verification](docs/installation-chatgpt-work.md); packaging commands are maintainer instructions.
+
+</details>
+
+Existing copies are backed up by the repository installer. Add `--figure` for the figure stack or `--set all` for all 27 skills; scope, preview, update and restore commands are in [Installation options](#installation-options).
 
 <a name="2-complete-your-first-revision"></a>
 
 ### ✍️ 2. Complete your first revision
 
-Put your current manuscript and its supporting results in the agent's working folder, then ask:
+Once the local skill is visible, put your current manuscript and its supporting results in the agent's working folder, then ask:
 
 ```text
 Use paper-workflow. Revise the Results paragraph in draft.md using evidence.md.
@@ -132,7 +189,7 @@ You can then use ordinary requests such as “improve this manuscript” or name
 
 A request to **review or suggest** produces findings. A request to **revise** produces edits within the requested scope. Missing evidence is surfaced; it is never written into existence.
 
-For complete prompts and task setups, see [task examples](docs/task-recipes.md).
+For complete prompts and task setups, see [task examples](docs/task-recipes.md). The optional `--set all` selection includes a [recomputable statistics walkthrough](skills/research/results-analysis/USAGE.md); its example helper needs SciPy.
 
 <a name="installation-options"></a>
 
@@ -161,7 +218,7 @@ bash install.sh --agent codex --doctor   # file/version/dependency checks
 <details>
 <summary><b>🛠️ Environment requirements and skill loading</b></summary>
 
-**Requirements:** Codex or Claude Code, Bash, and Python 3.9+ (standard library only; no extra pip packages for installation). Remote installation also uses `curl` and `tar`. On Windows, run in the agent's WSL or Git Bash environment; the command is for Bash, not PowerShell. See [environments and file formats](docs/compatibility.md) for verification status.
+**Local installer requirements:** Codex or Claude Code, Bash, and Python 3.9+ (standard library only; no extra pip packages for installation). Remote installation also uses `curl` and `tar`. For Windows, see [Codex Windows setup](docs/installation-codex.md#windows-desktop-app). [ChatGPT Work on the web](#install-chatgpt-work-web) uses a separate distribution flow. See [environments and file formats](docs/compatibility.md) for verification status.
 
 If a skill is not visible, refresh the skill list or reopen the session, then check [troubleshooting](docs/installation-management.md#troubleshooting). Agent-specific instructions: [Codex](docs/installation-codex.md) · [Claude Code](docs/installation-claude.md).
 
@@ -171,6 +228,8 @@ If a skill is not visible, refresh the skill list or reopen the session, then ch
 <summary><b>🔄 Inspect the installer, update, restore or pin a version</b></summary>
 
 Read [install.sh](install.sh) before running it if you prefer, or use the clone-based commands above. Existing copies are backed up before replacement; see [update and restore](docs/installation-management.md).
+
+To share one installed copy across agents, follow the [manual linked layout](docs/installation-management.md#manual-layout-one-canonical-copy-linked-into-the-agent-directory). Run updates, checks and restores against the canonical directory; existing agent entries are preserved.
 
 Pin an immutable commit with `--ref <full-commit-sha>`; the installer records the source and file hashes. Version history: [CHANGELOG](CHANGELOG.md).
 

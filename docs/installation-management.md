@@ -109,7 +109,9 @@ The remote script also accepts this flag. To reproduce a version predating the m
 
 | Symptom | Next action |
 |---|---|
-| `bash` not recognized in Windows | Run within the same WSL/Git Bash environment as the agent; see compatibility notes |
+| `bash` not recognized in Windows | Check whether the app uses the native or WSL2 agent; use the corresponding [Windows installation route](installation-codex.md#windows-desktop-app) |
+| GitHub skill installation reports missing path or `SKILL.md` | Select individual skill directories under `skills/<category>/<name>`; the repository root is a collection |
+| ChatGPT Work on the web cannot import the repository | Check the [workspace/plugin distribution requirements](installation-codex.md#chatgpt-work-on-the-web); a local install and a source archive do not supply marketplace metadata |
 | Python requirement error | Make Python 3.9+ available as `python3` or `python` in that environment |
 | Installer cannot identify an agent | Set `--agent codex`, `--agent claude`, or an explicit `--dest` |
 | Doctor reports missing/untracked/modified | Read the reported path; reinstall, retain your local edit, or restore the intended copy |

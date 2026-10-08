@@ -4,6 +4,9 @@
 
 ### Usage fixes
 
+- Build on the fixes in PR #11 and PR #13 with complete synthetic run data, consistent t/P/effect sizes and three-comparison Bonferroni reporting. Recompute cross-dataset averages within runs and add numerical regression checks.
+- Correct related SD/SE, test/P and one-/two-sided examples, clarify assumption diagnostics, and document the all-skills installation required for results-analysis.
+
 - Refuse overwriting paper notes and generated images/metadata; add explicit alternative note paths and unique default schematic names. Reject empty image responses and payloads.
 - Preserve PDF text graphics state across page content streams and `q`/`Q`; block incomplete page content instead of reporting PASS.
 - Reject malformed CSV quotes, preserve fixed figure export dimensions, show singleton observations and refuse undefined singleton SD/CI intervals.
@@ -14,6 +17,10 @@
 
 ### Installation safety
 
+- Document the manual canonical-directory and symlink layout from PR #5, with entry points in both READMEs and agent guides; updates, checks and restores target the canonical directory.
+- Group README installation guidance into Codex, Claude Code, and ChatGPT Work on the web. Keep Windows-native and WSL2 instructions in the Codex guide, including an explicit Windows-user destination; document individual skill paths for the built-in installer and separate web packaging requirements, with verification limits.
+- Add a standard-library web bundle builder: a single-entry `nature-paper-workflow` skill with bundled specialists, a skills-only plugin ZIP and a GitHub marketplace. Retain resources, licenses and file hashes, reuse the installer profiles, and refuse existing output paths.
+- Add a copyable agent installation instruction and `INSTALL.md`, without mandatory creator selection or user-run build/upload steps. Separate maintainer packaging and publication from web account registration; keep the latter explicitly unverified.
 - Refuse to replace per-skill symlinks under the default `backup` policy or `error`, before changing any selected destination.
 - Preserve live, broken and looping skill links under `--on-conflict keep` without adopting them into the installation record.
 - Identify linked entries in `--doctor` and direct checks to the canonical installation; linked targets are not automatically verified.

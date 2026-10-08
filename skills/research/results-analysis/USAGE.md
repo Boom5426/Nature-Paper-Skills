@@ -1,129 +1,91 @@
-# Results Analysis Workflow 使用指南
+# Results Analysis 使用指南
 
-本文档展示如何使用 `results-analysis` skill 进行实验结果分析。
-
-## 调用方式
-
-Claude Code 中用 `/results-analysis` 调用，Codex CLI/IDE 中用 `$results-analysis` 明确提及；也可以直接用自然语言描述任务。下文示例以 `/results-analysis` 为例。
+直接调用 `results-analysis` skill 分析数据。它属于研究扩展，安装时选择
+`--set all`（从仓库根目录运行 `bash install.sh --set all`）。
 
 ## 快速开始
 
-### 1. 基本使用
+在 Codex CLI/IDE 中明确调用 `$results-analysis`，在 Claude Code 中调用
+`/results-analysis`，并说明数据路径、实验单位和输出路径。例如：
 
-最简单的使用方式是调用 skill 并给出结果文件：
+```text
+Use results-analysis. Compare the models in experiments/results.csv.
+Report mean, sample SD, n, and the planned comparisons. Preserve all runs,
+seed labels and metrics. Save the report to analysis-report-v2.md and the
+Results draft to results-draft-v2.md; do not overwrite existing files.
+```
+
+按需要说明任务是完整分析、模型对比、消融分析或可视化。Agent 使用数据加载、
+统计验证、可视化和写作流程；检验方法由独立/配对设计、分析单位和推断目标决定。
+
+## 可复算的三模型示例
+
+本页是**合成教学示例**，不代表真实模型实验。完整的 15 条运行记录见
+[usage-runs.csv](examples/usage-runs.csv)：三个模型各 5 次运行，保留种子标识
+42、123、456、789、1024。每行包含 model、seed、accuracy、f1_score 和
+training_time；准确率/F1 的单位为百分比，训练时间为小时。
+
+数据由各指标的既有均值和 SD 按
+`mean + SD × [-2, -1, 0, 1, 2] / sqrt(2.5)` 构造并重排，保存到小数点后六位。
+种子是示例中的运行标识，没有执行模型训练或随机采样。本次用完整合成输入替换了
+原先与输出 SD 不一致的 CSV 片段，保留原报告中的均值和 SD。
+
+从仓库根目录复算：
 
 ```bash
-/results-analysis path/to/results.csv
+python3 skills/research/results-analysis/scripts/example_statistics.py --example usage
 ```
 
-Agent 会：
-1. 按 results-analysis skill 的方法论分析数据
-2. 生成分析报告和 Results 草稿
+helper 需要 SciPy（`python3 -m pip install scipy`），只向标准输出打印 JSON。
+它从 CSV 的未舍入数值计算样本 SD（ddof=1）、t、双侧 P 和 pooled Cohen's d，
+并给出三项比较的 Bonferroni 校正 P。公式与
+[SciPy 的汇总统计 t 检验定义](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind_from_stats.html)
+一致。
 
-### 2. 说明分析重点
+教学设计预设每个模型有 5 次独立运行、近似正态误差和相等总体方差，
+采用等方差双侧双样本 t 检验。相同 seed 标签不用于模型间配对；真实实验中若
+运行按共同数据划分或实验单位匹配，应按实际设计分析。小样本的正态性或方差检验
+`p > 0.05` 不能证明假设成立，本例不虚构这些预检验结果。
 
-```bash
-/results-analysis experiments/comparison/ comparison
-```
-
-skill 没有固定参数，路径后面的词只是给 agent 的提示，也可以换成一句话。常用的分析重点：
-- `full` - 完整分析（默认）
-- `comparison` - 模型对比
-- `ablation` - 消融实验
-- `visualization` - 可视化生成
-
-## 完整工作流示例
-
-### 场景：对比三个模型的性能
-
-假设你有以下实验结果：
-
-```
-experiments/
-├── baseline_lstm.csv
-├── bert_base.csv
-└── our_method.csv
-```
-
-每个 CSV 文件包含 5 次运行的结果：
-
-```csv
-run,accuracy,f1_score,training_time
-1,86.2,85.8,2.5
-2,86.5,86.1,2.4
-3,85.9,85.5,2.6
-4,86.3,85.9,2.5
-5,86.1,85.7,2.5
-```
-
-### Step 1: 调用 skill
-
-```bash
-/results-analysis experiments/ comparison
-```
-
-### Step 2: Agent 执行分析
-
-Agent 会：
-
-1. **读取数据**
-   - 定位所有 CSV 文件
-   - 验证数据格式和完整性
-   - 检查实验设置（5 次运行，随机种子）
-
-2. **统计分析**
-   - 计算基础统计量（均值 ± 标准差）
-   - 执行预检验（正态性、方差齐性）
-   - 进行显著性检验（t-test, ANOVA）
-   - 计算效应量（Cohen's d）
-
-3. **生成报告**
-   - 创建 `analysis-report.md`
-   - 创建 `results-draft.md`
-   - 创建 `visualization-specs.md`
-
-### Step 3: 查看输出
-
-#### analysis-report.md
+### analysis-report.md
 
 ```markdown
-# 实验结果分析报告
+# 合成实验结果分析报告
 
-## 执行摘要
+## 描述性统计
 
-三个模型在准确率上的对比：
+数值为 5 次运行的均值 ± 样本 SD：
 - Baseline LSTM: 86.2% ± 0.21%
 - BERT-base: 91.3% ± 0.18%
 - Our Method: 93.5% ± 0.23%
 
-Our Method 显著优于两个基线方法（p < 0.001）。
+## 预先指定的三项准确率比较
 
-## 统计显著性检验
+| 对比 | t-statistic | 未校正 p-value | Cohen's d | Bonferroni p-value |
+|------|-------------|----------------|-----------|--------------------|
+| Our Method vs Baseline LSTM | t(8) = 52.41 | p = 1.95e-11 | d = 33.15 | p = 5.84e-11 |
+| Our Method vs BERT-base | t(8) = 16.84 | p = 1.56e-7 | d = 10.65 | p = 4.69e-7 |
+| BERT-base vs Baseline LSTM | t(8) = 41.23 | p = 1.32e-10 | d = 26.08 | p = 3.96e-10 |
 
-### 预检验
-- 正态性检验（Shapiro-Wilk）: 所有组 p > 0.05（每组 n = 5，功效很低，只作参考）
-- 方差齐性检验（Levene）: F = 1.23, p = 0.31 ✓
-
-### 主要对比
-| 对比 | t-statistic | p-value | Cohen's d |
-|------|-------------|---------|-----------|
-| Our Method vs Baseline | t(8) = 52.41 | p < 0.001 | d = 33.15 |
-| Our Method vs BERT-base | t(8) = 16.84 | p < 0.001 | d = 10.65 |
-
-### 多重比较校正
-使用 Bonferroni 校正（α' = 0.017），所有对比仍然显著。
+等方差双侧双样本 t 检验，每组 n = 5，df = 8。检验族包含上表三项比较，
+家族 α = 0.05，未校正 P 的判定阈值为 α' = 0.05/3 ≈ 0.0167。
+三项比较均通过 Bonferroni 校正。检验使用未舍入的 CSV 数值。
 ```
 
-#### results-draft.md
+这些很大的 d 来自示例中很小的运行间 SD；效应量的实际意义还需要结合任务和设计判断。
+
+### results-draft.md
 
 ```markdown
 ## Results
 
 ### Performance Comparison
 
-Table 1 shows the performance comparison of three models on the text classification task. Our method achieves 93.5% ± 0.23% accuracy, significantly outperforming Baseline LSTM (86.2% ± 0.21%) and BERT-base (91.3% ± 0.18%).
+Our method achieved 93.5% ± 0.23% accuracy, compared with 86.2% ± 0.21%
+for Baseline LSTM and 91.3% ± 0.18% for BERT-base.
 
-**Table 1**: Model performance comparison. Values are mean ± standard deviation across 5 runs. Bold indicates best result.
+**Table 1**: Synthetic model performance. Values are mean ± sample SD across
+five runs per model; accuracy and F1 are percentages, and training time is hours.
 
 | Model | Accuracy (%) | F1 Score (%) | Training Time (h) |
 |-------|--------------|--------------|-------------------|
@@ -131,124 +93,81 @@ Table 1 shows the performance comparison of three models on the text classificat
 | BERT-base | 91.3 ± 0.18 | 90.7 ± 0.16 | 8.5 ± 0.12 |
 | **Our Method** | **93.5 ± 0.23** | **92.8 ± 0.21** | **5.2 ± 0.10** |
 
-With five independent runs per model as the unit (n = 5 per group), our method exceeded Baseline LSTM by 7.3 points (two-sample t-test, t(8) = 52.41, P < 0.001, Cohen's d = 33.15) and BERT-base by 2.2 points (t(8) = 16.84, P < 0.001, Cohen's d = 10.65); both differences remained significant after Bonferroni correction for three comparisons (α' = 0.017).
+Using five independent runs per model (n = 5 per group), our method exceeded
+Baseline LSTM by 7.3 percentage points (equal-variance two-sided two-sample
+t-test, t(8) = 52.41, P = 1.95e-11, Cohen's d = 33.15) and BERT-base by
+2.2 percentage points (t(8) = 16.84, P = 1.56e-07, Cohen's d = 10.65).
+Both differences remained significant after Bonferroni correction over the
+three predefined pairwise comparisons (family α = 0.05).
 ```
 
-#### visualization-specs.md
+### visualization-specs.md
 
 ```markdown
 # 可视化规格
 
-## Figure 1: 性能对比柱状图
+## Figure 1: 性能对比
+- X 轴：模型名称
+- Y 轴：准确率（%）
+- 展示所有运行的点，并明确标注均值和样本 SD
+- 输出：PDF 和 PNG
+- 配色：Okabe-Ito；标签和字体按最终展示尺寸检查
 
-**数据**:
-- X 轴: 模型名称（Baseline LSTM, BERT-base, Our Method）
-- Y 轴: 准确率（%）
-- 误差条: 标准差
-
-**样式**:
-- 格式: PDF（矢量图）
-- 配色: Okabe-Ito palette
-- 字体: Times New Roman, 10pt
-- 图表尺寸: 3.5 inch × 2.5 inch（单栏）
-
-**Caption**:
-"Performance comparison of three models. Error bars represent standard deviation across 5 runs. Our method significantly outperforms both baselines (p < 0.001)."
+Caption: "Synthetic model performance across five runs per model.
+Error bars show sample SD. Accuracy differences against both baselines
+remain significant after Bonferroni correction over three predefined comparisons."
 ```
 
-## 高级用法
+## 四数据集示例
 
-### 消融实验分析
+[分析报告](examples/example-analysis-report.md)和
+[Results 草稿](examples/example-results-section.md)使用另一组较大 SD 的合成数据：
+[benchmark-runs.csv](examples/benchmark-runs.csv)。两组示例均保留各自既有的均值和 SD，
+不共用 t、d 或 P。构造方法与上文相同。benchmark 四列分别采用基准秩序列
+`[0,1,2,3,4]`、`[0,2,1,4,3]`、`[1,0,2,4,3]`、`[0,1,3,2,4]`
+索引标准化的 `[-2,-1,0,1,2]`；三个模型再按
+`[0,1,2,3,4]`、`[2,0,4,1,3]`、`[3,1,4,0,2]` 重排完整运行。
+这些构造用于复算演示，不是从真实观测反推或估计跨数据集协方差。
+
+benchmark CSV 每行是一个模型运行，含四个数据集的准确率。先在同一行内取四个
+数据集的均值，再对每个模型的 5 个运行均值计算 SD 和模型间检验。这样保留了
+运行内的跨数据集协方差；各数据集 SD 的算术平均不能替代平均准确率的 SD。
 
 ```bash
-/results-analysis experiments/ablation/ ablation
+python3 skills/research/results-analysis/scripts/example_statistics.py --example benchmark
 ```
 
-Agent 会分析各组件的贡献：
+## 其他任务
 
-```markdown
-## 消融实验结果
+### 消融分析
 
-| 配置 | Accuracy | Δ |
-|------|----------|---|
-| Full Model | 93.5 | - |
-| w/o Attention | 91.2 | -2.3 |
-| w/o Layer Norm | 90.8 | -2.7 |
-| w/o Positional Encoding | 92.1 | -1.4 |
-
-Layer Norm 对性能贡献最大（-2.7%），其次是 Attention（-2.3%）。
+```text
+Use results-analysis. Analyze experiments/ablation/.
+Report each component's accuracy change in percentage points and its uncertainty.
+Preserve the full-model reference and save a new report to ablation-report-v2.md.
 ```
 
-### 只生成可视化规格
+例如，93.5% 降到 90.8% 是下降 2.7 个百分点；相对下降百分比需要另行计算。
 
-```bash
-/results-analysis experiments/ visualization
+### 可视化
+
+```text
+Use results-analysis. Make visualization specifications from experiments/results.csv.
+Specify the observations, units and error bars. Save to visualization-specs-v2.md.
 ```
 
-Agent 只生成可视化规格，不进行统计分析。
+### 数据或设计不完整
 
-## Skill 方法论
+缺少运行记录、样本量、配对关系或独立单位时，明确哪些统计量不能复算。
+只有汇总数据时，不报告需要原始观测的 Shapiro-Wilk 或 Levene 结果。
+重复次数由所需精度、变异性和功效确定；5 次运行本身不保证结论可靠。
+检验选择基于设计、目标和诊断，不因一个正态性检验 P 值自动切换方法。
 
-Agent 在分析过程中遵循 results-analysis skill 的方法论：
+## 方法与检查
 
-### 1. 统计方法（references/statistical-methods.md）
-
-- 预检验：正态性、方差齐性
-- 参数检验：t-test, ANOVA
-- 非参数检验：Wilcoxon, Mann-Whitney U
-- 多重比较校正：Bonferroni, FDR
-
-### 2. 写作规范（references/results-writing-guide.md）
-
-- IMRaD 结构
-- 完整的统计信息报告
-- 引导读者观察关键现象
-- 客观描述结果
-
-### 3. 可视化最佳实践（references/visualization-best-practices.md）
-
-- 矢量图格式（PDF/EPS）
-- 色盲友好配色（Okabe-Ito, Paul Tol）
-- 误差条和置信区间
-- 黑白打印可读性
-
-### 4. 常见错误避免（references/common-pitfalls.md）
-
-- 不 cherry-pick 结果
-- 不 p-hacking
-- 报告完整统计信息
-- 使用多重比较校正
-
-## 故障排除
-
-### 问题 1: 数据格式不正确
-
-**错误信息**: "无法解析 CSV 文件"
-
-**解决方案**: 确保 CSV 文件包含列名，数据格式正确：
-```csv
-run,metric1,metric2
-1,value1,value2
-```
-
-### 问题 2: 样本量过小
-
-**警告信息**: "样本量不足（< 3 次运行）"
-
-**解决方案**: 至少进行 3-5 次实验运行以获得可靠的统计结果。
-
-### 问题 3: 数据不满足正态性假设
-
-**Agent 行为**: 自动切换到非参数检验
-
-**输出**: "数据不满足正态性假设（Shapiro-Wilk, p < 0.05），使用 Mann-Whitney U 检验"
-
-## 总结
-
-`results-analysis` skill 提供了从实验数据到论文 Results 部分的完整流程。
-
-遵循这个工作流可以确保：
-- 统计分析的正确性
-- 结果报告的完整性
-- 论文写作的规范性
-- 可视化的专业性
+- [统计方法](references/statistical-methods.md)：设计、检验、效应量和校正。
+- [结果写作](references/results-writing-guide.md)：报告模板和数值含义。
+- [常见问题](references/common-pitfalls.md)：SD/SE、统计推断和重复设计。
+- 每个数值都应能回到原始记录或明确的汇总输入。
+- 表格、正文、图注使用同一分析单位、同一比较和同一校正范围。
+- 由未舍入数值计算，最后只对报告值舍入；缺失的方差或协方差不凭空补齐。

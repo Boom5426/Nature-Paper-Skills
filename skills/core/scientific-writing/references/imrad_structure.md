@@ -291,7 +291,8 @@ separation; follow the journal when it does.)
 - Effect size and confidence interval
 - Sample sizes
 
-**Example**: "Groups differed significantly on test performance (t(48) = 3.21, p = 0.002, Cohen's d = 0.87, 95% CI: 0.34-1.40)."
+**Example**: "Two independent groups (n = 25 per group) differed on test performance (equal-variance two-sided t-test, t(48) = 3.21, p = 0.00237, pooled Cohen's d = 0.91, 95% CI: 0.32-1.49)."
+The illustrative d interval uses inversion of the noncentral t distribution; all values describe the same balanced two-group comparison.
 
 ### Length
 - Typically 2-4 pages

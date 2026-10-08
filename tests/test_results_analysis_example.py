@@ -4,7 +4,10 @@ A pooled equal-n two-sample t-test on those means, SDs, and n = 5 is what the
 example claims to have run. Both copies of the statistics — the analysis-report
 table and the results-draft sentence — have to show that result.
 """
+import csv
 import math
+import re
+import statistics
 import unittest
 from pathlib import Path
 
@@ -18,10 +21,29 @@ T_CRIT_001 = 5.041
 
 class ResultsAnalysisExampleTests(unittest.TestCase):
     def test_worked_example_matches_pooled_t_from_printed_means(self):
-        n = 5
-        our, our_sd = 93.5, 0.23
-        baseline, baseline_sd = 86.2, 0.21
-        bert, bert_sd = 91.3, 0.18
+        text = USAGE.read_text(encoding="utf-8")
+        with (USAGE.parent / "examples/usage-runs.csv").open(newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        summaries = {}
+        counts = []
+        for model in ("Our Method", "Baseline LSTM", "BERT-base"):
+            match = re.search(r"^- " + re.escape(model)
+                              + r": ([0-9.]+)% ± ([0-9.]+)%$", text, re.MULTILINE)
+            self.assertIsNotNone(match, model)
+            observations = [float(row["accuracy"]) for row in rows
+                            if row["model"] == model]
+            counts.append(len(observations))
+            self.assertEqual(counts[-1], 5)
+            mean = statistics.mean(observations)
+            sd = statistics.stdev(observations)
+            self.assertEqual(float(match[1]), round(mean, 1))
+            self.assertEqual(float(match[2]), round(sd, 2))
+            summaries[model] = (mean, sd)
+        self.assertEqual(len(set(counts)), 1)
+        n = counts[0]
+        our, our_sd = summaries["Our Method"]
+        baseline, baseline_sd = summaries["Baseline LSTM"]
+        bert, bert_sd = summaries["BERT-base"]
 
         baseline_sp = math.sqrt((our_sd ** 2 + baseline_sd ** 2) / 2)
         baseline_gap = our - baseline
@@ -39,18 +61,23 @@ class ResultsAnalysisExampleTests(unittest.TestCase):
         self.assertEqual(round(baseline_gap, 1), 7.3)
         self.assertEqual(round(bert_gap, 1), 2.2)
 
-        text = USAGE.read_text(encoding="utf-8")
-        table = text[text.index("### 主要对比"):text.index("### 多重比较校正")]
-        draft = text[text.index("With five independent runs"):text.index("α' = 0.017).") + len("α' = 0.017).")]
+        table = re.search(r"### analysis-report\.md\s+```markdown\n(.*?)```", text, re.DOTALL)
+        draft = re.search(r"### results-draft\.md\s+```markdown\n(.*?)```", text, re.DOTALL)
+        self.assertIsNotNone(table)
+        self.assertIsNotNone(draft)
+        table = table[1]
+        draft = " ".join(draft[1].split())
 
-        self.assertIn("| Our Method vs Baseline | t(8) = 52.41 | p < 0.001 | d = 33.15 |", table)
-        self.assertIn("| Our Method vs BERT-base | t(8) = 16.84 | p < 0.001 | d = 10.65 |", table)
+        self.assertIn("| Our Method vs Baseline LSTM | t(8) = 52.41 | p = 1.95e-11 | d = 33.15 |", table)
+        self.assertIn("| Our Method vs BERT-base | t(8) = 16.84 | p = 1.56e-7 | d = 10.65 |", table)
         self.assertIn(
-            "by 7.3 points (two-sample t-test, t(8) = 52.41, P < 0.001, Cohen's d = 33.15) "
-            "and BERT-base by 2.2 points (t(8) = 16.84, P < 0.001, Cohen's d = 10.65)",
+            "by 7.3 percentage points (equal-variance two-sided two-sample "
+            "t-test, t(8) = 52.41, P = 1.95e-11, Cohen's d = 33.15) "
+            "and BERT-base by 2.2 percentage points "
+            "(t(8) = 16.84, P = 1.56e-07, Cohen's d = 10.65)",
             draft,
         )
-        self.assertIn("Bonferroni correction for three comparisons (α' = 0.017)", draft)
+        self.assertIn("Bonferroni correction over the three predefined pairwise comparisons", draft)
         for copy in (table, draft):
             for stale in ("5.67", "3.59", "3.21", "2.03", "0.012"):
                 self.assertNotIn(stale, copy)

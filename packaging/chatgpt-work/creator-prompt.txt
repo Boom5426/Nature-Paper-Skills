@@ -1,0 +1,6 @@
+Create a private, persistent plugin called Nature Paper Skills from the attached plugin ZIP.
+Include every bundled skill under skills/<skill-name>/, preserving each SKILL.md and its references, scripts, templates, assets and license files.
+Use paper-workflow as the entry for general manuscript tasks.
+Keep explicit user instructions authoritative, preserve measured values and citations, and ask for missing evidence when needed.
+Use the session's available tools. Create a skills-only plugin with no MCP server or external app dependency.
+Finish the plugin creation flow and tell me how to select it in a new conversation.
