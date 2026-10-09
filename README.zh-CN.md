@@ -1,26 +1,14 @@
 <div align="center">
 
-# 🧬 Nature-Paper-Skills
+# Nature Paper Skills
 
-**先建立有证据支撑的科学论证，再打磨论文语言。**
+**面向 Codex 和 Claude Code 的证据驱动科研写作工作流：先建立科学论证，再打磨论文语言。**
 
-面向 Codex 和 Claude Code 的 27 个模块化技能，连接论文结构、科学证据、科研图表、写作、引用核验与审稿回复。  
-适用于生命科学、计算生物学与方法学期刊论文。
+[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/zh/) · [🚀 Get Started](#快速开始) · [🗺️ Workflow](#工作流总览) · [🪄 Examples](#修改效果示例) · [🧩 27 Skills](docs/skill-map.md) · [⭐ GitHub Stars](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
 
-🧠 **论文结构** · 📊 **科研图表** · ✍️ **科学写作** · 📚 **引用核验** · 📨 **审稿回复**
-
-[![Skills](https://img.shields.io/badge/skills-27-8a63d2)](docs/skill-map.md)
-[![CI](https://github.com/Boom5426/Nature-Paper-Skills/actions/workflows/ci.yml/badge.svg)](https://github.com/Boom5426/Nature-Paper-Skills/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/license-MIT%20%2B%20Apache--2.0-green)](#许可)
-[![Stars](https://img.shields.io/github/stars/Boom5426/Nature-Paper-Skills?style=social)](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
-
-🌐 **README：** [English](README.md) · **简体中文** &nbsp;&nbsp;|&nbsp;&nbsp; **网站：** [English](https://boom5426.github.io/Nature-Paper-Skills/) · [简体中文](https://boom5426.github.io/Nature-Paper-Skills/zh/)
-
-[🗺️ 工作流总览](#工作流总览) · [🚀 快速开始](#快速开始) · [🧩 按任务选择](#按任务选择) · [📚 完整技能目录](docs/skill-map.md)
+[English](README.md) · **中文**
 
 </div>
-
----
 
 <a name="核心特点"></a>
 

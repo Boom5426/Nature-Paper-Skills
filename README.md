@@ -1,26 +1,14 @@
 <div align="center">
 
-# 🧬 Nature-Paper-Skills
+# Nature Paper Skills
 
-**Build the argument before polishing the prose.**
+**Build the argument before polishing the prose — an evidence-grounded scientific writing workflow for Codex and Claude Code.**
 
-27 modular skills for Codex and Claude Code, connecting scientific claims, evidence, figures, writing, citations and reviewer responses.  
-Built for life-science, computational-biology and methods manuscripts.
+[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/) · [🚀 Get Started](#quick-start) · [🗺️ Workflow](#workflow-at-a-glance) · [🪄 Examples](#see-what-changes) · [🧩 27 Skills](docs/skill-map.md) · [⭐ GitHub Stars](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
 
-🧠 **Structure** · 📊 **Figures** · ✍️ **Writing** · 📚 **Citations** · 📨 **Rebuttals**
-
-[![Skills](https://img.shields.io/badge/skills-27-8a63d2)](docs/skill-map.md)
-[![CI](https://github.com/Boom5426/Nature-Paper-Skills/actions/workflows/ci.yml/badge.svg)](https://github.com/Boom5426/Nature-Paper-Skills/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/license-MIT%20%2B%20Apache--2.0-green)](#license)
-[![Stars](https://img.shields.io/github/stars/Boom5426/Nature-Paper-Skills?style=social)](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
-
-🌐 **README:** **English** · [简体中文](README.zh-CN.md) &nbsp;&nbsp;|&nbsp;&nbsp; **Website:** [English](https://boom5426.github.io/Nature-Paper-Skills/) · [简体中文](https://boom5426.github.io/Nature-Paper-Skills/zh/)
-
-[🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [📚 All skills](docs/skill-map.md)
+**English** · [中文](README.zh-CN.md)
 
 </div>
-
----
 
 <a name="what-makes-the-workflow-useful"></a>
 

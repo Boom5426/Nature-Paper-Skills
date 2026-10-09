@@ -110,15 +110,31 @@ class DocumentedCountTests(unittest.TestCase):
     def test_claimed_totals_match_the_repository(self) -> None:
         total = len(skill_paths())
         patterns = [
-            ("README.md", rf"skills-{total}-"),
-            ("README.zh-CN.md", rf"skills-{total}-"),
+            # The skill count now appears in a text navigation link, not a decorative badge.
+            ("README.md", rf"\[🧩 {total} Skills\]\(docs/skill-map\.md\)"),
+            ("README.zh-CN.md", rf"\[🧩 {total} Skills\]\(docs/skill-map\.md\)"),
             ("README.zh-CN.md", rf"{total} 个 skill"),
-            ("README.md", rf"{total} skills"),
         ]
         for doc, pattern in patterns:
             with self.subTest(doc=doc, pattern=pattern):
                 text = (REPO_ROOT / doc).read_text(encoding="utf-8")
                 self.assertRegex(text, pattern, f"{doc}: stale skill count, the repository has {total}")
+
+    def test_readme_first_screen_is_consistent(self) -> None:
+        """Both languages expose the same six navigational actions before prose."""
+        icons = ("🌐 Website", "🚀 Get Started", "🗺️ Workflow",
+                 "🪄 Examples", "🧩 ", "⭐ GitHub Stars")
+        for doc in ("README.md", "README.zh-CN.md"):
+            with self.subTest(doc=doc):
+                text = (REPO_ROOT / doc).read_text(encoding="utf-8")
+                header = text.split("</div>", 1)[0]
+                self.assertIn("# Nature Paper Skills", header)
+                self.assertNotIn("![", header, "Use one navigation row instead of mixed badges")
+                nav = next((line for line in header.splitlines() if line.startswith("[🌐 Website]")), "")
+                self.assertTrue(nav, "Missing the website-first navigation row")
+                self.assertEqual(nav.count(" · "), 5, "Navigation should contain six actions")
+                self.assertTrue(all(f"[{icon}" in nav for icon in icons))
+                self.assertEqual(header.count(" · "), 6, "One navigation row and one language row")
 
     def test_claimed_recommended_counts_match_the_installer(self) -> None:
         count = len(bash_array("RECOMMENDED_SKILLS"))
