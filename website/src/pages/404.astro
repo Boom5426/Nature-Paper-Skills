@@ -1,0 +1,5 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import {url} from '../lib/site';
+---
+<SiteLayout locale="en" route=""><section class="container section"><div class="eyebrow">404 / PAGE NOT FOUND</div><h1>Let’s find the right page.</h1><p style="margin:25px 0">This page may have moved. The workflow, task library and installation guides are still here.</p><div class="actions"><a class="button primary" href={url('en')}>Back to home →</a><a class="button" href={url('en','docs')}>Browse the docs</a></div></section></SiteLayout>

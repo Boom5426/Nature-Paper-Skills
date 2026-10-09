@@ -1,0 +1,10 @@
+---
+import {type Locale,type Route,text,url,titles} from '../lib/site';
+interface Props{locale:Locale;route:Route;description:string;eyebrow?:string}
+const {locale,route,description,eyebrow} = Astro.props;
+---
+<header class="page-hero container">
+ <div class="breadcrumb"><a href={url(locale)}>{text(locale,'Home','首页')}</a><span aria-hidden="true">/</span><span>{titles[route][locale==='zh'?1:0]}</span></div>
+ {eyebrow&&<div class="eyebrow"><span class="dot"></span>{eyebrow}</div>}
+ <h1>{titles[route][locale==='zh'?1:0]}</h1><p>{description}</p>
+</header>

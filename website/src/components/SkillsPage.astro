@@ -1,0 +1,40 @@
+---
+import {type Locale,text,url,source} from '../lib/site';
+import {categories,pick,skillCopy} from '../data/content';
+import repository from '../data/repository.json';
+import PageHeader from './PageHeader.astro';
+interface Props{locale:Locale}
+const {locale}=Astro.props;
+const categoryOrder=Object.keys(categories);
+const sorted=[...repository.skills].sort((a,b)=>categoryOrder.indexOf(a.category)-categoryOrder.indexOf(b.category)||(a.id==='paper-workflow'?-1:b.id==='paper-workflow'?1:a.id.localeCompare(b.id)));
+for(const skill of sorted)if(!skillCopy[skill.id])throw new Error(`Add English and Chinese website copy for ${skill.id}`);
+for(const id of Object.keys(skillCopy))if(!sorted.some(s=>s.id===id))throw new Error(`Remove obsolete website skill copy: ${id}`);
+---
+<PageHeader locale={locale} route="skills" eyebrow={`${repository.counts.all} ${text(locale,'SPECIALIZED SKILLS · ONE WORKFLOW','个专门技能 · 一套工作流')}`} description={text(locale,'You do not need to memorize the skill names. Start with paper-workflow or choose a task. Explore the catalog when you need a specialist.','无需记住所有技能名。从 paper-workflow 或具体任务开始，需要专门能力时再浏览目录。')}/>
+<div class="container page-content" data-catalog data-locale={locale}>
+ <div class="actions" style="margin-bottom:26px"><a class="button compact primary" href={url(locale,'tasks')}>{text(locale,'Browse by task','按任务选择')} →</a><a class="text-link" href={source('docs/skill-map.md')} target="_blank" rel="noopener noreferrer">{text(locale,'Source skill map','仓库技能地图')} ↗</a></div>
+ <form class="catalog-toolbar js-only" onsubmit="return false"><div class="field"><label for="skill-search">{text(locale,'Search skills','搜索技能')}</label><input id="skill-search" name="search" type="search" placeholder={text(locale,'Try “figures”, “abstract” or “review”','试试“图形”“摘要”或“审稿”')} autocomplete="off"/></div><div class="field"><label for="skill-category">{text(locale,'Category','分类')}</label><select id="skill-category" name="category"><option value="all">{text(locale,'All categories','全部分类')}</option>{Object.entries(categories).map(([key,value])=><option value={key}>{pick(locale,value)} ({sorted.filter(s=>s.category===key).length})</option>)}</select></div><div class="field"><label for="skill-profile">{text(locale,'Installation profile','安装组合')}</label><select id="skill-profile" name="profile"><option value="all">{text(locale,'Full workflow','完整工作流')} ({repository.counts.all})</option><option value="recommended">{text(locale,'Writing & review','写作与审稿')} ({repository.counts.recommended})</option><option value="figures">{text(locale,'Writing + figures','写作与图形')} ({repository.counts.figures})</option></select></div><button type="reset" class="button compact">{text(locale,'Reset','重置')}</button></form>
+ <div class="catalog-status"><span role="status" aria-live="polite" data-catalog-status>{text(locale,`${sorted.length} of ${sorted.length} skills`,`${sorted.length} / ${sorted.length} 个技能`)}</span><span>{text(locale,'Generated from the repository’s SKILL.md files and installer.','根据仓库 SKILL.md 与安装器生成。')}</span></div>
+ <div class="skills-grid">{sorted.map(skill=><article class="skill-card" data-skill data-category={skill.category} data-profiles={skill.profiles.join(' ')} data-search={[skill.id,skill.description,...skillCopy[skill.id].title,...skillCopy[skill.id].summary,...categories[skill.category]].join(' ').toLowerCase()}><div class="skill-top"><span class="badge tint">{pick(locale,categories[skill.category])}</span><span class="badge">{skill.profiles.includes('recommended')?text(locale,'Writing & review','写作与审稿'):skill.profiles.includes('figures')?text(locale,'Figure add-on','图形扩展'):text(locale,'Full workflow','完整工作流')}</span></div><h2>{pick(locale,skillCopy[skill.id].title)}</h2><code>{skill.id}</code><p>{pick(locale,skillCopy[skill.id].summary)}</p><a class="text-link" href={source(skill.path)} target="_blank" rel="noopener noreferrer">{text(locale,'View skill source','查看技能源码')} ↗</a></article>)}</div>
+ <div class="empty-state" data-no-results hidden><h2>{text(locale,'No matching skills.','未找到匹配的技能。')}</h2><p>{text(locale,'Try a broader term or reset the filters.','试试更宽泛的关键词，或重置筛选条件。')}</p><button class="button compact" style="margin-top:18px" type="button" data-reset-catalog>{text(locale,'Reset filters','重置筛选')}</button></div>
+ <noscript><p class="no-js-note">{text(locale,'All skills are shown. Search and filters require JavaScript; source links work without it.','当前显示全部技能。搜索与筛选需要 JavaScript；源码链接不受影响。')}</p></noscript>
+</div>
+<script>
+ document.querySelectorAll<HTMLElement>('[data-catalog]').forEach(root=>{
+  const form=root.querySelector<HTMLFormElement>('form')!;
+  const search=root.querySelector<HTMLInputElement>('#skill-search')!;
+  const category=root.querySelector<HTMLSelectElement>('#skill-category')!;
+  const profile=root.querySelector<HTMLSelectElement>('#skill-profile')!;
+  const cards=Array.from(root.querySelectorAll<HTMLElement>('[data-skill]'));
+  const normalize=(s:string)=>s.normalize('NFKC').toLocaleLowerCase().trim();
+  const filter=()=>{
+   const terms=normalize(search.value).split(/\s+/).filter(Boolean);let count=0;
+   cards.forEach(card=>{const show=(category.value==='all'||card.dataset.category===category.value)&&(card.dataset.profiles||'').split(' ').includes(profile.value)&&terms.every(t=>normalize(card.dataset.search||'').includes(t));card.hidden=!show;if(show)count++;});
+   root.querySelector('[data-catalog-status]')!.textContent=root.dataset.locale==='zh'?`${count} / ${cards.length} 个技能`:`${count} of ${cards.length} skills`;
+   (root.querySelector('[data-no-results]') as HTMLElement).hidden=count!==0;
+  };
+  form.addEventListener('input',filter);form.addEventListener('change',filter);form.addEventListener('submit',e=>e.preventDefault());
+  form.addEventListener('reset',()=>setTimeout(filter,0));
+  root.querySelector('[data-reset-catalog]')?.addEventListener('click',()=>{form.reset();search.focus();});
+ });
+</script>

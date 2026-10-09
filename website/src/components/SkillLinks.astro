@@ -1,0 +1,8 @@
+---
+import repo from '../data/repository.json';
+import {source} from '../lib/site';
+interface Props { ids: string[] }
+const {ids} = Astro.props;
+const skills = ids.map(id => {const skill=repo.skills.find(s=>s.id===id);if(!skill)throw new Error(`Unknown skill: ${id}`);return skill;});
+---
+<div class="skill-links">{skills.map(skill=><a class="skill-link" href={source(skill.path)} target="_blank" rel="noopener noreferrer">{skill.id} ↗</a>)}</div>

@@ -1,0 +1,29 @@
+{
+  "name": "nature-paper-skills-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "dependencies": {
+    "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.64.0",
+    "@tailwindcss/vite": "4.3.3",
+    "astro": "7.3.8",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3",
+    "yaml": "2.9.1"
+  },
+  "scripts": {
+    "dev": "node scripts/generate-content.mjs && astro dev --host 0.0.0.0",
+    "build": "node scripts/generate-content.mjs && astro build && node scripts/check-links.mjs",
+    "preview": "astro preview",
+    "check": "node scripts/generate-content.mjs && astro check",
+    "test:unit": "node --test tests/*.test.mjs",
+    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:e2e",
+    "social": "node scripts/create-social-cards.mjs"
+  }
+}

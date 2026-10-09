@@ -15,6 +15,8 @@
 
 [🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [📚 All skills](docs/skill-map.md)
 
+[🌐 Project website](https://boom5426.github.io/Nature-Paper-Skills/) · [中文主页](https://boom5426.github.io/Nature-Paper-Skills/zh/)
+
 </div>
 
 ---

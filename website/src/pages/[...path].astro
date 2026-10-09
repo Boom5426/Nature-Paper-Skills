@@ -1,0 +1,16 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Home from '../components/Home.astro';
+import WorkflowPage from '../components/WorkflowPage.astro';
+import TasksPage from '../components/TasksPage.astro';
+import ExamplePage from '../components/ExamplePage.astro';
+import SkillsPage from '../components/SkillsPage.astro';
+import InstallPage from '../components/InstallPage.astro';
+import DocsPage from '../components/DocsPage.astro';
+import {routes,type Route,type Locale} from '../lib/site';
+export function getStaticPaths(){return (['en','zh'] as const).flatMap(locale=>routes.map(route=>({params:{path:[locale==='zh'?'zh':'',route].filter(Boolean).join('/')||undefined},props:{locale,route}})));}
+interface Props{locale:Locale;route:Route}
+const {locale,route}=Astro.props;
+const Page={'':Home,workflow:WorkflowPage,tasks:TasksPage,'examples/first-revision':ExamplePage,skills:SkillsPage,install:InstallPage,docs:DocsPage}[route];
+---
+<SiteLayout locale={locale} route={route}><Page locale={locale}/></SiteLayout>

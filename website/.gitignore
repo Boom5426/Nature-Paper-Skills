@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+src/data/repository.json
+playwright-report/
+test-results/
+quality/

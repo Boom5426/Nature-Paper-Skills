@@ -18,6 +18,8 @@
 
 [🗺️ 工作流总览](#工作流总览) · [🚀 快速开始](#快速开始) · [🧩 按任务选择](#按任务选择) · [📚 完整技能目录](docs/skill-map.md)
 
+[🌐 中文主页](https://boom5426.github.io/Nature-Paper-Skills/zh/) · [English website](https://boom5426.github.io/Nature-Paper-Skills/)
+
 </div>
 
 ---

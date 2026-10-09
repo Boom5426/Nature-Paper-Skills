@@ -1,0 +1,6 @@
+---
+import {type Locale,text} from '../lib/site';
+interface Props {locale:Locale;id:string;content:string;label?:string}
+const {locale,id,content,label}=Astro.props;
+---
+<div class="code-box"><div class="code-toolbar"><span>{label || text(locale,'COPYABLE REQUEST','可复制的任务指令')}</span><button type="button" class="copy-button js-only" data-copy={id}>{text(locale,'Copy prompt','复制提示词')}</button></div><pre id={id} tabindex="0">{content}</pre></div>

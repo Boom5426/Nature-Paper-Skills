@@ -1,0 +1,100 @@
+name: Website
+on:
+  push:
+    branches: [main]
+    paths:
+      - website/**
+      - skills/**
+      - examples/first-run/**
+      - docs/**
+      - INSTALL.md
+      - install.sh
+      - VERSION
+      - .github/workflows/website.yml
+  pull_request:
+    paths:
+      - website/**
+      - skills/**
+      - examples/first-run/**
+      - docs/**
+      - INSTALL.md
+      - install.sh
+      - VERSION
+      - .github/workflows/website.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: website-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: website
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - name: Install reproducible dependencies and browser
+        run: |
+          npm ci --no-fund
+          npx playwright install --with-deps chromium
+      - name: Validate types, repository content and links
+        run: |
+          npm run check
+          npm run build
+          npm run test:unit
+      - name: Check dependency advisories
+        run: |
+          mkdir -p quality
+          npm audit --json > quality/npm-audit.json || true
+          npm audit --audit-level=high
+      - name: Test browser behavior, responsive layouts and accessibility
+        run: npm run test:e2e
+      - name: Upload browser reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-quality-${{ github.run_id }}
+          path: |
+            website/quality
+            website/playwright-report
+            website/test-results
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: website/dist
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Deploy the verified static site
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Explain first-time setup when unavailable
+        if: failure()
+        run: |
+          echo '::notice::If Pages is not enabled, set Settings > Pages > Source to GitHub Actions, then rerun the failed deployment job. No token, server or custom domain is required.'

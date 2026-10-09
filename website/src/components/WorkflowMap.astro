@@ -1,0 +1,20 @@
+---
+import {type Locale,text,url} from '../lib/site';
+import {stages,pick} from '../data/content';
+import SkillLinks from './SkillLinks.astro';
+interface Props {locale:Locale}
+const {locale}=Astro.props;
+---
+<div data-tabs="workflow">
+ <div class="workflow-tabs" role="tablist" aria-label={text(locale,'Writing workflow stages','写作工作流阶段')}>
+ {stages.map((stage,i)=><button type="button" class="workflow-tab" id={`stage-tab-${i}`} role="tab" aria-selected={i===1?'true':'false'} tabindex={i===1?0:-1} aria-controls={`stage-panel-${i}`}><span class="step">0{i+1}</span><strong>{pick(locale,stage.name)}</strong></button>)}
+ </div>
+ {stages.map((stage,i)=><div class="workflow-panel" role="tabpanel" id={`stage-panel-${i}`} aria-labelledby={`stage-tab-${i}`} tabindex="0" hidden={i!==1}>
+  <h3>{pick(locale,stage.detail)}</h3><div class="workflow-detail">
+   <div><span class="label">{text(locale,'Your input','你提供什么')}</span><p>{pick(locale,stage.input)}</p></div>
+   <div><span class="label">{text(locale,'Your outcome','你得到什么')}</span><p>{pick(locale,stage.output)}</p></div>
+   <div><span class="label">{text(locale,'Relevant skills','相关技能')}</span><SkillLinks ids={stage.skills}/><a class="text-link" style="margin-top:12px;font-size:12px" href={url(locale,`tasks#${stage.task}`)}>{text(locale,'Open this task','查看对应任务')} <span aria-hidden="true">→</span></a></div>
+  </div>
+ </div>)}
+ <div class="integrity-rail"><div class="checks"><span>{text(locale,'Statistics','统计报告')}</span><span>{text(locale,'Citation support','引用支持')}</span><span>{text(locale,'Data availability','数据可用性')}</span></div><span>{text(locale,'Checks throughout, not just at the end.','核查贯穿相关阶段，而非仅在最后。')}</span></div>
+</div>

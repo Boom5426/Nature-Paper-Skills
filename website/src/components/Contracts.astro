@@ -1,0 +1,19 @@
+---
+import {type Locale,text,source,sectionSource} from '../lib/site';
+import {contracts,pick} from '../data/content';
+interface Props{locale:Locale}
+const {locale}=Astro.props;
+---
+<section class="contract-section" id="section-contracts">
+ <div class="container">
+  <div class="contract-layout">
+   <div><div class="eyebrow">{text(locale,'THE SECTION CONTRACTS','章节职责')}</div><h2>{text(locale,'Every section has a scientific job.','每个章节，都有自己的科学任务。')}</h2><p>{text(locale,'An Abstract is not a shortened Results section. A Discussion is not a list of limitations. Make each part do the work the paper needs.','摘要不是缩短的 Results，讨论也不是局限清单。让每个部分完成论文需要它承担的任务。')}</p><a class="text-link" href={source(sectionSource)} target="_blank" rel="noopener noreferrer">{text(locale,'Explore the section contracts','阅读完整章节职责')} ↗</a><p class="small">{text(locale,'Guidance informed by a sample of 28 method papers; not an official journal format. The journal’s current instructions take precedence.','依据 28 篇方法论文总结写作指导，并非期刊官方格式。具体期刊的最新要求优先。')}</p></div>
+   <div data-tabs="contracts"><div class="contract-tabs" role="tablist" aria-label={text(locale,'Manuscript section','论文章节')}>
+    {contracts.map((c,i)=><button type="button" role="tab" id={`contract-tab-${i}`} aria-controls={`contract-panel-${i}`} aria-selected={i===0?'true':'false'} tabindex={i===0?0:-1}>{c.name}</button>)}
+   </div>
+   {contracts.map((c,i)=><div role="tabpanel" id={`contract-panel-${i}`} aria-labelledby={`contract-tab-${i}`} tabindex="0" class="contract-panel" hidden={i!==0}><h3>{pick(locale,c.title)}</h3><dl><dt>{text(locale,'Purpose','职责')}</dt><dd>{pick(locale,c.purpose)}</dd><dt>{text(locale,'Depends on','依赖')}</dt><dd>{pick(locale,c.depends)}</dd><dt>{text(locale,'A common mistake','常见问题')}</dt><dd>{pick(locale,c.mistake)}</dd></dl></div>)}
+   </div>
+  </div>
+  <div class="dependency-line" aria-label={text(locale,'Scientific claim dependency order','科学论断的依赖顺序')}><span>{text(locale,'Evidence & figures','证据与图表')}</span><i aria-hidden="true">→</i><span>Results</span><i aria-hidden="true">→</i><span>Discussion</span><i aria-hidden="true">→</i><span>Introduction</span><i aria-hidden="true">→</i><span>Abstract</span><i aria-hidden="true">→</i><span>Title</span></div>
+ </div>
+</section>

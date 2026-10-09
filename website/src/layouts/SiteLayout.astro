@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import Mark from '../components/Mark.astro';
+import repository from '../data/repository.json';
+import { type Locale, type Route, url, source, text, titles, BASE, ORIGIN, REPO } from '../lib/site';
+interface Props { locale: Locale; route: Route; description?: string; }
+const { locale, route, description } = Astro.props;
+const title = `${titles[route][locale === 'zh' ? 1 : 0]} · Nature Paper Skills`;
+const desc = description || text(locale,'A modular scientific writing workflow for Codex and Claude Code. Connect claims, evidence, figures, writing and reviewer responses.','连接科学论断、证据、图表、写作与审稿回复的模块化论文工作流，面向 Codex 与 Claude Code。');
+const nav: [Route,string,string][] = [['workflow','Workflow','工作流'],['tasks','Use cases','任务'],['examples/first-revision','Examples','示例'],['skills','Skills','技能'],['docs','Docs','文档']];
+const other = locale === 'zh' ? 'en' : 'zh';
+---
+<!doctype html>
+<html lang={locale === 'zh' ? 'zh-CN' : 'en'}>
+ <head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title><meta name="description" content={desc} />
+  <meta name="theme-color" content="#f8f9fc" />
+  <link rel="icon" type="image/svg+xml" href={`${BASE}/favicon.svg`} />
+  <link rel="canonical" href={ORIGIN + url(locale, route)} />
+  <link rel="alternate" hreflang="en" href={ORIGIN + url('en',route)} />
+  <link rel="alternate" hreflang="zh-CN" href={ORIGIN + url('zh',route)} />
+  <link rel="alternate" hreflang="x-default" href={ORIGIN + url('en',route)} />
+  <meta property="og:type" content="website" /><meta property="og:site_name" content="Nature Paper Skills" />
+  <meta property="og:title" content={title} /><meta property="og:description" content={desc} />
+  <meta property="og:url" content={ORIGIN + url(locale,route)} />
+  <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
+  <meta property="og:image" content={`${ORIGIN}${BASE}/og-${locale}.png`} />
+  <meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={text(locale,'Nature Paper Skills: Build the argument before polishing the prose.','Nature Paper Skills：先建立清晰论证，再打磨论文语言。')} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script is:inline>document.documentElement.classList.add('js');</script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main">{text(locale,'Skip to content','跳到正文')}</a>
+  <header class="site-header">
+   <div class="container header-inner">
+    <a class="brand" href={url(locale)} aria-label="Nature Paper Skills — Home"><Mark /><span class="brand-name">Nature Paper Skills<small>{text(locale,'Scientific writing, connected','连接科学证据与论文表达')}</small></span></a>
+    <nav id="site-navigation" class="site-nav" aria-label={text(locale,'Main navigation','主导航')}>
+     {nav.map(([path,en,zh]) => <a href={url(locale,path)} aria-current={route===path?'page':undefined}>{text(locale,en,zh)}</a>)}
+     <a class="github-nav" href={REPO} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+     <a class="button compact primary" href={url(locale,'install')} aria-current={route==='install'?'page':undefined}>{text(locale,'Get started','快速开始')} <span aria-hidden="true">→</span></a>
+    </nav>
+    <div class="header-tools">
+     <a class="locale-link" data-locale-switch href={url(other,route)} lang={other==='zh'?'zh-CN':'en'} aria-label={other==='zh'?'切换为简体中文':'Switch to English'}>{other==='zh'?'中文':'EN'}</a>
+     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label={text(locale,'Open navigation menu','打开导航菜单')}>☰</button>
+    </div>
+   </div>
+  </header>
+  <main id="main" tabindex="-1"><slot /></main>
+  <footer class="site-footer">
+   <div class="container">
+    <div class="footer-grid">
+     <div class="footer-brand"><a class="brand" href={url(locale)}><Mark /><span class="brand-name">Nature Paper Skills<small>OPEN SOURCE · EVIDENCE FIRST</small></span></a><p>{text(locale,'A connected workflow for the scientific argument, not just the sentence.','不止改善句子，更连接科学论证与实验证据。')}</p><p>{text(locale,'Source version','源码版本')} {repository.version} · {repository.counts.all} {text(locale,'skills','个技能')}</p></div>
+     <div class="footer-column"><h3>{text(locale,'Explore','了解项目')}</h3><a href={url(locale,'workflow')}>{text(locale,'The workflow','工作流')}</a><a href={url(locale,'tasks')}>{text(locale,'Use cases','任务入口')}</a><a href={url(locale,'skills')}>{text(locale,'Skill library','技能目录')}</a><a href={url(locale,'examples/first-revision')}>{text(locale,'Worked example','完整示例')}</a></div>
+     <div class="footer-column"><h3>{text(locale,'Build & learn','使用与开发')}</h3><a href={url(locale,'install')}>{text(locale,'Installation','安装')}</a><a href={url(locale,'docs')}>{text(locale,'Documentation','文档')}</a><a href={source('CHANGELOG.md')} target="_blank" rel="noopener noreferrer">{text(locale,'Changelog','更新记录')} ↗</a><a href={source('CONTRIBUTING.md')} target="_blank" rel="noopener noreferrer">{text(locale,'Contributing','参与贡献')} ↗</a></div>
+     <div class="footer-column"><h3>{text(locale,'Project & credits','项目与来源')}</h3><a href={REPO} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={source('ATTRIBUTION.md')} target="_blank" rel="noopener noreferrer">{text(locale,'Attribution','第三方来源')} ↗</a><a href={source('LICENSE')} target="_blank" rel="noopener noreferrer">MIT {text(locale,'license','许可')} ↗</a><a href={source('LICENSE-APACHE')} target="_blank" rel="noopener noreferrer">Apache-2.0 ↗</a><a href={source('NOTICE')} target="_blank" rel="noopener noreferrer">{text(locale,'Third-party notice','第三方声明')} ↗</a></div>
+    </div>
+    <div class="footer-bottom"><p>{text(locale,'An independent open-source project. Not affiliated with or endorsed by Nature Portfolio or Springer Nature. No publication or acceptance outcome is predicted.','独立开源项目，不从属于 Nature Portfolio 或 Springer Nature，也未获得其背书。不预测发表或录用结果。')}</p><a href="https://star-history.com/#Boom5426/Nature-Paper-Skills&Date" target="_blank" rel="noopener noreferrer">☆ Star History ↗</a></div>
+   </div>
+  </footer>
+  <div id="copy-feedback" role="status" aria-live="polite" class="sr-only"></div>
+  <script>import '../lib/client';</script>
+ </body>
+</html>

@@ -1,0 +1,53 @@
+---
+import {type Locale,text,source,url} from '../lib/site';
+import repository from '../data/repository.json';
+import {buildInstallation} from '../lib/installation.mjs';
+import PageHeader from './PageHeader.astro';
+interface Props{locale:Locale}
+const {locale}=Astro.props;
+const initial=buildInstallation({agent:'codex',os:'linux',profile:'all',method:'prompt',locale},repository.counts);
+const profiles=[{id:'recommended',name:text(locale,'Writing & review','写作与审稿'),summary:text(locale,'The focused manuscript workflow','聚焦论文写作与审稿'),count:repository.counts.recommended},{id:'figures',name:text(locale,'Writing + figures','写作与图形'),summary:text(locale,'Add figure production and checking','增加图形制作与检查'),count:repository.counts.figures},{id:'all',name:text(locale,'Full workflow','完整工作流'),summary:text(locale,'Include research and optional extensions','包含研究与可选扩展技能'),count:repository.counts.all}];
+---
+<PageHeader locale={locale} route="install" eyebrow={text(locale,'LOCAL TO YOUR AGENT. GROUNDED IN YOUR WORK.','带进你的 Agent，服务你的研究。')} description={text(locale,'Choose your environment and skill profile. Copy the instruction to your agent or use a supported local command. This website does not install or run anything on your computer.','选择你的运行环境与技能组合。将指令复制给 Agent，或使用受支持的本地命令。本站不会在你的电脑上自动安装或运行任何内容。')}/>
+<div class="container page-content" data-install data-locale={locale} data-counts={JSON.stringify(repository.counts)}>
+ <noscript><p class="no-js-note">{text(locale,'The default instruction below requests the full workflow for local Codex on Linux. Enable JavaScript to customize it, or read INSTALL.md for all supported routes.','下方默认指令请求为 Linux 本地 Codex 安装完整工作流。启用 JavaScript 可调整选项；全部路径请阅读 INSTALL.md。')} <a class="text-link" href={source('INSTALL.md')}>INSTALL.md ↗</a></p></noscript>
+ <div class="install-layout">
+  <form class="install-config js-only" aria-label={text(locale,'Installation options','安装选项')}>
+   <fieldset><legend><span>01</span>{text(locale,'Choose your agent','选择你的 Agent')}</legend><div class="segmented">{[['codex','Codex'],['claude','Claude Code'],['web','ChatGPT Work']].map(([id,label])=><label><input type="radio" name="agent" value={id} checked={id==='codex'}/><span>{label}</span></label>)}</div></fieldset>
+   <fieldset><legend><span>02</span>{text(locale,'Confirm its environment','确认实际运行环境')}</legend><div class="field"><label class="sr-only" for="install-os">{text(locale,'Operating system','操作系统')}</label><select id="install-os" name="os"><option value="linux">Linux</option><option value="macos">macOS</option><option value="windows">{text(locale,'Windows — native agent','Windows — 原生 Agent')}</option><option value="wsl">Windows — WSL2</option></select></div></fieldset>
+   <fieldset><legend><span>03</span>{text(locale,'Pick a skill profile','选择技能组合')}</legend>{profiles.map(p=><label class="profile-option"><input type="radio" name="profile" value={p.id} checked={p.id==='all'}/><span><span><strong>{p.name}</strong><small>{p.summary}</small></span><b>{p.count}</b></span></label>)}</fieldset>
+   <fieldset style="margin-bottom:12px"><legend><span>04</span>{text(locale,'Choose an installation method','选择安装方式')}</legend><div class="segmented">{[['prompt',text(locale,'Ask your agent','让 Agent 安装')],['command',text(locale,'Bash command','Bash 命令')],['clone',text(locale,'Clone first','先克隆仓库')]].map(([id,label])=><label><input type="radio" name="method" value={id} checked={id==='prompt'}/><span>{label}</span></label>)}</div></fieldset>
+   <p class="small" style="font-size:10px;margin-top:15px">{text(locale,`Every choice requests an explicit profile. The installer’s no-profile default remains the ${repository.counts.recommended}-skill writing and review set.`,`这里始终明确指定组合。安装器未指定组合时，仍默认安装 ${repository.counts.recommended} 个写作与审稿技能。`)}</p>
+  </form>
+  <div class="install-result">
+   <div class="terminal"><div class="terminal-header"><span data-install-kind>{text(locale,'AGENT INSTALLATION INSTRUCTION','AGENT 安装指令')}</span><button type="button" class="copy-button js-only" data-copy="install-content">{text(locale,'Copy instruction','复制指令')}</button></div><pre id="install-content" tabindex="0">{initial.text}</pre><div class="terminal-footer">{text(locale,'Copies text only. Read the script before running a remote command.','仅复制文本。执行远程命令前，先检查脚本。')}</div></div>
+   <p class="install-note" data-install-notice role="status" aria-live="polite">{initial.notice}</p>
+   <div class="verification"><h3>{text(locale,'Then verify two different things.','然后分别验证两件事。')}</h3><p>{text(locale,'The installed files, and whether your actual agent can discover and invoke the skill.','一是安装文件；二是实际 Agent 是否能够发现并调用技能。')}</p><pre data-install-verification tabindex="0">{initial.verification}</pre><a class="text-link" href={url(locale,'examples/first-revision')}>{text(locale,'Run your first revision','开始第一次修订')} →</a></div>
+  </div>
+ </div>
+ <div class="install-guides"><a href={source('docs/installation-codex.md')} target="_blank" rel="noopener noreferrer"><h3>Codex ↗</h3><p>{text(locale,'CLI, app and IDE paths; Windows-native and WSL environment guidance.','CLI、App 与 IDE 路径，以及 Windows 原生环境和 WSL 说明。')}</p></a><a href={source('docs/installation-claude.md')} target="_blank" rel="noopener noreferrer"><h3>Claude Code ↗</h3><p>{text(locale,'User or project installation, invocation, updates and recovery.','用户级或项目级安装、调用方式、更新与恢复。')}</p></a><a href={source('docs/installation-chatgpt-work.md')} target="_blank" rel="noopener noreferrer"><h3>ChatGPT Work ↗</h3><p>{text(locale,'Separate account registration and distribution; live web reuse is unverified.','独立的账号注册与分发流程；网页持久复用尚未验证。')}</p></a></div>
+ <div class="callout"><p>{text(locale,'Existing copies are preserved by the commands above. Preserved or locally modified skills can prevent the selected profile from being fully updated. The agent should report those entries instead of declaring complete success. Figure rendering and document editing also need their own working tools.','以上命令会保留现有副本。被保留或经过本地修改的技能，可能导致所选组合未完整更新。Agent 应明确报告这些条目，而不是声称全部成功。图形渲染与文档编辑还需要各自可用的工具。')} <a class="text-link" href={source('docs/installation-management.md')} target="_blank" rel="noopener noreferrer">{text(locale,'Update & recovery guide','更新与恢复指南')} ↗</a></p></div>
+</div>
+<script>
+ import {buildInstallation} from '../lib/installation.mjs';
+ document.querySelectorAll<HTMLElement>('[data-install]').forEach(root=>{
+  const form=root.querySelector<HTMLFormElement>('form')!;
+  const os=root.querySelector<HTMLSelectElement>('#install-os')!;
+  const counts=JSON.parse(root.dataset.counts||'{}');
+  const locale=root.dataset.locale||'en';
+  function update(){
+   let data=new FormData(form);const agent=String(data.get('agent'));const native=os.value==='windows';
+   os.disabled=agent==='web';
+   form.querySelectorAll<HTMLInputElement>('input[name=method]').forEach(input=>{input.disabled=input.value!=='prompt'&&(agent==='web'||native);});
+   const checked=form.querySelector<HTMLInputElement>('input[name=method]:checked')!;
+   if(checked.disabled)form.querySelector<HTMLInputElement>('input[name=method][value=prompt]')!.checked=true;
+   data=new FormData(form);
+   const result=buildInstallation({agent,os:os.value,profile:String(data.get('profile')),method:String(data.get('method')),locale},counts);
+   root.querySelector('#install-content')!.textContent=result.text;
+   root.querySelector('[data-install-verification]')!.textContent=result.verification;
+   root.querySelector('[data-install-notice]')!.textContent=result.notice;
+   root.querySelector('[data-install-kind]')!.textContent=result.kind==='bash'?'BASH':locale==='zh'?'AGENT 安装指令':'AGENT INSTALLATION INSTRUCTION';
+  }
+  form.addEventListener('change',update);form.addEventListener('submit',e=>e.preventDefault());
+ });
+</script>

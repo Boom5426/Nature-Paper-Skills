@@ -1,0 +1,9 @@
+---
+import {type Locale,text,source} from '../lib/site';
+import {docsGroups,pick,faqs} from '../data/content';
+import PageHeader from './PageHeader.astro';
+interface Props{locale:Locale}
+const {locale}=Astro.props;
+---
+<PageHeader locale={locale} route="docs" eyebrow={text(locale,'DOCUMENTATION, CLOSE TO THE SOURCE','文档直接连接权威源码')} description={text(locale,'Installation, workflow details, figure production and project boundaries. These guides live with the code, so the website does not maintain a second, drifting copy.','这里汇总安装、工作流细节、图形制作与项目边界。指南与代码共同维护，网站不再保留另一套容易过时的副本。')}/>
+<div class="container page-content"><div class="docs-grid">{docsGroups.map(group=><section class="doc-group"><h2>{pick(locale,group.title)}</h2>{group.links.map(link=><a href={source(locale==='zh'&&link.path==='README.md'?'README.zh-CN.md':link.path)} target="_blank" rel="noopener noreferrer"><span>{pick(locale,link.title)}</span><span aria-hidden="true">↗</span></a>)}</section>)}</div><section class="faq" id="faq"><div class="eyebrow">{text(locale,'BEFORE YOU START','开始之前')}</div><h2>{text(locale,'A few useful answers.','几个值得了解的问题。')}</h2>{faqs.map(faq=><details><summary>{pick(locale,faq.q)}</summary><p>{pick(locale,faq.a)}</p></details>)}</section></div>

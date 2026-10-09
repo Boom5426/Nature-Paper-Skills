@@ -1,0 +1,29 @@
+---
+import repo from '../data/repository.json';
+import {type Locale,text,url} from '../lib/site';
+interface Props{locale:Locale}
+const {locale}=Astro.props;
+const n=repo.example.draft.match(/Across (\d+) independent cultures/)?.[1];
+const marker=repo.example.draft.match(/expression by (\d+%)/)?.[1];
+const markerCI=repo.example.draft.match(/expression by .*?\((95% CI [^;]+);/)?.[1];
+const survival=repo.example.draft.match(/Survival changed by (\d+) percentage point/)?.[1];
+const survivalCI=repo.example.draft.match(/Survival changed by .*?\((95% CI [^;]+);/)?.[1];
+if(!n||!marker||!markerCI||!survival||!survivalCI)throw new Error('Teaching-example preview needs updating against the source.');
+---
+<div class="paper-surround">
+ <article class="paper" aria-label={text(locale,'A synthetic teaching example of evidence-aware revision','依据证据修订的虚构教学案例')}>
+  <div class="paper-toolbar"><span><span class="status-dot"></span>{text(locale,'EVIDENCE-AWARE REVISION','依据证据修订')}</span><span>{text(locale,'TEACHING EXAMPLE','教学案例')}</span></div>
+  <div class="paper-body">
+   <div class="paper-subtitle"><span class="badge error">{text(locale,'Original claim','原始论断')}</span><span>{text(locale,'Unsupported conclusion','结论缺乏支持')}</span></div>
+   <p class="paper-claim" lang="en">{repo.example.claim}</p>
+   <div class="paper-subtitle" style="margin-top:19px"><span class="badge teal">{text(locale,'Reference revision','参考修订')}</span></div>
+   <p class="paper-revision" lang="en">{repo.example.summary}</p>
+   <div class="paper-result"><div class="paper-subtitle">{text(locale,'THE NUMBERS STAY','保留原始测量值')}<span class="paper-number">n = {n}</span></div><div class="paper-data">
+    <div><strong>+{marker}</strong><span class="small">{text(locale,'Marker expression','标记物表达')} · Fig. 1a<br/>{markerCI}</span></div>
+    <div><strong>+{survival} pp</strong><span class="small">{text(locale,'Survival','存活率')} · Fig. 1b<br/>{survivalCI} pp</span></div>
+   </div></div>
+  </div>
+  <div class="paper-footer"><span>{text(locale,`${n} independent cultures · original evidence preserved`,`${n} 个独立培养样本 · 保留原始证据`)}</span><a href={url(locale,'examples/first-revision')} aria-label={text(locale,'View the complete evidence','查看完整证据')}>↗</a></div>
+ </article>
+ <p class="paper-caption">{text(locale,'Synthetic example · illustrative reference, not a live model run.','虚构教学案例 · 参考修订，并非模型实时运行结果。')}</p>
+</div>

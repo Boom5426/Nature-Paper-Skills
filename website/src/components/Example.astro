@@ -1,0 +1,17 @@
+---
+import repo from '../data/repository.json';
+import {type Locale,text,source,url} from '../lib/site';
+interface Props{locale:Locale;full?:boolean}
+const {locale,full=false}=Astro.props;
+const {draft,revision,claim,summary,evidence}=repo.example;
+---
+<div data-example class="highlight-on">
+ <div class="example-heading"><span class="badge tint">{text(locale,'SYNTHETIC TEACHING EXAMPLE','虚构教学案例')}</span><button type="button" class="copy-button js-only" data-highlight-toggle aria-pressed="true">{text(locale,'Highlight the claim change','高亮论断改动')}</button></div>
+ <div class="example-grid">
+  <article class="excerpt"><div class="excerpt-header"><span class="label">{text(locale,'01 / Original draft','01 / 原始段落')}</span><span class="badge error">{text(locale,'Unsupported claim','缺乏支持的论断')}</span></div><p lang="en">{full?draft.slice(0,draft.lastIndexOf(claim)):''}<mark class="claim-mark">{claim}</mark></p></article>
+  <article class="excerpt reference"><div class="excerpt-header"><span class="label">{text(locale,'02 / Reference revision','02 / 参考修订')}</span><span class="badge teal">{text(locale,'Evidence-bounded','不超出证据')}</span></div><p lang="en">{full?revision.slice(0,revision.lastIndexOf(summary)):''}<mark class="revision-mark">{summary}</mark></p></article>
+ </div>
+ <div class="example-evidence"><h3>{text(locale,'What the supplied evidence actually says','提供的证据究竟说明了什么')}</h3><ul lang="en">{evidence.slice(1,full?evidence.length:5).map(line=><li>{line}</li>)}</ul></div>
+ <p class="source-note">{text(locale,'An illustrative reference revision, not a recorded live agent execution or a comparative benchmark. “No demonstrated survival benefit” does not mean “no effect.”','这里展示的是参考修订，不是 Agent 实时运行记录，也不是对照评测。“未证明存活率获益”不等于“没有作用”。')}</p>
+ <div class="example-actions"><a class="text-link" href={full?source('examples/first-run/README.md'):url(locale,'examples/first-revision')} target={full?'_blank':undefined} rel={full?'noopener noreferrer':undefined}>{full?text(locale,'Open the source tutorial','阅读源教程'):text(locale,'Follow the complete example','查看完整示例')} <span aria-hidden="true">{full?'↗':'→'}</span></a><span class="small">{text(locale,'Keep the measurement. Correct the interpretation.','保留测量事实，纠正不成立的解释。')}</span></div>
+</div>
