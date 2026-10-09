@@ -10,7 +10,7 @@
 
 🌐 **English** · [简体中文](README.zh-CN.md)
 
-[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/) · [🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [🪄 Examples](#see-what-changes) · [🧩 27 Skills](docs/skill-map.md) · [⭐ Stars](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
+[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/) · [🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [🪄 Examples](#see-what-changes) · [🧩 27 Skills](docs/skill-map.md) · [![⭐ Stars](https://img.shields.io/github/stars/Boom5426/Nature-Paper-Skills?style=flat&label=%E2%AD%90%20Stars)](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
 
 </div>
 
