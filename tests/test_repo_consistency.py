@@ -125,11 +125,11 @@ class DocumentedCountTests(unittest.TestCase):
         nav_labels = {
             "README.md": (
                 "[🌐 Website](", "[🗺️ Workflow](", "[🚀 Quick start](",
-                "[🧩 Choose a task](", "[🪄 Examples](", "[🧩 27 Skills](", "[![⭐ Stars](",
+                "[🧩 Choose a task](", "[🪄 Examples](", "[🧩 27 Skills](",
             ),
             "README.zh-CN.md": (
                 "[🌐 项目主页](", "[🗺️ 工作流总览](", "[🚀 快速开始](",
-                "[🧩 按任务选择](", "[🪄 Examples](", "[🧩 27 Skills](", "[![⭐ Stars](",
+                "[🧩 按任务选择](", "[🪄 Examples](", "[🧩 27 Skills](",
             ),
         }
         for doc, labels in nav_labels.items():
@@ -137,13 +137,13 @@ class DocumentedCountTests(unittest.TestCase):
                 text = (REPO_ROOT / doc).read_text(encoding="utf-8")
                 header = text.split("</div>", 1)[0]
                 self.assertIn("# 🧬 Nature-Paper-Skills", header)
-                self.assertEqual(header.count("!["), 1, "Only the dynamic Stars badge is shown")
-                self.assertIn("[![⭐ Stars](https://img.shields.io/github/stars/Boom5426/Nature-Paper-Skills?style=flat&label=%E2%AD%90%20Stars)](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)", header)
+                self.assertNotIn("![", header, "Navigation must use aligned text links only")
+                self.assertNotIn("stargazers", header, "Remove the unaligned Stars badge")
                 self.assertIn("docs/skill-map.md", header)
                 lines = [line for line in header.splitlines() if line.startswith(labels[0])]
                 self.assertEqual(len(lines), 1, "Exactly one homepage-first navigation row")
                 nav = lines[0]
-                self.assertEqual(nav.count(" · "), 6, "Navigation should contain seven actions")
+                self.assertEqual(nav.count(" · "), 5, "Navigation should contain six actions")
                 positions = [nav.index(label) for label in labels]
                 self.assertEqual(positions, sorted(positions), "Navigation order is fixed")
                 self.assertIn("🧠", header, "Restore the five illustrated workflow themes")
