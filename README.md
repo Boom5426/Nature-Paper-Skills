@@ -2,7 +2,10 @@
 
 # 🧬 Nature-Paper-Skills
 
-**From first draft to submission and rebuttal, build a clear, evidence-grounded manuscript.**
+**Build the argument before polishing the prose.**
+
+27 modular skills for Codex and Claude Code, connecting scientific claims, evidence, figures, writing, citations and reviewer responses.  
+Built for life-science, computational-biology and methods manuscripts.
 
 🧠 **Structure** · 📊 **Figures** · ✍️ **Writing** · 📚 **Citations** · 📨 **Rebuttals**
 
@@ -21,18 +24,16 @@
 
 <a name="what-makes-the-workflow-useful"></a>
 
-27 skills for Codex and Claude Code, connecting structure, scientific writing, figures, citations and reviewer responses.
-Built for Nature-series life-science, computational-biology and methods papers.
+## ✨ Why this workflow
 
-## ✨ What makes the workflow useful
+- **Argument before style.** Define the scientific question, contribution and claim–evidence chain before rewriting sentences.
+- **Evidence-bound edits.** Preserve measured values, independent units, uncertainty, negative results and necessary scope conditions.
+- **Figure-led Results.** Give each main figure a claim, align its panels and legends with Results, and use optional figure-production and QA tools when needed.
+- **Section-specific writing.** Keep the Abstract, Introduction, Results, Discussion and Methods focused on their distinct roles, with consistent scientific claims.
+- **Citations and rebuttals.** Check whether a cited source supports a claim; connect each reviewer response to completed evidence and actual manuscript changes.
+- **Task-sized revisions.** Improve a whole manuscript, one section or one paragraph without reopening settled material.
 
-- 🎯 **Build the argument before polishing sentences.** Connect the scientific question, contribution and evidence chain before refining the prose.
-- 📊 **Give every figure a job.** Define its main claim, organize panels and keep legends aligned with Results. The optional figure stack checks text size, collisions, alignment and source data.
-- ✍️ **Write for the journal reader.** Turn project-log language and defensive scaffolding into direct scientific prose while preserving measured values, necessary conditions and negative results.
-- 📚 **Check what a citation actually supports.** Treat bibliography consistency, reference existence and claim-to-source support as separate checks.
-- 📨 **Connect reviewer replies to manuscript changes.** Preserve the referee's numbering, answer each ask and tie the reply to completed evidence and the revised text.
-- 📐 **Hold each section to its own job.** The Abstract, Introduction, Results, Discussion and Methods each have one contract: what the section must do, what it depends on and its typical shape, drawn from 28 Nature Methods, Nature Biotechnology and Nature Communications method papers. A changed Results claim is rechecked wherever the Abstract, Introduction or Discussion restates it.
-- 🧩 **Use the workflow at the scale you need.** Revise a whole paper, repair a Results section or work on one paragraph. The dispatcher selects the relevant layers and preserves settled material.
+Section patterns are informed by [28 computational-method Articles](skills/core/paper-workflow/references/section-evidence.md); they are descriptive guidance, **not journal formatting rules**.
 
 <a name="workflow-at-a-glance"></a>
 
@@ -76,15 +77,17 @@ The diagram includes figure production, available with `--figure`; the default i
 
 ## 🪄 See what changes
 
-The workflow connects manuscript revision, figure work and reviewer responses. These examples zoom in on the writing layer: direct scientific prose with the facts that make a result interpretable.
+**A synthetic teaching example:** a draft claims improved survival although the supplied survival interval does not establish a benefit. The reference revision corrects the claim rather than merely smoothing the prose.
 
-| 📝 Before | ✨ After | 🔒 What stays |
-|---|---|---|
-| “We carefully verified that survival changed by 1 percentage point (95% CI −3 to 5), which should not be overinterpreted.” | “Survival changed by 1 percentage point (95% CI −3 to 5), with no clear evidence of improvement.” | The measured effect, interval and uncertainty |
-| “These orderings should not be read as a universal ranking across all settings.” | “These orderings hold for the tested settings.” | The scope of the comparison |
-| “The analysis reads the final output from `results/final_scores.csv`.” | “The analysis uses the measured response scores.” | The scientific object; file access details belong in the appropriate methods/data documentation |
+| Draft — unsupported conclusion | Reference revision — evidence-aligned conclusion |
+|---|---|
+| “These results demonstrate that the treatment improves both marker expression and survival.” | “The treatment therefore increased marker expression without a demonstrated survival benefit.” |
 
-These are illustrative edits, not claims about a real study. A scientific limitation or reproducibility detail must remain wherever it is needed. See [worked examples](skills/core/anti-defensive-writing/references/worked-examples.md) and the [complete first-run example](examples/first-run/README.md).
+**Evidence retained in the full revision:** 12 independent cultures; marker expression **+18%** (95% CI **10–26%**; Fig. 1a); survival **+1 percentage point** (95% CI **−3 to 5**; Fig. 1b). The survival interval does not establish either a benefit or no effect.
+
+The reference edit also removes defensive narration while keeping every measurement and figure reference. It is **an illustrative expected output, not a recorded agent run or a real study**.
+
+[See the interactive example](https://boom5426.github.io/Nature-Paper-Skills/examples/first-revision/) · [Read the full input, evidence and reference revision](examples/first-run/README.md) · [More editing examples](skills/core/anti-defensive-writing/references/worked-examples.md)
 
 <a name="quick-start"></a>
 
@@ -92,102 +95,73 @@ These are illustrative edits, not claims about a real study. A scientific limita
 
 <a name="1-install"></a>
 
-### 📥 1. Install
+### 1. Choose a skill profile and install
 
-Choose all 27 skills for the full research workflow, or 19 for manuscript writing and review. The complete set adds figure production, literature research, results analysis, reference auditing, conference writing and presentations. Local installation needs Bash and Python 3.9+; remote installation also needs curl and tar.
+| Profile | Best for | Installer selection |
+|---|---|---|
+| **Full research workflow · 27 skills** | Manuscript work, figures, literature and analysis extensions | `--set all` |
+| **Writing & review · 19 skills** | Structure, prose, references, submission and rebuttal | `--set recommended` (installer default) |
+| **Writing & review + figures · 21 skills** | The 19-skill stack plus figure production and checks | `--set recommended --figure` |
 
-**Let the agent handle installation:** use the code block's top-right copy button, then paste the instruction into your agent chat:
-
-**Full research workflow: all 27 skills**
+**Copy this instruction into Codex or Claude Code for the full 27-skill profile:**
 
 ```text
 Read and follow https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md to install all 27 Nature Paper Skills for this environment, using the all profile, and verify the result.
 If the page cannot be read, use an available GitHub tool or git clone to retrieve the main branch and read INSTALL.md from the repository root; do not substitute search snippets for the file.
 ```
 
-**Manuscript writing and review: recommended 19-skill stack**
+For the **19- or 21-skill profile**, choose a ready-to-copy instruction from the [website's installation builder](https://boom5426.github.io/Nature-Paper-Skills/install/), or explicitly request the chosen profile when asking the agent to follow `INSTALL.md`. The installer otherwise defaults to 19 skills.
 
-```text
-Read and follow https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md to install the recommended 19 Nature Paper Skills for this environment, and verify the result.
-If the page cannot be read, use an available GitHub tool or git clone to retrieve the main branch and read INSTALL.md from the repository root; do not substitute search snippets for the file.
-```
-
-No explicit creator selection is required. [INSTALL.md](INSTALL.md) chooses the supported route and asks the agent to handle retrieval and verification. Persistent ChatGPT Work web installation remains unverified; account registration must be available before the agent reports success.
-
-| Your app | Start here |
-|---|---|
-| Codex: app, CLI or IDE | [Install for Codex](#install-codex-bash); Windows instructions are in the detailed guide |
-| Claude Code | [Install for Claude Code](#install-claude-code) |
-| ChatGPT Work on the web | [Web installation and availability](#install-chatgpt-work-web); automatic installation is unverified |
+Local installation needs **Bash and Python 3.9+**; remote source retrieval also needs `curl` and `tar`. The agent should report the actual installation location, profile, integrity check and whether live client discovery was tested. File integrity does not establish that a new agent session can invoke the skill.
 
 <a name="install-codex-bash"></a>
 
 <details>
-<summary><b>Codex</b></summary>
-
-On Linux/macOS, run:
+<summary><b>Codex · Linux/macOS command and Windows setup</b></summary>
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex --set all
 ```
 
-This command installs all 27. Use `--set recommended` for the 19-skill stack.
-
-On Windows, follow the [Windows instructions](docs/installation-codex.md#windows-desktop-app), choosing the native agent or WSL2 route used by your app.
-
-The default destination is `~/.agents/skills`. Refresh the skill list or start a new chat, then select `paper-workflow`; in CLI/IDE, explicitly invoke `$paper-workflow`. See [Codex setup](docs/installation-codex.md) for requirements and verification status.
-
-If using the built-in `skill-installer`, specify a directory containing `SKILL.md`, such as [`skills/core/paper-workflow`](https://github.com/Boom5426/Nature-Paper-Skills/tree/main/skills/core/paper-workflow). The repository root is a collection, not a single skill; see the [skill map](docs/skill-map.md) for the directories in a complete workflow.
+Use the flags in the profile table for smaller sets. Install into the agent's actual environment, then refresh/reopen Codex and invoke `$paper-workflow` in CLI/IDE. Native Windows and WSL installations need different target paths; follow the [Codex setup guide](docs/installation-codex.md#windows-desktop-app). The repository root is a collection, not a single skill.
 
 </details>
 
 <a name="install-claude-code"></a>
 
 <details>
-<summary><b>Claude Code</b></summary>
-
-Run in the same machine and user environment as Claude Code:
+<summary><b>Claude Code · Linux/macOS command</b></summary>
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --set all
 ```
 
-This command installs all 27. Use `--set recommended` for the 19-skill stack.
-
-The default destination is `~/.claude/skills`. Refresh/reopen Claude Code and invoke `/paper-workflow`. See [Claude Code setup](docs/installation-claude.md) for requirements and verification status.
+Use the flags in the profile table for smaller sets. Refresh/reopen Claude Code and invoke `/paper-workflow`. See the [Claude Code setup guide](docs/installation-claude.md).
 
 </details>
 
 <a name="install-chatgpt-work-web"></a>
 
 <details>
-<summary><b>ChatGPT Work on the web</b></summary>
+<summary><b>ChatGPT Work on the web · registration not yet verified</b></summary>
 
-Use **either copyable instruction above**. The agent handles retrieval and any supported installation flow; you do not need to select `@skill-creator`, run Python or upload a ZIP.
-
-**Automatic web installation is unverified.** It requires this account to expose a supported save/register flow. A download or a skill directory inside a web task does not confirm availability in a new chat. The agent should report the missing capability if registration is unavailable.
-
-For reliable distribution, the maintainer publishes a plugin or a workspace administrator imports its GitHub marketplace. See [web distribution and verification](docs/installation-chatgpt-work.md); packaging commands are maintainer instructions.
+Web installation is **not confirmed**. Downloading skills or generating a directory in a web task does not register them for later chats. Persistent use requires an available account/workspace registration flow; report it as unavailable if the flow is absent. See [web distribution and verification](docs/installation-chatgpt-work.md).
 
 </details>
 
-Existing copies are backed up by the repository installer. Add `--figure` for the figure stack or `--set all` for all 27 skills; scope, preview, update and restore commands are in [Installation options](#installation-options).
-
 <a name="2-complete-your-first-revision"></a>
 
-### ✍️ 2. Complete your first revision
+### 2. Complete your first revision
 
-Once the local skill is visible, put your current manuscript and its supporting results in the agent's working folder, then ask:
+Once `paper-workflow` is discoverable in the agent, place your manuscript excerpt and supporting evidence in its working folder, then ask:
 
 ```text
-Use paper-workflow. Revise the Results paragraph in draft.md using evidence.md.
-Preserve measured values and figure references. Save a revised copy and briefly
-explain the material changes.
+Use paper-workflow. Revise only the Results paragraph in draft.md using evidence.md.
+Preserve measured values, confidence intervals and figure references.
+Save a revised copy and explain the material changes.
 ```
 
-For ready-made inputs and a reference output, use [First successful revision](examples/first-run/README.md). In Codex CLI/IDE you can explicitly mention `$paper-workflow`; in Claude Code invoke `/paper-workflow`.
-
-You can then use ordinary requests such as “improve this manuscript” or name a specialist. The dispatcher diagnoses the task, states the scope and applies the steps needed. You do not need to memorize skill names.
+Try the [self-contained first-run example](examples/first-run/README.md) before working with a private manuscript. You can then ask in plain language to improve a manuscript, review a section or check a citation; you do not need to memorize skill names.
 
 <a name="choose-a-task"></a>
 
@@ -209,47 +183,13 @@ For complete prompts and task setups, see [task examples](docs/task-recipes.md).
 
 <a name="installation-options"></a>
 
-## 📦 Installation options
+## ⚙️ Installation, updates and compatibility
 
-<details>
-<summary><b>⚙️ Choose an agent, installation scope or skill set</b></summary>
+The local installer supports `--dry-run`, `--doctor`, `--on-conflict`, `--restore` and `--ref <full-commit-sha>`. It records provenance and hashes, and backs up files when replacing an existing installation. Existing modified or linked skills require the appropriate conflict policy; do not overwrite them blindly.
 
-```bash
-# From a clone; no source download unless --ref is supplied
-git clone https://github.com/Boom5426/Nature-Paper-Skills.git
-cd Nature-Paper-Skills
-bash install.sh --agent codex --local     # this project's .agents/skills
-bash install.sh --agent claude --local    # this project's .claude/skills
-bash install.sh --agent both             # both user-level locations
-bash install.sh --agent codex --figure   # add figure production/checking
-bash install.sh --agent codex --set all  # all 27 skills
-bash install.sh --agent codex --dry-run  # preview
-bash install.sh --agent codex --doctor   # file/version/dependency checks
-```
+[Installation management, update and restore](docs/installation-management.md) · [Codex setup (including Windows)](docs/installation-codex.md) · [Claude Code setup](docs/installation-claude.md) · [Supported environments and file formats](docs/compatibility.md)
 
-**Default:** 19 writing, review and venue skills. **Figure add-on:** `nature-figure` and `figure-style`; needs Python plotting packages or an R plotting setup. **All:** 27 skills, adding literature/research tools and optional conference/presentation/reference-verification workflows. The core writing and data-plotting routes do not require an OpenRouter key; only the optional AI schematic draft route does. Follow the target journal's image policy.
-
-</details>
-
-<details>
-<summary><b>🛠️ Environment requirements and skill loading</b></summary>
-
-**Local installer requirements:** Codex or Claude Code, Bash, and Python 3.9+ (standard library only; no extra pip packages for installation). Remote installation also uses `curl` and `tar`. For Windows, see [Codex Windows setup](docs/installation-codex.md#windows-desktop-app). [ChatGPT Work on the web](#install-chatgpt-work-web) uses a separate distribution flow. See [environments and file formats](docs/compatibility.md) for verification status.
-
-If a skill is not visible, refresh the skill list or reopen the session, then check [troubleshooting](docs/installation-management.md#troubleshooting). Agent-specific instructions: [Codex](docs/installation-codex.md) · [Claude Code](docs/installation-claude.md).
-
-</details>
-
-<details>
-<summary><b>🔄 Inspect the installer, update, restore or pin a version</b></summary>
-
-Read [install.sh](install.sh) before running it if you prefer, or use the clone-based commands above. Existing copies are backed up before replacement; see [update and restore](docs/installation-management.md).
-
-To share one installed copy across agents, follow the [manual linked layout](docs/installation-management.md#manual-layout-one-canonical-copy-linked-into-the-agent-directory). Run updates, checks and restores against the canonical directory; existing agent entries are preserved.
-
-Pin an immutable commit with `--ref <full-commit-sha>`; the installer records the source and file hashes. Version history: [CHANGELOG](CHANGELOG.md).
-
-</details>
+The skills provide instructions and optional helper scripts, not the external editors, runtimes, source access or experiments required for every task.
 
 <a name="scope-and-limits"></a>
 
