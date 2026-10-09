@@ -1,6 +1,6 @@
 <div align="center">
 
-# Nature Paper Skills
+# 🧬 Nature Paper Skills
 
 **面向 Codex 和 Claude Code 的证据驱动科研写作工作流：先建立科学论证，再打磨论文语言。**
 
