@@ -100,7 +100,7 @@ The reference edit also removes defensive narration while keeping every measurem
 | Profile | Best for | Installer selection |
 |---|---|---|
 | **Full research workflow · 27 skills** | Manuscript work, figures, literature and analysis extensions | `--set all` |
-| **Writing & review · 19 skills** | Structure, prose, references, submission and rebuttal | `--set recommended` (installer default) |
+| **Writing & review · recommended 19-skill stack** | Structure, prose, references, submission and rebuttal | `--set recommended` (installer default) |
 | **Writing & review + figures · 21 skills** | The 19-skill stack plus figure production and checks | `--set recommended --figure` |
 
 **Copy this instruction into Codex or Claude Code for the full 27-skill profile:**
