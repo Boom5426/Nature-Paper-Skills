@@ -4,9 +4,6 @@
 
 **From first draft to submission and rebuttal, build a clear, evidence-grounded manuscript.**
 
-27 skills for Codex and Claude Code, connecting structure, scientific writing, figures, citations and reviewer responses.
-Built for Nature-series life-science, computational-biology and methods papers.
-
 🧠 **Structure** · 📊 **Figures** · ✍️ **Writing** · 📚 **Citations** · 📨 **Rebuttals**
 
 [![Skills](https://img.shields.io/badge/skills-27-8a63d2)](docs/skill-map.md)
@@ -23,6 +20,9 @@ Built for Nature-series life-science, computational-biology and methods papers.
 ---
 
 <a name="what-makes-the-workflow-useful"></a>
+
+27 skills for Codex and Claude Code, connecting structure, scientific writing, figures, citations and reviewer responses.
+Built for Nature-series life-science, computational-biology and methods papers.
 
 ## ✨ What makes the workflow useful
 
