@@ -4,17 +4,13 @@
 
 **From first draft to submission and rebuttal, build a clear, evidence-grounded manuscript.**
 
-27 skills for Codex and Claude Code, connecting structure, scientific writing, figures, citations and reviewer responses.  
-Built for Nature-series life-science, computational-biology and methods papers.
+27 skills for Codex and Claude Code, connecting structure, scientific writing, figures, citations and reviewer responses. Built for Nature-series life-science, computational-biology and methods papers.
 
 🧠 **Structure** · 📊 **Figures** · ✍️ **Writing** · 📚 **Citations** · 📨 **Rebuttals**
 
-[![Skills](https://img.shields.io/badge/skills-27-8a63d2)](docs/skill-map.md)
-[![Stars](https://img.shields.io/github/stars/Boom5426/Nature-Paper-Skills?style=social)](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
-
 🌐 **English** · [简体中文](README.zh-CN.md)
 
-[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/) · [🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [🪄 Examples](#see-what-changes) · [🧩 27 Skills](docs/skill-map.md)
+[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/) · [🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [🪄 Examples](#see-what-changes) · [🧩 27 Skills](docs/skill-map.md) · [⭐ Stars](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
 
 </div>
 
