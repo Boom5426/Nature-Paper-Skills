@@ -14,11 +14,9 @@
 [![License](https://img.shields.io/badge/license-MIT%20%2B%20Apache--2.0-green)](#许可)
 [![Stars](https://img.shields.io/github/stars/Boom5426/Nature-Paper-Skills?style=social)](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
 
-🌐 [English](README.md) · **简体中文**
+🌐 **README：** [English](README.md) · **简体中文** &nbsp;&nbsp;|&nbsp;&nbsp; **网站：** [English](https://boom5426.github.io/Nature-Paper-Skills/) · [简体中文](https://boom5426.github.io/Nature-Paper-Skills/zh/)
 
 [🗺️ 工作流总览](#工作流总览) · [🚀 快速开始](#快速开始) · [🧩 按任务选择](#按任务选择) · [📚 完整技能目录](docs/skill-map.md)
-
-[🌐 中文主页](https://boom5426.github.io/Nature-Paper-Skills/zh/) · [English website](https://boom5426.github.io/Nature-Paper-Skills/)
 
 </div>
 
