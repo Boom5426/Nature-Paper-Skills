@@ -1,6 +1,6 @@
 <div align="center">
 
-# Nature Paper Skills
+# 🧬 Nature Paper Skills
 
 **Build the argument before polishing the prose — an evidence-grounded scientific writing workflow for Codex and Claude Code.**
 
