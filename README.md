@@ -20,12 +20,12 @@
 
 ## ✨ Why this workflow
 
-- **Argument before style.** Define the scientific question, contribution and claim–evidence chain before rewriting sentences.
-- **Evidence-bound edits.** Preserve measured values, independent units, uncertainty, negative results and necessary scope conditions.
-- **Figure-led Results.** Give each main figure a claim, align its panels and legends with Results, and use optional figure-production and QA tools when needed.
-- **Section-specific writing.** Keep the Abstract, Introduction, Results, Discussion and Methods focused on their distinct roles, with consistent scientific claims.
-- **Citations and rebuttals.** Check whether a cited source supports a claim; connect each reviewer response to completed evidence and actual manuscript changes.
-- **Task-sized revisions.** Improve a whole manuscript, one section or one paragraph without reopening settled material.
+- 🎯 **Argument before style.** Define the scientific question, contribution and claim–evidence chain before rewriting sentences.
+- 🔒 **Evidence-bound edits.** Preserve measured values, independent units, uncertainty, negative results and necessary scope conditions.
+- 📊 **Figure-led Results.** Give each main figure a claim, align its panels and legends with Results, and use optional figure-production and QA tools when needed.
+- 📐 **Section-specific writing.** Keep the Abstract, Introduction, Results, Discussion and Methods focused on their distinct roles, with consistent scientific claims.
+- 📚 **Citations and rebuttals.** Check whether a cited source supports a claim; connect each reviewer response to completed evidence and actual manuscript changes.
+- 🧩 **Task-sized revisions.** Improve a whole manuscript, one section or one paragraph without reopening settled material.
 
 Section patterns are informed by [28 computational-method Articles](skills/core/paper-workflow/references/section-evidence.md); they are descriptive guidance, **not journal formatting rules**.
 
