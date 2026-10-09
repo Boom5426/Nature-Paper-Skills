@@ -1,0 +1,78 @@
+name: Website live smoke
+on:
+  workflow_run:
+    workflows: [Website]
+    types: [completed]
+    branches: [main]
+  push:
+    branches: [main]
+    paths: [.github/workflows/website-live-smoke.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-site:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check deployed bilingual pages and their first-party assets
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from urllib.request import Request, urlopen
+          from urllib.parse import urljoin, urlparse
+          from pathlib import Path
+          import json,time
+          base='https://boom5426.github.io/Nature-Paper-Skills/'
+          paths=['','workflow/','tasks/','examples/first-revision/','skills/','install/','docs/']
+          reports=[];assets=set()
+          class Page(HTMLParser):
+              def __init__(self):super().__init__();self.h1=0;self.lang=None;self.assets=[]
+              def handle_starttag(self,tag,attrs):
+                  a=dict(attrs)
+                  if tag=='h1':self.h1+=1
+                  if tag=='html':self.lang=a.get('lang')
+                  if tag=='script' and a.get('src'):self.assets.append(a['src'])
+                  if tag=='link' and a.get('rel')=='stylesheet' and a.get('href'):self.assets.append(a['href'])
+          def fetch(url):
+              for attempt in range(8):
+                  try:
+                      with urlopen(Request(url,headers={'User-Agent':'Nature-Paper-Skills-public-smoke/1.0','Cache-Control':'no-cache'}),timeout=20) as r:
+                          assert r.status==200,(url,r.status)
+                          return r.read(),r.headers.get('Content-Type','')
+                  except Exception:
+                      if attempt==7:raise
+                      time.sleep(5)
+          for prefix,language in [('', 'en'),('zh/','zh-CN')]:
+              for path in paths:
+                  url=base+prefix+path;raw,content_type=fetch(url);html=raw.decode('utf-8')
+                  assert 'text/html' in content_type,(url,content_type)
+                  page=Page();page.feed(html)
+                  assert page.h1==1,(url,'h1',page.h1)
+                  assert page.lang==language,(url,'lang',page.lang)
+                  assert 'Nature Paper Skills' in html,(url,'missing brand')
+                  if path=='':assert ('先建立清晰论证' if prefix else 'Build the argument') in html
+                  for asset in page.assets:
+                      resolved=urljoin(url,asset)
+                      assert resolved.startswith(base),(url,'unexpected external runtime asset',resolved)
+                      assets.add(resolved)
+                  reports.append({'url':url,'status':200,'lang':page.lang,'h1':page.h1})
+                  print('PASS',url)
+          for url in sorted(assets):
+              raw,content_type=fetch(url)
+              assert len(raw)>0,(url,'empty asset')
+              assert 'text/html' not in content_type,(url,'HTML instead of asset')
+              reports.append({'url':url,'status':200,'bytes':len(raw),'content_type':content_type})
+              print('PASS asset',url)
+          result={'base':base,'pages':14,'assets':len(assets),'checks':reports}
+          Path('public-smoke.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+          print(f'Public site verified: 14 bilingual pages and {len(assets)} runtime assets.')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: website-public-smoke-${{ github.run_id }}
+          path: public-smoke.json
+          if-no-files-found: warn
+          retention-days: 14
