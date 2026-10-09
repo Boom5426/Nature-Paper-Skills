@@ -121,20 +121,35 @@ class DocumentedCountTests(unittest.TestCase):
                 self.assertRegex(text, pattern, f"{doc}: stale skill count, the repository has {total}")
 
     def test_readme_first_screen_is_consistent(self) -> None:
-        """Both languages expose the same six navigational actions before prose."""
-        icons = ("🌐 Website", "🚀 Get Started", "🗺️ Workflow",
-                 "🪄 Examples", "🧩 ", "⭐ GitHub Stars")
-        for doc in ("README.md", "README.zh-CN.md"):
+        """Both READMEs retain the original illustrated hero and the expanded navigation."""
+        nav_labels = {
+            "README.md": (
+                "[🌐 Website](", "[🗺️ Workflow](", "[🚀 Quick start](",
+                "[🧩 Choose a task](", "[🪄 Examples](", "[🧩 27 Skills](",
+            ),
+            "README.zh-CN.md": (
+                "[🌐 项目主页](", "[🗺️ 工作流总览](", "[🚀 快速开始](",
+                "[🧩 按任务选择](", "[🪄 Examples](", "[🧩 27 Skills](",
+            ),
+        }
+        for doc, labels in nav_labels.items():
             with self.subTest(doc=doc):
                 text = (REPO_ROOT / doc).read_text(encoding="utf-8")
                 header = text.split("</div>", 1)[0]
-                self.assertIn("# Nature Paper Skills", header)
-                self.assertNotIn("![", header, "Use one navigation row instead of mixed badges")
-                nav = next((line for line in header.splitlines() if line.startswith("[🌐 Website]")), "")
-                self.assertTrue(nav, "Missing the website-first navigation row")
+                self.assertIn("# 🧬 Nature-Paper-Skills", header)
+                self.assertIn("[![Skills]", header)
+                self.assertIn("[![Stars]", header)
+                self.assertNotIn("[![CI]", header)
+                self.assertNotIn("[![License]", header)
+                self.assertEqual(header.count("[!["), 2, "Only skills and stars badges remain")
+                lines = [line for line in header.splitlines() if line.startswith(labels[0])]
+                self.assertEqual(len(lines), 1, "Exactly one homepage-first navigation row")
+                nav = lines[0]
                 self.assertEqual(nav.count(" · "), 5, "Navigation should contain six actions")
-                self.assertTrue(all(f"[{icon}" in nav for icon in icons))
-                self.assertEqual(header.count(" · "), 6, "One navigation row and one language row")
+                positions = [nav.index(label) for label in labels]
+                self.assertEqual(positions, sorted(positions), "Navigation order is fixed")
+                self.assertIn("🧠", header, "Restore the five illustrated workflow themes")
+                self.assertRegex(header, r"🌐 (?:\*\*English\*\*|\[English\]\(README\.md\))")
 
     def test_claimed_recommended_counts_match_the_installer(self) -> None:
         count = len(bash_array("RECOMMENDED_SKILLS"))

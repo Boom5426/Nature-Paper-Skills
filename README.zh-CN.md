@@ -1,14 +1,24 @@
 <div align="center">
 
-# 🧬 Nature Paper Skills
+# 🧬 Nature-Paper-Skills
 
-**面向 Codex 和 Claude Code 的证据驱动科研写作工作流：先建立科学论证，再打磨论文语言。**
+**从科研初稿到投稿与返修，把研究成果写成论证清楚、证据扎实的期刊论文。**
 
-[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/zh/) · [🚀 Get Started](#快速开始) · [🗺️ Workflow](#工作流总览) · [🪄 Examples](#修改效果示例) · [🧩 27 Skills](docs/skill-map.md) · [⭐ GitHub Stars](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
+27 个 skill，将结构修订、科学写作、论文图表、引用核验与审稿回复串成一套工作流。  
+面向 Codex 和 Claude Code，聚焦 Nature 系列生命科学、计算生物学与方法学稿件。
 
-[English](README.md) · **中文**
+🧠 **论文结构** · 📊 **科研图表** · ✍️ **科学写作** · 📚 **引用核验** · 📨 **审稿回复**
+
+[![Skills](https://img.shields.io/badge/skills-27-8a63d2)](docs/skill-map.md)
+[![Stars](https://img.shields.io/github/stars/Boom5426/Nature-Paper-Skills?style=social)](https://github.com/Boom5426/Nature-Paper-Skills/stargazers)
+
+🌐 [English](README.md) · **简体中文**
+
+[🌐 项目主页](https://boom5426.github.io/Nature-Paper-Skills/zh/) · [🗺️ 工作流总览](#工作流总览) · [🚀 快速开始](#快速开始) · [🧩 按任务选择](#按任务选择) · [🪄 Examples](#修改效果示例) · [🧩 27 Skills](docs/skill-map.md)
 
 </div>
+
+---
 
 <a name="核心特点"></a>
 
