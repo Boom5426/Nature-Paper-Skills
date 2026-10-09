@@ -132,6 +132,42 @@ class DocumentedCountTests(unittest.TestCase):
                 self.assertRegex(text, pattern, f"{doc}: stale recommended count, install.sh installs {count}")
 
 
+class SectionContractTests(unittest.TestCase):
+    """Section standards live in one file; specialists point to it rather than restating it.
+
+    A renamed or deleted contract would leave every pointer dangling without any diff showing it.
+    """
+
+    CONTRACT = SKILLS_ROOT / "core/paper-workflow/references/section-contracts.md"
+    EVIDENCE = SKILLS_ROOT / "core/paper-workflow/references/section-evidence.md"
+    POINTERS = (
+        "core/manuscript-optimizer/SKILL.md",
+        "core/write-scientific-manuscript/SKILL.md",
+        "core/write-scientific-manuscript/references/section-logic.md",
+        "core/scientific-writing/SKILL.md",
+        "venue/nature-portfolio-playbook/SKILL.md",
+    )
+
+    def test_contract_and_evidence_are_linked_from_the_dispatcher(self) -> None:
+        dispatcher = (SKILLS_ROOT / "core/paper-workflow/SKILL.md").read_text(encoding="utf-8")
+        self.assertTrue(self.CONTRACT.is_file())
+        self.assertIn("references/section-contracts.md", dispatcher)
+        self.assertTrue(self.EVIDENCE.is_file())
+        self.assertIn("(section-evidence.md)", self.CONTRACT.read_text(encoding="utf-8"))
+
+    def test_specialists_point_to_the_contract_in_a_default_skill(self) -> None:
+        self.assertIn("core/paper-workflow", bash_array("RECOMMENDED_SKILLS"))
+        for rel in self.POINTERS:
+            text = (SKILLS_ROOT / rel).read_text(encoding="utf-8")
+            with self.subTest(rel=rel):
+                self.assertIn("`paper-workflow`", text)
+                self.assertIn("references/section-contracts.md", text)
+
+    def test_evidence_names_its_reproduction_script(self) -> None:
+        self.assertIn("scripts/section_corpus.py", self.EVIDENCE.read_text(encoding="utf-8"))
+        self.assertTrue((REPO_ROOT / "scripts/section_corpus.py").is_file())
+
+
 class RoutingReachabilityTests(unittest.TestCase):
     """A default install must not route the user to a skill it did not install.
 

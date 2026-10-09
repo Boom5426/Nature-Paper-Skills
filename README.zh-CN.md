@@ -31,6 +31,7 @@
 - ✍️ **写给论文读者看。** 把项目日志式表达和防御性解释改成直接的科学叙述，保留测量值、必要条件与阴性结果。
 - 📚 **核查引用到底支持什么。** 分别检查参考文献格式、文献是否存在，以及原文是否支持当前论断。
 - 📨 **让审稿回复与改稿对应。** 保留审稿人的编号，逐条回应，把回复落到已完成的证据和稿件修改上。
+- 📐 **每个部分按自己的任务来写。** 摘要、引言、结果、讨论和方法各有一份写作合同：这一部分要完成什么、依赖哪些内容、典型篇幅多长，依据是 Nature Methods、Nature Biotechnology 和 Nature Communications 的 28 篇方法论文。Results 的结论一旦改变，摘要、引言和讨论中复述它的地方都会被重新核对。
 - 🧩 **整篇、章节、段落都能进入。** 工作流按任务选择相关层次，处理有问题的部分，保留已经稳定的内容。
 
 <a name="工作流总览"></a>
@@ -69,7 +70,7 @@ flowchart LR
 
 图中的图形制作需加装 `--figure`；默认安装已包含图形规划、稿件修订与审稿回复。
 
-[🗺️ 完整工作流](docs/workflow-map.md) · [📚 全部技能](docs/skill-map.md) · [✍️ 写作原则](docs/design-principles.md) · [📊 图形流程](docs/figure-workflow.md)
+[🗺️ 完整工作流](docs/workflow-map.md) · [📐 各部分写作合同](skills/core/paper-workflow/references/section-contracts.md) · [📚 全部技能](docs/skill-map.md) · [✍️ 写作原则](docs/design-principles.md) · [📊 图形流程](docs/figure-workflow.md)
 
 <a name="修改效果示例"></a>
 
@@ -194,6 +195,7 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 | 想完成什么 | 提供什么 | 得到什么 | 入口 |
 |---|---|---|---|
 | 🧬 优化整篇论文 | 当前稿件、相关结果/图表、已确定的期刊 | 修订稿、关键修改、待补证据 | `paper-workflow` |
+| 📐 撰写或修改某一部分 | 该部分原文、当前 Results 与图、目标期刊 | 按该部分合同修改的成品；依赖未定稿结果的论断会被指出 | `paper-workflow` |
 | ✍️ 修改一个段落 | 原文、上下文、修改范围 | 修改后的段落和必要说明 | `write-scientific-manuscript` |
 | 🪄 去掉审计式／防御式表达 | 正文、SI、图注或数据声明 | 更直接的科学表达，保留数字与必要条件 | `anti-defensive-writing` |
 | 📊 规划或制作图表 | 科学问题、结果表或现有图 | 面板方案；有数据和工具时输出图文件 | `figure-planner`；出图另加 `--figure` |
@@ -253,6 +255,8 @@ bash install.sh --agent codex --doctor   # 检查文件、版本与依赖
 ## 🧭 适用范围与边界
 
 面向生命科学、计算生物学、方法、基准和资源类期刊论文。用户明确的期刊要求及项目决定优先于默认 Nature 风格。本项目独立于 Nature Portfolio，不预测录用结果。
+
+各部分的典型篇幅来自三本 Nature Portfolio 期刊的 28 篇开放获取计算方法论文（[证据与局限](skills/core/paper-workflow/references/section-evidence.md)）。它们用于检查稿件，不是格式规定；格式以目标期刊当前的作者指南为准。
 
 技能提供操作规则与部分辅助脚本，不自带 Word 编辑器、PDF 渲染器、LaTeX 环境、联网访问权限或实验数据。[兼容说明](docs/compatibility.md)分别列出可读取、可编辑与可导出的范围。
 

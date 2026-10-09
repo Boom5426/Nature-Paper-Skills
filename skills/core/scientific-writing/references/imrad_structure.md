@@ -51,8 +51,17 @@ Attract readers and accurately represent the paper's content.
 ### Purpose
 Provide a complete, standalone summary enabling readers to decide if the full paper is relevant to them.
 
-### Structure
-Most journals now require **structured abstracts** with labeled sections:
+### Format comes from the journal
+Abstract length, structure and whether it may carry citations are set by the target journal's
+current guide. Do not choose a format from this primer.
+
+**Single unstructured paragraph**: the default on the journal-first path of this repository when the
+journal states no other format. Run one chain from problem to gap, approach, the findings that carry
+the main claim and the bounded implication; `paper-workflow`'s `references/section-contracts.md`
+gives the full contract.
+
+**Structured abstract**: only where the journal or a reporting guideline requires it, as is common
+in clinical and health journals (for trials, CONSORT for Abstracts). It uses labeled sections:
 
 **Background/Objective**: Why was the study needed? What was the aim?
 - 1-2 sentences
@@ -73,18 +82,17 @@ Most journals now require **structured abstracts** with labeled sections:
 - Avoid overstating or adding new information
 
 ### Length
-- Typically 100-250 words (check journal requirements)
-- Some journals allow up to 300 words
+- Set by the target journal; read its current guide rather than a remembered range
 
 ### Key Rules
 - Write the abstract **last** (after completing all other sections)
 - Make it fully understandable without reading the paper
-- Do not cite references in the abstract
+- Cite references in the abstract only where the journal's format allows it
 - Avoid abbreviations or define them at first use
 - Use past tense for methods and results, present tense for conclusions
-- Include key quantitative results with statistical measures
+- Report the quantitative results that carry the main claim, with direction, magnitude and comparison; add test statistics only where the journal's format asks for them
 
-### Example Structure
+### Example (structured format, clinical journal)
 ```
 Background: Hospital-acquired infections remain a major cause of morbidity. This study
 evaluated the effectiveness of a new disinfection protocol in reducing infection rates.
@@ -539,6 +547,9 @@ crisis in higher education.
 ## Venue-Specific Structure Expectations
 
 ### Journal vs. Conference Formats
+
+Indicative only. Take word limits, structure and Methods placement from the target venue's current
+guide.
 
 | Venue Type | Length | Structure | Methods Placement | Key Focus |
 |-----------|--------|-----------|-------------------|-----------|

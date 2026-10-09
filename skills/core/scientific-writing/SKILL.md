@@ -31,6 +31,10 @@ This skill should be used when:
 
 For title, abstract, cover-letter, or top-level logic decisions, read `references/editor-first-impression.md`.
 
+The job, dependencies and acceptance criteria of each manuscript section are defined once in
+`paper-workflow`'s `references/section-contracts.md`; this skill drafts to them. Abstract length and
+structure, and other formats, come from the target journal, not from a generic template.
+
 For LaTeX equation numbering, figure placement, table pagination or page-break requests, read
 `references/latex-layout.md`. A typesetting-only task uses the existing prose, figures and numerical
 content; it does not require a reverse outline, claim rewrite or figure-generation pass. Respect
@@ -86,7 +90,10 @@ For detailed guidance on creating figures, refer to the `nature-figure` skill.
 - **Results**: Present findings with the brief interpretation each one needs; broader meaning waits for the Discussion
 - **Discussion**: Interpret results, state the scope of the work once in a closing paragraph, propose future directions
 
-For detailed guidance on IMRAD structure, refer to `references/imrad_structure.md`.
+For detailed guidance on IMRAD structure, refer to `references/imrad_structure.md`. It is a
+general primer across fields. Where it differs from the section contracts on a journal-first
+manuscript, the contracts govern, and the formats it describes apply only when the target journal
+requires them.
 
 **Alternative Structures**: Support discipline-specific formats including:
 - Review articles (narrative, systematic, scoping)
@@ -105,7 +112,7 @@ For detailed guidance on IMRAD structure, refer to `references/imrad_structure.m
 
 If these sections answer different versions of the story, the manuscript will feel fragmented even when the prose is locally strong.
 
-**Abstract Composition**: Craft concise, standalone summaries (100-250 words) that capture the paper's purpose, methods, results, and conclusions. Support both structured abstracts (with labeled sections) and unstructured single-paragraph formats. Make the abstract state the problem, the aim/method, the key result, and the implication. Do not spend most of the space on generic background or report only that results were significant.
+**Abstract Composition**: Craft concise, standalone summaries that capture the paper's purpose, methods, results, and conclusions. Take length and format from the target journal: write a structured abstract (with labeled sections) only where the journal or a reporting guideline requires one, and otherwise a single unstructured paragraph. Make the abstract state the problem, the aim/method, the key result, and the implication. Do not spend most of the space on generic background or report only that results were significant.
 
 **Title and Cover Letter**: Make the title a concise summary of the main contribution, ideally about 20 words or fewer. Prefer concrete keywords, avoid question-form titles, avoid unnecessary abbreviations, and avoid making the method the title unless the method itself is the main contribution. Make the cover letter about one page, state significance, journal fit, readership fit, and one or two key findings, and do not turn it into a second abstract or a full result list.
 

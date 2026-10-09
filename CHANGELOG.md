@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Section contracts
+
+- Add a position axis to `paper-workflow`: each section (Title, Abstract, Introduction, Results, Discussion, Methods, legends, SI, availability) has one contract stating its job, dependencies, typical shape and failure modes, in `references/section-contracts.md`. `manuscript-optimizer`, `write-scientific-manuscript` and `scientific-writing` now point to it instead of restating their own versions.
+- Add dependency rules between positions: an Abstract or Title request stays narrow but keeps claims resting on unsettled results out, and a changed Results claim is rechecked wherever it is restated.
+- Separate logic from format: abstract length and structure, citations in the abstract and Methods placement come from the journal's current guide, listed as a format check in `nature-portfolio-playbook`. The IMRaD primer's structured clinical abstract is no longer presented as the default.
+- Derive typical ranges and method-paper patterns from 28 Nature Methods, Nature Biotechnology and Nature Communications method Articles (`references/section-evidence.md`), reproducible with `scripts/section_corpus.py`. Discussion length (3–5 paragraphs) and the Introduction's findings preview are recorded as house choices that depart from the sample.
+- Add the `abstract-section` behavior case.
+- Document the section axis in both READMEs, the workflow map, design principles, skill map and CONTRIBUTING. `paper-workflow` and the ChatGPT Work entry now also trigger on single-section requests such as rewriting the Abstract.
+
 ### Usage fixes
 
 - Build on the fixes in PR #11 and PR #13 with complete synthetic run data, consistent t/P/effect sizes and three-comparison Bonferroni reporting. Recompute cross-dataset averages within runs and add numerical regression checks.

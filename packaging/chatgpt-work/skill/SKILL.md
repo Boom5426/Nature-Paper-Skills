@@ -1,9 +1,10 @@
 ---
 name: nature-paper-workflow
 description: >-
-  Revise scientific manuscripts, improve Results and Review article structure,
+  Revise scientific manuscripts or a single section such as the Abstract,
+  Introduction or Discussion, improve Results and Review article structure,
   audit submission evidence, or prepare responses to reviewers. Use for
-  优化论文、润色论文、投稿前检查 and 审稿回复. Apply the bundled Nature Paper
+  优化论文、润色论文、改摘要、写引言、投稿前检查 and 审稿回复. Apply the bundled Nature Paper
   Skills workflows to the draft and evidence supplied by the user.
 ---
 
@@ -22,7 +23,9 @@ When the dispatcher or a specialist calls for another skill, read
 `resources/<skill-name>/SKILL.md` from this package and apply its instructions.
 These are bundled resources; they do not need separate entries in the @ menu.
 Resolve each specialist's relative references, scripts, templates and assets
-from that specialist's own directory. Read only the resources needed for the task.
+from that specialist's own directory. When a specialist points to another skill's
+reference file, such as `paper-workflow`'s `references/section-contracts.md`, read it
+from `resources/<skill-name>/`. Read only the resources needed for the task.
 
 The index records the specialists included in this build. Local installer flags
 mentioned by a specialist describe the standalone distribution. If a needed

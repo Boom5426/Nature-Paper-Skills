@@ -118,6 +118,12 @@ failure that actually occurred rather than to general advice:
 - `skills/figure/nature-figure/references/figure-delivery-bundle.md`, added to
   the vendored Apache-2.0 skill and therefore distributed under that skill's
   Apache-2.0 terms.
+- `skills/core/paper-workflow/references/section-contracts.md`, which merges the
+  section guidance previously restated in `manuscript-optimizer`,
+  `write-scientific-manuscript` and `scientific-writing`, and
+  `references/section-evidence.md` with `scripts/section_corpus.py`. The typical
+  ranges were measured on 28 published Nature Portfolio method papers; no text from
+  those papers is reproduced beyond one title quoted as an example.
 - `skills/core/write-scientific-manuscript`, distilled from a completed revision
   cycle on a computational-biology manuscript. Its clarity rules, the conditions
   under which a new term may be coined, and the sentence-load diagnostics each

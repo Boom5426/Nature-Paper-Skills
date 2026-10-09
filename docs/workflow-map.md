@@ -18,6 +18,19 @@ Identify the active manuscript, article type, requested unit, editing permission
 
 Check relevant layers in this order, and edit only layers with observed problems. A layer that is sound does not need a rewrite. A posture edit follows stabilization of its claim. Stop after the requested scope and a focused consistency check are complete.
 
+## Positions
+
+The layers decide what to fix first; the position decides what a fixed section must do. Each
+position (Title, Abstract, Introduction, Results, Discussion, Methods, legends, SI) has one contract
+in [section-contracts.md](../skills/core/paper-workflow/references/section-contracts.md): its job,
+what it depends on, its typical shape and what makes it fail. Positions depend on one another in
+this order: figures and evidence → Results → Discussion → Introduction → Abstract → Title. A request
+to revise the Abstract stays an Abstract edit, but a claim that rests on an unsettled result stays
+out of it, and a changed Results claim is rechecked wherever it is restated. Formats such as
+abstract length come from the journal's current guide, not from the contracts. The typical ranges
+and method-paper patterns come from 28 Nature Methods, Nature Biotechnology and Nature Communications
+method papers; see [section-evidence.md](../skills/core/paper-workflow/references/section-evidence.md).
+
 ## Integrity checks
 
 Statistics, citation metadata, live source existence, claim support and availability are distinct. Run those needed for the task, and cover all applicable categories in a comprehensive preflight. An unavailable source or tool is an unchecked category. Necessary limitations, independent-unit n, measurement values, negative results and reproducibility facts survive every style pass.

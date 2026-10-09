@@ -1,16 +1,17 @@
 # Section Logic Patterns
 
-Use these patterns as diagnostic scaffolds, not rigid templates.
+Each section's job, dependencies and acceptance criteria are defined once in `paper-workflow`'s
+`references/section-contracts.md`. This file gives paragraph-level patterns for applying them;
+where the two differ, the contract governs. Use these patterns as diagnostic scaffolds, not rigid
+templates.
 
 ## Abstract
 
-1. **Problem:** What broad scientific or practical problem matters?
-2. **Gap:** What remains unknown or unreliable?
-3. **Approach:** What did the study do that directly addresses the gap?
-4. **Evidence:** What are the one or two results necessary to support the central claim?
-5. **Meaning:** What does the study now enable or clarify, within its scope?
-
-Every sentence should advance this chain. Remove background that never becomes relevant and method detail that does not help interpret the result.
+The Abstract is usually one paragraph, so its logic is a sentence sequence. Reverse-outline it one
+sentence at a time: label each sentence with its link in the contract's chain (problem, gap,
+approach, evidence, meaning). A sentence with no label goes, and a link with no sentence is a gap.
+Background that never becomes relevant and method detail that does not help interpret the result
+have no label.
 
 ## Introduction
 

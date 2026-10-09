@@ -54,3 +54,12 @@ statements a journal requires, the scope condition behind a reporting decision, 
 stated plainly. Most audit and defensive text is added while editing, so the rule binds editors
 first: a change adds no qualifier unless the sentence would otherwise be false. See
 `anti-defensive-writing`.
+
+## 10. Each Section Has One Job
+
+The layer decides what to fix first; the position decides what a fixed section must do. An
+Abstract, an Introduction and a Methods section are held to different standards, written once in
+`paper-workflow`'s section contracts and nowhere else. Sections restate claims settled upstream
+(Results → Discussion → Introduction → Abstract → Title), so a changed claim is rechecked downstream
+and no section claims more than its upstream supports. Typical shapes are measured from published
+papers and used as checks; formats come from the journal.

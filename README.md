@@ -31,6 +31,7 @@ Built for Nature-series life-science, computational-biology and methods papers.
 - ✍️ **Write for the journal reader.** Turn project-log language and defensive scaffolding into direct scientific prose while preserving measured values, necessary conditions and negative results.
 - 📚 **Check what a citation actually supports.** Treat bibliography consistency, reference existence and claim-to-source support as separate checks.
 - 📨 **Connect reviewer replies to manuscript changes.** Preserve the referee's numbering, answer each ask and tie the reply to completed evidence and the revised text.
+- 📐 **Hold each section to its own job.** The Abstract, Introduction, Results, Discussion and Methods each have one contract: what the section must do, what it depends on and its typical shape, drawn from 28 Nature Methods, Nature Biotechnology and Nature Communications method papers. A changed Results claim is rechecked wherever the Abstract, Introduction or Discussion restates it.
 - 🧩 **Use the workflow at the scale you need.** Revise a whole paper, repair a Results section or work on one paragraph. The dispatcher selects the relevant layers and preserves settled material.
 
 <a name="workflow-at-a-glance"></a>
@@ -69,7 +70,7 @@ Structure and evidence come before sentence polish. Statistics, citation support
 
 The diagram includes figure production, available with `--figure`; the default installation already covers figure planning, manuscript revision and reviewer responses.
 
-[🗺️ Full workflow](docs/workflow-map.md) · [📚 All skills](docs/skill-map.md) · [✍️ Writing principles](docs/design-principles.md) · [📊 Figure workflow](docs/figure-workflow.md)
+[🗺️ Full workflow](docs/workflow-map.md) · [📐 Section contracts](skills/core/paper-workflow/references/section-contracts.md) · [📚 All skills](docs/skill-map.md) · [✍️ Writing principles](docs/design-principles.md) · [📊 Figure workflow](docs/figure-workflow.md)
 
 <a name="see-what-changes"></a>
 
@@ -195,6 +196,7 @@ You can then use ordinary requests such as “improve this manuscript” or name
 | Your task | Provide | Expected result | Entry |
 |---|---|---|---|
 | 🧬 Improve a whole manuscript | Current draft, relevant results/figures, target venue if decided | Revised draft, key changes, unresolved evidence gaps | `paper-workflow` |
+| 📐 Write or revise one section | The section, current Results and figures, target journal | Revised section held to its contract; claims resting on unsettled results named | `paper-workflow` |
 | ✍️ Fix a paragraph | Passage, surrounding context, requested scope | Replacement passage with a brief explanation where useful | `write-scientific-manuscript` |
 | 🪄 Remove audit/defensive writing | Main text, SI, legend or availability statement | Direct scientific prose retaining numbers and necessary conditions | `anti-defensive-writing` |
 | 📊 Plan or make figures | Scientific question, result table or existing figure | Panel plan; rendered files when data and tools are available | `figure-planner`; add `--figure` for production |
@@ -254,6 +256,8 @@ Pin an immutable commit with `--ref <full-commit-sha>`; the installer records th
 ## 🧭 Scope and limits
 
 This is a focused journal-writing workflow for life sciences, computational biology, methods, benchmarks and resources. Explicit venue and project instructions take precedence over its Nature-style defaults. It is independent of Nature Portfolio and does not predict acceptance.
+
+The typical section shapes come from 28 open-access computational-method papers in three Nature Portfolio journals ([evidence and limits](skills/core/paper-workflow/references/section-evidence.md)). They are checks on a draft, not format rules; the target journal's current guide sets the format.
 
 Skills provide instructions and some helper scripts. They do not themselves supply a Word editor, PDF renderer, LaTeX installation, browsing access or experimental evidence. [Compatibility](docs/compatibility.md) separates readable inputs from editable/exportable outputs.
 

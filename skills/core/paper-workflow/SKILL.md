@@ -2,9 +2,12 @@
 name: paper-workflow
 description: >-
   Route general manuscript requests such as improve my paper, revise this draft,
-  优化论文, 润色论文 or 投稿前检查. Identify the article type, requested scope and
-  available evidence, then choose the necessary writing or checking steps.
-  Use direct specialist skills for a named, narrow task. Do not route ordinary
+  优化论文, 润色论文 or 投稿前检查. Identify the article type, requested scope, the
+  sections in scope and available evidence, then choose the necessary writing or checking steps.
+  Also use when one section is named, such as rewrite the Abstract, 改摘要, 写引言 or 讨论怎么写,
+  so that the section's contract and its dependencies on other sections apply.
+  Go to a specialist directly when the user names one or a narrow job such as a
+  citation style. Do not route ordinary
   emails, code documentation or non-manuscript writing through this workflow.
 ---
 
@@ -24,7 +27,8 @@ Default assumption: unless a conference venue is named, the manuscript follows t
 
 ## Step 1: Establish the task and classify the input
 
-Identify the active source, article type, requested scope and output before choosing a route.
+Identify the active source, article type, requested scope, the positions in scope (Abstract,
+Introduction, Results, Methods and so on; see Positions below) and output before choosing a route.
 Use supplied context; ask only when an ambiguity would change the work. A request to inspect,
 review, diagnose or suggest produces findings, not file edits. A request to revise authorizes
 edits within its stated scope. Explicitly frozen decisions and numerical results remain fixed.
@@ -51,9 +55,9 @@ The table gives candidate steps in order, not mandatory rewrite passes.
 | Input | Class | Chain |
 |---|---|---|
 | One sentence or one paragraph | `passage` | `write-scientific-manuscript`, then `anti-defensive-writing` if the passage is hedged, over-caveated or written in an audit, self-critical, developer or commitment voice, then `scientific-prose-style` |
-| One section to draft or rewrite in prose | `section` | `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
+| One section to draft or rewrite in prose, such as the Abstract or the Introduction | `section` | Read that position's entry in `references/section-contracts.md` and check its upstream dependency; `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
 | A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision`, `anti-defensive-writing`, then `scientific-prose-style` |
-| A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
+| A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, with `references/section-contracts.md` as the per-section standard; `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
 | Reads like an audit report, a rebuttal or a self-critique; hedged, over-caveated or apologetic; a paragraph opens with a limitation; the SI or data statements confess what could not be found; the text names folders, files or build steps, or promises a future release | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
 | A Review, survey, or Perspective | `review-article` | `review-article-architecture` first, then the Review path below |
 | A draft carried across many sessions | `long-draft` | Reconcile current source and decisions with `draft-marker-discipline` if markers/state are relevant; research articles use `manuscript-optimizer`, Reviews/surveys/Perspectives use `review-article-architecture`. Length alone never selects the Review route |
@@ -147,6 +151,35 @@ reproducible. `anti-defensive-writing` may move such a statement out of a high-i
 it once instead of at every mention, or rewrite it as positive scope, but it must not delete it. A
 pass that silently removes one is a reporting failure, not a style improvement. Audit-voice wording
 added by an integrity check ("as checked", "could not be identified") is not protected.
+
+## Positions
+
+The layers decide what to fix first. The position decides what a fixed section must do. An
+Abstract, an Introduction and a Methods section are held to different standards, and some layers
+behave differently in them: a Methods section is almost entirely load-bearing, and an Abstract keeps
+effect sizes but not test statistics. [section-contracts.md](references/section-contracts.md) states
+each position's job, dependencies, acceptance criteria and owning specialists once. Specialists
+apply it and do not restate it. Read the entry for every position in scope before diagnosing it,
+and check the edit against the same entry afterwards.
+
+Positions depend on one another:
+
+> figures and evidence → Results → Discussion → Introduction → Abstract → Title
+
+Methods records what was actually done and changes only with the procedure. Three rules follow:
+
+- A request for a downstream position stays narrow. Edit it against the current upstream text, keep
+  claims that rest on unsettled results out of it or mark them as pending, and name the dependency
+  in the reply.
+- After a claim changes upstream, recheck the positions that restate it: the Discussion opening,
+  the final Introduction paragraph, the Abstract, the Title and the affected legends. This is a
+  focused check, not a rewrite.
+- No position claims more than its upstream supports.
+
+Format is not part of a contract. Abstract length and structure, citations in the abstract, title
+length and Methods placement come from the target journal's current guide, through
+`nature-portfolio-playbook` for Nature Portfolio journals. A generic template, such as a structured
+clinical abstract, is never the default.
 
 ## Default journal path
 
@@ -245,6 +278,11 @@ before attempting heavy revision.
 - editing a general manuscript request without first identifying the actual problem layer
 - treating the coverage map as a requirement to rewrite every section on every request
 - polishing sentences before the claim hierarchy is stable
+- writing the Abstract or Title from a Results claim that is still moving, or failing to recheck them
+  after it moves
+- importing an abstract format, such as a structured clinical abstract, that the target journal does
+  not ask for
+- holding every section to one generic standard instead of its own contract
 - running a defensive-writing pass before the claim hierarchy is stable, which strips real scope
   conditions along with the disclaimers
 - letting a posture edit delete scientifically necessary limitations, numerical results or reproducibility facts

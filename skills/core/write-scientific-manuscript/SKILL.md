@@ -166,13 +166,17 @@ Do not begin by swapping individual words if the paragraph's logic or order is w
 
 ## Adapt to the manuscript section
 
-- **Title:** state the central contribution or finding without claiming more breadth than the study supports. Avoid unexplained acronyms and fashionable umbrella terms that obscure the actual task.
-- **Abstract:** follow problem → unresolved gap → approach → central evidence → bounded implication. Make it understandable without the main text.
-- **Introduction:** move from broad problem to specific unresolved question, explain why existing approaches do not resolve it, then state what this study does. Do not write a catalogue of prior methods.
-- **Results:** lead with the question or purpose, report the result, then give a proportionate interpretation. Keep Methods detail only when needed to understand the comparison.
-- **Discussion:** begin with the main advance, interpret rather than repeat the Results, compare with prior work, state limitations, and end with a concrete implication rather than generic optimism.
-- **Methods:** favor exact, reproducible description over rhetorical flow. Define data, preprocessing, splits, models, objectives, metrics, statistics, and selection procedures unambiguously.
-- **Figure legends:** make the figure interpretable without the Results text; define panels, groups, units, statistics, sample sizes, and visual encodings without adding unsupported interpretation.
+Each position has its own job and acceptance criteria, defined once in `paper-workflow`'s
+`references/section-contracts.md`. Read the entry for the section being revised, and accept a
+passage edit only when the passage still meets it. [section-logic.md](references/section-logic.md)
+gives the paragraph-level patterns for applying those contracts.
+
+Two positions change what passage repair means:
+
+- **Methods:** fix ambiguity, not rhythm. Exact, reproducible description outranks flow; do not merge
+  or compress definitions to make them read better.
+- **Figure legends:** the legend must stand without the Results text, and a clarity edit never adds
+  interpretation.
 
 ## Match the requested output
 

@@ -213,79 +213,15 @@ answering from intuition.
 
 ## Section contracts
 
-### Title
+Each position (Title, Abstract, Introduction, Results, Discussion, Methods, legends and SI) is held
+to its contract in `paper-workflow`'s `references/section-contracts.md`, which also gives the order
+in which positions depend on one another. Read the entries for the sections under revision; this
+skill does not restate them.
 
-Express the central scientific finding or question at the highest supported level. Prefer:
-
-> concept or finding > framework name > implementation
-
-Use a benchmark or method name as the title focus only when that artifact is itself the main
-contribution. Avoid unexplained acronyms, inflated umbrella terms, and unsupported breadth.
-
-### Abstract
-
-Build one complete chain:
-
-> problem → unresolved gap → approach → two or three main findings → conceptual implication
-
-Do not compress Results mechanically. Omit dataset lists, every baseline, every metric, pipeline
-details, and secondary analyses unless one is essential to the main claim. Ensure that a broad
-reader can state the paper's main finding after one read.
-
-### Introduction
-
-Use this default progression:
-
-1. the field-level problem;
-2. the missing capability or unresolved question;
-3. why the problem remains difficult or conceptually unresolved;
-4. what this study does and what it makes possible to learn.
-
-Move from `field → gap → precise question → solution`. Use literature to establish the gap, not to
-display coverage. Avoid method-by-method catalogues. Define the real scientific problem before
-introducing the proposed model, benchmark, or framework.
-
-### Results
-
-Treat Results as an argument. Organize each subsection as:
-
-> question → why the analysis is needed → design → core observation → interpretation
-
-Lead paragraphs with the scientific message when the evidence already supports it, not with a
-generic action such as `We next investigated...`. Make the link from analysis to conclusion
-explicit; do not make the reader derive the decisive inference from a list of observations.
-
-For every reported metric, state its scientific or evaluative meaning when needed for the next
-inference. When metrics disagree, explain what each metric captures and treat the disagreement as a
-result. For example, distinguish pattern agreement, magnitude error, and direction accuracy rather
-than treating one higher correlation as globally better performance.
-
-Report only the one or two quantitative anchors needed to support the local claim, not every plotted
-number. Keep denser panel-level values in the figure or legend. Do not package all findings as
-positive. Context dependence, no universal winner, negative results, and metric disagreement may be
-the central result.
-
-### Discussion
-
-Answer these questions instead of replaying the Results:
-
-1. What do the findings jointly establish?
-2. What could explain the pattern?
-3. How does it change the understanding of the problem?
-4. Which implications extend beyond this dataset or analysis, and why?
-5. Where are the boundaries?
-
-Use `main answer → scientific interpretation → broader implication → limitations → future
-implication`. Clearly label mechanism evidence versus mechanistic hypothesis. State limitations
-once, as the scope of the research, in one closing Discussion paragraph (or where a limit sets a
-reported value), rather than appending defensive caveats to every result.
-
-### Figures and legends
-
-Make the main text state the question, important pattern, and inference. Make the figure carry dense
-evidence and the legend define panels, groups, units, statistics, sample sizes, and visual encodings.
-Never write only `Supplementary Fig. X shows similar results`; state what question it answers and
-what pattern matters.
+At this layer, check three things for each section: whether it does its contract's job, whether it
+restates a claim that has since moved upstream, and whether it claims more than the evidence it
+depends on. Revise the positions that compress the argument (Abstract, Title and the final
+Introduction paragraph) only after the claims they compress are settled.
 
 ## Paragraph and sentence rules
 

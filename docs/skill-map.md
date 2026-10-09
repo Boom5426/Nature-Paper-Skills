@@ -4,7 +4,7 @@ Recommended: all 17 Core skills, the Venue skill and `paper-reviewer` (19 total)
 
 ## Core
 
-- `paper-workflow`: top-level router
+- `paper-workflow`: top-level router; owns the section contracts (what each section must do, its dependencies and typical shape) and the paper sample behind them
 - `paper-bootstrap`: initialize a paper project and source of truth
 - `scientific-writing`: draft and section-level rewriting
 - `write-scientific-manuscript`: clarity and logic diagnosis for a passage that is correct but hard to follow

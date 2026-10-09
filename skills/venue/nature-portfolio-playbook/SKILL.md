@@ -67,6 +67,25 @@ Do this early. Do not treat article type as formatting cleanup.
 
 If the manuscript keeps oscillating between `method paper` and `resource paper`, resolve that before rewriting the abstract or Results.
 
+## Format Check
+
+The section contracts in `paper-workflow` (`references/section-contracts.md`) define what each
+section must do. This skill supplies the format the venue imposes on them. Before drafting or
+revising front matter, read the target journal's current formatting guide and note its version or
+access date in the project notes. Check:
+
+- abstract or summary paragraph: length, single paragraph or structured, whether citations are
+  allowed, and any prescribed sequence (the `Nature` summary paragraph is written for readers in
+  other disciplines and has its own order)
+- title: length and character limits, and whether abbreviations are allowed
+- main text: word limit, heading rules, and whether Results and Discussion may be combined
+- Methods: placement, length, and which details move to Supplementary Information
+- display items: number of main figures and tables, and Extended Data rules
+
+Do not carry limits over from memory, from another journal or from a secondary summary; published
+summaries of these limits disagree with one another. If the current guide cannot be read, report
+the format as unchecked.
+
 ## Nature Portfolio Preflight
 
 Run this before calling a draft submission-ready:
