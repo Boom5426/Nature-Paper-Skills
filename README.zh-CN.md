@@ -2,10 +2,10 @@
 
 # 🧬 Nature-Paper-Skills
 
-**从科研初稿到投稿与返修，把研究成果写成论证清楚、证据扎实的期刊论文。**
+**先建立有证据支撑的科学论证，再打磨论文语言。**
 
-27 个 skill，将结构修订、科学写作、论文图表、引用核验与审稿回复串成一套工作流。
-面向 Codex 和 Claude Code，聚焦 Nature 系列生命科学、计算生物学与方法学稿件。
+面向 Codex 和 Claude Code 的 27 个模块化技能，连接论文结构、科学证据、科研图表、写作、引用核验与审稿回复。  
+适用于生命科学、计算生物学与方法学期刊论文。
 
 🧠 **论文结构** · 📊 **科研图表** · ✍️ **科学写作** · 📚 **引用核验** · 📨 **审稿回复**
 
@@ -26,13 +26,14 @@
 
 ## ✨ 核心特点
 
-- 🎯 **先稳住论证，再打磨句子。** 把科学问题、贡献和证据链接起来，再处理段落与语言。
-- 📊 **让每张图都有明确任务。** 一图一主张，组织面板，保持图注与 Results 一致；可选图形技能提供字号、碰撞、对齐与源数据检查。
-- ✍️ **写给论文读者看。** 把项目日志式表达和防御性解释改成直接的科学叙述，保留测量值、必要条件与阴性结果。
-- 📚 **核查引用到底支持什么。** 分别检查参考文献格式、文献是否存在，以及原文是否支持当前论断。
-- 📨 **让审稿回复与改稿对应。** 保留审稿人的编号，逐条回应，把回复落到已完成的证据和稿件修改上。
-- 📐 **每个部分按自己的任务来写。** 摘要、引言、结果、讨论和方法各有一份写作合同：这一部分要完成什么、依赖哪些内容、典型篇幅多长，依据是 Nature Methods、Nature Biotechnology 和 Nature Communications 的 28 篇方法论文。Results 的结论一旦改变，摘要、引言和讨论中复述它的地方都会被重新核对。
-- 🧩 **整篇、章节、段落都能进入。** 工作流按任务选择相关层次，处理有问题的部分，保留已经稳定的内容。
+- **论证先于语言。** 先明确科学问题、贡献和论断与证据的对应关系，再优化句子。
+- **修订受证据约束。** 保留测量值、独立实验单位、不确定性、阴性结果和必要的适用条件。
+- **以图表组织 Results。** 每张主图有清晰结论，面板、图注与结果叙述一致；按需使用图形制作与质量检查工具。
+- **各章节各司其职。** 摘要、引言、结果、讨论和方法完成不同的论证任务，同时保持科学结论一致。
+- **引用核验与审稿回复。** 区分文献是否存在和是否支持论断，让每条审稿回复对应已完成的证据和实际改稿。
+- **按需局部修改。** 可以处理整篇、一个章节或一段文字，不必重新打开已经确定的内容。
+
+各章节的典型组织方式参考了 [28 篇计算方法学 Article](skills/core/paper-workflow/references/section-evidence.md)；这是描述性参考，**不是期刊的格式规定**。
 
 <a name="工作流总览"></a>
 
@@ -74,17 +75,19 @@ flowchart LR
 
 <a name="修改效果示例"></a>
 
-## 🪄 修改效果示例
+## 🪄 一次有证据约束的修订
 
-工作流同时处理稿件修订、图表与审稿回复。下面聚焦写作层：去掉项目日志式表达和防御性解释，同时保留理解结果所需的事实。
+**虚构教学案例：** 原稿声称处理提高了细胞存活，但已有存活结果的置信区间不足以支持该结论。参考修订纠正了科学解释，而不只是润色语言。
 
-| 📝 修改前 | ✨ 修改后 | 🔒 保留什么 |
-|---|---|---|
-| “We carefully verified that survival changed by 1 percentage point (95% CI −3 to 5), which should not be overinterpreted.” | “Survival changed by 1 percentage point (95% CI −3 to 5), with no clear evidence of improvement.” | 效应值、置信区间及不确定性 |
-| “These orderings should not be read as a universal ranking across all settings.” | “These orderings hold for the tested settings.” | 比较的适用范围 |
-| “The analysis reads the final output from `results/final_scores.csv`.” | “The analysis uses the measured response scores.” | 科学对象；文件获取细节放在需要它的方法或数据说明中 |
+| 修改前：缺少证据支持的结论 | 修改后：符合证据的参考结论 |
+|---|---|
+| “These results demonstrate that the treatment improves both marker expression and survival.” | “The treatment therefore increased marker expression without a demonstrated survival benefit.” |
 
-这些是示意改写，不代表真实研究结果。影响科学解释或复现的条件必须保留。更多内容见[修改前后案例](skills/core/anti-defensive-writing/references/worked-examples.md)和[完整入门示例](examples/first-run/README.md)。
+**完整修订保留的证据：** 12 个独立培养样本；标志物表达增加 **18%**（95% CI **10–26%**；Fig. 1a）；存活变化 **+1 个百分点**（95% CI **−3 至 5**；Fig. 1b）。这个区间既不能证明存活获益，也不能证明完全没有效应。
+
+参考修订还删除了防御性描述，保留所有测量值和图号。它是**示意性参考答案，不是实际运行记录，也不代表真实研究结果**。
+
+[查看网页交互案例](https://boom5426.github.io/Nature-Paper-Skills/zh/examples/first-revision/) · [查看完整原稿、证据与参考修订](examples/first-run/README.md) · [更多文字修改案例](skills/core/anti-defensive-writing/references/worked-examples.md)
 
 <a name="快速开始"></a>
 
@@ -92,101 +95,72 @@ flowchart LR
 
 <a name="1-安装"></a>
 
-### 📥 1. 安装
+### 1. 选择技能组合并安装
 
-完整科研流程选择 27 个技能；只做论文写作和审稿，可选 19 个。完整集增加实际绘图、文献研究、结果分析、参考文献核验、会议论文与学术演示。本地安装需要 Bash 和 Python 3.9+；远程安装还需要 curl 和 tar。
+| 技能组合 | 适用任务 | 安装参数 |
+|---|---|---|
+| **完整科研工作流 · 27 个** | 论文、科研图表、文献与分析扩展 | `--set all` |
+| **写作与审稿 · 19 个** | 结构、语言、引用、投稿检查和审稿回复 | `--set recommended`（安装器默认） |
+| **写作审稿 + 图表 · 21 个** | 19 个基础技能，另加图形制作与检查 | `--set recommended --figure` |
 
-**让代理自动安装：** 点击下方代码块右上角的复制按钮，再粘贴到代理对话中：
-
-**完整科研流程：全部 27 个 skill**
+**在 Codex 或 Claude Code 中复制这条指令，即可请求安装完整的 27 个技能：**
 
 ```text
 读取并执行 https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md，为当前环境安装 Nature Paper Skills 全部 27 个技能（all 完整集），并验证结果。
 若页面读取失败，请使用可用的 GitHub 工具或 git clone 获取 main 分支源码，再读取根目录 INSTALL.md；不要用搜索摘要代替原文。
 ```
 
-**论文写作与审稿：推荐的 19 个 skill**
+如果需要 **19 或 21 个技能**，可以在[网站安装向导](https://boom5426.github.io/Nature-Paper-Skills/zh/install/)选择并复制相应指令，或明确要求代理按照 `INSTALL.md` 安装对应组合。未指定组合时，安装器默认安装 19 个。
 
-```text
-读取并执行 https://github.com/Boom5426/Nature-Paper-Skills/blob/main/INSTALL.md，为当前环境安装 Nature Paper Skills 推荐的 19 个技能，并验证结果。
-若页面读取失败，请使用可用的 GitHub 工具或 git clone 获取 main 分支源码，再读取根目录 INSTALL.md；不要用搜索摘要代替原文。
-```
-
-无需指定 creator。[INSTALL.md](INSTALL.md) 让代理选择受支持的路径，自行取得资源并验证。网页版持久安装尚未验证，代理须确认账号注册能力后才能报告成功。
-
-| 你使用的应用 | 从这里开始 |
-|---|---|
-| Codex：App、CLI 或 IDE | [Codex 安装](#install-codex-bash)；Windows 操作放在详细指南中 |
-| Claude Code | [Claude Code 安装](#install-claude-code) |
-| 网页版 ChatGPT Work | [网页版安装与可用性](#install-chatgpt-work-web)；自动安装尚未验证 |
+本地安装需要 **Bash 和 Python 3.9+**；远程获取源码还需要 `curl` 和 `tar`。代理应报告实际安装目录、选择的组合、完整性检查及是否验证过新会话加载。文件校验通过不等于客户端已成功识别技能。
 
 <a name="install-codex-bash"></a>
 
 <details>
-<summary><b>Codex</b></summary>
-
-Linux/macOS 运行：
+<summary><b>Codex · Linux/macOS 命令与 Windows 说明</b></summary>
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent codex --set all
 ```
 
-此命令安装全部 27 个；需要 19 个写作与审稿技能时，将 `--set all` 换成 `--set recommended`。
-
-Windows 请按 [Windows 安装说明](docs/installation-codex.md#windows-desktop-app)，选择 App 实际使用的原生 agent 或 WSL2 路径。
-
-默认安装到 `~/.agents/skills`。刷新技能列表或新建会话，再选择 `paper-workflow`；CLI/IDE 可显式调用 `$paper-workflow`。环境要求和验证范围见 [Codex 安装指南](docs/installation-codex.md)。
-
-如果使用内置 `skill-installer`，请指定包含 `SKILL.md` 的目录，例如 [`skills/core/paper-workflow`](https://github.com/Boom5426/Nature-Paper-Skills/tree/main/skills/core/paper-workflow)。仓库根目录是技能集合，不能作为单个 skill 安装；完整工作流需要哪些目录，见[技能地图](docs/skill-map.md)。
+要安装更小的组合，替换为表格中的参数。请安装到实际 Agent 使用的环境，再刷新或重启 Codex；CLI/IDE 中可以调用 `$paper-workflow`。Windows 原生环境和 WSL 的目标目录不同，详见 [Codex 安装指南](docs/installation-codex.md#windows-desktop-app)。仓库根目录是技能集合，不能作为单个 Skill 安装。
 
 </details>
 
 <a name="install-claude-code"></a>
 
 <details>
-<summary><b>Claude Code</b></summary>
-
-在 Claude Code 所用的机器和用户环境中运行：
+<summary><b>Claude Code · Linux/macOS 命令</b></summary>
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/install.sh | bash -s -- --agent claude --set all
 ```
 
-此命令安装全部 27 个；需要 19 个写作与审稿技能时，将 `--set all` 换成 `--set recommended`。
-
-默认安装到 `~/.claude/skills`。刷新或重新打开 Claude Code，再调用 `/paper-workflow`。环境要求和验证范围见 [Claude Code 安装指南](docs/installation-claude.md)。
+安装其他组合时使用表格中的参数。刷新或重新打开 Claude Code 后调用 `/paper-workflow`。见 [Claude Code 安装指南](docs/installation-claude.md)。
 
 </details>
 
 <a name="install-chatgpt-work-web"></a>
 
 <details>
-<summary><b>网页版 ChatGPT Work</b></summary>
+<summary><b>ChatGPT Work 网页版 · 持久注册尚未验证</b></summary>
 
-使用上方**任一条复制指令**，让代理自行取得资源并执行当前环境支持的安装流程；无需你点选 `@skill-creator`、运行 Python 或上传 ZIP。
-
-**网页版自动安装尚未验证。** 当前账号须提供受支持的保存／注册流程；网页任务中下载了文件或生成了技能目录，不能证明新会话可调用。如果缺少注册能力，代理应直接说明原因。
-
-可靠分发需由维护者发布插件，或由工作区管理员导入 GitHub marketplace。见[网页版分发与验证](docs/installation-chatgpt-work.md)；打包命令属于维护者操作。
+**网页版自动安装尚未确认。** 在网页任务中下载技能或生成目录，不等于已经注册为新会话可用的 Skill。持久使用需要账号或工作区提供受支持的注册能力；若不可用，代理应明确说明。参见[网页版分发与验证](docs/installation-chatgpt-work.md)。
 
 </details>
 
-仓库安装器会备份已有副本。添加 `--figure` 安装绘图技能，或用 `--set all` 安装全部 27 个 skill；安装范围、预览、更新和恢复命令见[安装选项](#安装选项)。
-
 <a name="2-完成第一次修订"></a>
 
-### ✍️ 2. 完成第一次修订
+### 2. 完成第一次修订
 
-在本地 agent 中确认技能可见后，将当前稿件和相关结果放进工作目录，然后说：
+确认代理能够识别 `paper-workflow` 后，将稿件片段与支持它的证据放入工作目录，再输入：
 
 ```text
-用 paper-workflow。依据 evidence.md 中的证据修改 draft.md 的 Results 段落。
-保留测量值和图号，保存修订副本，并简要说明关键改动。
+使用 paper-workflow，依据 evidence.md 中的证据只修改 draft.md 的 Results 段落。
+保留测量值、置信区间和图号，保存修订副本并说明关键改动。
 ```
 
-没有现成材料时，直接用[第一次完成修订](examples/first-run/README.md)，里面有输入、提示词和参考输出。Codex CLI/IDE 可用 `$paper-workflow` 明确调用；Claude Code 可用 `/paper-workflow`。
-
-之后可以直接说“优化这篇论文”，也可以点名某个技能。工作流会先判断问题和范围，再执行需要的步骤，无需记住全部技能名。
+建议先运行[不需要私人稿件的完整入门案例](examples/first-run/README.md)，再处理自己的论文。之后可以直接说“优化论文”“检查讨论”或“核对引用”，无需记住所有 Skill 名称。
 
 <a name="按任务选择"></a>
 
@@ -208,47 +182,13 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 
 <a name="安装选项"></a>
 
-## 📦 安装选项
+## ⚙️ 安装维护与兼容性
 
-<details>
-<summary><b>⚙️ 选择 agent、安装范围与技能组合</b></summary>
+本地安装器支持 `--dry-run`、`--doctor`、`--on-conflict`、`--restore` 和 `--ref <完整提交SHA>`。安装器记录版本来源与文件哈希，并在替换已有安装时备份；对于用户改动或软链接，请使用合适的冲突处理策略，不要直接覆盖。
 
-```bash
-# 克隆后使用本地文件；只有指定 --ref 才重新下载
-git clone https://github.com/Boom5426/Nature-Paper-Skills.git
-cd Nature-Paper-Skills
-bash install.sh --agent codex --local     # 当前项目 .agents/skills
-bash install.sh --agent claude --local    # 当前项目 .claude/skills
-bash install.sh --agent both             # 两个 agent 的用户级位置
-bash install.sh --agent codex --figure   # 加装图形制作与检查
-bash install.sh --agent codex --set all  # 全部 27 个 skill
-bash install.sh --agent codex --dry-run  # 预览
-bash install.sh --agent codex --doctor   # 检查文件、版本与依赖
-```
+[安装维护、更新与恢复](docs/installation-management.md) · [Codex 安装（含 Windows）](docs/installation-codex.md) · [Claude Code 安装](docs/installation-claude.md) · [支持的环境与文件格式](docs/compatibility.md)
 
-**默认：** 19 个写作、评审与期刊技能。**图形扩展：** `nature-figure`、`figure-style`，需要 Python 绘图包或 R 绘图环境。**完整集：** 全部 27 个技能，包含文献研究、结果分析及可选的会议、演示、在线文献核验流程。核心写作和数据绘图不需要 OpenRouter 密钥；只有可选 AI 示意草图路线需要。图像使用须符合目标期刊要求。
-
-</details>
-
-<details>
-<summary><b>🛠️ 环境要求与技能加载排错</b></summary>
-
-**本地安装器需要：** Codex 或 Claude Code、Bash、Python 3.9+（安装只用标准库，无需额外 pip 包）。远程安装还需要 `curl` 和 `tar`。Windows 操作见 [Codex Windows 安装说明](docs/installation-codex.md#windows-desktop-app)。[网页版 ChatGPT Work](#install-chatgpt-work-web)采用独立分发流程。已验证范围见[环境与文件格式](docs/compatibility.md)。
-
-如果找不到技能，刷新技能列表或重新打开会话，再看[排错说明](docs/installation-management.md#troubleshooting)。分 agent 安装说明：[Codex](docs/installation-codex.md) · [Claude Code](docs/installation-claude.md)。
-
-</details>
-
-<details>
-<summary><b>🔄 查看安装器、更新、恢复与固定版本</b></summary>
-
-可以先读 [install.sh](install.sh)，或按上方命令克隆后安装。更新前会备份已有技能，详见[更新与恢复](docs/installation-management.md)。
-
-多个 agent 共用一份安装副本时，可采用[手动软链接布局](docs/installation-management.md#manual-layout-one-canonical-copy-linked-into-the-agent-directory)。更新、检查与恢复都针对中央安装目录执行；已有 agent 条目会保留。
-
-通过 `--ref <完整提交SHA>` 固定版本；安装器会记录来源和文件哈希。版本变化见 [CHANGELOG](CHANGELOG.md)。
-
-</details>
+Skills 提供流程说明和可选辅助脚本，不自带每项任务需要的编辑器、运行环境、来源访问权限或实验数据。
 
 <a name="适用范围与边界"></a>
 
