@@ -5,7 +5,8 @@ description: >-
   优化论文, 润色论文 or 投稿前检查. Identify the article type, requested scope, the
   sections in scope and available evidence, then choose the necessary writing or checking steps.
   Also use when one section is named, such as rewrite the Abstract, 改摘要, 写引言 or 讨论怎么写,
-  so that the section's contract and its dependencies on other sections apply.
+  or when a draft must reach a broad reader (面向大同行, 写给非本领域读者, too technical), so that
+  the section's contract, its reader and its dependencies on other sections apply.
   Go to a specialist directly when the user names one or a narrow job such as a
   citation style. Do not route ordinary
   emails, code documentation or non-manuscript writing through this workflow.
@@ -56,6 +57,7 @@ The table gives candidate steps in order, not mandatory rewrite passes.
 |---|---|---|
 | One sentence or one paragraph | `passage` | `write-scientific-manuscript`, then `anti-defensive-writing` if the passage is hedged, over-caveated or written in an audit, self-critical, developer or commitment voice, then `scientific-prose-style` |
 | One section to draft or rewrite in prose, such as the Abstract or the Introduction | `section` | Read that position's entry in `references/section-contracts.md` and check its upstream dependency; `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
+| Written for specialists but must reach a broad reader: 面向大同行, 写给非本领域读者, "too technical" | `audience` | Read the Reader section of `references/section-contracts.md`; `manuscript-optimizer` for framing in the broad positions (opening question, what success is measured against, findings in biological terms), then `write-scientific-manuscript` for terms and passage logic, then `scientific-prose-style`. Technical positions keep their precision |
 | A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision`, `anti-defensive-writing`, then `scientific-prose-style` |
 | A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, with `references/section-contracts.md` as the per-section standard; `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
 | Reads like an audit report, a rebuttal or a self-critique; hedged, over-caveated or apologetic; a paragraph opens with a limitation; the SI or data statements confess what could not be found; the text names folders, files or build steps, or promises a future release | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
@@ -122,7 +124,8 @@ one.
 
 Use these layers to diagnose problems and preserve dependency order.
 
-1. **Structure**: is there a defensible claim hierarchy and evidence chain?
+1. **Structure**: is there a defensible claim hierarchy and evidence chain, framed for the intended
+   reader?
    `manuscript-optimizer` for research articles, `review-article-architecture` for Reviews.
 2. **Prose**: is the section drafted in full paragraphs that carry the argument?
    `scientific-writing`, with `results-section-revision` for late-stage Results architecture.
@@ -159,7 +162,9 @@ Abstract, an Introduction and a Methods section are held to different standards,
 behave differently in them: a Methods section is almost entirely load-bearing, and an Abstract keeps
 effect sizes but not test statistics. [section-contracts.md](references/section-contracts.md) states
 each position's job, dependencies, acceptance criteria and owning specialists once. Specialists
-apply it and do not restate it. Read the entry for every position in scope before diagnosing it,
+apply it and do not restate it. Positions also differ in register: the front matter and the opening
+and close of each section are written for the broad peer (大同行), the body of Results and Methods
+for specialists; the contracts' Reader section defines both and how to test them. Read the entry for every position in scope before diagnosing it,
 and check the edit against the same entry afterwards.
 
 Positions depend on one another:

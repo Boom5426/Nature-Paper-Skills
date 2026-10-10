@@ -36,6 +36,10 @@ Use these framing defaults:
 - preserve the non-specialist-friendly summary paragraph expectation
 - if fit is uncertain, explicitly test whether the broad-readership case is real before optimizing prose too far
 
+For all three journals, front matter follows the broad register defined in the Reader section of
+`paper-workflow`'s `references/section-contracts.md`. For `Nature` the broad peer is any scientist;
+for `Nature Methods` and `Nature Biotechnology` it is a biologist who would use the method.
+
 ### `Nature Methods`
 
 Prefer `Nature Methods` when the central contribution is a method, assay, platform, computational approach, or resource whose main claim is enabling power.

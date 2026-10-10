@@ -25,7 +25,7 @@ journal's current guide.
 | Nature Biotechnology | Milo, scArches, CARD, GLUE, Scissor, DestVI, SEACells, Higashi, MaxFuse |
 | Nature Communications | ScType, STAGATE, GraphST, ALRA, SpatialPCA, STdeconvolve, dsb, SpaTalk, scDEAL, nnSVG |
 
-PMCIDs and the counting code are in the repository at `scripts/section_corpus.py`, which is not
+PMCIDs for both samples and the counting code are in the repository at `scripts/section_corpus.py`, which is not
 part of the installed skill. Run it with `--xml-dir <cache>` to fetch the same papers and recompute
 every count in the next section.
 
@@ -72,8 +72,36 @@ approximate.
   paragraph with the outlook in about 6; the last sentence is a field-level outlook in about 18 and a
   software availability statement in 4.
 
+## Reader: method Articles compared with `Nature`
+
+The broad register in the contracts' Reader section was checked against a second sample, selected
+on 2026-10-10 from Europe PMC: open-access `Nature` papers from 2020 to 2025 with method-like title
+terms, sorted by citations, keeping the first twelve that introduce a computational method for
+biology or medicine (AlphaFold, AlphaFold 3, ModelAngelo, RETFound, Prov-GigaPath, AF-Cluster, a
+breast cancer response predictor, Chroma, luciferase design, NYUTron, Swarm Learning and EVEscape).
+SCimilarity and GET, the only single-cell or transcription methods among the 80 candidates, are a
+supplement and are not counted. Only abstracts were read. One reader coded them.
+
+| Abstract feature | 28 method Articles | 12 `Nature` papers |
+|---|---|---|
+| First sentence states a biological or biomedical stake | 3 (CellOT, Nicheformer, DestVI; SATURN in part) | 6 |
+| Method introduced by what it does before how it works | 14 | 9 |
+| Success measured against experiment, expert work or known biology | 1 or 2 | about 6 |
+| Main finding framed as a capability or biological insight first | about 8 | 7 (3 more mix it with a benchmark) |
+| Last sentence states a field-level implication | most; 8 end on software availability | 11 |
+| Model-internal terms per abstract (script) | median 1, none in 9 | median 1, none in 4 |
+
+The last row is the decisive one. Breadth does not come from using fewer technical terms: both
+samples name model families at the same rate. It comes from framing: what the first sentence is
+about, what success is measured against, and in whose terms the finding is stated. When `Nature`
+abstracts give a number, it is usually in units a field reader can judge, such as a clinical AUC, a
+catalytic efficiency or the deviation from a crystal structure.
+
 ## House choices that depart from the sample
 
+- **Reader:** the contracts write front matter for the broad peer. Most method Articles in the
+  first sample open with a technology or a computational task and measure success only against
+  other algorithms; the `Nature` sample shows the register the contracts ask for.
 - **Discussion length:** the contracts set 3–5 paragraphs; 13 of 27 papers fall in that range and
   the median is 5. The narrower range keeps the three moves compact.
 - **Final Introduction paragraph:** the contracts ask for an enlarged version of the Abstract's
@@ -89,6 +117,8 @@ approximate.
 
 The sample ranks by citation count, so 2022 papers are over-represented and recent ones are scarce.
 It includes only open-access papers in three journals, and only computational methods for
-single-cell and spatial data; CellOT is the only perturbation-response paper. Five papers are
+single-cell and spatial data; CellOT is the only perturbation-response paper. The `Nature` sample
+is small, spans protein structure and clinical prediction rather than single-cell biology, and was
+read only at the level of the abstract. Five papers are
 accepted manuscripts rather than typeset versions. The coded counts rest on one reader. A pattern
 that most published papers share may still be one that editors tolerate rather than reward.

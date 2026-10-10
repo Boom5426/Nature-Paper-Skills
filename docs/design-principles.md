@@ -63,3 +63,11 @@ Abstract, an Introduction and a Methods section are held to different standards,
 (Results → Discussion → Introduction → Abstract → Title), so a changed claim is rechecked downstream
 and no section claims more than its upstream supports. Typical shapes are measured from published
 papers and used as checks; formats come from the journal.
+
+## 11. Write The Framing For The Broad Peer
+
+Breadth is a matter of framing, not vocabulary. Front matter opens with the biological question,
+introduces the method by what it lets a biologist do, measures success against what biologists rely
+on and states findings in biological terms. Technical terms stay, placed after the function they
+serve, and technical detail lives in Results and Methods. Clarity rules make a passage followable;
+they do not make a specialist framing broad.

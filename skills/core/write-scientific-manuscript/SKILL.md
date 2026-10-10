@@ -51,6 +51,24 @@ For file-based revision, identify the authoritative version and preserve citatio
 
 ## Write for a broad scientific reader
 
+Clarity and breadth are different repairs. The rules below make a passage followable; they do not
+turn a technical framing into one a broad peer (大同行) can use. In the broad positions defined in
+the Reader section of `paper-workflow`'s `references/section-contracts.md` (the Abstract, the
+opening and close of the Introduction, Results subsections and Discussion), check the framing
+first:
+
+- the opening sentence states the biological stake, not a technology, dataset or computational task;
+- the method is introduced by what it lets a biologist find or predict, and only then by how;
+- findings say what was predicted or recovered, compared with what the biologist relies on where the
+  Results contain that comparison;
+- a metric is named only with what it measures, and a number appears in units the reader can judge;
+- a scientist from another field could restate the problem, the finding and why it matters.
+
+Do not delete technical terms to look accessible. Place each after the function it serves, and keep
+the technical detail in Results and Methods.
+
+Then apply the passage rules:
+
 - Assume intelligence but not local project knowledge.
 - Introduce the biological or methodological problem before project-specific machinery.
 - Define an uncommon term when first needed, not several paragraphs earlier.

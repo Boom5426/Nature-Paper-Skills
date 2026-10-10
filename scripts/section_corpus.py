@@ -50,7 +50,21 @@ BRIEF = {"CytoTRACE 2", "CytoSPACE"}
 # Accepted manuscripts rather than the typeset version: excluded from abstract and figure counts.
 ACCEPTED_MANUSCRIPT = {"alevin-fry", "Milo", "CARD", "Scissor", "DestVI"}
 
+# Reader comparison, selected on 2026-10-10: Europe PMC, JOURNAL "Nature", OPEN_ACCESS:y, HAS_FT:y,
+# PUB_YEAR 2020-2025, method-like title terms, sorted by citations; the first twelve papers that
+# introduce a computational method for biology or medicine, plus every single-cell or transcription
+# method among the 80 candidates. Only abstracts are used.
+BROAD_SAMPLE: dict[str, str] = {
+    "AlphaFold": "PMC8371605", "AlphaFold 3": "PMC11168924", "ModelAngelo": "PMC11006616",
+    "RETFound": "PMC10550819", "Prov-GigaPath": "PMC11153137", "AF-Cluster": "PMC10808063",
+    "Breast cancer response predictor": "PMC8791834", "Chroma": "PMC10686827",
+    "Luciferase design": "PMC9946828", "NYUTron": "PMC10338337", "Swarm Learning": "PMC8189907",
+    "EVEscape": "PMC10599991",
+}
+BROAD_SUPPLEMENT: dict[str, str] = {"SCimilarity": "PMC11864978", "GET": "PMC11754112"}
+
 EUROPE_PMC = "https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/fullTextXML"
+EUROPE_PMC_SEARCH = "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=PMCID:{pmcid}&format=json&resultType=core"
 NCBI_EFETCH = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id={num}"
 
 
@@ -69,6 +83,16 @@ def fetch(pmcid: str, dest: Path) -> None:
             return
         errors.append(f"{url}: no <body> in response")
     raise RuntimeError(f"could not fetch {pmcid}: " + "; ".join(errors))
+
+
+def fetch_abstract(pmcid: str, dest: Path) -> None:
+    """Cache the Europe PMC abstract of one article as JSON."""
+    with urllib.request.urlopen(EUROPE_PMC_SEARCH.format(pmcid=pmcid), timeout=90) as response:
+        data = json.load(response)
+    hits = data["resultList"]["result"]
+    if len(hits) != 1 or not hits[0].get("abstractText"):
+        raise RuntimeError(f"expected one abstract for {pmcid}, got {len(hits)}")
+    dest.write_text(json.dumps({"pmcid": pmcid, "abstract": hits[0]["abstractText"]}), encoding="utf-8")
 
 
 def txt(el: ET.Element) -> str:
@@ -122,6 +146,13 @@ PERFORMANCE_NUMBER = re.compile(r"\d[\d,.~–-]*\s*(%|-fold|×)")
 TAKEAWAY = re.compile(r"^(Together|Collectively|Taken together|Overall|In summary|In sum|These (results|findings|analyses|data)|Thus|Therefore|Hence|This (shows|demonstrates|indicates|suggests)|Altogether|In conclusion)\b")
 INTERPRETIVE = re.compile(r"\b(suggest\w*|indicat\w*|demonstrat\w*|show\w*|reveal\w*|confirm\w*|highlight\w*|support\w*|underscor\w*|enabl\w*|consistent with)\b", re.I)
 COMPARISON = re.compile(r"\b(unlike|in contrast to|compared (?:to|with)|existing methods|previous methods|other methods|competing methods|current methods|prior methods)\b", re.I)
+# Model-internal vocabulary: architecture, objective or estimator names a biologist would not use.
+INTERNAL_TERMS = re.compile(r"\b(auto-?encoder|variational|attention|transformer|graph neural|graph network|contrastive|"
+                            r"self-supervised|optimal transport|latent|embedding|hypergraph|gaussian process|low-rank|kernel|"
+                            r"diffusion|representation learning|transfer learning|metric learning|nearest[- ]neighbou?r|"
+                            r"factori[sz]ation|dimension reduction|convex|archetypal|autoregressive|probabilistic|"
+                            r"generative model|language model|hidden markov|multiple-sequence alignment|"
+                            r"multi-sequence alignment|vision transformer|fine-tun)", re.I)
 LABELS = ["novel", "first", "unprecedented", "state-of-the-art", "outperform\\w*", "superior", "powerful"]
 
 
@@ -178,6 +209,7 @@ def analyse(path: Path) -> dict:
         "abstract_sentences": len(ab_sents),
         "study_sentence_index": next((i for i, s in enumerate(ab_sents, 1) if STUDY_SENTENCE.search(s)), None),
         "abstract_performance_numbers": len(PERFORMANCE_NUMBER.findall(ab)),
+        "abstract_internal_terms": len(INTERNAL_TERMS.findall(ab)),
         "intro_paragraphs": len(intro),
         "results_subsections": sub_records,
         "discussion_paragraphs": len(paras(discussion)) if discussion is not None else None,
@@ -218,6 +250,19 @@ def main() -> int:
             rec.update(journal=journal, pmcid=pmcid, accepted_manuscript=name in ACCEPTED_MANUSCRIPT)
             records[name] = rec
 
+    broad = {}
+    for name, pmcid in {**BROAD_SAMPLE, **BROAD_SUPPLEMENT}.items():
+        path = args.xml_dir / f"{pmcid}.abstract.json"
+        if not path.exists():
+            if args.offline:
+                print(f"missing {path} (--offline)", file=sys.stderr)
+                return 1
+            fetch_abstract(pmcid, path)
+            time.sleep(0.5)
+        text = re.sub(r"<[^>]+>", "", json.loads(path.read_text(encoding="utf-8"))["abstract"])
+        broad[name] = {"pmcid": pmcid, "abstract_internal_terms": len(INTERNAL_TERMS.findall(text)),
+                       "supplement": name in BROAD_SUPPLEMENT}
+
     typeset = {n: r for n, r in records.items() if not r["accepted_manuscript"]}
     print(f"Articles: {len(records)} ({len(typeset)} typeset, {len(records) - len(typeset)} accepted manuscripts)")
     for journal in SAMPLE:
@@ -249,8 +294,12 @@ def main() -> int:
     print("First Results heading starts with 'Overview' or 'Method overview':",
           sum(bool(r["results_subsections"]) and bool(re.match(r"^(method )?overview\b", r["results_subsections"][0]["title"], re.I))
               for r in records.values()))
+    terms = [r["abstract_internal_terms"] for r in records.values()]
+    print(f"Model-internal terms per abstract, method Articles: {summary(terms)}; none: {sum(x == 0 for x in terms)}")
+    nature = [r["abstract_internal_terms"] for r in broad.values() if not r["supplement"]]
+    print(f"Model-internal terms per abstract, Nature sample: {summary(nature)}; none: {sum(x == 0 for x in nature)}")
     if args.json is not None:
-        args.json.write_text(json.dumps(records, indent=1), encoding="utf-8")
+        args.json.write_text(json.dumps({"articles": records, "nature": broad}, indent=1), encoding="utf-8")
     return 0
 
 

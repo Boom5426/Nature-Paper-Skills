@@ -49,8 +49,17 @@ implementation flaw invalidates a result, stop interpreting that result and repo
 
 ## Reader model
 
-Assume a reader who understands the broad life-science or AI domain but does not know this
-benchmark, dataset, metric, model, or local terminology.
+Frame the paper for the broad peer (大同行): a scientist outside the subfield who did not build
+this kind of method. For a computational-biology paper, that is a biologist who would use the
+method but does not know its benchmarks, metrics or model families. A reader who knows "the broad
+AI domain" is an adjacent specialist; writing for that reader is the usual reason a manuscript
+reads as too technical. The Reader section of `paper-workflow`'s `references/section-contracts.md`
+says which positions carry this register and how to test them.
+
+At this layer, check framing before wording: whether the paper opens from a biological question,
+whether success is measured against what biologists rely on (experiment, expert annotation, known
+biology) where the data allow it, and whether findings are stated as what was predicted or
+recovered rather than as metric gains.
 
 Do not assume that the reader knows:
 

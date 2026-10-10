@@ -39,6 +39,9 @@ Do not use this skill for:
 1. Front-half alignment
    - check title, abstract, introduction, and discussion against the actual Results
    - flag any claim stronger than the downstream evidence
+   - check the broad positions against the Reader section of `paper-workflow`'s
+     `references/section-contracts.md`: a front matter written for specialists is a reader-friction
+     finding, not a polish item
 2. Figure and legend coverage
    - verify that every main-figure panel and supplementary panel cited in the paper actually exists
    - verify that panel letters, metrics, datasets, and numbers agree across figure, legend, and main text
@@ -89,6 +92,7 @@ Do not use this skill for:
 - Is the supplement indexed precisely enough, including panel letters when needed?
 - Are strong causal or mechanism words used only where direct evidence exists?
 - Are title, abstract, and discussion consistent about the paper's actual contribution type?
+- Could a scientist outside the subfield say, from the title and abstract alone, what biological question was addressed, what was found and why it matters?
 - If the target is `Nature Portfolio`, are the reporting-summary inputs, data/code statements, image-integrity materials, and disclosure items actually ready rather than merely planned?
 - If a submission form or portal draft already exists, do the title, abstract, keywords, availability statements, and related metadata still match the manuscript exactly?
 - Has the paper been pressure-tested against the main rejection dimensions: insufficient contribution, weak clarity, weak empirical effect, incomplete evaluation, and questionable design?
@@ -119,6 +123,7 @@ If no major problems exist, say that explicitly and then list only the residual 
 ## Common Failure Modes
 
 - Abstract promise stronger than Results support
+- Front matter that opens with a technology or computational task and reports findings only as metric gains over other methods
 - Figure panel mentioned in text but not actually indexed or explained
 - Legend still describing an old version of the plot
 - Supplementary figure cited at whole-figure level when the argument depends on one panel

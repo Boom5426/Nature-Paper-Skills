@@ -19,6 +19,45 @@ Results and Conclusions labels is a requirement of some journals and reporting g
 default. On the default journal path, with no stated format, write the abstract as one unstructured
 paragraph and report the format as unchecked.
 
+## Reader
+
+Front matter is written for 大同行, the broad peer: a scientist outside the subfield who did not
+build this kind of method. For a computational-biology paper in Nature Methods, Nature
+Biotechnology or Nature Communications, that is a biologist who would use the method but does not
+know its benchmarks, metrics or model families; for `Nature` or `Science`, any scientist. A reader
+who knows "the broad AI domain" is an adjacent specialist, not a broad peer.
+
+Positions differ in register:
+
+- **Broad positions:** the Title; the whole Abstract; the first and final paragraphs of the
+  Introduction; the first and last sentences of each Results subsection; the opening and closing of
+  the Discussion.
+- **Technical positions:** the body of each Results subsection, Methods, legends and the SI. Here
+  precision and reproducibility come first, and technical vocabulary is expected.
+
+Broad accessibility is a matter of framing, not of deleting terms. A broad position meets the
+reader when:
+
+1. **It opens with the biological stake.** The first sentence names a biological or biomedical
+   question, process or need, not a technology, dataset, model class or computational task.
+2. **The method is introduced by what it does.** Say what the method lets a biologist find or
+   predict before saying how; a model family or component may follow as the means, in one clause.
+3. **Success is measured against what the biologist relies on.** When the Results compare the
+   method with experiment, expert annotation or known biology, lead with that comparison;
+   comparisons with other algorithms support it. Never invent such a comparison.
+4. **Findings are stated in biological terms.** Say what was predicted or recovered, such as which
+   genes rise or fall or which drug pairs act beyond the sum of their single effects. A metric
+   name appears only with what it measures, and a number appears in units the reader can judge.
+5. **It passes the neighbour test.** A scientist from another field can say, after one read, what
+   problem was addressed, what was found and why it matters.
+
+Precision is not traded for this. Technical support moves to the technical positions; it does not
+disappear, and no claim becomes broader than the evidence.
+
+This register is a house choice that departs from the sample of method papers behind the typical
+ranges below, most of which open with a technology or a computational task. Computational papers
+in `Nature` follow it far more often; see [section-evidence.md](section-evidence.md).
+
 ## Dependency order
 
 Positions restate claims that are settled elsewhere:
@@ -60,8 +99,8 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 - **Job:** name the central finding or question at the highest level the evidence supports.
 - **Depends on:** the main claim, as compressed in the Abstract.
 - **Meets the contract when:** the focus follows concept or finding > framework name >
-  implementation; a broad reader knows what the paper is about after one pass; it uses the terms
-  the intended readers search for.
+  implementation; a broad peer knows what biological question or capability the paper is about
+  after one pass; it uses the terms the intended readers search for.
 - **Method papers:** the title names the task, the data or setting and the key idea ("Mapping
   single-cell data to reference atlases by transfer learning"). The method name is optional and,
   when present, often follows "with". A claim sentence fits a title when the contribution is a
@@ -74,19 +113,24 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 
 ## Abstract
 
-- **Job:** compress the paper's chain so that a reader outside the subfield can state the main
-  finding after one read.
+- **Job:** compress the paper's chain so that a broad peer can state the problem, the main finding
+  and why it matters after one read. Every sentence is in the broad register (see Reader).
 - **Depends on:** settled Results claims, the Discussion's main answer and the Introduction's gap.
 - **Meets the contract when:** one chain runs problem → unresolved gap → approach → the findings
   that carry the main claim (usually one to three) → bounded implication, and every sentence
-  advances it. The sentence that introduces the study ("Here we present ...") follows the problem
-  and gap, usually as the second to fourth sentence. Comparative results are stated in words, with
-  what was compared and on what ("more accurate than X on Y"). A number appears only when the number
-  is the claim, usually at most one, and it carries its direction, magnitude and comparison. A
-  closing sentence of field-level implication is acceptable when it names what becomes possible.
+  advances it. The first sentence states the biological stake. The sentence that introduces the
+  study ("Here we present ...") follows the problem and gap, usually as the second to fourth
+  sentence, and says what the method lets a biologist do. Findings are stated as what was predicted
+  or recovered, with what it was compared against; a comparison with experiment, expert annotation or
+  known biology leads when the Results contain one. A number appears only when the number is the
+  claim, usually at most one, in units the reader can judge, with its direction, magnitude and
+  comparison. A closing sentence of field-level implication is acceptable when it names what becomes
+  possible.
   When the supplied material does not provide a move, most often the gap, take it from the
   Introduction or leave it marked for the author; do not compose a new claim about the literature.
-- **Fails when:** generic background takes most of the space; it lists datasets, baselines or every
+- **Fails when:** it opens with a sequencing technology, a dataset, a model class or a computational
+  task; it states the main finding only as a benchmark win or as a metric the reader cannot
+  interpret; generic background takes most of the space; it lists datasets, baselines or every
   metric; it says a result was significant without saying what changed, or offers a P value as the
   finding; it claims more than the Results, such as outperforming all methods when the Results show
   a narrower win; it cites a result whose Results subsection is not settled; it uses labels such as
@@ -102,12 +146,13 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 
 - **Job:** make the study's question necessary.
 - **Depends on:** the central question; the final paragraph also depends on the Results.
-- **Meets the contract when:** it moves from the field-level problem to the missing capability or
-  unresolved question, then to why that question remains hard, then to what this study does and
+- **Meets the contract when:** it opens in the broad register with the biological problem, not
+  with the data type or the computational task, and moves to the missing capability or unresolved
+  question, then to why that question remains hard, then to what this study does and
   what it makes possible to learn. Prior work is organized by what it can and cannot answer. The
   final paragraph states the question, approach and primary contribution, then previews the main
   findings as an enlarged version of the Abstract's findings sentences: what was shown, against
-  what, and what it enables, in a few sentences.
+  what, and what it enables, in a few sentences and in biological terms.
 - **Fails when:** it is a method-by-method catalogue or a chronology; the proposed method appears
   before the problem is defined; the final paragraph walks through the applications or figures one
   by one, gives detailed numbers, or promises what the Results later walk back; it carries design
@@ -121,7 +166,9 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 - **Job:** establish the claims as an argument, one subsection per question.
 - **Depends on:** the figures, tables and analyses, and the claim architecture.
 - **Meets the contract when:** each subsection heading states the supported finding. A subsection
-  opens with the question or context that makes the analysis necessary; later paragraphs lead with
+  opens with the question or context that makes the analysis necessary, stated in biological terms,
+  and its last sentence says what the result means for that question; both are broad positions,
+  while the body between them may be technical; later paragraphs lead with
   their message when the evidence supports it. Each local claim runs question → minimum design →
   core observation with direction and magnitude → interpretation, stated explicitly whenever the
   inference is not obvious from the observation. One or two quantitative anchors carry each local
@@ -137,7 +184,8 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
   to model C"). Open with a result instead only when the first contribution is itself a finding.
   The usual order is overview → comparison with baselines, early (often the second subsection) →
   properties such as robustness, ablation and scalability → biological applications, ending on the
-  strongest biological result.
+  strongest biological result. Each comparison says what the better prediction lets a biologist do,
+  and a comparison with experiment or known biology is reported where the data allow one.
 - **Fails when:** it follows experiment chronology or panel order; procedural openers ("We next
   investigated", "To test this") are the default pattern or run in consecutive subsections;
   implementation checks are reported as findings; a chain of setup, safeguard and caveat precedes
@@ -151,15 +199,16 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 - **Job:** state what the findings jointly establish and what changes because of them.
 - **Depends on:** settled Results.
 - **Meets the contract when:** it makes three moves, in this order, each in one or more paragraphs.
-  1. **Findings and their significance:** open with the main advance and its evidence, and say what
-     it adds to or changes in existing methods or understanding. The comparison with related
+  1. **Findings and their significance:** open, in the broad register, with the main advance and
+     its evidence, and say what it adds to or changes in existing methods or understanding. The comparison with related
      methods belongs here or in move 2.
   2. **Why they hold and what they mean:** the methodological logic behind the result (which design
      choice does the work) and the biological value of the findings. Interpret rather than replay,
      and label mechanism evidence apart from mechanistic hypothesis.
   3. **Scope and field-level implication:** the conditions under which the conclusions hold, then
      the implication for the field, including which implications extend beyond the data analysed,
-     and why. The final sentence states that implication and names what becomes possible.
+     and why. The final sentence states that implication in the broad register and names what
+     becomes possible for biology or medicine.
 - **Limitations:** state genuine limitations once, as scope, in move 3, or where a limit sets a
   reported value. A useful limitation changes how a result is read.
 - **Fails when:** it reopens with field background; it repeats Results numbers; it itemizes

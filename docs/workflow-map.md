@@ -26,10 +26,13 @@ in [section-contracts.md](../skills/core/paper-workflow/references/section-contr
 what it depends on, its typical shape and what makes it fail. Positions depend on one another in
 this order: figures and evidence → Results → Discussion → Introduction → Abstract → Title. A request
 to revise the Abstract stays an Abstract edit, but a claim that rests on an unsettled result stays
-out of it, and a changed Results claim is rechecked wherever it is restated. Formats such as
+out of it, and a changed Results claim is rechecked wherever it is restated. Positions also differ
+in register: the front matter and the opening and close of each section are written for the broad
+peer (大同行), with the technical detail in the body of Results and in Methods. Formats such as
 abstract length come from the journal's current guide, not from the contracts. The typical ranges
-and method-paper patterns come from 28 Nature Methods, Nature Biotechnology and Nature Communications
-method papers; see [section-evidence.md](../skills/core/paper-workflow/references/section-evidence.md).
+and method-paper patterns come from 28 Nature Methods, Nature Biotechnology and Nature
+Communications method papers; see
+[section-evidence.md](../skills/core/paper-workflow/references/section-evidence.md).
 
 ## Integrity checks
 

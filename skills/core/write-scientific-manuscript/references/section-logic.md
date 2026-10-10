@@ -17,7 +17,7 @@ have no label.
 
 ### Paragraph 1: establish the problem
 
-Start with the real scientific goal, not a narrow implementation. Explain why it matters and introduce only the concepts needed to define the problem.
+Start with the real scientific goal, not a narrow implementation, stated in biological terms a broad peer recognizes rather than as a computational task. Explain why it matters and introduce only the concepts needed to define the problem.
 
 ### Paragraph 2: expose the unresolved limitation
 

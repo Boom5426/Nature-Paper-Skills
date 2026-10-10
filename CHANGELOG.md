@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Broad-peer framing
+
+- Define the reader for front matter as the broad peer (大同行) rather than an adjacent specialist, in the section contracts' new Reader section, `manuscript-optimizer`'s reader model and `write-scientific-manuscript`. Broad positions (Title, Abstract, opening and close of each section) open with the biological stake, introduce the method by what it does, measure success against experiment, expert work or known biology where the Results allow, and state findings in biological terms.
+- Add an `audience` route to `paper-workflow` for drafts that read as too technical.
+- Compare abstracts of the 28 method Articles with 12 computational-method papers in `Nature`: framing differs sharply, while the rate of model-internal terms does not (median one per abstract in both). Recorded in `section-evidence.md` and reproducible with `scripts/section_corpus.py`.
+- Add the `broad-reader-abstract` behavior case.
+- Carry the reader checks into `submission-audit` (front matter written for specialists is a reader-friction finding), `results-section-revision` (first and last sentences of each subsection), the editor-first abstract rules, the Introduction paragraph pattern, the task recipes, the ChatGPT Work entry and the website's Abstract card.
+
 ### Section contracts
 
 - Add a position axis to `paper-workflow`: each section (Title, Abstract, Introduction, Results, Discussion, Methods, legends, SI, availability) has one contract stating its job, dependencies, typical shape and failure modes, in `references/section-contracts.md`. `manuscript-optimizer`, `write-scientific-manuscript` and `scientific-writing` now point to it instead of restating their own versions.
