@@ -38,7 +38,7 @@ export const skillCopy: Record<string, {title: Pair; summary: Pair}> = Object.fr
  ['submission-audit','Check submission readiness','检查投稿准备情况','Locate prioritized issues before submission or resubmission.','在投稿或返修前定位重要问题。'],
  ['rebuttal-response','Connect replies to revisions','连接回复与改稿','Draft reviewer responses grounded in completed work.','依据已完成工作准备审稿回复。'],
  ['stats-reporting-audit','Check statistical reporting','核查统计报告','Check units, replication, comparisons and figure statistics.','核查独立单位、重复、比较与图注统计。'],
- ['anti-defensive-writing','Write for the paper’s reader','写给论文读者看','Remove defensive or project-log prose without losing necessary facts.','去掉防御式与项目日志式表达，保留必要事实。'],
+ ['anti-defensive-writing','Write for the paper’s reader','写给论文读者看','Remove defensive or project-log prose, keeping necessary facts and what the venue’s reviewers check.','去掉防御式与项目日志式表达，保留必要事实和目标 venue 审稿人会查的内容。'],
  ['scientific-prose-style','Refine the sentences','打磨科学语言','Improve rhythm, punctuation and sentence-level expression.','改善句子节奏、标点与表达。'],
  ['nature-portfolio-playbook','Choose a journal route','选择期刊路径','Align article structure and preflight with the target venue.','让文章结构与投稿检查符合目标期刊。'],
  ['nature-figure','Produce research figures','制作科研图形','Use Python or R to build figures when the required tools are available.','在工具可用时，使用 Python 或 R 制作图形。'],
@@ -48,7 +48,7 @@ export const skillCopy: Record<string, {title: Pair; summary: Pair}> = Object.fr
  ['results-analysis','Interpret experiment outputs','分析实验输出','Turn supplied numerical outputs into interpretable findings.','把已有数值结果转化为可解释的发现。'],
  ['paper-reviewer','Review papers and replies','评审论文与回复','Assess manuscripts, inventory reviewer asks and check reply coverage.','评估稿件、拆解审稿要求并核对回复覆盖。'],
  ['reference-audit-guide','Verify reference existence','核验文献存在性','Use optional tools for live reference checks when sources are accessible.','在来源可访问时，使用可选工具核验文献。'],
- ['conference-paper-writing','Write for conferences','撰写会议论文','Use a dedicated route for conference-first manuscripts.','为以会议为目标的论文采用专门路径。'],
+ ['conference-paper-writing','Write for conferences','撰写会议论文','Write to what ML reviewers check: leakage, reproducibility, runs and spread.','按 ML 审稿人检查的内容写：数据泄漏、可复现性、运行次数与波动。'],
  ['academic-presentations','Turn papers into talks','把论文转化为报告','Organize a paper’s message into a presentation.','把论文的核心信息组织为演示报告。'],
 ].map(([id,en,zh,summaryEn,summaryZh])=>[id,{title:[en,zh] as Pair,summary:[summaryEn,summaryZh] as Pair}]));
 export const categories: Record<string, Pair> = {core:['Core','核心'],venue:['Venue','期刊'],figure:['Figure','图形'],research:['Research','研究'],review:['Review','评审'],optional:['Extensions','扩展']};

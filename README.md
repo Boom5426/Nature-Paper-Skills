@@ -24,11 +24,11 @@
 - 🔒 **Evidence-bound edits.** Preserve measured values, independent units, uncertainty, negative results and necessary scope conditions.
 - 📊 **Figure-led Results.** Give each main figure a claim, align its panels and legends with Results, and use optional figure-production and QA tools when needed.
 - 📐 **Section-specific writing.** Keep the Abstract, Introduction, Results, Discussion and Methods focused on their distinct roles, with consistent scientific claims.
-- 🌍 **Written for the venue's readers.** What a paper must say is decided by who reads it at the target venue: the editor, the reviewer and the broad peer. Front matter puts readers in front of their own problem by the second sentence, measures success against what they rely on and keeps the numbers they can use. Technical detail stays in Results and Methods, and a sentence the venue's reviewers look for, such as an ML paper's no-leakage statement, is kept rather than cut as defensive.
+- 🌍 **Written for the venue's readers.** What to keep or cut follows from who reads the paper at the target venue: the editor, the reviewer and the broad peer. Front matter states the reader's problem by the second sentence and keeps the numbers they can use.
 - 📚 **Citations and rebuttals.** Check whether a cited source supports a claim; connect each reviewer response to completed evidence and actual manuscript changes.
 - 🧩 **Task-sized revisions.** Improve a whole manuscript, one section or one paragraph without reopening settled material.
 
-Section patterns are informed by [28 computational-method Articles](skills/core/paper-workflow/references/section-evidence.md); they are descriptive guidance, **not journal formatting rules**.
+Section patterns are informed by [28 computational-method Articles and 12 `Nature` method papers](skills/core/paper-workflow/references/section-evidence.md). They are descriptive guidance, **not journal formatting rules**.
 
 <a name="workflow-at-a-glance"></a>
 
@@ -190,7 +190,7 @@ The skills provide instructions and optional helper scripts, not the external ed
 
 ## 🧭 Scope and limits
 
-This is a focused journal-writing workflow for life sciences, computational biology, methods, benchmarks and resources. Explicit venue and project instructions take precedence over its Nature-style defaults. It is independent of Nature Portfolio and does not predict acceptance.
+This is a focused journal-writing workflow for life sciences, computational biology, methods, benchmarks and resources. Its rules are written for Nature-style journal articles and derived again when the target venue differs. For a named ML conference, what its reviewers check decides what stays, with details in `conference-paper-writing` (full profile). Explicit project instructions take precedence over all defaults. It is independent of Nature Portfolio and does not predict acceptance.
 
 The typical section shapes come from 28 open-access computational-method papers in three Nature Portfolio journals ([evidence and limits](skills/core/paper-workflow/references/section-evidence.md)). They are checks on a draft, not format rules; the target journal's current guide sets the format.
 

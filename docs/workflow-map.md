@@ -4,7 +4,7 @@ The agent-facing routing rules live in [paper-workflow](../skills/core/paper-wor
 
 ## Choose scope first
 
-Identify the active manuscript, article type, requested unit, editing permission and available evidence. A paragraph does not require whole-project setup. A diagnosis request does not authorize rewriting. Existing project decisions and explicit venue instructions take precedence over defaults.
+Identify the active manuscript, article type, requested unit, editing permission and available evidence. A paragraph does not require whole-project setup. A diagnosis request does not authorize rewriting. Name the target venue and what its editors and reviewers check: that decides what the paper must say and what it can leave out. Existing project decisions and explicit venue instructions take precedence over defaults.
 
 ## Scientific-to-stylistic order
 
@@ -27,11 +27,11 @@ what it depends on, its typical shape and what makes it fail. Positions depend o
 this order: figures and evidence → Results → Discussion → Introduction → Abstract → Title. A request
 to revise the Abstract stays an Abstract edit, but a claim that rests on an unsettled result stays
 out of it, and a changed Results claim is rechecked wherever it is restated. Positions also differ
-in register: the front matter and the opening and close of each section are written for the broad
-peer (大同行), with the technical detail in the body of Results and in Methods. Formats such as
+in reader: the front matter serves the editor and the broad peer (大同行), and the body of Results,
+Methods and the SI serves the reviewer, who also checks every front-matter claim. Formats such as
 abstract length come from the journal's current guide, not from the contracts. The typical ranges
 and method-paper patterns come from 28 Nature Methods, Nature Biotechnology and Nature
-Communications method papers; see
+Communications method papers, and the reader checks also from 12 `Nature` method papers. See
 [section-evidence.md](../skills/core/paper-workflow/references/section-evidence.md).
 
 ## Integrity checks

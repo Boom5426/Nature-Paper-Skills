@@ -12,7 +12,7 @@ Thanks for contributing. This repository is intentionally narrow: it is a journa
 ## Out Of Scope
 
 - generic writing prompts with no clear role in the manuscript workflow
-- conference-first logic inside the core journal path
+- conference-first defaults inside the core journal path (a rule that applies only when an ML conference is the target is fine, with its details kept in `conference-paper-writing`)
 - large dependency-heavy tooling that is not required by a specific skill
 - orphan scripts, templates, or references that are not linked from a skill
 
@@ -42,6 +42,7 @@ Thanks for contributing. This repository is intentionally narrow: it is a journa
 - Prefer explicit workflow guidance over generic advice.
 - Keep Markdown concise and scannable.
 - Preserve the repository's existing tone: direct, opinionated, and evidence-bounded.
+- A new writing rule names the reader and the venue it serves. A claim about what published papers do cites [section-evidence.md](skills/core/paper-workflow/references/section-evidence.md) or new counted evidence.
 - When you add user-facing functionality, update both [README.md](README.md) (English, the default) and [README.zh-CN.md](README.zh-CN.md) (Simplified Chinese).
 - Section standards (what an Abstract, Introduction, Results, Discussion or Methods section must do) live only in [section-contracts.md](skills/core/paper-workflow/references/section-contracts.md). Other skills point to it rather than restating it. When you change a typical range or a method-paper pattern, update [section-evidence.md](skills/core/paper-workflow/references/section-evidence.md), say whether the change follows the sample or is a house choice, and rerun `scripts/section_corpus.py` if the sample changes.
 
