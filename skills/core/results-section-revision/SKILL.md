@@ -24,8 +24,8 @@ Before revising any Results subsection, check:
 7. Does the paragraph close by stating what changes in interpretation?
 8. Does the subsection end in a way that naturally leads into the next one?
 9. Are the first and last sentences of each subsection written for a broad peer, stating the
-   question and what the result means in biological terms, while the body carries the technical
-   detail? See the Reader section of `paper-workflow`'s `references/section-contracts.md`.
+   question and what the result means in the reader's terms, while the body carries the technical
+   detail? See the Readers section of `paper-workflow`'s `references/section-contracts.md`.
 
 ## Subsection Pattern
 

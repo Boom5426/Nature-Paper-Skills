@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Rules derived from the reader
+
+- State where the rules come from: each serves the editor, the reviewer or the broad peer at the target venue, and is derived again when the venue, article type or reader differs (`paper-workflow`, design principle 12). Text that meets a rule's wording while defeating its purpose fails it.
+- Replace "the first sentence states the biological stake" with "the reader meets a specific problem they recognise as theirs by the second sentence", in the reader's terms. Coded from both samples: the problem appears by the second sentence in 18 of 28 method Articles and 8 of 12 `Nature` papers, and weak openings are truisms about biology as often as about technology.
+- Rewrite the contracts' Reader section as Readers: the editor, the reviewer and the broad peer, with the positions each one reads. `manuscript-optimizer`'s reader model follows.
+- At double-blind ML venues, keep an anonymized code link or a release statement and write Limitations in its own section (`anti-defensive-writing`, `conference-paper-writing`).
+- Update both READMEs, the design principles, the task recipes and the website's Abstract card.
+
 ### Venue, numbers and punctuation
 
 - Decide what a paper must say from the target venue's side: `paper-workflow` now names the venue and asks what its editors and reviewers check before any keep-or-cut decision. `anti-defensive-writing` gains a section on what the venue makes load-bearing. At ML conferences a no-leakage sentence stays, a configuration chosen on evaluation data is reported beside the default instead of labelled "prespecified", verdict sentences give way to estimates and intervals, and a single training run is reported to the author as a gap.

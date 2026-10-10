@@ -67,8 +67,9 @@ Force the abstract to answer the four core reader questions:
 
 1. Why did the study need to be done?
    - introduce the topic and the specific problem
-   - for a computational paper, state the biological question, not the computational task; the
-     Reader section of `paper-workflow`'s `references/section-contracts.md` gives the full test
+   - put the reader in front of that problem by the second sentence, in the reader's terms. A
+     context sentence may lead into it. The authors' task called important is not a problem. The
+     Readers section of `paper-workflow`'s `references/section-contracts.md` gives the full test
 2. What did you do?
    - state the aim and the method briefly
 3. What did you find?

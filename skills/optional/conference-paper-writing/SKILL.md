@@ -866,6 +866,7 @@ What stays out, or changes form:
 | A configuration chosen on data later used for evaluation | A label does not fix it. Report the default configuration's result beside the selected one |
 | "No parameters are trained" or similar | Useful, because reviewers ask whether a method adds parameters. State it once |
 | Internal governance, ledgers, file paths | Out of the paper |
+| "Code will be released upon publication", anonymized repository link | The convention under double-blind review. Keep it as the venue's guide words it |
 | Reproducibility statement, LLM-use disclosure | Required or expected at most venues. Process detail belongs here, following the current year's guide |
 
 Before an arXiv upload, remember that the LaTeX source is public, comments included. Strip comments,

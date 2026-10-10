@@ -53,11 +53,12 @@ For file-based revision, identify the authoritative version and preserve citatio
 
 Clarity and breadth are different repairs. The rules below make a passage followable; they do not
 turn a technical framing into one a broad peer (大同行) can use. In the broad positions defined in
-the Reader section of `paper-workflow`'s `references/section-contracts.md` (the Abstract, the
+the Readers section of `paper-workflow`'s `references/section-contracts.md` (the Abstract, the
 opening and close of the Introduction, Results subsections and Discussion), check the framing
 first:
 
-- the opening sentence states the biological stake, not a technology, dataset or computational task;
+- by the end of the second sentence the reader faces a specific problem they recognise as theirs,
+  stated in their terms, not a truism about the field or the authors' task called important;
 - the method is introduced by what it lets a biologist find or predict, and only then by how;
 - findings say what was predicted or recovered, compared with what the biologist relies on where the
   Results contain that comparison;

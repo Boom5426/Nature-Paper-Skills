@@ -76,7 +76,7 @@ approximate.
 
 ## Reader: method Articles compared with `Nature`
 
-The broad register in the contracts' Reader section was checked against a second sample, selected
+The broad register in the contracts' Readers section was checked against a second sample, selected
 on 2026-10-10 from Europe PMC: open-access `Nature` papers from 2020 to 2025 with method-like title
 terms, sorted by citations, keeping the first twelve that introduce a computational method for
 biology or medicine (AlphaFold, AlphaFold 3, ModelAngelo, RETFound, Prov-GigaPath, AF-Cluster, a
@@ -87,6 +87,9 @@ supplement and are not counted. Only abstracts were read. One reader coded them.
 | Abstract feature | 28 method Articles | 12 `Nature` papers |
 |---|---|---|
 | First sentence states a biological or biomedical stake | 3 (CellOT, Nicheformer, DestVI; SATURN in part) | 6 |
+| First sentence states a specific problem, limit or need | 8 | 5 |
+| A specific problem stated by the end of the second sentence | 18 | 8 |
+| Two opening sentences without a specific problem | 10 (5 go straight to "Here we present") | 4 |
 | Method introduced by what it does before how it works | 14 | 9 |
 | Success measured against experiment, expert work or known biology | 1 or 2 | about 6 |
 | Main finding framed as a capability or biological insight first | about 8 | 7 (3 more mix it with a benchmark) |
@@ -97,9 +100,22 @@ supplement and are not counted. Only abstracts were read. One reader coded them.
 | Size of a gain or a result, with its comparison or units | 3 | 5 |
 | Abstracts with a semicolon (script) | 3 of 23 | 1 of 12 |
 
-The last row is the decisive one. Breadth does not come from using fewer technical terms: both
-samples name model families at the same rate. It comes from framing: what the first sentence is
-about, what success is measured against, and in whose terms the finding is stated.
+The model-internal terms row is the decisive one. Breadth does not come from using fewer technical
+terms: both samples name model families at the same rate. It comes from framing: how soon the
+reader meets the problem, what success is measured against, and in whose terms the finding is
+stated.
+
+What separates strong openings from weak ones is not biology against technology. Strong openings
+state a limit the reader meets in their own work, often in technical words ("Many spatially resolved
+transcriptomic technologies do not have single-cell resolution" in CARD, and "Interpreting electron
+cryo-microscopy (cryo-EM) maps with atomic models requires high levels of expertise and
+labour-intensive manual intervention" in ModelAngelo). Weak openings are truisms that could open any
+paper in the field, biological ("Tissue makeup depends on the local cellular microenvironment",
+Nicheformer) as often as technical ("Recent advances in spatially resolved transcriptomics have
+enabled ...", STAGATE). A general first sentence is the majority in both samples (20 of 28 and 7 of
+12). It works when the second sentence states the problem, as in AlphaFold ("... but this represents
+a small fraction of the billions of known protein sequences"). The opening rows were coded by one
+reader from the first two sentences of each abstract.
 
 Broad framing does not mean fewer numbers. The `Nature` abstracts carry more of them than the method
 Articles: the scale of the evidence ("1.6 million unlabelled retinal images", "more than 16,400 blood
@@ -116,9 +132,10 @@ unique proteins" against "billions of known protein sequences").
 
 ## House choices that depart from the sample
 
-- **Reader:** the contracts write front matter for the broad peer. Most method Articles in the
-  first sample open with a technology or a computational task and measure success only against
-  other algorithms; the `Nature` sample shows the register the contracts ask for.
+- **Reader:** checks 2 to 4 of the contracts' Readers section are house choices. Most method
+  Articles in the first sample measure success only against other algorithms and state findings as
+  benchmark gains. The `Nature` sample shows the register those checks ask for. Check 1, that the
+  reader meets the problem by the second sentence, follows the majority of both samples.
 - **Discussion length:** the contracts set 3–5 paragraphs; 13 of 27 papers fall in that range and
   the median is 5. The narrower range keeps the three moves compact.
 - **Final Introduction paragraph:** the contracts ask for an enlarged version of the Abstract's

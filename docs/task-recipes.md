@@ -7,7 +7,7 @@ Use ordinary language or name the entry skill. Provide the active source and the
 | Whole-paper revision | “Use paper-workflow to improve manuscript.tex using the supplied result tables. The terminology and data splits are frozen. Revise within those constraints.” | Revised source, material changes, evidence gaps |
 | Diagnosis only | “检查稿件的主要论证问题，按重要性给建议，先不要改文件。” | Located findings and remedies; no manuscript edits |
 | Passage | “只改第二段，让比较对象和逻辑更清楚；保留数字、引用和其他段落。” | Revised second paragraph and any necessary local consistency check |
-| Broad readers | “摘要和引言写得太技术了，改成面向大同行的写法。数字和结论不变，技术细节留在结果和方法里。” | Front matter reframed around the biological question; technical detail kept in Results and Methods |
+| Broad readers | “摘要和引言写得太技术了，改成面向大同行的写法。数字和结论不变，技术细节留在结果和方法里。” | Front matter reframed around the reader's problem. Technical detail kept in Results and Methods |
 | One section | “只改摘要，目标期刊 Nature Methods。Results 里 S3 还在重跑，其他部分不动。” | Revised Abstract held to its section contract; claims resting on the pending result left out and named |
 | Posture | “去掉这段 SI 的审计式和防御式表达，保留必要的统计、复现信息及阴性结果。” | Reader-facing scientific prose |
 | ML venue | “这是 ICLR 附录，去掉审计味和防御腔，但 ICLR 审稿人要找的信息保留。” | Prose kept to what the venue's reviewers check: no-leakage statement, runs and spread, numbers instead of verdicts; evidence gaps named for the author |

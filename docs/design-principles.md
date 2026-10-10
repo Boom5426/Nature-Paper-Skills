@@ -1,5 +1,11 @@
 # Design Principles
 
+Every principle below serves a reader of the paper at its target venue: the editor who decides
+whether it goes to review, the reviewer who checks the evidence, or the reader who uses the result.
+They are written for the default case, a research article in a Nature Portfolio journal. When the
+venue, the article type or the reader differs, derive the rule again from that reader's need
+instead of applying its wording. Principle 12 states this directly.
+
 ## 1. Claim Before Polish
 
 Do not smooth prose that sits on top of an unstable claim or weak evidence chain.
@@ -55,6 +61,10 @@ stated plainly. Most audit and defensive text is added while editing, so the rul
 first: a change adds no qualifier unless the sentence would otherwise be false. See
 `anti-defensive-writing`.
 
+Whether a sentence is defence or a required statement depends on whether the target venue's
+reviewers look for it. An ML conference needs the no-leakage sentence and the release statement
+that a journal edit would cut.
+
 ## 10. Each Section Has One Job
 
 The layer decides what to fix first; the position decides what a fixed section must do. An
@@ -66,8 +76,19 @@ papers and used as checks; formats come from the journal.
 
 ## 11. Write The Framing For The Broad Peer
 
-Breadth is a matter of framing, not vocabulary. Front matter opens with the biological question,
-introduces the method by what it lets a biologist do, measures success against what biologists rely
-on and states findings in biological terms. Technical terms stay, placed after the function they
+Breadth is a matter of framing, not vocabulary. Front matter puts the reader in front of a problem
+they recognise as theirs by the second sentence, introduces the method by what it lets its users
+do, measures success against what the reader relies on and states findings in the reader's terms,
+numbers included. Technical terms stay, placed after the function they
 serve, and technical detail lives in Results and Methods. Clarity rules make a passage followable;
 they do not make a specialist framing broad.
+
+## 12. Derive Each Rule From Its Reader
+
+A rule is a conclusion about what some reader needs, not a premise. Before applying one, name the
+reader it serves and what it protects. When the venue, the article type or the reader differs,
+derive it again and say so. Text that meets a rule's wording while defeating its purpose fails the
+rule. Two corrections came from this: "open with biology" became "the reader meets their problem by
+the second sentence", because weak openings in the corpus are truisms about biology as often as
+about technology, and "at most one number in the abstract" became "keep the numbers the reader can
+use", because most `Nature` abstracts in the sample carry them.

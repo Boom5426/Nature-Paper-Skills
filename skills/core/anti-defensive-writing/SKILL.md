@@ -141,7 +141,8 @@ planned before acceptance, upon publication, upon acceptance, access can be arra
 corresponding author, we intend to, a future version will, will be addressed in future work.
 
 Fix. State what exists now: the repository, accession or access route as it stands today, and delete
-the promise. If what exists does not meet the journal's policy (a private repository, no route for
+the promise. At a double-blind venue, an anonymized link or a release statement is the convention
+(The venue decides what is load-bearing). If what exists does not meet the journal's policy (a private repository, no route for
 editors or reviewers), the author has to fix that before submission; report it, and do not cover it
 with a promise. A sentence about what future research should test is not a commitment ("Validation
 across sites will be important for ...") and may stay in the closing scope paragraph. A sentence about
@@ -206,6 +207,16 @@ code), and how stable the conclusions are (how many runs, how wide the intervals
 - **Report robustness as runs and spread.** Seed values belong in the hyperparameter table. The text
   states how many runs each number pools and how much they vary. A model trained only once is an
   evidence gap for the author, not a wording problem.
+
+Two more journal rules turn around at ML conferences:
+
+- **A release statement is not a commitment there.** Authors cannot link their own repository
+  during review, so an anonymized code link or "code will be released upon publication" is the
+  venue's convention. Keep it, worded as that venue's guide asks. The commitment voice applies to
+  arrangements the venue does not ask for.
+- **Limitations get their own section.** Several ML venues require a Limitations section or a
+  checklist answer. Write it there, as scope, instead of folding it into a closing Discussion
+  paragraph.
 
 Process detail that a venue asks for, such as a reproducibility statement or a declaration of LLM
 use, goes in that statement and follows the venue's current guide. Internal governance, ledgers and

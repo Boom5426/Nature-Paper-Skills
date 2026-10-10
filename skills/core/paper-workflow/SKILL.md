@@ -26,6 +26,16 @@ may be sufficient after diagnosis; a general request does not itself require rep
 Default assumption: unless a conference venue is named, the manuscript follows the journal-oriented
 `Nature`-style path.
 
+## Where the rules come from
+
+Every rule in these skills serves a reader of the paper at its target venue: the editor who decides
+whether it goes to review, the reviewer who checks the evidence, or the reader who uses the result.
+The rules are written for the default case, a research article in a Nature Portfolio journal.
+Before applying a rule, know whose need it serves. When the venue, the article type or the reader
+differs, derive the rule again from that need and say so in the reply. Text that meets a rule's
+wording while defeating its purpose fails the rule. When a rule seems to work against its own
+purpose in a case, report it rather than follow it silently.
+
 ## Step 1: Establish the task and classify the input
 
 Identify the active source, article type, requested scope, the positions in scope (Abstract,
@@ -64,7 +74,7 @@ The table gives candidate steps in order, not mandatory rewrite passes.
 |---|---|---|
 | One sentence or one paragraph | `passage` | `write-scientific-manuscript`, then `anti-defensive-writing` if the passage is hedged, over-caveated or written in an audit, self-critical, developer or commitment voice, then `scientific-prose-style` |
 | One section to draft or rewrite in prose, such as the Abstract or the Introduction | `section` | Read that position's entry in `references/section-contracts.md` and check its upstream dependency; `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
-| Written for specialists but must reach a broad reader: 面向大同行, 写给非本领域读者, "too technical" | `audience` | Read the Reader section of `references/section-contracts.md`; `manuscript-optimizer` for framing in the broad positions (opening question, what success is measured against, findings in biological terms), then `write-scientific-manuscript` for terms and passage logic, then `scientific-prose-style`. Technical positions keep their precision |
+| Written for specialists but must reach a broad reader: 面向大同行, 写给非本领域读者, "too technical" | `audience` | Read the Readers section of `references/section-contracts.md`; `manuscript-optimizer` for framing in the broad positions (the reader's problem by the second sentence, what success is measured against, findings in the reader's terms), then `write-scientific-manuscript` for terms and passage logic, then `scientific-prose-style`. Technical positions keep their precision |
 | A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision`, `anti-defensive-writing`, then `scientific-prose-style` |
 | A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, with `references/section-contracts.md` as the per-section standard; `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
 | Reads like an audit report, a rebuttal or a self-critique; hedged, over-caveated or apologetic; a paragraph opens with a limitation; the SI or data statements confess what could not be found; the text names folders, files or build steps, or promises a future release | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
@@ -171,7 +181,7 @@ effect sizes but not test statistics. [section-contracts.md](references/section-
 each position's job, dependencies, acceptance criteria and owning specialists once. Specialists
 apply it and do not restate it. Positions also differ in register: the front matter and the opening
 and close of each section are written for the broad peer (大同行), the body of Results and Methods
-for specialists; the contracts' Reader section defines both and how to test them. Read the entry for every position in scope before diagnosing it,
+for specialists. The contracts' Readers section defines both and how to test them. Read the entry for every position in scope before diagnosing it,
 and check the edit against the same entry afterwards.
 
 Positions depend on one another:

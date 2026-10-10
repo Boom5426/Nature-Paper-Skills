@@ -19,21 +19,34 @@ Results and Conclusions labels is a requirement of some journals and reporting g
 default. On the default journal path, with no stated format, write the abstract as one unstructured
 paragraph and report the format as unchecked.
 
-## Reader
+## Readers
 
-Front matter is written for 大同行, the broad peer: a scientist outside the subfield who did not
-build this kind of method. For a computational-biology paper in Nature Methods, Nature
-Biotechnology or Nature Communications, that is a biologist who would use the method but does not
-know its benchmarks, metrics or model families. For `Nature` or `Science`, it is any scientist. A
-reader who knows "the broad AI domain" is an adjacent specialist, not a broad peer.
+Every position is written for someone. Three readers decide what a paper must say, and the target
+venue decides who they are and what they check.
+
+- **The editor** decides whether the paper goes to review. The editor reads the Title, the
+  Abstract, the opening of the Introduction and the cover letter, and asks whether the problem
+  matters to the journal's readers and whether the advance is clear.
+- **The reviewer** is a specialist who checks the evidence: the Results body, Methods, legends and
+  the SI, and every claim in the front matter against them. What reviewers check differs by venue
+  (`anti-defensive-writing`, The venue decides what is load-bearing).
+- **The broad peer** (大同行) reads the paper after publication: the Title, the Abstract, the
+  figures and the opening and close of each section.
+
+The broad positions serve the editor and the broad peer. The technical positions serve the
+reviewer. No position may fail the reviewer, because the reviewer also checks the front matter.
+
+For a computational-biology paper in Nature Methods, Nature Biotechnology or Nature Communications,
+the broad peer is a biologist who would use the method but does not know its benchmarks, metrics or
+model families. For `Nature` or `Science`, it is any scientist. A reader who knows "the broad AI
+domain" is an adjacent specialist, not a broad peer.
 
 At an ML conference such as ICLR, NeurIPS or ICML, the broad peer is an ML researcher outside the
-application area. The biological stake can still open the paper. The method, the evaluation
-protocol and the baselines are stated in ML terms, model families need no gloss, and success is
-measured against the strongest baselines under a protocol in which test data played no part in
-selection. The contracts below are written for journal research articles. A conference paper takes
-its structure from `conference-paper-writing` (optional set, installed with `--set all`), and the
-dependency rules still apply.
+application area. The method, the evaluation protocol and the baselines are stated in ML terms,
+model families need no gloss, and success is measured against the strongest baselines under a
+protocol in which test data played no part in selection. The contracts below are written for
+journal research articles. A conference paper takes its structure from `conference-paper-writing`
+(optional set, installed with `--set all`), and the dependency rules still apply.
 
 Positions differ in register:
 
@@ -46,17 +59,25 @@ Positions differ in register:
 Broad accessibility is a matter of framing, not of deleting terms. A broad position meets the
 reader when:
 
-1. **It opens with the biological stake.** The first sentence names a biological or biomedical
-   question, process or need, not a technology, dataset, model class or computational task.
-2. **The method is introduced by what it does.** Say what the method lets a biologist find or
+1. **The reader meets their problem early.** By the end of the second sentence, the reader faces
+   a specific problem they recognise as theirs: what cannot yet be known or done, and why that
+   matters. State it in the target reader's terms. For `Nature` that is usually a scientific
+   question. For a methods journal it is often a limit of the data or tools its readers use
+   ("Many spatially resolved transcriptomic technologies do not have single-cell resolution").
+   At an ML venue it is the ML problem. A context sentence may come first when it leads into the
+   problem. Prefer one specific to this problem over a truism that could open any paper in the
+   field, about biology ("Proteins are essential to life") or about a technology ("Recent advances
+   in spatial transcriptomics have enabled ..."). The authors' task stated as important
+   ("Predicting X is an important problem") is not a problem statement.
+2. **The method is introduced by what it does.** Say what the method lets its users find or
    predict before saying how. A model family or component may follow as the means, in one clause.
-3. **Success is measured against what the biologist relies on.** When the Results compare the
+3. **Success is measured against what the reader relies on.** When the Results compare the
    method with experiment, expert annotation or known biology, lead with that comparison.
    Comparisons with other algorithms support it. Never invent such a comparison.
-4. **Findings are stated in biological terms.** Say what was predicted or recovered, such as which
-   genes rise or fall or which drug pairs act beyond the sum of their single effects. A metric
-   name appears only with what it measures, and a number appears in units the reader can judge.
-   Stating a finding in biological terms does not mean replacing its numbers with words. Keep the
+4. **Findings are stated in the reader's terms.** Say what was predicted or recovered, such as
+   which genes rise or fall or which drug pairs act beyond the sum of their single effects. A
+   metric name appears only with what it measures, and a number appears in units the reader can
+   judge. Stating a finding this way does not mean replacing its numbers with words. Keep the
    number and say what it measures.
 5. **It passes the neighbour test.** A scientist from another field can say, after one read, what
    problem was addressed, what was found and why it matters.
@@ -64,9 +85,11 @@ reader when:
 Precision is not traded for this. Technical support moves to the technical positions. It does not
 disappear, and no claim becomes broader than the evidence.
 
-This register is a house choice that departs from the sample of method papers behind the typical
-ranges below, most of which open with a technology or a computational task. Computational papers
-in `Nature` follow it far more often ([section-evidence.md](section-evidence.md)).
+Check 1 follows most published papers: the problem is stated by the second sentence in 18 of the
+28 method Articles and 8 of the 12 `Nature` papers, and whether the opening is about biology or
+about a technology does not separate the strong openings from the weak ones. Checks 2 to 4 are
+house choices. Most method Articles measure success only against other algorithms, and the
+`Nature` papers follow the checks far more often ([section-evidence.md](section-evidence.md)).
 
 ## Dependency order
 
@@ -109,8 +132,8 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 - **Job:** name the central finding or question at the highest level the evidence supports.
 - **Depends on:** the main claim, as compressed in the Abstract.
 - **Meets the contract when:** the focus follows concept or finding > framework name >
-  implementation. A broad peer knows what biological question or capability the paper is about
-  after one pass, and the title uses the terms the intended readers search for.
+  implementation. A broad peer knows what question or capability the paper is about after one
+  pass, and the title uses the terms the intended readers search for.
 - **Method papers:** the title names the task, the data or setting and the key idea ("Mapping
   single-cell data to reference atlases by transfer learning"). The method name is optional and,
   when present, often follows "with". A claim sentence fits a title when the contribution is a
@@ -125,13 +148,14 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 ## Abstract
 
 - **Job:** compress the paper's chain so that a broad peer can state the problem, the main finding
-  and why it matters after one read. Every sentence is in the broad register (see Reader).
+  and why it matters after one read. Every sentence is in the broad register (see Readers).
 - **Depends on:** settled Results claims, the Discussion's main answer and the Introduction's gap.
 - **Meets the contract when:** one chain runs problem → unresolved gap → approach → the findings
   that carry the main claim (usually one to three) → bounded implication, and every sentence
-  advances it. The first sentence states the biological stake. The sentence that introduces the
+  advances it. By the end of the second sentence the reader faces the problem (Readers, check 1).
+  The sentence that introduces the
   study ("Here we present ...") follows the problem and gap, usually as the second to fourth
-  sentence, and says what the method lets a biologist do. Findings are stated as what was predicted
+  sentence, and says what the method lets its users do. Findings are stated as what was predicted
   or recovered and what it was compared against. A comparison with experiment, expert annotation or
   known biology leads when the Results contain one. A closing sentence of field-level implication is
   acceptable when it names what becomes possible.
@@ -148,7 +172,9 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
   lighter: "substantially better" is weaker than the same gain with its size. Most `Nature`
   abstracts in the reader sample carry such numbers ([section-evidence.md](section-evidence.md)).
 - **Fails when:**
-  - it opens with a sequencing technology, a dataset, a model class or a computational task
+  - two sentences pass without a specific problem, for example a truism about biology or about a
+    technology followed by "Here we present"
+  - it states the authors' task as important instead of the reader's problem
   - it states the main finding only as a benchmark win, or as a metric the reader cannot interpret
   - generic background takes most of the space
   - it lists datasets, baselines or every metric
@@ -169,15 +195,16 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 
 - **Job:** make the study's question necessary.
 - **Depends on:** the central question. The final paragraph also depends on the Results.
-- **Meets the contract when:** it opens in the broad register with the biological problem, not
-  with the data type or the computational task, and moves to the missing capability or unresolved
+- **Meets the contract when:** its first paragraph puts the reader in front of the problem early
+  (Readers, check 1) and moves to the missing capability or unresolved
   question, then to why that question remains hard, then to what this study does and
   what it makes possible to learn. Prior work is organized by what it can and cannot answer. The
   final paragraph states the question, approach and primary contribution, then previews the main
   findings as an enlarged version of the Abstract's findings sentences: what was shown, against
-  what, and what it enables, in a few sentences and in biological terms. It may carry the numbers
+  what, and what it enables, in a few sentences and in the reader's terms. It may carry the numbers
   that show the scale of the work or the size of the main gain.
 - **Fails when:**
+  - it spends its opening on context that could open any paper in the field
   - it is a method-by-method catalogue or a chronology
   - the proposed method appears before the problem is defined
   - the final paragraph walks through the applications or figures one by one, lists results number
@@ -192,7 +219,8 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 - **Job:** establish the claims as an argument, one subsection per question.
 - **Depends on:** the figures, tables and analyses, and the claim architecture.
 - **Meets the contract when:** each subsection heading states the supported finding. A subsection
-  opens with the question or context that makes the analysis necessary, stated in biological terms,
+  opens with the question or context that makes the analysis necessary, stated so a broad peer can
+  follow it,
   and its last sentence says what the result means for that question. Both are broad positions.
   The body between them may be technical, and later paragraphs lead with their message when the
   evidence supports it. Each local claim runs question → minimum design → core observation with
