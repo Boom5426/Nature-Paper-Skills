@@ -1,6 +1,6 @@
 ---
 name: scientific-prose-style
-description: "Prose-quality rules for writing scientific manuscript text: abstract, introduction, results, discussion. The headline rule is a strict em-dash budget: the long dash (—) is overused and reads as a stylistic tic, so cap it and rewrite with commas, colons, parentheses, or a period. Also caps semicolons and colons, the usual replacements, and covers hedging, sentence rhythm, and paragraph openers. Load whenever drafting or revising manuscript prose (not figures; that is figure-planner)."
+description: "Prose-quality rules for writing scientific manuscript text: abstract, introduction, results, discussion. The headline rule is a strict em-dash budget: the long dash (—) is overused and reads as a stylistic tic, so cap it and rewrite with commas, colons, parentheses, or a period. Also caps semicolons and colons, the usual replacements, and covers hedging, sentence rhythm, paragraph openers, and AI-sounding prose (去 AI 味, AI 味重, sounds AI-generated) with an information test, a corpus-checked list of tells and a detection script. Load whenever drafting or revising manuscript prose (not figures; that is figure-planner)."
 license: Apache-2.0
 ---
 
@@ -11,7 +11,7 @@ introduction, results, and discussion. Load this whenever you draft or revise
 manuscript text. (Figure planning lives in `figure-planner`; this skill
 is about words on the page.)
 
-This skill owns punctuation and rhythm only, and it runs last. When a passage is hard to follow
+This skill owns punctuation, rhythm and word-level tells, and it runs last. When a passage is hard to follow
 for reasons punctuation cannot fix, such as an unstable claim, a missing evidence link, or a
 paragraph whose job is unclear, fix that first with `manuscript-optimizer` or `scientific-writing`.
 Re-punctuating a sentence whose scientific role is wrong does not make it readable, and polishing a
@@ -104,6 +104,24 @@ clauses joined by dashes, semicolons, and "and," it is three sentences.
 - Prefer plain connectives (`but`, `so`, `because`, `here`) over heavy ones
   (`moreover`, `furthermore`, `additionally`) unless enumerating.
 
+## Rule 6: Every word carries information (AI tells)
+
+Prose reads as machine-written when words carry nothing: an intensifier on a plain fact
+(`ultimately`, `a clear boundary`), a frame that inflates a modest point (`not only ... but`,
+`in its own right`), a sentence that repeats the last one (`In this way, ...`), or vocabulary that
+published papers almost never use (`delve`, `underscore`, `pivotal`, `shed light`). Apply the
+information test: delete the word or sentence, and if the reader loses no fact, number, condition
+or link, leave it deleted. Never swap a tell for a synonym, and never reword a frame (`a decision problem as well as a modelling one` is the same frame): replace it with its content.
+
+Most words called AI vocabulary are common in published papers (`robust`, `moreover`, `notably`,
+`highlight`), so do not cut by word list. [references/ai-tells.md](references/ai-tells.md) gives
+the families, the corpus rates and the cases that stay, and `scripts/ai_tells.py` lists candidates
+in a draft. Recaps, forward pointers and rhetorical questions are `anti-defensive-writing`'s
+commentary voice. Coined terms and weak subjects are `write-scientific-manuscript`'s.
+
+Body text carries no bold sentences. Emphasis comes from position, the first sentence of a
+paragraph, not from formatting.
+
 ## Self-check before you hand prose back
 
 Run this on any abstract/intro/section you write:
@@ -115,6 +133,9 @@ Run this on any abstract/intro/section you write:
 3. **Read the longest sentence aloud.** If you run out of breath, split it.
 4. En-dashes in numeric ranges (`5–10`) and hyphens in compounds
    (`single-cell`) are fine and are not counted against the budget.
+5. **Run the information test** on intensifiers, frames and closing sentences
+   (Rule 6). For a whole section, run `scripts/ai_tells.py` and read every
+   flagged line.
 
 ---
 

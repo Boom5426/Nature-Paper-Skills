@@ -9,6 +9,7 @@ Use ordinary language or name the entry skill. Provide the active source and the
 | Passage | “只改第二段，让比较对象和逻辑更清楚；保留数字、引用和其他段落。” | Revised second paragraph and any necessary local consistency check |
 | Broad readers | “摘要和引言写得太技术了，改成面向大同行的写法。数字和结论不变，技术细节留在结果和方法里。” | Front matter reframed around the reader's problem. Technical detail kept in Results and Methods |
 | One section | “只改摘要，目标期刊 Nature Methods。Results 里 S3 还在重跑，其他部分不动。” | Revised Abstract held to its section contract; claims resting on the pending result left out and named |
+| AI tone | “这几段 AI 味太重，帮我去掉。数字和结论不变。” | Sentences that carry no information removed or restated as facts; common words that carry content kept; flagged lines from `ai_tells.py` checked one by one |
 | Posture | “去掉这段 SI 的审计式和防御式表达，保留必要的统计、复现信息及阴性结果。” | Reader-facing scientific prose |
 | ML venue | “这是 ICLR 附录，去掉审计味和防御腔，但 ICLR 审稿人要找的信息保留。” | Prose kept to what the venue's reviewers check: no-leakage statement, runs and spread, numbers instead of verdicts; evidence gaps named for the author |
 | Figures | “依据 results.csv 规划两张主图，先给每张图的主结论、面板及图注，不出图。” | Figure plan; no fabricated visual QA |

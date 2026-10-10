@@ -9,6 +9,10 @@ file (what each paragraph does) are not computed here.
 Usage:
     python3 scripts/section_corpus.py --xml-dir /path/to/cache            # download if missing
     python3 scripts/section_corpus.py --xml-dir /path/to/cache --offline  # use cached XML only
+    python3 scripts/section_corpus.py --xml-dir /path/to/cache --offline --tells  # AI-tell baseline
+
+--tells prints the corpus rate of every pattern in
+skills/core/scientific-prose-style/scripts/ai_tells.py, the values that script stores as its baseline.
 """
 from __future__ import annotations
 
@@ -227,15 +231,54 @@ def summary(values: list[float]) -> str:
     return f"n={len(values)} median={st.median(values)} IQR={q[0]}-{q[2]} range={min(values)}-{max(values)}"
 
 
+def tell_baseline(xml_dir: Path, offline: bool) -> int:
+    """Print the per-10k-word rate and paper count of each ai_tells.py pattern in the body text."""
+    import importlib.util
+    script = Path(__file__).resolve().parents[1] / "skills/core/scientific-prose-style/scripts/ai_tells.py"
+    spec = importlib.util.spec_from_file_location("ai_tells", script)
+    tells = importlib.util.module_from_spec(spec)
+    sys.modules["ai_tells"] = tells
+    spec.loader.exec_module(tells)
+    words, counts, papers = 0, Counter(), Counter()
+    for journal, sample in SAMPLE.items():
+        for name, pmcid in sample.items():
+            if name in BRIEF:
+                continue
+            path = xml_dir / f"{pmcid}.xml"
+            if not path.exists():
+                if offline:
+                    print(f"missing {path} (--offline)", file=sys.stderr)
+                    return 1
+                fetch(pmcid, path)
+                time.sleep(0.5)
+            root = ET.parse(path).getroot()
+            art = root if tag(root) == "article" else root.find(".//article")
+            body = art.find(".//body")
+            text = " ".join(txt(without_xrefs(p)) for p in body.iter() if tag(p) == "p" and len(txt(p)) > 40)
+            words += len(tells._WORD.findall(text))
+            for tell in tells.TELLS:
+                n = len(tell.regex().findall(text))
+                counts[tell.key] += n
+                papers[tell.key] += n > 0
+    print(f"CORPUS_WORDS = {words}")
+    for tell in tells.TELLS:
+        print(f"{tell.key:40} corpus_per_10k={1e4 * counts[tell.key] / words:.2f} corpus_papers={papers[tell.key]}")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--xml-dir", required=True, type=Path, help="cache directory for full-text XML")
     ap.add_argument("--offline", action="store_true", help="do not download; fail if XML is missing")
     ap.add_argument("--json", type=Path, help="also write per-paper records to this new file")
+    ap.add_argument("--tells", action="store_true", help="print the corpus baseline for ai_tells.py and exit")
     args = ap.parse_args()
     args.xml_dir.mkdir(parents=True, exist_ok=True)
     if args.json is not None and args.json.exists():
         ap.error(f"refusing to overwrite {args.json}")
+
+    if args.tells:
+        return tell_baseline(args.xml_dir, args.offline)
 
     records = {}
     for journal, papers in SAMPLE.items():

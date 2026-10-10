@@ -168,6 +168,7 @@ Try the [self-contained first-run example](examples/first-run/README.md) before 
 | 📐 Write or revise one section | The section, current Results and figures, target journal | Revised section held to its contract; claims resting on unsettled results named | `paper-workflow` |
 | ✍️ Fix a paragraph | Passage, surrounding context, requested scope | Replacement passage with a brief explanation where useful | `write-scientific-manuscript` |
 | 🪄 Remove audit/defensive writing | Main text, SI, legend or availability statement | Direct scientific prose retaining numbers and necessary conditions | `anti-defensive-writing` |
+| 🧹 Remove AI tone | A passage or section that reads as generated | Empty intensifiers, frames, recaps and coined terms removed, with numbers and findings kept | `paper-workflow` |
 | 📊 Plan or make figures | Scientific question, result table or existing figure | Panel plan; rendered files when data and tools are available | `figure-planner`; add `--figure` for production |
 | 🔎 Check before submission | Final draft, SI, bibliography and venue | Prioritized findings with locations; unchecked categories identified | `submission-audit` |
 | 📨 Reply to reviewers | Original comments, manuscript, completed new evidence | Numbered response draft and matching manuscript changes | `paper-workflow` |

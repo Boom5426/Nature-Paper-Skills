@@ -136,6 +136,9 @@ blank lines, but semantic review decides each change; do not batch-merge by leng
 - Use active voice when it makes the actor or logic clearer; use passive voice when the procedure or result is the natural focus.
 - Remove throat-clearing, duplicated meaning, ornamental transitions, and empty intensifiers.
 - Avoid compressed strings of nouns and stacked modifiers.
+- Make the thing that acts the grammatical subject. "The experiments further reveal a clear boundary
+  set by information availability" becomes "Information availability sets a boundary", followed by
+  the boundary itself.
 - Do not replace a clear ordinary word merely to sound more sophisticated.
 - Do not use a fragmentary series of very short sentences when the causal or contrastive relation is clearer in one well-formed sentence.
 
@@ -153,7 +156,7 @@ Use a new label only when all of the following are true:
 - the label can be defined in one direct sentence;
 - the same label will be used consistently afterward.
 
-Otherwise, describe the phenomenon directly. Do not capitalize, hyphenate, abbreviate, or name an ordinary analytical step to manufacture novelty. Search the manuscript and, when needed, the relevant literature before asserting that a term is standard or introducing a replacement.
+Otherwise, describe the phenomenon directly. Do not capitalize, hyphenate, abbreviate, or name an ordinary analytical step to manufacture novelty. A hyphenated modifier coined for the paper is the most common case: "deployment-available biological knowledge" becomes "biological knowledge available before profiling". Field terms readers already use, such as "cell-type-aware", stay. `scientific-prose-style`'s `scripts/ai_tells.py` lists candidate compounds, and its `references/ai-tells.md` gives the other tells. Search the manuscript and, when needed, the relevant literature before asserting that a term is standard or introducing a replacement.
 
 Preserve established field terminology even when it is less elegant than a newly invented alternative. If the source uses an unclear coined term, explain the issue and propose a conventional replacement rather than silently creating another term.
 

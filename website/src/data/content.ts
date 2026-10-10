@@ -39,7 +39,7 @@ export const skillCopy: Record<string, {title: Pair; summary: Pair}> = Object.fr
  ['rebuttal-response','Connect replies to revisions','连接回复与改稿','Draft reviewer responses grounded in completed work.','依据已完成工作准备审稿回复。'],
  ['stats-reporting-audit','Check statistical reporting','核查统计报告','Check units, replication, comparisons and figure statistics.','核查独立单位、重复、比较与图注统计。'],
  ['anti-defensive-writing','Write for the paper’s reader','写给论文读者看','Remove defensive or project-log prose, keeping necessary facts and what the venue’s reviewers check.','去掉防御式与项目日志式表达，保留必要事实和目标 venue 审稿人会查的内容。'],
- ['scientific-prose-style','Refine the sentences','打磨科学语言','Improve rhythm, punctuation and sentence-level expression.','改善句子节奏、标点与表达。'],
+ ['scientific-prose-style','Refine the sentences','打磨科学语言','Improve rhythm and punctuation, and remove words that carry no information.','改善句子节奏与标点，删去不带信息的空话。'],
  ['nature-portfolio-playbook','Choose a journal route','选择期刊路径','Align article structure and preflight with the target venue.','让文章结构与投稿检查符合目标期刊。'],
  ['nature-figure','Produce research figures','制作科研图形','Use Python or R to build figures when the required tools are available.','在工具可用时，使用 Python 或 R 制作图形。'],
  ['figure-style','Check figure legibility','检查图形可读性','Check visual correctness, alignment and readable figure elements.','检查视觉准确性、对齐与图形元素可读性。'],

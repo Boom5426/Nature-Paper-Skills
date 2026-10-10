@@ -167,6 +167,7 @@ curl -fsSL https://raw.githubusercontent.com/Boom5426/Nature-Paper-Skills/main/i
 | 📐 撰写或修改某一部分 | 该部分原文、当前 Results 与图、目标期刊 | 按该部分合同修改的成品；依赖未定稿结果的论断会被指出 | `paper-workflow` |
 | ✍️ 修改一个段落 | 原文、上下文、修改范围 | 修改后的段落和必要说明 | `write-scientific-manuscript` |
 | 🪄 去掉审计式／防御式表达 | 正文、SI、图注或数据声明 | 更直接的科学表达，保留数字与必要条件 | `anti-defensive-writing` |
+| 🧹 去 AI 味 | 读起来像 AI 写的段落或章节 | 删去空洞的强调、拔高句式、复述总结和自造术语，保留数字与结论 | `paper-workflow` |
 | 📊 规划或制作图表 | 科学问题、结果表或现有图 | 面板方案；有数据和工具时输出图文件 | `figure-planner`；出图另加 `--figure` |
 | 🔎 投稿前检查 | 最终稿、SI、参考文献和目标期刊 | 有定位、按重要性排序的问题；注明未检查项 | `submission-audit` |
 | 📨 回复审稿意见 | 原始意见、稿件、已完成的新证据 | 保留编号的回复草稿及对应稿件修改 | `paper-workflow` |

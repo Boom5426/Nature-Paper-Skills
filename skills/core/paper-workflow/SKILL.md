@@ -6,7 +6,8 @@ description: >-
   sections in scope and available evidence, then choose the necessary writing or checking steps.
   Also use when one section is named, such as rewrite the Abstract, 改摘要, 写引言 or 讨论怎么写,
   or when a draft must reach a broad reader (面向大同行, 写给非本领域读者, too technical), so that
-  the section's contract, its reader and its dependencies on other sections apply.
+  the section's contract, its reader and its dependencies on other sections apply. Also use when
+  prose reads as AI-generated (去 AI 味, AI 味重, 像 AI 写的, sounds AI-generated).
   Go to a specialist directly when the user names one or a narrow job such as a
   citation style. Do not route ordinary
   emails, code documentation or non-manuscript writing through this workflow.
@@ -75,6 +76,7 @@ The table gives candidate steps in order, not mandatory rewrite passes.
 | One sentence or one paragraph | `passage` | `write-scientific-manuscript`, then `anti-defensive-writing` if the passage is hedged, over-caveated or written in an audit, self-critical, developer or commitment voice, then `scientific-prose-style` |
 | One section to draft or rewrite in prose, such as the Abstract or the Introduction | `section` | Read that position's entry in `references/section-contracts.md` and check its upstream dependency; `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
 | Written for specialists but must reach a broad reader: 面向大同行, 写给非本领域读者, "too technical" | `audience` | Read the Readers section of `references/section-contracts.md`; `manuscript-optimizer` for framing in the broad positions (the reader's problem by the second sentence, what success is measured against, findings in the reader's terms), then `write-scientific-manuscript` for terms and passage logic, then `scientific-prose-style`. Technical positions keep their precision |
+| Reads as AI-generated: 去 AI 味, AI 味重, 像 AI 写的, "sounds AI-generated" | `ai-tone` | Run `scientific-prose-style`'s `scripts/ai_tells.py` on the text in scope and read its `references/ai-tells.md`. Then `write-scientific-manuscript` for coined terms and weak subjects, `anti-defensive-writing` for recaps, forward pointers and rhetorical questions, and `scientific-prose-style` for words, frames and typography. Apply the information test: delete what carries nothing, never swap synonyms, never cut a number |
 | A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision`, `anti-defensive-writing`, then `scientific-prose-style` |
 | A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, with `references/section-contracts.md` as the per-section standard; `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
 | Reads like an audit report, a rebuttal or a self-critique; hedged, over-caveated or apologetic; a paragraph opens with a limitation; the SI or data statements confess what could not be found; the text names folders, files or build steps, or promises a future release | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
@@ -315,6 +317,8 @@ before attempting heavy revision.
   an ML paper's no-leakage statement as defensive wording
 - answering an evaluation-design problem with a label such as "prespecified" instead of reporting the
   result the reviewer would ask for
+- treating AI tone as a word list: swapping synonyms or cutting common words such as "robust" instead
+  of deleting what carries no information
 - rewriting the manuscript from experiment memory instead of a current `result_summary.md`
 - editing figure legends late without rechecking the Results text
 - leaving repository choice, accession IDs, or source-data coverage until the portal is open

@@ -5,7 +5,7 @@ description: >-
   Introduction or Discussion, make a technical draft readable for scientists
   outside the field, improve Results and Review article structure,
   audit submission evidence, or prepare responses to reviewers. Use for
-  优化论文、润色论文、改摘要、写引言、面向大同行、投稿前检查 and 审稿回复. Apply the bundled Nature Paper
+  优化论文、润色论文、改摘要、写引言、面向大同行、去 AI 味、投稿前检查 and 审稿回复. Apply the bundled Nature Paper
   Skills workflows to the draft and evidence supplied by the user.
 ---
 

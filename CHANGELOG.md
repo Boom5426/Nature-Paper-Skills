@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### AI tone
+
+- Add an information test for AI-sounding prose to `scientific-prose-style` (Rule 6): delete a word or sentence when the reader loses no fact by its removal, never swap synonyms, never cut a number. `references/ai-tells.md` lists ten families (empty intensifiers, elevation frames, restatement, recap closers, forward pointers, rhetorical questions, weak subjects, coined compounds, typography, uniform shape) with before and after examples.
+- Check the tells against the 28-paper corpus: "robust", "moreover", "notably" and "highlight" are common in published papers and are not cut by list, while "delve", "in its own right", "underscore" and "pivotal" are near absent and are flagged everywhere. `scripts/ai_tells.py` reports candidates against the stored corpus rates, which `scripts/section_corpus.py --tells` recomputes.
+- Route 去 AI 味 requests through `paper-workflow` (`ai-tone`): terms and weak subjects in `write-scientific-manuscript`, recaps, forward pointers and rhetorical questions in `anti-defensive-writing`, words, frames and typography in `scientific-prose-style`. No bold sentences in body text.
+- Add the `ai-tone` behavior case.
+
 ### Rules derived from the reader
 
 - State where the rules come from: each serves the editor, the reviewer or the broad peer at the target venue, and is derived again when the venue, article type or reader differs (`paper-workflow`, design principle 12). Text that meets a rule's wording while defeating its purpose fails it.

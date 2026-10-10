@@ -20,7 +20,7 @@ Recommended: all 17 Core skills, the Venue skill and `paper-reviewer` (19 total)
 - `rebuttal-response`: author-side reviewer response workflow, claim calibration, and final letter audit
 - `stats-reporting-audit`: author-side statistical-reporting audit (independent-unit `n`, replication, multiple comparisons, figure-legend statistics)
 - `anti-defensive-writing`: rhetorical posture (audit, defensive, self-critical, developer-facing and commitment writing in the main text, SI, legends, table notes and data statements; caveats in high-impact positions; paragraphs opening with a limitation). Runs after the relevant claim is stable; preserve scientifically necessary scope, numbers, reporting requirements and reproducibility facts. Apply only when the task needs this layer
-- `scientific-prose-style`: sentence-level prose linting (em-dash and semicolon budget, hedging, sentence rhythm, paragraph openers)
+- `scientific-prose-style`: sentence-level prose linting (em-dash and semicolon budget, hedging, sentence rhythm, paragraph openers, AI tells with an information test and a corpus-checked detection script)
 
 ## Venue
 

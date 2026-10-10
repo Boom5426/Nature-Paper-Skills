@@ -105,9 +105,19 @@ already shows what the verdict said. Keep a plain "Note" column only for facts n
 - rhetorical overstatement: "the aggregate score reports none of this";
 - lecture-note devices: chains of rhetorical questions, "This is not an edge case", "the informative
   null is the other one";
-- labels such as headline performance or the real task.
+- labels such as headline performance or the real task;
+- recap closers that announce significance instead of stating a result: "Together, these results
+  extend our understanding of ...". A closer that adds a conclusion stays ("Together, these
+  analyses show that the gain comes from the dose module, not from model size");
+- forward pointers and meta-commentary: "These controls motivate improving the evidence", "this
+  opens new avenues", "paves the way";
+- a rhetorical question that opens a paragraph and is answered by the next sentence.
 
 Fix. Replace the rhetoric with the factual statement it stood for, and check that it is literally true.
+Turn a rhetorical question into a statement of what the analysis isolates. Delete a recap or forward
+pointer, or keep its content once where it acts: a concrete next step goes in the closing scope
+paragraph of the Discussion. These are among the tells listed in `scientific-prose-style`'s
+`references/ai-tells.md`.
 
 ### 5. Developer voice: the repository leaking into the paper
 
@@ -290,7 +300,7 @@ grep -n -i -E "does not (establish|imply|mean|test|estimate|prove|relabel)|do no
 # self-critical, including verdict columns in tables
 grep -n -i -E "could not be (identified|determined|recovered)|not (exposed|identifiable|directly comparable)|unstable|\bonly (about |around )?[0-9]|remains? at null|failed to|unfortunately|we acknowledge|limitation|shortcoming|caveat|exploratory|qualification|within tolerance|interval crosses zero|positive interval" "$F"
 # commentary
-grep -n -i -E "headline|usually framed|none of this|edge case|the real task|\?\s*$" "$F"
+grep -n -i -E "headline|usually framed|none of this|edge case|the real task|\?\s*$|(together|taken together|collectively), these|motivat\w+ (future|further)|open\w* (new )?avenues|paves? the way" "$F"
 # developer: paths, files, workbooks, build and pipeline internals
 grep -n -i -E '\\texttt\{|[A-Za-z0-9_\\]+/[ }.,;)]|\.(csv|tsv|xlsx?|json|ya?ml|py|ipynb|gmt|h5ad|parquet|npz|pkl)\b|manifest|launcher|loader|run configuration|artifact|workbook|index sheet|editable latex|latex source|regenerat|\bscript\b|pipeline' "$F"
 # commitment
