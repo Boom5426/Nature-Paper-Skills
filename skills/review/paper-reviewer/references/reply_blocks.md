@@ -236,7 +236,7 @@ Fourteen rules. Each is checkable, which is the point.
     `We fully agree with the referee that`, `We have carefully considered`.
 13. **No reply ends without a location**, or the explicit sentence that no manuscript change was needed
     and why. Never close on `We hope this addresses the referee's concern`.
-14. **No em dashes.** Use a comma, a semicolon, a colon, or a period.
+14. **No em dashes.** Use a comma, a colon, or a period. Keep semicolons rare.
 
 Rules 4 and 5 work together and are easy to get backwards: **gloss the referee's word plainly, do not
 replace it. Plain language comes from explaining their term, never from inventing a better one.**

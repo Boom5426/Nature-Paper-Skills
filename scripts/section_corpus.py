@@ -195,6 +195,7 @@ def analyse(path: Path) -> dict:
             "closes_with_takeaway_marker": bool(texts) and bool(TAKEAWAY.match(sents(texts[-1])[-1])),
             "closes_with_interpretive_verb": bool(texts) and bool(INTERPRETIVE.search(sents(texts[-1])[-1])),
             "numbers_per_paragraph": [len(NUMBER.findall(txt(without_xrefs(p)))) for p in ps],
+            "semicolons_per_paragraph": [txt(without_xrefs(p)).count(";") for p in ps],
         })
     discussion = next((s for s in secs if title(s).lower().startswith("discussion")), None)
     figure_labels = set()
@@ -210,9 +211,11 @@ def analyse(path: Path) -> dict:
         "study_sentence_index": next((i for i, s in enumerate(ab_sents, 1) if STUDY_SENTENCE.search(s)), None),
         "abstract_performance_numbers": len(PERFORMANCE_NUMBER.findall(ab)),
         "abstract_internal_terms": len(INTERNAL_TERMS.findall(ab)),
+        "abstract_semicolons": ab.count(";"),
         "intro_paragraphs": len(intro),
         "results_subsections": sub_records,
         "discussion_paragraphs": len(paras(discussion)) if discussion is not None else None,
+        "discussion_semicolons_per_paragraph": [p.count(";") for p in paras(discussion)] if discussion is not None else [],
         "discussion_compares_methods": discussion is not None and any(COMPARISON.search(p) for p in paras(discussion)),
         "main_figures": len(figure_labels),
         "labels": {w: bool(re.search(r"\b" + w + r"\b", lowered)) for w in LABELS},
@@ -261,7 +264,7 @@ def main() -> int:
             time.sleep(0.5)
         text = re.sub(r"<[^>]+>", "", json.loads(path.read_text(encoding="utf-8"))["abstract"])
         broad[name] = {"pmcid": pmcid, "abstract_internal_terms": len(INTERNAL_TERMS.findall(text)),
-                       "supplement": name in BROAD_SUPPLEMENT}
+                       "abstract_semicolons": text.count(";"), "supplement": name in BROAD_SUPPLEMENT}
 
     typeset = {n: r for n, r in records.items() if not r["accepted_manuscript"]}
     print(f"Articles: {len(records)} ({len(typeset)} typeset, {len(records) - len(typeset)} accepted manuscripts)")
@@ -298,6 +301,14 @@ def main() -> int:
     print(f"Model-internal terms per abstract, method Articles: {summary(terms)}; none: {sum(x == 0 for x in terms)}")
     nature = [r["abstract_internal_terms"] for r in broad.values() if not r["supplement"]]
     print(f"Model-internal terms per abstract, Nature sample: {summary(nature)}; none: {sum(x == 0 for x in nature)}")
+    print("Typeset abstracts with a semicolon, method Articles:",
+          f"{sum(r['abstract_semicolons'] > 0 for r in typeset.values())} of {len(typeset)}")
+    print("Abstracts with a semicolon, Nature sample:",
+          f"{sum(r['abstract_semicolons'] > 0 for r in broad.values() if not r['supplement'])} of {len(BROAD_SAMPLE)}")
+    semis = [x for s in subs for x in s["semicolons_per_paragraph"]]
+    semis += [x for r in records.values() for x in r["discussion_semicolons_per_paragraph"]]
+    print(f"Results and Discussion paragraphs: {len(semis)}; without a semicolon: {sum(x == 0 for x in semis)};",
+          f"with one: {sum(x == 1 for x in semis)}; with two or more: {sum(x >= 2 for x in semis)}")
     if args.json is not None:
         args.json.write_text(json.dumps({"articles": records, "nature": broad}, indent=1), encoding="utf-8")
     return 0

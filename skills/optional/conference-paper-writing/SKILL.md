@@ -313,7 +313,9 @@ For each experiment, explicitly state:
 
 Requirements:
 - Error bars with methodology (standard deviation vs standard error)
-- Hyperparameter search ranges
+- Number of runs behind each reported number
+- Hyperparameter search ranges, and the split they were selected on
+- One sentence stating that test data played no part in model or configuration selection
 - Compute infrastructure (GPU type, total hours)
 - Seed-setting methods
 
@@ -835,6 +837,44 @@ Always include:
 - Error bars (specify: std dev or std error)
 - Number of runs
 - Statistical tests if comparing methods
+
+---
+
+## What Reviewers Check, and What Stays Out
+
+Decide what goes into the paper from the reviewer's side. On the experimental record, ML reviewers
+check three things:
+
+1. **Did test data influence model selection?** Write one plain sentence saying that test data played
+   no part in choosing the model, its hyperparameters or its configuration. Reviewers look for it.
+   A journal-style posture pass may read it as defensive. Here it stays, once, where the evaluation
+   protocol is described.
+2. **Can the results be reproduced?** Splits, hyperparameters, seeds and code. A sentence on how the
+   splits were built is enough in the appendix ("splits are assigned by hashing gene names, so they
+   can be regenerated"). The choice of hash function is not needed. Seed values go in the
+   hyperparameter table, and bootstrap settings are stated once in the statistics appendix.
+3. **How stable are the conclusions?** State how many runs each number pools and how much they vary.
+   A component trained only once will be questioned. Report it to the author as a gap. Do not word
+   around it.
+
+What stays out, or changes form:
+
+| Content | At an ML venue |
+|---|---|
+| Preregistered, prespecified, locked, frozen | Rare in ML. An unverifiable "preregistered" invites suspicion. Write "the configuration was selected on the development split and applied unchanged to the evaluation split." |
+| Verdict sentences ("supported if the CI excludes 0", "criterion not met") | Clinical-trial style. Report the mean or median and the interval and let the reader judge |
+| A configuration chosen on data later used for evaluation | A label does not fix it. Report the default configuration's result beside the selected one |
+| "No parameters are trained" or similar | Useful, because reviewers ask whether a method adds parameters. State it once |
+| Internal governance, ledgers, file paths | Out of the paper |
+| Reproducibility statement, LLM-use disclosure | Required or expected at most venues. Process detail belongs here, following the current year's guide |
+
+Before an arXiv upload, remember that the LaTeX source is public, comments included. Strip comments,
+internal paths and notes with `arxiv_latex_cleaner` or an equivalent step, and check the cleaned
+source still compiles. A submission that sends only the PDF does not expose them, but source or code
+uploaded as supplementary material does.
+
+`anti-defensive-writing` applies the same rules when it runs on a conference paper (its section
+The venue decides what is load-bearing).
 
 ---
 

@@ -34,6 +34,13 @@ Use supplied context; ask only when an ambiguity would change the work. A reques
 review, diagnose or suggest produces findings, not file edits. A request to revise authorizes
 edits within its stated scope. Explicitly frozen decisions and numerical results remain fixed.
 
+Name the target venue, then ask two questions from its side: what do its editors and reviewers
+check, and who reads it? The answers decide what the paper must say and what it can leave out. A
+sentence that one venue's reviewers look for can read as defensive at another: an ML conference
+needs a plain statement that test data played no part in model selection, which a journal edit
+might cut. `nature-portfolio-playbook` covers Nature Portfolio journals and `conference-paper-writing`
+covers ML conferences. When no venue is named, take the default journal path and say so.
+
 Carry forward named protected passages and the requested edit depth. A light-touch request does
 not reopen approved Abstract, Introduction or Discussion prose. If a protected passage contains
 a material scientific error, report it with a concrete remedy; preserving its text is not a
@@ -140,7 +147,7 @@ Use these layers to diagnose problems and preserve dependency order.
    legends and data statements. It runs after the claim hierarchy is settled,
    because before that an unnecessary disclaimer and a real scope condition are indistinguishable:
    the claim they qualify is still moving.
-5. **Sentence**: em-dash budget, hedging, sentence rhythm, paragraph openers.
+5. **Sentence**: em-dash and semicolon budget, hedging, sentence rhythm, paragraph openers.
    `scientific-prose-style`, last.
 
 Integrity checks run alongside, not in sequence: `citation-verifier`, `claim-source-verification`,
@@ -149,8 +156,8 @@ Integrity checks run alongside, not in sequence: `citation-verifier`, `claim-sou
 Layer 4 has a boundary the other layers do not: **a load-bearing statement stays.** Load-bearing is
 decided by what a sentence states, not by which skill added it: the unit of replication and n, no P
 values, blinding and exclusions, an access route, the count behind a reporting decision, an
-estimator's assumptions, a null result, and any scope condition the Methods needs to stay
-reproducible. `anti-defensive-writing` may move such a statement out of a high-impact position, state
+estimator's assumptions, a null result, any scope condition the Methods needs to stay
+reproducible, and any statement the target venue's reviewers look for. `anti-defensive-writing` may move such a statement out of a high-impact position, state
 it once instead of at every mention, or rewrite it as positive scope, but it must not delete it. A
 pass that silently removes one is a reporting failure, not a style improvement. Audit-voice wording
 added by an integrity check ("as checked", "could not be identified") is not protected.
@@ -294,6 +301,10 @@ before attempting heavy revision.
 - running a submission audit on a draft still being restructured
 - polishing a Review before its drift audit
 - using conference-style writing skills by default for journal manuscripts
+- deciding what to keep without asking what the target venue's reviewers check, for example cutting
+  an ML paper's no-leakage statement as defensive wording
+- answering an evaluation-design problem with a label such as "prespecified" instead of reporting the
+  result the reviewer would ask for
 - rewriting the manuscript from experiment memory instead of a current `result_summary.md`
 - editing figure legends late without rechecking the Results text
 - leaving repository choice, accession IDs, or source-data coverage until the portal is open

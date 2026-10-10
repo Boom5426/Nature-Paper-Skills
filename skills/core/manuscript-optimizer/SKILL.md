@@ -59,7 +59,8 @@ says which positions carry this register and how to test them.
 At this layer, check framing before wording: whether the paper opens from a biological question,
 whether success is measured against what biologists rely on (experiment, expert annotation, known
 biology) where the data allow it, and whether findings are stated as what was predicted or
-recovered rather than as metric gains.
+recovered rather than as metric gains. Framing a finding biologically keeps its numbers: the scale
+of the evidence and the size of the gain stay, with what they measure.
 
 Do not assume that the reader knows:
 

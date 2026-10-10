@@ -28,8 +28,8 @@ This skill owns clarity and logic diagnosis. It carries no house style and no pu
 - `anti-defensive-writing` after the passage logic is settled, when the text reads like an audit
   report, a rebuttal or a self-critique.
 - `scientific-prose-style` last, for punctuation and rhythm. This file deliberately carries no
-  em-dash rule; that skill owns it, and its cap is at most one em dash per paragraph and none in
-  the abstract.
+  em-dash or semicolon rule. That skill owns both, and its cap for each is at most one per paragraph
+  and none in the abstract.
 - `results-section-revision` when only Results subsection flow and paragraph openings need repair.
 - `review-article-architecture` when the piece is a Review, survey, or Perspective.
 - `rebuttal-response` when the prose is a reply to reviewers rather than manuscript text. The
@@ -61,7 +61,8 @@ first:
 - the method is introduced by what it lets a biologist find or predict, and only then by how;
 - findings say what was predicted or recovered, compared with what the biologist relies on where the
   Results contain that comparison;
-- a metric is named only with what it measures, and a number appears in units the reader can judge;
+- a metric is named only with what it measures, and a number appears in units the reader can judge
+  (keep the numbers that show the scale of the evidence and the size of the gain);
 - a scientist from another field could restate the problem, the finding and why it matters.
 
 Do not delete technical terms to look accessible. Place each after the function it serves, and keep

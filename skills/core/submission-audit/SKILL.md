@@ -59,20 +59,32 @@ Do not use this skill for:
    - Statistical analysis declares only statistics the paper reports (see `stats-reporting-audit`)
    - voice: audit, defensive or self-critical writing in the main text, SI, legends and data
      statements (run the `anti-defensive-writing` detection pass)
-6. Nature Portfolio preflight when relevant
-   - reporting-summary readiness
-   - data and code availability statements
-   - accession IDs, repositories, and disclosure of sharing restrictions
-   - image-integrity and raw-data readiness
-   - end matter: competing interests; author contributions whose initials match the byline; a
-     generative-AI statement in the Methods scoped to actual use, with no AI-generated images; code
-     availability consistent with the released repository
-   - preprint, related-manuscript, and conference-proceedings disclosure
+6. Venue preflight: what the target venue's editors and reviewers check
+   - Nature Portfolio:
+     - reporting-summary readiness
+     - data and code availability statements
+     - accession IDs, repositories, and disclosure of sharing restrictions
+     - image-integrity and raw-data readiness
+     - end matter: competing interests, author contributions whose initials match the byline, a
+       generative-AI statement in the Methods scoped to actual use with no AI-generated images, and
+       code availability consistent with the released repository
+     - preprint, related-manuscript, and conference-proceedings disclosure
+   - ML conference (`conference-paper-writing`, What Reviewers Check, in the optional set installed
+     with `--set all`):
+     - one statement that test data played no part in model or configuration selection
+     - the number of runs behind each reported number, and their spread
+     - no configuration chosen on evaluation data without the default configuration's result beside it
+     - reproducibility and LLM-use statements as the current year's guide asks
 
    Initials are checked against full names, not treated as unique identifiers. A missing or ambiguous
-   contribution mapping is a finding for the authors; it is not authorization to remove a byline
+   contribution mapping is a finding for the authors. It is not authorization to remove a byline
    entry, change correspondence or assign a contribution role.
-7. Reviewer-side rejection pass
+7. Source hygiene
+   - LaTeX comments become public when the source leaves the authors, on arXiv or as supplementary
+     material
+   - strip internal paths and notes with `arxiv_latex_cleaner` or an equivalent step, and confirm
+     the cleaned source compiles
+8. Reviewer-side rejection pass
    - contribution sufficiency
    - writing clarity and reproducibility
    - empirical strength

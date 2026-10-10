@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Venue, numbers and punctuation
+
+- Decide what a paper must say from the target venue's side: `paper-workflow` now names the venue and asks what its editors and reviewers check before any keep-or-cut decision. `anti-defensive-writing` gains a section on what the venue makes load-bearing. At ML conferences a no-leakage sentence stays, a configuration chosen on evaluation data is reported beside the default instead of labelled "prespecified", verdict sentences give way to estimates and intervals, and a single training run is reported to the author as a gap.
+- Add "What Reviewers Check, and What Stays Out" to `conference-paper-writing`, a venue preflight for ML conferences and a source-hygiene step (LaTeX comments are public on arXiv, so strip them with `arxiv_latex_cleaner`) to `submission-audit`.
+- Replace the "usually at most one number" abstract rule: numbers that show the scale of the problem, of the data or validation, and the size of a gain with its comparison are kept. The Introduction preview, the Discussion opening and Results claims follow the same rule. Most `Nature` abstracts in the reader sample carry such numbers.
+- Cap semicolons in `scientific-prose-style` (none in the abstract, at most one per paragraph), measured against the corpus: 3 of 23 typeset method-paper abstracts and 1 of 12 `Nature` abstracts use one. The section contracts no longer use them.
+- Add the `iclr-appendix` behavior case and record the venue and number comparisons.
+
 ### Broad-peer framing
 
 - Define the reader for front matter as the broad peer (大同行) rather than an adjacent specialist, in the section contracts' new Reader section, `manuscript-optimizer`'s reader model and `write-scientific-manuscript`. Broad positions (Title, Abstract, opening and close of each section) open with the biological stake, introduce the method by what it does, measure success against experiment, expert work or known biology where the Results allow, and state findings in biological terms.

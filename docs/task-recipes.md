@@ -10,6 +10,7 @@ Use ordinary language or name the entry skill. Provide the active source and the
 | Broad readers | “摘要和引言写得太技术了，改成面向大同行的写法。数字和结论不变，技术细节留在结果和方法里。” | Front matter reframed around the biological question; technical detail kept in Results and Methods |
 | One section | “只改摘要，目标期刊 Nature Methods。Results 里 S3 还在重跑，其他部分不动。” | Revised Abstract held to its section contract; claims resting on the pending result left out and named |
 | Posture | “去掉这段 SI 的审计式和防御式表达，保留必要的统计、复现信息及阴性结果。” | Reader-facing scientific prose |
+| ML venue | “这是 ICLR 附录，去掉审计味和防御腔，但 ICLR 审稿人要找的信息保留。” | Prose kept to what the venue's reviewers check: no-leakage statement, runs and spread, numbers instead of verdicts; evidence gaps named for the author |
 | Figures | “依据 results.csv 规划两张主图，先给每张图的主结论、面板及图注，不出图。” | Figure plan; no fabricated visual QA |
 | Submission | “检查当前最终稿、SI 和 references.bib 是否存在投稿阻断项。目标期刊已确定，未联网检查的要求请注明。” | Prioritized preflight with checked/unchecked scope |
 | Rebuttal | “按 reviewer_comments.md 的原编号准备回复。只使用 completed_results.md 中已完成的结果，并同步修改稿件。” | One response per ask and actual matched manuscript edits |

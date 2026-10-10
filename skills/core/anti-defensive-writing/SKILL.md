@@ -1,6 +1,6 @@
 ---
 name: anti-defensive-writing
-description: "Remove audit, defensive, self-critical, developer-facing and commitment writing from manuscripts, Supplementary Information, legends, table notes, data/code statements and figure content. Preserve numbers, definitions, reproducibility facts, mandated statistics, null results and conditions that determine reported values. Use after claim hierarchy is settled and before sentence polishing, when a draft reads like an audit report, rebuttal, self-critique or repository README, or on requests to de-audit, cut hedging, remove developer notes or promises, 去审计、审计味、防御性写作、自我批评、自我限制、评判式写作、去包装、太多免责、写得太怂、太啰嗦、让语气更肯定、面向开发人员、代码路径、文件名、事前承诺. Also prevents these voices from being added during editing."
+description: "Remove audit, defensive, self-critical, developer-facing and commitment writing from manuscripts, Supplementary Information, legends, table notes, data/code statements and figure content. Preserve numbers, definitions, reproducibility facts, mandated statistics, null results and conditions that determine reported values. What is load-bearing depends on the target venue: an ML conference needs the no-leakage sentence a journal pass might cut. Use after claim hierarchy is settled and before sentence polishing, when a draft reads like an audit report, rebuttal, self-critique or repository README, or on requests to de-audit, cut hedging, remove developer notes or promises, 去审计、审计味、防御性写作、自我批评、自我限制、评判式写作、去包装、太多免责、写得太怂、太啰嗦、让语气更肯定、面向开发人员、代码路径、文件名、事前承诺. Also prevents these voices from being added during editing."
 license: MIT
 ---
 
@@ -162,8 +162,8 @@ A sentence is load-bearing, and is reshaped rather than deleted, when it does on
 - **Gives an estimator's assumptions** that the reader needs to interpret it.
 - **Reports a null, negative or contradictory result.** State it plainly as a finding ("The
   prespecified primary success rule was not met"). Never delete a result to improve tone.
-- **Declares a prespecified rule.** Keep it once, and check that each outcome it governs is reported
-  somewhere in the paper. If one is not (a prespecified comparator whose contrast appears nowhere),
+- **Declares a prespecified rule.** Keep it once, in the target field's terms (see The venue decides
+  what is load-bearing), and check that each outcome it governs is reported somewhere in the paper. If one is not (a prespecified comparator whose contrast appears nowhere),
   flag it to the author; do not delete the criterion to hide the gap.
 - **Frames a construction that determines interpretation**, once: "These constructions enrich for
   cross-context divergence and are stress tests, not representative panels."
@@ -178,11 +178,44 @@ fix is a precise statement ("no stratum showed a reliable gain"), which is preci
 tone never outranks evidence: no number, interval, n, control or null result is traded for
 directness, and a posture pass cuts repetition, not content.
 
+## The venue decides what is load-bearing
+
+A sentence is reassurance only if no reader at the target venue needs it. Editors and reviewers at
+different venues check different things, so the same sentence can be noise in a journal and required
+at a conference. Before classifying, name the target venue and what its editors and reviewers check.
+For Nature Portfolio journals, `nature-portfolio-playbook` lists the required statements. For ML
+conferences, `conference-paper-writing` does (optional set, installed with `--set all`). The rules
+below apply whether or not it is installed. The six voices above are calibrated for journal articles.
+
+At ML conferences such as ICLR, NeurIPS and ICML, reviewers check three things: whether test data
+influenced model selection, whether the results can be reproduced (splits, hyperparameters, seeds,
+code), and how stable the conclusions are (how many runs, how wide the intervals). Four rules follow.
+
+- **Keep one no-leakage sentence.** Reviewers look for a plain statement that test data played no
+  part in selecting the model, its hyperparameters or its configuration. It is class A, not class
+  C. State it once, where the evaluation protocol is described.
+- **A label does not fix a selection problem.** If a configuration was chosen on data that is later
+  used for evaluation, calling it "prespecified" or "fixed in advance" does not answer the reviewer.
+  Report the default configuration's result beside the selected one, and report the selection to
+  the author as an evidence gap. Wording cannot close it.
+- **Use the field's phrasing, not trial vocabulary.** Preregistered, locked, frozen, gates and
+  verdict sentences ("supported if the interval excludes zero", "criterion not met") come from
+  clinical trials. An unverifiable "preregistered" invites suspicion. Write "the configuration was
+  selected on the development split and applied unchanged to the evaluation split", and report
+  means, medians and intervals so the reader can judge.
+- **Report robustness as runs and spread.** Seed values belong in the hyperparameter table. The text
+  states how many runs each number pools and how much they vary. A model trained only once is an
+  evidence gap for the author, not a wording problem.
+
+Process detail that a venue asks for, such as a reproducibility statement or a declaration of LLM
+use, goes in that statement and follows the venue's current guide. Internal governance, ledgers and
+file paths stay out of the paper at every venue.
+
 ## Where each kind of content belongs
 
 | Part | Keeps | Removes or moves |
 |---|---|---|
-| Abstract | headline findings, effect sizes | test statistics, provenance, caveats unless the claim is false without them |
+| Abstract | headline findings, effect sizes, the scale of the data or validation | test statistics, provenance, caveats unless the claim is false without them |
 | Introduction | problem, gap, approach, findings | design controls ("no regime-specific tuning"), field commentary, rhetorical questions |
 | Results | question, setup in one sentence, result, interpretation, next question | setup, safeguard, caveat, control, exception chains; provenance qualifiers; implementation checks |
 | Figure legends | what is plotted, n, error bars, statistic | interpretation defences, "not selected by", "listed for completeness" |
@@ -195,15 +228,17 @@ directness, and a posture pass cuts repetition, not content.
 
 ## Procedure
 
-1. **Settle the claim first.** Run after `manuscript-optimizer`. While the claim is moving, an
-   unnecessary disclaimer and a real scope condition look alike.
+1. **Settle the claim and name the venue first.** Run after `manuscript-optimizer`. While the claim
+   is moving, an unnecessary disclaimer and a real scope condition look alike. Name the target venue
+   and what its reviewers check (The venue decides what is load-bearing).
 2. **Detect.** Read paragraph by paragraph, and run the detection pass below on the source. Cover the
    SI, legends, captions, table notes, table columns, end matter and data statements, not only the
    main text.
 3. **Classify each hit.**
    - A. Necessary to understand the experiment: state once, naturally, where it acts.
    - B. Needed for reproducibility: move to Methods or SI, one plain sentence.
-   - C. Reassurance against a possible criticism: delete.
+   - C. Reassurance against a possible criticism that the target venue's reviewers do not check:
+     delete.
    - D. Internal project, governance or repository language: restate in reader terms, or delete.
    - E. Self-criticism: neutral fact, design decision, finding, or delete.
    - F. Null or contradictory result: keep as a finding, in neutral words.
@@ -238,7 +273,7 @@ looks for.
 ```bash
 F=manuscript.tex   # repeat for the SI and for any generator that writes captions or table notes
 # audit
-grep -n -i -E "locked|frozen|hash|scored once|fixed in advance|verif|sanity|leak|post[- ]hoc|original (design|evaluation)|recomputation|\bgate\b|\bPASS\b|\bFAIL\b|numerical check|predeclared|historical|legacy" "$F"
+grep -n -i -E "locked|frozen|hash|scored once|fixed in advance|verif|sanity|leak|post[- ]hoc|original (design|evaluation)|recomputation|\bgate\b|\bPASS\b|\bFAIL\b|numerical check|predeclared|preregist|criterion (was )?(not )?met|supported if|historical|legacy" "$F"
 # defensive
 grep -n -i -E "does not (establish|imply|mean|test|estimate|prove|relabel)|do not (claim|imply)|should not be (read|interpreted|taken)|is not an? |are not an? |not intended|rather than|instead of|for completeness|to be clear|should be noted|worth noting|visible rather than|so (that )?a reader|had .* been|specific to .*; it does not|without claiming|not (statistical )?significance" "$F"
 # self-critical, including verdict columns in tables

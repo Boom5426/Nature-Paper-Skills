@@ -73,6 +73,8 @@ Force the abstract to answer the four core reader questions:
    - state the aim and the method briefly
 3. What did you find?
    - report the key result, not a placeholder like "results are discussed"
+   - keep the numbers that let the reader judge it: the scale of the data or validation, and the
+     size of the gain against a named comparison
 4. How will the study advance the field?
    - state the conclusion and implication
 

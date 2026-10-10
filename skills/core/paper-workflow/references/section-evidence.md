@@ -50,6 +50,8 @@ every count in the next section.
 | Main figures, typeset (n = 23) | median 5, range 3–7 |
 | Title or abstract uses "novel" / "powerful" | 0 / 0 of 28 |
 | First Results heading "Overview of X" or "Method overview" | 11 of 28 |
+| Typeset abstracts with a semicolon | 3 of 23 |
+| Results and Discussion paragraphs without a semicolon (n = 982) | 749 (one in 133, two or more in 100) |
 
 ## Coded by reading
 
@@ -90,12 +92,27 @@ supplement and are not counted. Only abstracts were read. One reader coded them.
 | Main finding framed as a capability or biological insight first | about 8 | 7 (3 more mix it with a benchmark) |
 | Last sentence states a field-level implication | most; 8 end on software availability | 11 |
 | Model-internal terms per abstract (script) | median 1, none in 9 | median 1, none in 4 |
+| Any number a reader can use (typeset abstracts only) | 7 of 23 | 8 of 12 |
+| Scale of the data or validation (cells, images, patients, proteins tested, tasks) | 4 | 6 |
+| Size of a gain or a result, with its comparison or units | 3 | 5 |
+| Abstracts with a semicolon (script) | 3 of 23 | 1 of 12 |
 
 The last row is the decisive one. Breadth does not come from using fewer technical terms: both
 samples name model families at the same rate. It comes from framing: what the first sentence is
-about, what success is measured against, and in whose terms the finding is stated. When `Nature`
-abstracts give a number, it is usually in units a field reader can judge, such as a clinical AUC, a
-catalytic efficiency or the deviation from a crystal structure.
+about, what success is measured against, and in whose terms the finding is stated.
+
+Broad framing does not mean fewer numbers. The `Nature` abstracts carry more of them than the method
+Articles: the scale of the evidence ("1.6 million unlabelled retinal images", "more than 16,400 blood
+transcriptomes derived from 127 clinical studies", "experimental characterization of 310 proteins")
+and the size of the result in units a field reader can judge ("an area under the curve of 0.87",
+"an improvement of 5.36-14.7% in the AUC compared with traditional models", "25 out of 26 tasks", "a
+backbone root-mean-square deviation of around 1.0 Å"). One abstract carries about ten numbers. Seven
+state their main result in words only, and four of these compare it with experiment or human
+experts ("accuracy competitive with experimental structures", "of similar quality to those generated
+by human experts", "as accurate as high-throughput experimental scans"). The number rows were coded
+by one reader from the abstracts. Numbers in citations, names and background dates were not counted,
+and one `Nature` abstract counts only for a number giving the scale of the problem ("around 100,000
+unique proteins" against "billions of known protein sequences").
 
 ## House choices that depart from the sample
 

@@ -24,14 +24,22 @@ paragraph and report the format as unchecked.
 Front matter is written for 大同行, the broad peer: a scientist outside the subfield who did not
 build this kind of method. For a computational-biology paper in Nature Methods, Nature
 Biotechnology or Nature Communications, that is a biologist who would use the method but does not
-know its benchmarks, metrics or model families; for `Nature` or `Science`, any scientist. A reader
-who knows "the broad AI domain" is an adjacent specialist, not a broad peer.
+know its benchmarks, metrics or model families. For `Nature` or `Science`, it is any scientist. A
+reader who knows "the broad AI domain" is an adjacent specialist, not a broad peer.
+
+At an ML conference such as ICLR, NeurIPS or ICML, the broad peer is an ML researcher outside the
+application area. The biological stake can still open the paper. The method, the evaluation
+protocol and the baselines are stated in ML terms, model families need no gloss, and success is
+measured against the strongest baselines under a protocol in which test data played no part in
+selection. The contracts below are written for journal research articles. A conference paper takes
+its structure from `conference-paper-writing` (optional set, installed with `--set all`), and the
+dependency rules still apply.
 
 Positions differ in register:
 
-- **Broad positions:** the Title; the whole Abstract; the first and final paragraphs of the
-  Introduction; the first and last sentences of each Results subsection; the opening and closing of
-  the Discussion.
+- **Broad positions:** the Title, the whole Abstract, the first and final paragraphs of the
+  Introduction, the first and last sentences of each Results subsection, and the opening and
+  closing of the Discussion.
 - **Technical positions:** the body of each Results subsection, Methods, legends and the SI. Here
   precision and reproducibility come first, and technical vocabulary is expected.
 
@@ -41,22 +49,24 @@ reader when:
 1. **It opens with the biological stake.** The first sentence names a biological or biomedical
    question, process or need, not a technology, dataset, model class or computational task.
 2. **The method is introduced by what it does.** Say what the method lets a biologist find or
-   predict before saying how; a model family or component may follow as the means, in one clause.
+   predict before saying how. A model family or component may follow as the means, in one clause.
 3. **Success is measured against what the biologist relies on.** When the Results compare the
-   method with experiment, expert annotation or known biology, lead with that comparison;
-   comparisons with other algorithms support it. Never invent such a comparison.
+   method with experiment, expert annotation or known biology, lead with that comparison.
+   Comparisons with other algorithms support it. Never invent such a comparison.
 4. **Findings are stated in biological terms.** Say what was predicted or recovered, such as which
    genes rise or fall or which drug pairs act beyond the sum of their single effects. A metric
    name appears only with what it measures, and a number appears in units the reader can judge.
+   Stating a finding in biological terms does not mean replacing its numbers with words. Keep the
+   number and say what it measures.
 5. **It passes the neighbour test.** A scientist from another field can say, after one read, what
    problem was addressed, what was found and why it matters.
 
-Precision is not traded for this. Technical support moves to the technical positions; it does not
+Precision is not traded for this. Technical support moves to the technical positions. It does not
 disappear, and no claim becomes broader than the evidence.
 
 This register is a house choice that departs from the sample of method papers behind the typical
 ranges below, most of which open with a technology or a computational task. Computational papers
-in `Nature` follow it far more often; see [section-evidence.md](section-evidence.md).
+in `Nature` follow it far more often ([section-evidence.md](section-evidence.md)).
 
 ## Dependency order
 
@@ -64,7 +74,7 @@ Positions restate claims that are settled elsewhere:
 
 > figures and evidence → Results → Discussion → Introduction → Abstract → Title
 
-The Introduction's opening rests on the central question; its final paragraph rests on the Results.
+The Introduction's opening rests on the central question. Its final paragraph rests on the Results.
 Methods records what was actually done and changes only when a procedure or analysis changes.
 Legends depend on their figure and on the Results sentence that cites it.
 
@@ -92,23 +102,24 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 | Abstract | problem, gap, approach, findings, implication | one paragraph of 5–8 sentences |
 | Introduction | field problem, what prior work cannot answer, why it is hard, this study and its main findings | 3–5 paragraphs |
 | Results | one subsection per claim | 5–8 subsections of 3–6 paragraphs |
-| Discussion | findings and their significance, why they hold and what they mean, scope and field-level implication | 3–5 paragraphs (house choice; the sample median is 5) |
+| Discussion | findings and their significance, why they hold and what they mean, scope and field-level implication | 3–5 paragraphs (house choice, sample median 5) |
 
 ## Title
 
 - **Job:** name the central finding or question at the highest level the evidence supports.
 - **Depends on:** the main claim, as compressed in the Abstract.
 - **Meets the contract when:** the focus follows concept or finding > framework name >
-  implementation; a broad peer knows what biological question or capability the paper is about
-  after one pass; it uses the terms the intended readers search for.
+  implementation. A broad peer knows what biological question or capability the paper is about
+  after one pass, and the title uses the terms the intended readers search for.
 - **Method papers:** the title names the task, the data or setting and the key idea ("Mapping
   single-cell data to reference atlases by transfer learning"). The method name is optional and,
   when present, often follows "with". A claim sentence fits a title when the contribution is a
   finding.
-- **Fails when:** a method or benchmark name is the focus although it is not the main contribution;
-  it uses an unexplained acronym, an inflated umbrella term or a label such as "novel"; it is
-  broader than the evidence.
-- **Owners:** `scientific-writing` (`references/editor-first-impression.md`) to draft;
+- **Fails when:**
+  - a method or benchmark name is the focus although it is not the main contribution
+  - it uses an unexplained acronym, an inflated umbrella term or a label such as "novel"
+  - it is broader than the evidence
+- **Owners:** `scientific-writing` (`references/editor-first-impression.md`) to draft, and
   `manuscript-optimizer` to check it against the claim architecture.
 
 ## Abstract
@@ -121,45 +132,60 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
   advances it. The first sentence states the biological stake. The sentence that introduces the
   study ("Here we present ...") follows the problem and gap, usually as the second to fourth
   sentence, and says what the method lets a biologist do. Findings are stated as what was predicted
-  or recovered, with what it was compared against; a comparison with experiment, expert annotation or
-  known biology leads when the Results contain one. A number appears only when the number is the
-  claim, usually at most one, in units the reader can judge, with its direction, magnitude and
-  comparison. A closing sentence of field-level implication is acceptable when it names what becomes
-  possible.
+  or recovered and what it was compared against. A comparison with experiment, expert annotation or
+  known biology leads when the Results contain one. A closing sentence of field-level implication is
+  acceptable when it names what becomes possible.
   When the supplied material does not provide a move, most often the gap, take it from the
-  Introduction or leave it marked for the author; do not compose a new claim about the literature.
-- **Fails when:** it opens with a sequencing technology, a dataset, a model class or a computational
-  task; it states the main finding only as a benchmark win or as a metric the reader cannot
-  interpret; generic background takes most of the space; it lists datasets, baselines or every
-  metric; it says a result was significant without saying what changed, or offers a P value as the
-  finding; it claims more than the Results, such as outperforming all methods when the Results show
-  a narrower win; it cites a result whose Results subsection is not settled; it uses labels such as
-  "novel" or "powerful" in place of a result; it ends on a generic promise ("will be a powerful
-  tool").
+  Introduction or leave it marked for the author. Do not compose a new claim about the literature.
+- **Numbers:** keep the ones a broad reader can use. Three kinds earn their place:
+  - the scale of the problem, such as structures solved against sequences known
+  - the scale of the data or the validation, such as cells, patients, studies or designs tested
+  - the size of a gain or an effect, with its direction and its comparison, in units the reader can
+    judge, such as a relative improvement, a clinical AUC or "25 of 26 tasks"
+
+  A number without its comparison, a metric value the reader cannot interpret, a list of every
+  dataset or metric, and test statistics do not. Do not strip numbers to make the abstract read
+  lighter: "substantially better" is weaker than the same gain with its size. Most `Nature`
+  abstracts in the reader sample carry such numbers ([section-evidence.md](section-evidence.md)).
+- **Fails when:**
+  - it opens with a sequencing technology, a dataset, a model class or a computational task
+  - it states the main finding only as a benchmark win, or as a metric the reader cannot interpret
+  - generic background takes most of the space
+  - it lists datasets, baselines or every metric
+  - it says a result was significant without saying what changed, or offers a P value as the finding
+  - it claims more than the Results, such as outperforming all methods when the Results show a
+    narrower win
+  - it cites a result whose Results subsection is not settled
+  - it uses labels such as "novel" or "powerful" in place of a result
+  - it ends on a generic promise ("will be a powerful tool")
 - **Layer notes:** the Abstract is a compression of the argument, not a summary of the Results in
-  order. At the posture layer it keeps headline findings and effect sizes; test statistics,
-  provenance and caveats leave unless the claim is false without them (`anti-defensive-writing`).
-- **Owners:** `scientific-writing` (`references/editor-first-impression.md`) to draft;
-  `write-scientific-manuscript` for the sentence chain; format from the journal.
+  order. At the posture layer it keeps headline findings, effect sizes and the scale of the evidence.
+  Test statistics, provenance and caveats leave unless the claim is false without them
+  (`anti-defensive-writing`).
+- **Owners:** `scientific-writing` (`references/editor-first-impression.md`) to draft,
+  `write-scientific-manuscript` for the sentence chain, and the journal for the format.
 
 ## Introduction
 
 - **Job:** make the study's question necessary.
-- **Depends on:** the central question; the final paragraph also depends on the Results.
+- **Depends on:** the central question. The final paragraph also depends on the Results.
 - **Meets the contract when:** it opens in the broad register with the biological problem, not
   with the data type or the computational task, and moves to the missing capability or unresolved
   question, then to why that question remains hard, then to what this study does and
   what it makes possible to learn. Prior work is organized by what it can and cannot answer. The
   final paragraph states the question, approach and primary contribution, then previews the main
   findings as an enlarged version of the Abstract's findings sentences: what was shown, against
-  what, and what it enables, in a few sentences and in biological terms.
-- **Fails when:** it is a method-by-method catalogue or a chronology; the proposed method appears
-  before the problem is defined; the final paragraph walks through the applications or figures one
-  by one, gives detailed numbers, or promises what the Results later walk back; it carries design
-  controls, field commentary or rhetorical questions.
-- **Owners:** `scientific-writing` to draft; `write-scientific-manuscript`
-  (`references/section-logic.md`) for the paragraph sequence; `claim-source-verification` for the
-  sentences that establish the gap.
+  what, and what it enables, in a few sentences and in biological terms. It may carry the numbers
+  that show the scale of the work or the size of the main gain.
+- **Fails when:**
+  - it is a method-by-method catalogue or a chronology
+  - the proposed method appears before the problem is defined
+  - the final paragraph walks through the applications or figures one by one, lists results number
+    by number, or promises what the Results later walk back
+  - it carries design controls, field commentary or rhetorical questions
+- **Owners:** `scientific-writing` to draft, `write-scientific-manuscript`
+  (`references/section-logic.md`) for the paragraph sequence, and `claim-source-verification` for
+  the sentences that establish the gap.
 
 ## Results
 
@@ -167,12 +193,12 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 - **Depends on:** the figures, tables and analyses, and the claim architecture.
 - **Meets the contract when:** each subsection heading states the supported finding. A subsection
   opens with the question or context that makes the analysis necessary, stated in biological terms,
-  and its last sentence says what the result means for that question; both are broad positions,
-  while the body between them may be technical; later paragraphs lead with
-  their message when the evidence supports it. Each local claim runs question → minimum design →
-  core observation with direction and magnitude → interpretation, stated explicitly whenever the
-  inference is not obvious from the observation. One or two quantitative anchors carry each local
-  claim, each against a named comparison; denser values stay in figures and legends. Where a
+  and its last sentence says what the result means for that question. Both are broad positions.
+  The body between them may be technical, and later paragraphs lead with their message when the
+  evidence supports it. Each local claim runs question → minimum design → core observation with
+  direction and magnitude → interpretation, stated explicitly whenever the inference is not obvious
+  from the observation. Each local claim carries the numbers that establish it, each with its
+  comparison. Runs of values that the argument does not use go to figures, tables and legends. Where a
   metric's meaning matters for the next inference, the text states what it measures. When metrics
   disagree, the text says what each captures (for example pattern agreement, magnitude error and
   direction accuracy) instead of letting one metric stand for overall performance. Observation,
@@ -186,13 +212,16 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
   properties such as robustness, ablation and scalability → biological applications, ending on the
   strongest biological result. Each comparison says what the better prediction lets a biologist do,
   and a comparison with experiment or known biology is reported where the data allow one.
-- **Fails when:** it follows experiment chronology or panel order; procedural openers ("We next
-  investigated", "To test this") are the default pattern or run in consecutive subsections;
-  implementation checks are reported as findings; a chain of setup, safeguard and caveat precedes
-  the result; a figure is cited without its question or inference; an interpretation is presented
-  as a measurement.
-- **Owners:** `manuscript-optimizer` while the claims are moving; `results-section-revision` once
-  they are settled; `stats-reporting-audit` for reported statistics.
+- **Fails when:**
+  - it follows experiment chronology or panel order
+  - procedural openers ("We next investigated", "To test this") are the default pattern or run in
+    consecutive subsections
+  - implementation checks are reported as findings
+  - a chain of setup, safeguard and caveat precedes the result
+  - a figure is cited without its question or inference
+  - an interpretation is presented as a measurement
+- **Owners:** `manuscript-optimizer` while the claims are moving, `results-section-revision` once
+  they are settled, and `stats-reporting-audit` for reported statistics.
 
 ## Discussion
 
@@ -200,8 +229,8 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 - **Depends on:** settled Results.
 - **Meets the contract when:** it makes three moves, in this order, each in one or more paragraphs.
   1. **Findings and their significance:** open, in the broad register, with the main advance and
-     its evidence, and say what it adds to or changes in existing methods or understanding. The comparison with related
-     methods belongs here or in move 2.
+     its evidence, which may include the headline number. Say what it adds to or changes in existing
+     methods or understanding. The comparison with related methods belongs here or in move 2.
   2. **Why they hold and what they mean:** the methodological logic behind the result (which design
      choice does the work) and the biological value of the findings. Interpret rather than replay,
      and label mechanism evidence apart from mechanistic hypothesis.
@@ -211,11 +240,13 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
      becomes possible for biology or medicine.
 - **Limitations:** state genuine limitations once, as scope, in move 3, or where a limit sets a
   reported value. A useful limitation changes how a result is read.
-- **Fails when:** it reopens with field background; it repeats Results numbers; it itemizes
-  self-criticism or repeats limitations already stated in the Results; it ends on a caveat, a plan
-  or a software availability statement; it closes on "paves the way" without naming what becomes
-  possible.
-- **Owners:** `scientific-writing` to draft; `write-scientific-manuscript` for passage logic;
+- **Fails when:**
+  - it reopens with field background
+  - it replays the Results number by number
+  - it itemizes self-criticism or repeats limitations already stated in the Results
+  - it ends on a caveat, a plan or a software availability statement
+  - it closes on "paves the way" without naming what becomes possible
+- **Owners:** `scientific-writing` to draft, `write-scientific-manuscript` for passage logic, and
   `anti-defensive-writing` for posture.
 
 ## Methods
@@ -223,33 +254,36 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 - **Job:** let another expert reproduce what was done and judge whether it was valid.
 - **Depends on:** the procedures and analyses actually run, not the narrative.
 - **Meets the contract when:** data, preprocessing, splits and their unit, models, objectives,
-  metrics, statistics, selection procedures and software versions are defined unambiguously; the
-  unit of replication and n are stated; every term used in the Results is defined; the items of an
-  applicable reporting guideline are present.
+  metrics, statistics, selection procedures and software versions are defined unambiguously. The
+  unit of replication and n are stated, every term used in the Results is defined, and the items of
+  an applicable reporting guideline are present.
 - **Method papers:** the comparison setup has its own description: which baselines, which versions
   and settings, how each was tuned and on what data, and how each metric is computed. A comparison
   the reader cannot reproduce cannot carry a claim.
-- **Fails when:** a method appears first in the Results; it carries interpretation paragraphs or
-  repeated defences of a choice; sensitivity results and implementation checks sit here instead of
-  in the SI.
+- **Fails when:**
+  - a method appears first in the Results
+  - it carries interpretation paragraphs or repeated defences of a choice
+  - sensitivity results and implementation checks sit here instead of in the SI
 - **Layer notes:** nearly every statement is load-bearing. Posture edits change form (negation to
   positive scope, stated once) and never delete a reproducibility fact. Passage edits fix ambiguity,
-  not rhythm; procedural prose is acceptable here.
-- **Owners:** `scientific-writing` (`references/reporting_guidelines.md`); `stats-reporting-audit`
+  not rhythm. Procedural prose is acceptable here.
+- **Owners:** `scientific-writing` (`references/reporting_guidelines.md`), and `stats-reporting-audit`
   for the statistical analysis subsection.
 
 ## Figure legends and table notes
 
 - **Job:** make each display item readable without the Results text.
 - **Depends on:** the figure itself and the Results sentence that cites it.
-- **Meets the contract when:** it defines each panel's role; states what is plotted, the groups,
-  units, n with its unit, error bars and the statistic; keeps the quantitative anchors the main text
-  omits; and agrees with panel letters, metrics, datasets and baselines.
+- **Meets the contract when:** it defines each panel's role and states what is plotted, the groups,
+  units, n with its unit, error bars and the statistic. It keeps the quantitative anchors the main
+  text omits and agrees with panel letters, metrics, datasets and baselines.
 - **Method papers:** Fig. 1 usually presents the method (workflow, model and inputs) and anchors the
   first Results subsection.
-- **Fails when:** its interpretation is stronger than the plot; it carries interpretation defences
-  or verdict columns; it was edited after the Results without rechecking them.
-- **Owners:** `figure-planner` (legend rules); `stats-reporting-audit`
+- **Fails when:**
+  - its interpretation is stronger than the plot
+  - it carries interpretation defences or verdict columns
+  - it was edited after the Results without rechecking them
+- **Owners:** `figure-planner` (legend rules), and `stats-reporting-audit`
   (`references/figure-statistics.md`).
 
 ## Supplementary Information
@@ -258,11 +292,11 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
 - **Meets the contract when:** each item states the question it answers, and the main text cites it
   by that question and the pattern that matters, never only "shows similar results".
 - **Fails when:** it carries audit commentary, unused items, reader instructions or build notes.
-- **Owners:** `anti-defensive-writing`; `scientific-writing` (`references/latex-layout.md`) for SI
-  table layout.
+- **Owners:** `anti-defensive-writing`, and `scientific-writing` (`references/latex-layout.md`) for
+  SI table layout.
 
 ## Data and code availability
 
 - **Job:** state what exists now, where it is and what it contains.
 - **Owners:** `data-availability`. Repository names, accession numbers and access conditions are
-  author facts; never invent or promise them.
+  author facts. Never invent or promise them.

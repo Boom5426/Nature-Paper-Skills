@@ -1,6 +1,6 @@
 ---
 name: scientific-prose-style
-description: "Prose-quality rules for writing scientific manuscript text — abstract, introduction, results, discussion. The headline rule is a strict em-dash budget: the long dash (—) is overused and reads as a stylistic tic, so cap it and rewrite with commas, colons, parentheses, or a period. Also covers hedging, sentence rhythm, and paragraph openers. Load whenever drafting or revising manuscript prose (not figures; that is figure-planner)."
+description: "Prose-quality rules for writing scientific manuscript text: abstract, introduction, results, discussion. The headline rule is a strict em-dash budget: the long dash (—) is overused and reads as a stylistic tic, so cap it and rewrite with commas, colons, parentheses, or a period. Also caps semicolons and colons, the usual replacements, and covers hedging, sentence rhythm, and paragraph openers. Load whenever drafting or revising manuscript prose (not figures; that is figure-planner)."
 license: Apache-2.0
 ---
 
@@ -24,7 +24,7 @@ rewrites paragraph openers and sentence boundaries, which is exactly what Rule 3
 then have to settle, so running this skill first means doing that work twice. Rule 3 here calibrates
 hedges within a sentence; deciding whether the hedge should exist at all belongs upstairs.
 
-## Rule 1 — Em-dash budget (the headline rule)
+## Rule 1: Em-dash budget (the headline rule)
 
 The long em-dash (`—`) is the single most overused mark in generated scientific
 prose. It feels punchy in isolation but a reader hits three or four per paragraph
@@ -69,26 +69,36 @@ Note what the rewrite does: promotes one clause to its own sentence, turns the
 bracketed aside into a relative clause, and swaps the contrast dash for "rather
 than." The prose is calmer and each sentence carries one idea.
 
-## Rule 2 — Don't trade the dash for a colon tic
+## Rule 2: Don't trade the dash for a colon or semicolon tic
 
-Colons are the natural replacement, but the same overuse applies: at most one
-colon per sentence, and if every sentence in a paragraph ends `...: <expansion>`
-you've just moved the tic. Vary the repair — some become periods, some commas.
+Colons and semicolons are the natural replacements, and the same overuse applies.
 
-## Rule 3 — Hedge once, not thrice
+- **Colons:** at most one per sentence. If every sentence in a paragraph ends
+  `...: <expansion>`, you have just moved the tic.
+- **Semicolons:** none in the abstract, and at most one per paragraph elsewhere.
+  Published prose rarely uses them. In `paper-workflow`'s section evidence, 3 of
+  23 typeset method-paper abstracts and 1 of 12 `Nature` abstracts have one, and
+  three quarters of the Results and Discussion paragraphs have none. Two clauses
+  joined by a semicolon are usually two sentences. Semicolons that separate list
+  items already containing commas, or statistics inside parentheses, do not count.
+
+Vary the repair. Most become periods, some become commas or a plain connective
+(`and`, `but`, `so`).
+
+## Rule 3: Hedge once, not thrice
 
 Scientific prose stacks hedges (`may possibly suggest that ... could in principle
 ...`). State the claim with one qualifier and the confidence level, then stop.
 `These results suggest X` — not `These results may tentatively be taken to
 suggest that X could hold`.
 
-## Rule 4 — Vary sentence length; one idea per sentence
+## Rule 4: Vary sentence length, one idea per sentence
 
 A paragraph of uniformly long, clause-heavy sentences is as fatiguing as the
 dash tic. Follow a long sentence with a short one. If a sentence has three
 clauses joined by dashes, semicolons, and "and," it is three sentences.
 
-## Rule 5 — Openers and connectives
+## Rule 5: Openers and connectives
 
 - Don't open consecutive paragraphs with the same word (`We ... We ... We ...`).
 - Prefer plain connectives (`but`, `so`, `because`, `here`) over heavy ones
@@ -98,8 +108,9 @@ clauses joined by dashes, semicolons, and "and," it is three sentences.
 
 Run this on any abstract/intro/section you write:
 
-1. **Count em-dashes.** More than one per paragraph, or any in the abstract →
-   rewrite the excess with the substitution table.
+1. **Count em-dashes and semicolons.** More than one of either per paragraph, or
+   any in the abstract → rewrite the excess with the substitution table or as
+   separate sentences.
 2. **Count paragraph-opening words.** Repeated opener → vary it.
 3. **Read the longest sentence aloud.** If you run out of breath, split it.
 4. En-dashes in numeric ranges (`5–10`) and hyphens in compounds
