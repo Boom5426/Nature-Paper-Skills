@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Upstream API changes and Windows encoding
+
+- Fetch arXiv results through `arxiv.Client().results(search)` in `reference-audit-guide`. arxiv 4.0 removed `Search.results()`, so every arXiv lookup returned "not found" on a fresh install.
+- Replace the retired Gemini preview image models in `academic-presentations` with `gemini-nano-banana-2.1` and `gemini-3-pro-image`, and tell users to set `NANOBANANA_MODEL`, because the nanobanana extension still defaults to the retired ID.
+- Update the edge-tts subtitle example to `SubMaker.get_srt()` and SRT output (edge-tts 7.x), feeding both word and sentence boundaries.
+- OpenAlex needs a free API key; `mailto` has been ignored since February 2026.
+- Stop the citation CLIs crashing on Windows GBK or cp1252 consoles when they print status emoji: unencodable characters are escaped instead, so the exit code again means verification failed. Read install records, eval assets and TTS scripts as UTF-8, and pass UTF-8 to `detex`.
+- Add `.gitattributes` so `*.sh` keeps LF line endings on Windows checkouts.
+
 ### AI tone
 
 - Add an information test for AI-sounding prose to `scientific-prose-style` (Rule 6): delete a word or sentence when the reader loses no fact by its removal, never swap synonyms, never cut a number. `references/ai-tells.md` lists ten families (empty intensifiers, elevation frames, restatement, recap closers, forward pointers, rhetorical questions, weak subjects, coined compounds, typography, uniform shape) with before and after examples.

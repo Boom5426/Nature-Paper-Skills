@@ -101,7 +101,7 @@ def install(args, dests):
     selected = [(rel, safe_name(Path(rel).name)) for rel in args.skill]
     if len({name for _, name in selected}) != len(selected):
         raise ValueError("Duplicate skill names in selection")
-    version = (source / "VERSION").read_text().strip() if (source / "VERSION").exists() else "unversioned"
+    version = (source / "VERSION").read_text(encoding="utf-8").strip() if (source / "VERSION").exists() else "unversioned"
     plans = []
     # Check all destinations before replacing any skill.
     for dest in dests:
@@ -259,7 +259,7 @@ def restore(args, dests):
         backup_dir = dest / STATE / "backups" / backup_id
         if backup_dir.is_symlink() or not backup_dir.is_dir():
             raise ValueError(f"Backup not found: {backup_dir}")
-        before = json.loads((backup_dir / "before.json").read_text())
+        before = json.loads((backup_dir / "before.json").read_text(encoding="utf-8"))
         current = read_manifest(dest)
         for backup in sorted(backup_dir.iterdir()):
             if backup.name == "before.json":

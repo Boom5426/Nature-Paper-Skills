@@ -1,6 +1,19 @@
 """Shared local input handling for the two citation audit CLIs."""
 from pathlib import Path
 import re
+import sys
+
+
+def tolerate_console_encoding():
+    """Keep the console codec but escape what it cannot encode.
+
+    On Windows a GBK or cp1252 console cannot encode the status emoji. The
+    resulting UnicodeEncodeError aborts the run with the same nonzero exit
+    status a failed check uses, so the crash reads as a verification result.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="backslashreplace")
 
 
 def bibtex_blocks(text):

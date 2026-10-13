@@ -194,6 +194,8 @@ class ArXivClient(APIClient):
             self.arxiv = arxiv
         except ImportError:
             raise ImportError("需要安装 arxiv 库: pip install arxiv")
+        # arxiv 4.0 移除了 Search.results(); Client.results(search) 在 1.x 起均可用
+        self.client = arxiv.Client()
 
     def search_by_id(self, arxiv_id: str) -> Optional[Dict]:
         """通过 arXiv ID 搜索论文
@@ -206,7 +208,7 @@ class ArXivClient(APIClient):
         """
         def request():
             search = self.arxiv.Search(id_list=[arxiv_id])
-            paper = next(search.results())
+            paper = next(self.client.results(search))
             return paper
 
         try:
@@ -236,7 +238,7 @@ class ArXivClient(APIClient):
                 max_results=max_results,
                 sort_by=self.arxiv.SortCriterion.Relevance
             )
-            results = list(search.results())
+            results = list(self.client.results(search))
             return results[0] if results else None
 
         try:

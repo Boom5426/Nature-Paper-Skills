@@ -117,8 +117,11 @@ pip install arxiv
 ```python
 import arxiv
 
+# arxiv 4.0 起 Search.results() 已移除,统一通过 Client 取结果
+client = arxiv.Client()
+
 # 通过 arXiv ID 获取
-paper = next(arxiv.Search(id_list=["1706.03762"]).results())
+paper = next(client.results(arxiv.Search(id_list=["1706.03762"])))
 print(f"Title: {paper.title}")
 print(f"Authors: {[a.name for a in paper.authors]}")
 print(f"Published: {paper.published}")
@@ -131,7 +134,7 @@ search = arxiv.Search(
     sort_by=arxiv.SortCriterion.Relevance
 )
 
-for result in search.results():
+for result in client.results(search):
     print(f"Title: {result.title}")
     print(f"arXiv ID: {result.entry_id.split('/')[-1]}")
     print("---")

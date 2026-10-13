@@ -51,7 +51,7 @@ Research has documented significant issues with AI-generated citations:
 | **Semantic Scholar** | 214M papers | 1 RPS (free key) | ML/AI papers, citation graphs |
 | **CrossRef** | 140M+ DOIs | Polite pool with mailto | DOI lookup, BibTeX retrieval |
 | **arXiv** | Preprints | 3-second delays | ML preprints, PDF access |
-| **OpenAlex** | 240M+ works | 100K/day, 10 RPS | Open alternative to MAG |
+| **OpenAlex** | 240M+ works | Free API key (`api_key`); daily credit budget, 30 RPS with key. `mailto` ignored since Feb 2026 | Open alternative to MAG |
 
 ### API Selection Guide
 

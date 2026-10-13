@@ -63,7 +63,9 @@ async def batch_tts(slides, out_dir):
 asyncio.run(batch_tts(slides, "output/edge-tts"))
 ```
 
-### With Subtitles (SRT/VTT)
+### With Subtitles (SRT)
+
+Requires edge-tts 7.0 or later: `SubMaker.get_srt()` replaced `generate_subs()`, and VTT output was dropped. Since 7.2 the stream emits `SentenceBoundary` cues by default; pass `boundary="WordBoundary"` to `Communicate` for word-level cues.
 
 ```python
 import edge_tts, asyncio
@@ -75,12 +77,12 @@ async def speak_with_subs(text, audio_out, sub_out, voice="en-US-AndrewNeural"):
         async for chunk in comm.stream():
             if chunk["type"] == "audio":
                 f.write(chunk["data"])
-            elif chunk["type"] == "WordBoundary":
+            elif chunk["type"] in ("WordBoundary", "SentenceBoundary"):
                 subs.feed(chunk)
-    with open(sub_out, "w") as f:
-        f.write(subs.generate_subs())
+    with open(sub_out, "w", encoding="utf-8") as f:
+        f.write(subs.get_srt())
 
-asyncio.run(speak_with_subs("Hello world", "out.mp3", "out.vtt"))
+asyncio.run(speak_with_subs("Hello world", "out.mp3", "out.srt"))
 ```
 
 ## Kokoro TTS

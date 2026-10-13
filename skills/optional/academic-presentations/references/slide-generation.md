@@ -4,10 +4,15 @@
 
 | Backend | Model | Env var override |
 |---------|-------|------------------|
-| Nanobanana (default) | `gemini-3.1-flash-image-preview` | `NANOBANANA_MODEL` |
-| Nanobanana (pro) | `gemini-3-pro-image-preview` | `NANOBANANA_MODEL` |
+| Nanobanana (standard) | `gemini-nano-banana-2.1` | `NANOBANANA_MODEL` |
+| Nanobanana (pro) | `gemini-3-pro-image` | `NANOBANANA_MODEL` |
 
-To use Pro model: `export NANOBANANA_MODEL=gemini-3-pro-image-preview`
+The extension's built-in default is still the preview ID `gemini-3.1-flash-image-preview`. Google listed it and `gemini-3-pro-image-preview` for shutdown on 25 June 2026 and names the IDs above as their replacements ([deprecations](https://ai.google.dev/gemini-api/docs/deprecations), checked 2026-10-13). Always set the model explicitly:
+
+```bash
+export NANOBANANA_MODEL=gemini-nano-banana-2.1   # standard
+export NANOBANANA_MODEL=gemini-3-pro-image       # pro
+```
 
 ## Prerequisites
 
@@ -111,5 +116,6 @@ Content: [layout description]
 | Nanobanana not installed | `gemini extensions install https://github.com/gemini-cli-extensions/nanobanana` |
 | 429 rate limit | Wait and retry, or set `NANOBANANA_MODEL` to a different model |
 | Style drift across slides | Switch to Approach B (edit from base) or use `/edit` on existing assets |
-| Need higher quality | `export NANOBANANA_MODEL=gemini-3-pro-image-preview` |
+| Model not found / 404 | `NANOBANANA_MODEL` is unset or names a retired preview ID; set it as in [Models](#models) |
+| Need higher quality | `export NANOBANANA_MODEL=gemini-3-pro-image` |
 | `/edit` distorts original figure | Use more explicit instructions: "Keep the original figure exactly as-is, only add framing" |

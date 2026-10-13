@@ -23,7 +23,7 @@ from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
 
-from citation_io import load_bibtex, latex_citations, resolve_inputs, fix_common_text
+from citation_io import load_bibtex, latex_citations, resolve_inputs, fix_common_text, tolerate_console_encoding
 
 
 class ErrorLevel(Enum):
@@ -583,6 +583,7 @@ def generate_report(errors: List[FormatError], output_file: str):
 
 
 def main():
+    tolerate_console_encoding()
     args = parse_arguments()
     try:
         bib_files, tex_file = resolve_inputs(args.input_file, args.bib, args.tex, args.check_latex)

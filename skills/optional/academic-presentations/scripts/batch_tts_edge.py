@@ -34,7 +34,7 @@ async def main():
 
     print(f"Generating {len(files)} audio files with voice={voice}")
     for i, f in enumerate(files, 1):
-        text = open(f).read().strip()
+        text = open(f, encoding="utf-8").read().strip()
         if not text:
             print(f"  [{i:02d}/{len(files)}] {os.path.basename(f):30s}  SKIPPED (empty)")
             continue

@@ -170,8 +170,9 @@ def prose(path: pathlib.Path, markers, floats, keep_floats: bool,
         text = strip_macro(text, name)
     # -n: do not follow \input/\include. They are already resolved above, and
     # letting detex expand them a second time would reintroduce unstripped text.
-    done = subprocess.run(["detex", "-n"], input=text,
-                          capture_output=True, text=True)
+    # Explicit UTF-8: the locale codec (GBK, cp1252) cannot encode every name.
+    done = subprocess.run(["detex", "-n"], input=text, capture_output=True,
+                          encoding="utf-8", errors="replace")
     if done.returncode != 0:
         sys.stderr.write(done.stderr)
         raise SystemExit(f"detex failed on {path} with status {done.returncode}")

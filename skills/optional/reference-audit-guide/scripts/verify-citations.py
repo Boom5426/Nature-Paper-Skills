@@ -23,7 +23,7 @@ from dataclasses import dataclass, asdict
 import re
 from difflib import SequenceMatcher
 
-from citation_io import load_bibtex, latex_citations, resolve_inputs
+from citation_io import load_bibtex, latex_citations, resolve_inputs, tolerate_console_encoding
 
 try:
     from semanticscholar import SemanticScholar
@@ -236,7 +236,8 @@ def verify_with_arxiv(arxiv_id: str) -> Optional[Dict]:
         return None
     try:
         search = arxiv.Search(id_list=[arxiv_id])
-        paper = next(search.results())
+        # arxiv 4.0 移除了 Search.results(); Client.results(search) 在 1.x 起均可用
+        paper = next(arxiv.Client().results(search))
         return {
             'title': paper.title,
             'authors': [a.name for a in paper.authors],
@@ -600,6 +601,7 @@ def generate_markdown_report(results: List[VerificationResult], output_file: str
 
 def main():
     """主函数"""
+    tolerate_console_encoding()
     args = parse_arguments()
 
     try:
