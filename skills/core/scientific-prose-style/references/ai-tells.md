@@ -55,6 +55,9 @@ is no more important than its neighbours.
 - After: "Information availability sets a boundary: with fewer than 20 profiled perturbations, no
   method beats the mean baseline."
 
+The test also runs downward. "Modest", "limited" or "only" on a number the reader can see grades it
+a second time, and `anti-defensive-writing` treats it as self-grading.
+
 ### 2. Elevation frames
 
 "Not only X but Y", "in its own right", "not merely", "more than just", which raise a point instead

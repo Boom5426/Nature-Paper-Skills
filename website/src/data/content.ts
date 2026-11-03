@@ -38,7 +38,7 @@ export const skillCopy: Record<string, {title: Pair; summary: Pair}> = Object.fr
  ['submission-audit','Check submission readiness','检查投稿准备情况','Locate prioritized issues before submission or resubmission.','在投稿或返修前定位重要问题。'],
  ['rebuttal-response','Connect replies to revisions','连接回复与改稿','Draft reviewer responses grounded in completed work.','依据已完成工作准备审稿回复。'],
  ['stats-reporting-audit','Check statistical reporting','核查统计报告','Check units, replication, comparisons and figure statistics.','核查独立单位、重复、比较与图注统计。'],
- ['anti-defensive-writing','Write for the paper’s reader','写给论文读者看','Remove defensive or project-log prose, keeping necessary facts and what the venue’s reviewers check.','去掉防御式与项目日志式表达，保留必要事实和目标 venue 审稿人会查的内容。'],
+ ['anti-defensive-writing','Write for the paper’s reader','写给论文读者看','Write the paper as a launch, not a work report, keeping necessary facts, expected comparisons and what the venue’s reviewers check.','按发布会原则写，去掉防御式与项目日志式表达，保留必要事实、领域默认的比较和目标 venue 审稿人会查的内容。'],
  ['scientific-prose-style','Refine the sentences','打磨科学语言','Improve rhythm and punctuation, and remove words that carry no information.','改善句子节奏与标点，删去不带信息的空话。'],
  ['nature-portfolio-playbook','Choose a journal route','选择期刊路径','Align article structure and preflight with the target venue.','让文章结构与投稿检查符合目标期刊。'],
  ['nature-figure','Produce research figures','制作科研图形','Use Python or R to build figures when the required tools are available.','在工具可用时，使用 Python 或 R 制作图形。'],

@@ -1,6 +1,6 @@
 ---
 name: anti-defensive-writing
-description: "Remove audit, defensive, self-critical, developer-facing and commitment writing from manuscripts, Supplementary Information, legends, table notes, data/code statements and figure content. Preserve numbers, definitions, reproducibility facts, mandated statistics, null results and conditions that determine reported values. What is load-bearing depends on the target venue: an ML conference needs the no-leakage sentence a journal pass might cut. Use after claim hierarchy is settled and before sentence polishing, when a draft reads like an audit report, rebuttal, self-critique or repository README, or on requests to de-audit, cut hedging, remove developer notes or promises, 去审计、审计味、防御性写作、自我批评、自我限制、评判式写作、去包装、太多免责、写得太怂、太啰嗦、让语气更肯定、面向开发人员、代码路径、文件名、事前承诺. Also prevents these voices from being added during editing."
+description: "Remove audit, defensive, self-critical, developer-facing and commitment writing from manuscripts, Supplementary Information, legends, table notes, data/code statements and figure content. Preserve numbers, definitions, reproducibility facts, mandated statistics, null results and conditions that determine reported values. What is load-bearing depends on the target venue: an ML conference needs the no-leakage sentence a journal pass might cut. Applies the 发布会原则: the strongest advantage leads, no attempts are narrated, numbers grade results, and every comparison the field expects stays reported. Use after claim hierarchy is settled and before sentence polishing, when a draft reads like an audit report, rebuttal, self-critique or repository README, or on requests to de-audit, cut hedging, remove developer notes or promises, 去审计、审计味、防御性写作、自我批评、自我限制、自我削弱、论文是发布会、评判式写作、去包装、太多免责、写得太怂、太啰嗦、让语气更肯定、面向开发人员、代码路径、文件名、事前承诺. Also prevents these voices from being added during editing."
 license: MIT
 ---
 
@@ -48,11 +48,15 @@ The text reports how the work was run and checked instead of what it found. Typi
   recomputation, primary arm of the original design;
 - internal vocabulary: phase and gate names, PASS or FAIL verdicts, retired metric names (files,
   folders and code names are the developer voice, below);
-- checker language presented as a finding: "no additive cost is resolvable".
+- checker language presented as a finding: "no additive cost is resolvable";
+- attempt narration, what was tried before the final design and what did not work: "we first
+  tried", "an earlier version", "we also experimented with", "did not help".
 
 Fix. State the design fact once, as a fact ("The evaluation split was held out from model
 selection"), in the section where the reader needs it. Move reproducibility detail to Methods or SI.
-Delete governance language outright.
+Delete governance language outright. An attempted variant either becomes a result with a job, an
+ablation stated with its numbers as what the component contributes, or leaves the paper. A variant
+the source reports without numbers does not gain a size in the rewrite.
 
 ### 2. Defensive voice: writing to an imagined reviewer
 
@@ -81,7 +85,8 @@ The text evaluates its own shortcomings instead of reporting facts. Typical cues
 - confessions of absence: could not be identified, not exposed, not identifiable, not available, no
   record exists;
 - self-grading: not directly comparable, unstable, only a small fraction, remains at null, failed to,
-  unfortunately, we acknowledge;
+  unfortunately, we acknowledge, and adjectives that grade a number: modest, limited, marginal, still
+  lags, falls short;
 - listing what the study did not use: datasets, runs, methods or resources that played no part;
 - retreat framed as justification: "we keep it linear because deep models do not yet outperform
   linear baselines";
@@ -90,7 +95,9 @@ The text evaluates its own shortcomings instead of reporting facts. Typical cues
   interval", "interval crosses zero", "within tolerance", "exploratory; small subset").
 
 Fix. Report the fact neutrally, or drop it if no reader needs it ("All data were obtained from the X
-collection"). Describe what was used, not what was not. Recast a defended choice as the design
+collection"). Let the number grade the result: give the value and its comparison, and drop the
+grading word in either direction, "modest" as much as "remarkable". Describe what was used, not what
+was not. Recast a defended choice as the design
 decision it was ("A linear map is the reference estimator, so that supervision can be separated from
 capacity"). Where the evidence supports it, turn a defended weakness into a finding: a gap that richer
 models fail to close is evidence about what limits the task. Gather genuine limitations into one
@@ -173,6 +180,8 @@ A sentence is load-bearing, and is reshaped rather than deleted, when it does on
 - **Gives an estimator's assumptions** that the reader needs to interpret it.
 - **Reports a null, negative or contradictory result.** State it plainly as a finding ("The
   prespecified primary success rule was not met"). Never delete a result to improve tone.
+- **Reports a comparison the field expects**, such as the standard metric or the strongest
+  baseline, even where the method does not win it (Launch principles, below).
 - **Declares a prespecified rule.** Keep it once, in the target field's terms (see The venue decides
   what is load-bearing), and check that each outcome it governs is reported somewhere in the paper. If one is not (a prespecified comparator whose contrast appears nowhere),
   flag it to the author; do not delete the criterion to hide the gap.
@@ -188,6 +197,69 @@ stratum" was false when one stratum reached a small positive mean with an interv
 fix is a precise statement ("no stratum showed a reliable gain"), which is precision, not defence. And
 tone never outranks evidence: no number, interval, n, control or null result is traded for
 directness, and a posture pass cuts repetition, not content.
+
+## Launch principles (发布会原则)
+
+A paper is a launch, not a work report. The author's nine principles for manuscript writing map onto
+this skill and its neighbours as follows.
+
+| # | Principle | Applied by | Limit |
+|---|---|---|---|
+| 1 | Organize the narrative around the strongest advantage | `manuscript-optimizer`, Claim Architecture | the strongest advantage the evidence supports |
+| 2 | Do not narrate what was done, tried or failed | audit voice (attempt narration) and section contracts, Results | an ablation stays, stated as what the component contributes |
+| 3 | No self-weakening wording, and no list of weaknesses for the reviewer | self-critical voice | genuine scope stays once, in the Discussion or in the Limitations section a venue asks for |
+| 4 | Do not stage a contest on a metric the method cannot win | Emphasis is chosen, the record is not | the comparison the field expects is still reported |
+| 5 | A result that does not win is not written as a loss | Emphasis is chosen, the record is not | parity needs a narrow interval, and a trade-off needs both sides measured |
+| 6 | State advantages explicitly | section contracts, Readers checks 3 and 4 and Results | an advantage is a number with its comparison, not an adjective |
+| 7 | Every experiment has an argumentative job, or it goes | `manuscript-optimizer`, figure and analysis roles | a control or a prespecified analysis has a job whatever its outcome |
+| 8 | Abstract and Introduction open like a launch: problem, gap, idea, hardest result | section contracts, Abstract and Introduction | the problem comes first, then the result |
+| 9 | The conclusion reinforces the take-home point and never undercuts itself | section contracts, Discussion | scope comes before the closing sentence, and a scope that contradicts the headline means the headline is too broad |
+
+Principles 6 and 8 add emphasis, not content. A claim about prior work (the gap), a protocol detail
+or an explanation that the supplied text does not give is taken from the Introduction or Methods,
+or left marked for the author. An explanation the data do not test is written as one ("consistent with"), not as "shows
+why". The reply lists every statement the rewrite adds that the source does not contain, derived
+numbers included, so that the author can confirm or cut it. The request that usually comes with the
+principles, "逐处指出并给出改法", is proposal mode
+(Modes).
+
+### Emphasis is chosen, the record is not
+
+The launch analogy holds for attention and fails for evidence. A launch audience cannot check the
+numbers. A reviewer has the tables, the SI and often the code, and an omission found there reads as
+selective reporting. What leads is a writing choice. What is reported is not.
+
+Principles 1 to 3 and 6 to 9 govern emphasis and apply in full. Principles 4 and 5 touch the record
+and apply only in this form:
+
+- **The frame comes from what the method is for.** Lead with the dimension the method was built to
+  improve, as the Introduction states it: unseen compounds, data efficiency, cost, a capability the
+  baselines lack. Test: would the same frame have been chosen if the numbers had come out the other
+  way? If not, the frame follows the result, and that is outcome switching.
+- **The comparison the field expects stays.** The standard metric, the strongest baseline and any
+  prespecified outcome are reported once, with their numbers and in neutral words, even where the
+  method does not win. They belong where the comparison is made, usually the Results body and its
+  table, not necessarily a broad position. The Abstract scopes its claim to the dimension it leads
+  with, so that no reader infers a win the Results do not show.
+- **No loss words, no disguised parity.** Write the values and the comparison: "0.71 against 0.74
+  for X". "Comparable", "matches", "on par" and "reached parity" need an interval that is narrow
+  against the differences that matter. Otherwise write "no detectable difference" and give the
+  interval.
+- **A trade-off needs both sides.** Explain a result that does not win by a difference in goal or by
+  a trade-off only when both sides are measured and reported together: "removing curated target
+  labels lowered benchmark AUROC from 0.83 to 0.80 and raised AUROC on new targets from 0.61 to
+  0.70". An untested reason is labelled as a hypothesis.
+- **No metric, split, candidate pool or statistic changes after the results are seen.** Wording
+  cannot repair a frame chosen that way. Report it to the author as an evidence gap.
+
+Reviewers check these because of what the reporting literature calls spin: emphasising secondary
+results when the primary comparison is null, or presenting a non-significant difference as
+equivalence (Boutron et al., JAMA 2010). In a randomized trial with 300 clinicians, abstracts with
+spin raised the rated benefit of the treatment and lowered the rated rigor of the trial (Boutron et
+al., J Clin Oncol 2014). Reporting a secondary win is not spin when the primary result is stated
+plainly and is not overshadowed. At ML venues the standard
+benchmarks and the strongest baselines belong in the main results table whether or not the method
+wins them (`conference-paper-writing`, What Reviewers Check).
 
 ## The venue decides what is load-bearing
 
@@ -238,7 +310,7 @@ file paths stay out of the paper at every venue.
 |---|---|---|
 | Abstract | headline findings, effect sizes, the scale of the data or validation | test statistics, provenance, caveats unless the claim is false without them |
 | Introduction | problem, gap, approach, findings | design controls ("no regime-specific tuning"), field commentary, rhetorical questions |
-| Results | question, setup in one sentence, result, interpretation, next question | setup, safeguard, caveat, control, exception chains; provenance qualifiers; implementation checks |
+| Results | question, setup in one sentence, result, interpretation, next question; the comparison the field expects; a control, after the result it supports | chains of setup, safeguards, caveats, controls and exceptions before the result; provenance qualifiers; implementation checks; attempt narration |
 | Figure legends | what is plotted, n, error bars, statistic | interpretation defences, "not selected by", "listed for completeness" |
 | Table notes and columns | what each column, symbol and bold means; n; the statistic | verdict columns, "not significance" disclaimers, tolerance and gate language |
 | Main figures | panels that answer a scientific question | compatibility, interface or eligibility matrices: SI table or one Methods sentence |
@@ -281,7 +353,7 @@ with a section of sentences that looked defensive and were kept. Read it before 
 ## Modes
 
 - **Edit** (default): apply the procedure and report.
-- **Proposal** ("先不动，只给方案", "just give me a plan"): make no edits. For each hit give the location,
+- **Proposal** ("先不动，只给方案", "逐处指出并给出改法", "just give me a plan"): make no edits. For each hit give the location,
   the quoted text, the voice, the action (delete, move, rewrite) and the proposed wording.
 - **Light touch** ("微调", "one sentence"): change only the named sentence, and add nothing around it.
 
@@ -295,10 +367,14 @@ looks for.
 F=manuscript.tex   # repeat for the SI and for any generator that writes captions or table notes
 # audit
 grep -n -i -E "locked|frozen|hash|scored once|fixed in advance|verif|sanity|leak|post[- ]hoc|original (design|evaluation)|recomputation|\bgate\b|\bPASS\b|\bFAIL\b|numerical check|predeclared|preregist|criterion (was )?(not )?met|supported if|historical|legacy" "$F"
+# attempt narration
+grep -n -i -E "we (first|initially) (tried|attempted|explored|used)|an earlier version|(also )?experimented with|did not (help|improve)|we then tried" "$F"
 # defensive
 grep -n -i -E "does not (establish|imply|mean|test|estimate|prove|relabel)|do not (claim|imply)|should not be (read|interpreted|taken)|is not an? |are not an? |not intended|rather than|instead of|for completeness|to be clear|should be noted|worth noting|visible rather than|so (that )?a reader|had .* been|specific to .*; it does not|without claiming|not (statistical )?significance" "$F"
 # self-critical, including verdict columns in tables
-grep -n -i -E "could not be (identified|determined|recovered)|not (exposed|identifiable|directly comparable)|unstable|\bonly (about |around )?[0-9]|remains? at null|failed to|unfortunately|we acknowledge|limitation|shortcoming|caveat|exploratory|qualification|within tolerance|interval crosses zero|positive interval" "$F"
+grep -n -i -E "could not be (identified|determined|recovered)|not (exposed|identifiable|directly comparable)|unstable|\bonly (about |around )?[0-9]|remains? at null|failed to|unfortunately|we acknowledge|limitation|shortcoming|caveat|exploratory|qualification|within tolerance|interval crosses zero|positive interval|\bmodest|marginal|\blimited (gain|improvement|effect|benefit)|still (lags|behind|below|trails)|falls? short|slightly (worse|lower|behind)" "$F"
+# record: parity words, each checked against its interval (Launch principles)
+grep -n -i -E "about as well as|comparabl|on par|parity|indistinguishabl|equivalen|no worse than|\bmatches\b" "$F"
 # commentary
 grep -n -i -E "headline|usually framed|none of this|edge case|the real task|\?\s*$|(together|taken together|collectively), these|motivat\w+ (future|further)|open\w* (new )?avenues|paves? the way" "$F"
 # developer: paths, files, workbooks, build and pipeline internals
@@ -309,12 +385,14 @@ grep -n -i -E "will be (made |publicly )?(available|released|deposited|provided|
 
 ## Reporting
 
-Report four lists: what was deleted or moved and why (by voice and class); every limitation kept and
-the reason it is load-bearing; every null or contradictory result, confirming that it is still
-stated; and every gap that needs the author rather than an edit (an access route that does not exist
-yet, a prespecified outcome reported nowhere, a stale panel reference). Then report the build and
-gate status. A pass that silently deletes a mandated statement or a
-result is a reporting failure, not a style improvement.
+Report five lists: every statement the rewrite adds that the source does not contain, such as a
+derived number, a protocol detail, a claim about prior work or an explanation, for the author to
+confirm; what was deleted or moved and why (by voice and class); every limitation kept and the
+reason it is load-bearing; every null, contradictory or non-winning result, confirming that it is
+still stated; and every gap that needs the author rather than an edit (an access route that does
+not exist yet, a prespecified outcome reported nowhere, a stale panel reference). Then report the
+build and gate status. A pass that silently deletes a mandated statement or a result is a reporting
+failure, not a style improvement.
 
 ## Local integration
 
@@ -373,4 +451,6 @@ three examples marked as upstream in `references/worked-examples.md` come from u
 the body was rewritten from this repository's manuscript-revision history, and later that day the
 developer and commitment voices were added: rule zero, the six voices, What stays, the placement
 table, the seven-way classification, the modes, the detection pass and the remaining worked examples
-are local. See `LICENSE` and `UPSTREAM.md`.
+are local. On 2026-11-03 the launch principles were added from the author's standing instruction,
+with the limits on principles 4 and 5 taken from the reporting literature on spin. See `LICENSE` and
+`UPSTREAM.md`.

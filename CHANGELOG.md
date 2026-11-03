@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Launch principles (发布会原则)
+
+- Map the author's nine launch principles (a paper is a launch, not a work report) onto the skills that apply them, with the limit of each, in a new `anti-defensive-writing` section. `paper-workflow` routes the request (`launch`), and "逐处指出并给出改法" selects proposal mode.
+- Separate emphasis from the record: what leads is a writing choice, what is reported is not. A comparison the field expects stays reported where the method does not win it, the frame comes from what the method is for, "matches" or "comparable" need an interval narrow against the differences that matter, and a trade-off needs both sides measured. These limits follow the reporting literature on spin.
+- Add attempt narration ("we first tried", "did not help") and grading adjectives ("modest", "limited", "still lags") to the posture cues and the detection pass, with a scan for parity words. The number grades the result, in either direction. An attempted variant stays only as an ablation with its numbers.
+- Principles 6 and 8 add emphasis, not content: a claim about prior work, a protocol detail or an explanation that the supplied text does not give is taken from the Introduction or Methods or left marked for the author, and an untested explanation is not written as "shows why". The reply lists every statement the rewrite adds that the source does not contain, for the author to confirm.
+- `manuscript-optimizer` builds the claim architecture around the strongest supported advantage and gives controls, scope analyses and prespecified analyses a role whatever their outcome. The section contracts lead the Abstract and Introduction findings with the strongest result, state advantages in the text, and narrow a headline that its own scope would contradict.
+- `conference-paper-writing` keeps standard benchmarks and strong baselines that the method does not win in the main results table.
+- Add the `launch-principles` behavior case.
+
 ### Upstream API changes and Windows encoding
 
 - Fetch arXiv results through `arxiv.Client().results(search)` in `reference-audit-guide`. arxiv 4.0 removed `Search.results()`, so every arXiv lookup returned "not found" on a fresh install.

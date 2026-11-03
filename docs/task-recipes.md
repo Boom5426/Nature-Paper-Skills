@@ -11,6 +11,7 @@ Use ordinary language or name the entry skill. Provide the active source and the
 | One section | “只改摘要，目标期刊 Nature Methods。Results 里 S3 还在重跑，其他部分不动。” | Revised Abstract held to its section contract; claims resting on the pending result left out and named |
 | AI tone | “这几段 AI 味太重，帮我去掉。数字和结论不变。” | Sentences that carry no information removed or restated as facts; common words that carry content kept; flagged lines from `ai_tells.py` checked one by one |
 | Posture | “去掉这段 SI 的审计式和防御式表达，保留必要的统计、复现信息及阴性结果。” | Reader-facing scientific prose |
+| Launch posture | “你在协助我写论文，全程遵守【发布会原则】：论文是发布会，不是工作汇报。1. …… 9. ……现在检查我发你的文字里所有的防御性写作，逐处指出并给出改法。” (the nine principles pasted in full) | Proposal by location: quoted text, principle and replacement wording. Comparisons the method does not win stay reported, and parity claims are checked against their intervals |
 | ML venue | “这是 ICLR 附录，去掉审计味和防御腔，但 ICLR 审稿人要找的信息保留。” | Prose kept to what the venue's reviewers check: no-leakage statement, runs and spread, numbers instead of verdicts; evidence gaps named for the author |
 | Figures | “依据 results.csv 规划两张主图，先给每张图的主结论、面板及图注，不出图。” | Figure plan; no fabricated visual QA |
 | Submission | “检查当前最终稿、SI 和 references.bib 是否存在投稿阻断项。目标期刊已确定，未联网检查的要求请注明。” | Prioritized preflight with checked/unchecked scope |

@@ -137,6 +137,13 @@ Use the architecture across the paper:
 Do not force three claims when the paper supports two, and do not present several contributions as
 equally central unless the evidence and design require that structure.
 
+Build the architecture around the strongest supported advantage. It is the main claim, the Abstract
+and the final Introduction paragraph lead their findings with it, and every other result supports
+it, sets its scope or moves to the SI. Fix the comparison frame at this step, from what the method
+is for. The frame never comes from which numbers win, and a comparison the field expects stays in
+the Results even where the method does not win it (`anti-defensive-writing`, Emphasis is chosen, the
+record is not).
+
 ### 4. Map claims to evidence and calibrate their level
 
 Extract substantive claims from the title, abstract, introduction, Results headings, figure
@@ -189,8 +196,11 @@ Do not default to preserving the original sentence or paragraph structure.
 
 ### 6. Align figures, text, and terminology
 
-Assign every figure and panel one primary role: claim-supporting evidence, definition or
-methodological bridge, validation in a new setting, practical consequence, or case illustration.
+Assign every figure, panel and analysis one primary role: claim-supporting evidence, a control that
+rules out an alternative explanation, definition or methodological bridge, validation in a new
+setting, scope, practical consequence, or case illustration. An analysis with none of these roles
+moves to the SI or leaves the paper. A control, a robustness check the claim depends on and a
+prespecified analysis have a role whatever their outcome.
 A panel that documents an interface, compatibility or eligibility check (which methods accept which
 inputs) has none of these roles; it belongs in an SI table or one Methods sentence.
 
@@ -262,6 +272,7 @@ units, and retain technical distinctions that change the scientific meaning.
 Reject or rewrite these patterns unless the evidence and context specifically justify them:
 
 - experiment logs: `We evaluated... We found... We also found... In addition...`;
+- attempt narratives: `We first tried X, which did not help, so we...`;
 - disconnected proof: `We did A and B. We observed C and D. Therefore, X` without the missing link;
 - procedural paragraph openers that hide the message: `To further investigate...`;
 - ornamental or vague abstractions such as `stable performance regimes`, `intrinsic quality`, or

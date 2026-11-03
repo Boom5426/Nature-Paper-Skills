@@ -155,8 +155,8 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
   advances it. By the end of the second sentence the reader faces the problem (Readers, check 1).
   The sentence that introduces the
   study ("Here we present ...") follows the problem and gap, usually as the second to fourth
-  sentence, and says what the method lets its users do. Findings are stated as what was predicted
-  or recovered and what it was compared against. A comparison with experiment, expert annotation or
+  sentence, and says what the method lets its users do. The findings lead with the strongest
+  result and are stated as what was predicted or recovered and what it was compared against. A comparison with experiment, expert annotation or
   known biology leads when the Results contain one. A closing sentence of field-level implication is
   acceptable when it names what becomes possible.
   When the supplied material does not provide a move, most often the gap, take it from the
@@ -181,6 +181,7 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
   - it says a result was significant without saying what changed, or offers a P value as the finding
   - it claims more than the Results, such as outperforming all methods when the Results show a
     narrower win
+  - it calls a difference whose interval spans zero parity ("matches", "comparable")
   - it cites a result whose Results subsection is not settled
   - it uses labels such as "novel" or "powerful" in place of a result
   - it ends on a generic promise ("will be a powerful tool")
@@ -200,7 +201,7 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
   question, then to why that question remains hard, then to what this study does and
   what it makes possible to learn. Prior work is organized by what it can and cannot answer. The
   final paragraph states the question, approach and primary contribution, then previews the main
-  findings as an enlarged version of the Abstract's findings sentences: what was shown, against
+  findings, strongest first, as an enlarged version of the Abstract's findings sentences: what was shown, against
   what, and what it enables, in a few sentences and in the reader's terms. It may carry the numbers
   that show the scale of the work or the size of the main gain.
 - **Fails when:**
@@ -226,13 +227,17 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
   evidence supports it. Each local claim runs question → minimum design → core observation with
   direction and magnitude → interpretation, stated explicitly whenever the inference is not obvious
   from the observation. Each local claim carries the numbers that establish it, each with its
-  comparison. Runs of values that the argument does not use go to figures, tables and legends. Where a
+  comparison, and the advantage is stated in the text, so the reader never has to find it in a
+  table. Runs of values that the argument does not use go to figures, tables and legends. Where a
   metric's meaning matters for the next inference, the text states what it measures. When metrics
   disagree, the text says what each captures (for example pattern agreement, magnitude error and
   direction accuracy) instead of letting one metric stand for overall performance. Observation,
   interpretation and implication stay distinct.
 - **Keeps visible:** metric disagreement, null and negative results, context dependence and the
-  absence of a universal winner. Any of these may be the result.
+  absence of a universal winner. Any of these may be the result. A comparison the field expects is
+  reported even where the method does not win it, with its number and in neutral words. The frame
+  of each comparison comes from what the method is for, not from which numbers win
+  (`anti-defensive-writing`, Emphasis is chosen, the record is not).
 - **Method papers:** the first subsection presents the method and its principle, anchored on
   Fig. 1. Its heading is "Overview of X" or one sentence stating the principle ("X combines A with B
   to model C"). Open with a result instead only when the first contribution is itself a finding.
@@ -242,6 +247,7 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
   and a comparison with experiment or known biology is reported where the data allow one.
 - **Fails when:**
   - it follows experiment chronology or panel order
+  - it narrates attempts: what was tried before the final design and what did not help
   - procedural openers ("We next investigated", "To test this") are the default pattern or run in
     consecutive subsections
   - implementation checks are reported as findings
@@ -267,7 +273,9 @@ computational-method Articles in Nature Methods, Nature Biotechnology and Nature
      and why. The final sentence states that implication in the broad register and names what
      becomes possible for biology or medicine.
 - **Limitations:** state genuine limitations once, as scope, in move 3, or where a limit sets a
-  reported value. A useful limitation changes how a result is read.
+  reported value. A useful limitation changes how a result is read. If a scope statement would
+  contradict the opening claim, the claim is too broad: narrow it upstream (Dependency order, rule
+  3) instead of dropping the scope.
 - **Fails when:**
   - it reopens with field background
   - it replays the Results number by number

@@ -7,8 +7,8 @@ description: >-
   Also use when one section is named, such as rewrite the Abstract, 改摘要, 写引言 or 讨论怎么写,
   or when a draft must reach a broad reader (面向大同行, 写给非本领域读者, too technical), so that
   the section's contract, its reader and its dependencies on other sections apply. Also use when
-  prose reads as AI-generated (去 AI 味, AI 味重, 像 AI 写的, sounds AI-generated).
-  Go to a specialist directly when the user names one or a narrow job such as a
+  prose reads as AI-generated (去 AI 味, AI 味重, 像 AI 写的, sounds AI-generated), and for the
+  发布会原则 (论文是发布会，不是工作汇报). Go to a specialist directly when the user names one or a narrow job such as a
   citation style. Do not route ordinary
   emails, code documentation or non-manuscript writing through this workflow.
 ---
@@ -80,6 +80,7 @@ The table gives candidate steps in order, not mandatory rewrite passes.
 | A Results section that is scientifically settled but reads figure-by-figure | `results-flow` | `results-section-revision`, `anti-defensive-writing`, then `scientific-prose-style` |
 | A whole draft, or no unit named | `manuscript` | `manuscript-optimizer`, with `references/section-contracts.md` as the per-section standard; `scientific-writing` for needed drafting; passage, posture and sentence specialists only for observed issues |
 | Reads like an audit report, a rebuttal or a self-critique; hedged, over-caveated or apologetic; a paragraph opens with a limitation; the SI or data statements confess what could not be found; the text names folders, files or build steps, or promises a future release | `posture` | `anti-defensive-writing`, then `scientific-prose-style`. If the claim hierarchy is not yet settled, run `manuscript-optimizer` first: an unnecessary disclaimer and a real scope condition look identical while the claim is still moving |
+| The 发布会原则: 论文是发布会，不是工作汇报, or a request that the paper read as a launch, not a work report | `launch` | `anti-defensive-writing`'s Launch principles section maps each of the nine principles to the skill that applies it and to its limit. On a whole draft, `manuscript-optimizer` first (principles 1 and 7: the main claim and each analysis's job), then the section contracts (6, 8 and 9), then `anti-defensive-writing` (2 to 5), then `scientific-prose-style`. On a passage, the last two. "逐处指出并给出改法" asks for proposal mode: location, quoted text and replacement wording, no edits. Principles 4 and 5 change what leads, never what is reported |
 | A Review, survey, or Perspective | `review-article` | `review-article-architecture` first, then the Review path below |
 | A draft carried across many sessions | `long-draft` | Reconcile current source and decisions with `draft-marker-discipline` if markers/state are relevant; research articles use `manuscript-optimizer`, Reviews/surveys/Perspectives use `review-article-architecture`. Length alone never selects the Review route |
 | Near submission or resubmission | `preflight` | `submission-audit`, `citation-verifier`, `claim-source-verification`, `stats-reporting-audit`, `data-availability` |
@@ -168,8 +169,9 @@ Integrity checks run alongside, not in sequence: `citation-verifier`, `claim-sou
 Layer 4 has a boundary the other layers do not: **a load-bearing statement stays.** Load-bearing is
 decided by what a sentence states, not by which skill added it: the unit of replication and n, no P
 values, blinding and exclusions, an access route, the count behind a reporting decision, an
-estimator's assumptions, a null result, any scope condition the Methods needs to stay
-reproducible, and any statement the target venue's reviewers look for. `anti-defensive-writing` may move such a statement out of a high-impact position, state
+estimator's assumptions, a null result, a comparison the field expects even where the method does
+not win it, any scope condition the Methods needs to stay reproducible, and any statement the target
+venue's reviewers look for. `anti-defensive-writing` may move such a statement out of a high-impact position, state
 it once instead of at every mention, or rewrite it as positive scope, but it must not delete it. A
 pass that silently removes one is a reporting failure, not a style improvement. Audit-voice wording
 added by an integrity check ("as checked", "could not be identified") is not protected.
@@ -319,6 +321,8 @@ before attempting heavy revision.
   result the reviewer would ask for
 - treating AI tone as a word list: swapping synonyms or cutting common words such as "robust" instead
   of deleting what carries no information
+- applying the 发布会原则 by dropping a comparison the method does not win, or by calling a difference
+  whose interval spans zero parity, instead of choosing what leads
 - rewriting the manuscript from experiment memory instead of a current `result_summary.md`
 - editing figure legends late without rechecking the Results text
 - leaving repository choice, accession IDs, or source-data coverage until the portal is open

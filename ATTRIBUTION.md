@@ -180,8 +180,10 @@ Source: https://github.com/Kiterlin/anti-defensive-writing
   `skill/anti-defensive-writing/SKILL.md`, fetched 2026-08-22 at `main`. On 2026-09-30 the body was
   rewritten from this repository's manuscript-revision history (rule zero, the audit, defensive,
   self-critical, commentary, developer and commitment voices, What stays, the placement table, modes, the detection pass and
-  `references/worked-examples.md`). The core rule and three upstream examples, reproduced unmodified
-  in `references/worked-examples.md`, remain from upstream. Upstream's Codex packaging files were not
+  `references/worked-examples.md`). On 2026-11-03 the launch principles section was added, the
+  author's nine principles with limits taken from the reporting literature on spin. The core rule
+  and three upstream examples, reproduced unmodified in `references/worked-examples.md`, remain from
+  upstream. Upstream's Codex packaging files were not
   carried over. The upstream MIT licence travels with the skill as
   `skills/core/anti-defensive-writing/LICENSE`, and the fetch record is in that directory's
   `UPSTREAM.md`.

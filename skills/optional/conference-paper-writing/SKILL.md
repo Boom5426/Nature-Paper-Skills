@@ -316,6 +316,7 @@ Requirements:
 - Number of runs behind each reported number
 - Hyperparameter search ranges, and the split they were selected on
 - One sentence stating that test data played no part in model or configuration selection
+- The standard benchmarks and the strongest baselines, including those the method does not win
 - Compute infrastructure (GPU type, total hours)
 - Seed-setting methods
 
@@ -864,6 +865,7 @@ What stays out, or changes form:
 | Preregistered, prespecified, locked, frozen | Rare in ML. An unverifiable "preregistered" invites suspicion. Write "the configuration was selected on the development split and applied unchanged to the evaluation split." |
 | Verdict sentences ("supported if the CI excludes 0", "criterion not met") | Clinical-trial style. Report the mean or median and the interval and let the reader judge |
 | A configuration chosen on data later used for evaluation | A label does not fix it. Report the default configuration's result beside the selected one |
+| A standard benchmark or a strong baseline the method does not win | Keep it in the main results table. Lead with the setting the method was built for and state the other result in neutral words. An omission that reviewers find in the appendix or the code reads as selective reporting |
 | "No parameters are trained" or similar | Useful, because reviewers ask whether a method adds parameters. State it once |
 | Internal governance, ledgers, file paths | Out of the paper |
 | "Code will be released upon publication", anonymized repository link | The convention under double-blind review. Keep it as the venue's guide words it |

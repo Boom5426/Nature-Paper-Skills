@@ -27,3 +27,5 @@ A case passes only if every criterion is satisfied. Any numerical drift, invente
 [2026-10-02 observations and response excerpts](results/2026-10-02.md): four fresh sessions, one trial per case. The subagents received no earlier conversation or grading rubric. The available agent runtime was used; there was no comparative model study, repeated-sampling study, Codex CLI session or Claude Code session. The result supports only these four observed executions.
 
 [2026-10-09 and 2026-10-10 observations](results/2026-10-10.md): before and after runs for the section contracts, the broad-peer framing, the venue rules (`iclr-appendix`), numbers in the abstract, the opening rule and AI tone, two runs per arm for the last five. The venue and number comparisons separated the versions. Four others did not, and the record says why.
+
+[2026-11-03 observations](results/2026-11-03.md): before and after runs for the launch principles (`launch-principles`), two runs per arm, then two after runs testing two lines added after the first four.
