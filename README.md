@@ -8,9 +8,9 @@
 
 🧠 **Structure** · 📊 **Figures** · ✍️ **Writing** · 📚 **Citations** · 📨 **Rebuttals**
 
-🌐 **English** · [简体中文](README.zh-CN.md)
 
-[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/) · [🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [🪄 Examples](#see-what-changes) · [🧩 27 Skills](docs/skill-map.md)
+[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/) · [🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [🪄 Examples](#see-what-changes) · [🧩 27 Skills](docs/skill-map.md) .   <a href="README.md"><img src="https://img.shields.io/badge/Language-English-1F6FB2?style=flat-square&amp;logo=googletranslate&amp;logoColor=white" alt="Language: English"></a>
+  <a href="README.zh-CN.md"><img src="https://img.shields.io/badge/%E8%AF%AD%E8%A8%80-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-1BA39C?style=flat-square&amp;logo=googletranslate&amp;logoColor=white" alt="语言：简体中文"></a>
 
 </div>
 
