@@ -2,7 +2,15 @@
 
 ## Unreleased
 
-### Launch principles (发布会原则)
+### Launch principles V3 (发布会原则)
+
+- Replace the nine launch principles with the author's V3 text (eight principles, confirmed 2026-11-22), quoted verbatim in `anti-defensive-writing` with a table that maps each principle to the skill that applies it and to its limit. A paper is a launch, not a work report: scientific truth is the floor, the strongest contribution is the centre of the narrative, and the reader's understanding is the final test.
+- Add principle 8, the first-reading test: read cold as a broad peer, answer four questions, and compare the contribution the authors intend with the one the reader receives. A mismatch is fixed by emphasis, information hierarchy and order before wording. `paper-workflow`'s `launch` route runs it first as the diagnosis and again as the acceptance check.
+- A launch review runs in three steps: a whole-paper diagnosis, line-by-line items in paper order (original with its location, problem and its effect on the reader, complete replacement text or a restructuring plan), and a priority that puts the core contribution and the argument before language polish.
+- Principles 3 and 4 now touch the record (formerly 4 and 5): negative evidence and scope that bear on the core conclusion are stated plainly, once, and the comparison the field expects stays reported.
+- Add the `launch-principles-v3` behavior case. The `launch-principles` case keeps the nine-principle prompt, because its 2026-11-03 record was run on it.
+
+### Launch principles (发布会原则), first version
 
 - Map the author's nine launch principles (a paper is a launch, not a work report) onto the skills that apply them, with the limit of each, in a new `anti-defensive-writing` section. `paper-workflow` routes the request (`launch`), and "逐处指出并给出改法" selects proposal mode.
 - Separate emphasis from the record: what leads is a writing choice, what is reported is not. A comparison the field expects stays reported where the method does not win it, the frame comes from what the method is for, "matches" or "comparable" need an interval narrow against the differences that matter, and a trade-off needs both sides measured. These limits follow the reporting literature on spin.

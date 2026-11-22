@@ -1,6 +1,6 @@
 ---
 name: anti-defensive-writing
-description: "Remove audit, defensive, self-critical, developer-facing and commitment writing from manuscripts, Supplementary Information, legends, table notes, data/code statements and figure content. Preserve numbers, definitions, reproducibility facts, mandated statistics, null results and conditions that determine reported values. What is load-bearing depends on the target venue: an ML conference needs the no-leakage sentence a journal pass might cut. Applies the 发布会原则: the strongest advantage leads, no attempts are narrated, numbers grade results, and every comparison the field expects stays reported. Use after claim hierarchy is settled and before sentence polishing, when a draft reads like an audit report, rebuttal, self-critique or repository README, or on requests to de-audit, cut hedging, remove developer notes or promises, 去审计、审计味、防御性写作、自我批评、自我限制、自我削弱、论文是发布会、评判式写作、去包装、太多免责、写得太怂、太啰嗦、让语气更肯定、面向开发人员、代码路径、文件名、事前承诺. Also prevents these voices from being added during editing."
+description: "Remove audit, defensive, self-critical, developer-facing and commitment writing from manuscripts, Supplementary Information, legends, table notes, data/code statements and figure content. Preserve numbers, definitions, reproducibility facts, mandated statistics, null results and conditions that determine reported values. What is load-bearing depends on the target venue: an ML conference needs the no-leakage sentence a journal pass might cut. Applies the 发布会原则 (V3): the strongest contribution leads, no attempts are narrated, numbers grade results, a first-reading test checks what readers keep, and expected comparisons stay reported. Use after claim hierarchy is settled and before sentence polishing, when a draft reads like an audit report, rebuttal, self-critique or repository README, or on requests to de-audit, cut hedging, remove developer notes or promises, 去审计、审计味、防御性写作、自我批评、自我限制、自我削弱、论文是发布会、评判式写作、去包装、太多免责、写得太怂、太啰嗦、让语气更肯定、面向开发人员、代码路径、文件名、事前承诺. Also prevents these voices from being added during editing."
 license: MIT
 ---
 
@@ -198,30 +198,69 @@ fix is a precise statement ("no stratum showed a reliable gain"), which is preci
 tone never outranks evidence: no number, interval, n, control or null result is traded for
 directness, and a posture pass cuts repetition, not content.
 
-## Launch principles (发布会原则)
+## Launch principles (发布会原则), V3
 
-A paper is a launch, not a work report. The author's nine principles for manuscript writing map onto
-this skill and its neighbours as follows.
+A paper is a launch, not a work report. Scientific truth is the floor, the strongest contribution is
+the centre of the narrative, and the reader's understanding is the final test. The author's text below
+(V3, confirmed 2026-11-22) is the standard; the table maps each principle onto this skill and its
+neighbours, with the limit that keeps it inside the record.
+
+> **论文是发布会，不是工作汇报。科学真实性是底线，最强贡献是叙事中心，读者理解是最终检验。**
+>
+> 1. **聚焦最强贡献**：围绕最重要的科学问题、最有价值的发现和最有力的证据组织全文。明确论文最希望读者记住什么，其他内容为此服务。
+> 2. **不写工作流水账**：不按研究过程、尝试顺序或实验清单展开。按照科学论证的需要选择内容、安排顺序，而不是复述做过的工作。
+> 3. **不主动削弱贡献**：避免不必要的自我否定、弱化措辞和防御性解释。不突出缺乏优势的比较，但必须如实呈现影响核心结论的负面证据与适用边界。
+> 4. **让优势成为结论**：不要只堆砌数字或期待读者自行发现贡献。每项关键结果都应明确回答：发现了什么、证明了什么、为什么重要。比较指标必须服务于科学问题。
+> 5. **实验服务于科学主张**：每个关键实验都应有明确的论证职责。区分实验证据、合理推断和未经验证的主张。删除重复、无关或不能增强论证的内容。
+> 6. **建立清晰的叙事主线**：摘要和引言遵循“重要问题 → 关键缺口 → 核心思路 → 最强证据”。结果部分围绕关键发现展开，讨论解释其科学意义，结论强化最重要的记忆点。
+> 7. **面向大同行，简洁准确**：默认读者具备相关基础，但不了解本文具体问题。优先使用常见、直接、准确的学术表达，减少术语堆砌、冗余修饰和不必要的技术细节，同时保持科学严谨性。
+> 8. **首次阅读测试（最重要的检查之一）**：完全站在第一次接触论文的大同行视角，不预设作者意图，独立判断：
+>    - 读完标题、摘要和引言，读者认为这篇论文究竟想解决什么问题？为什么值得关注？
+>    - 读者认为最重要的新贡献是什么？能否理解它与已有工作的本质区别？
+>    - 读完主要图表和结果，读者最终会记住什么科学发现？这些证据是否真正支撑核心主张？
+>    - 哪些地方会让读者困惑、误解、失去兴趣，或需要自行推断作者没有说清楚的结论？
+>
+>    **重点检查“作者想传达的贡献”与“读者实际接收到的信息”是否一致。** 如果最强贡献没有成为读者最自然的理解，应优先调整叙事重点、信息层级和论证顺序，而不是只做语言润色。
 
 | # | Principle | Applied by | Limit |
 |---|---|---|---|
-| 1 | Organize the narrative around the strongest advantage | `manuscript-optimizer`, Claim Architecture | the strongest advantage the evidence supports |
-| 2 | Do not narrate what was done, tried or failed | audit voice (attempt narration) and section contracts, Results | an ablation stays, stated as what the component contributes |
-| 3 | No self-weakening wording, and no list of weaknesses for the reviewer | self-critical voice | genuine scope stays once, in the Discussion or in the Limitations section a venue asks for |
-| 4 | Do not stage a contest on a metric the method cannot win | Emphasis is chosen, the record is not | the comparison the field expects is still reported |
-| 5 | A result that does not win is not written as a loss | Emphasis is chosen, the record is not | parity needs a narrow interval, and a trade-off needs both sides measured |
-| 6 | State advantages explicitly | section contracts, Readers checks 3 and 4 and Results | an advantage is a number with its comparison, not an adjective |
-| 7 | Every experiment has an argumentative job, or it goes | `manuscript-optimizer`, figure and analysis roles | a control or a prespecified analysis has a job whatever its outcome |
-| 8 | Abstract and Introduction open like a launch: problem, gap, idea, hardest result | section contracts, Abstract and Introduction | the problem comes first, then the result |
-| 9 | The conclusion reinforces the take-home point and never undercuts itself | section contracts, Discussion | scope comes before the closing sentence, and a scope that contradicts the headline means the headline is too broad |
+| 1 | Organize the paper around the strongest contribution: the question, the finding and the evidence the reader should remember | `manuscript-optimizer`, Claim Architecture | the strongest contribution the evidence supports |
+| 2 | No work log: order by the argument, not by the research process, the attempts or the experiment list | audit voice (attempt narration) and section contracts, Results | an ablation stays, stated as what the component contributes |
+| 3 | Do not weaken the contribution: no needless self-negation, softening or defensive explanation, and no spotlight on comparisons without an advantage | self-critical and defensive voices; Emphasis is chosen, the record is not | negative evidence and scope that bear on the core conclusion are stated plainly, once, where they act; the comparison the field expects is still reported |
+| 4 | Make the advantage the conclusion: each key result says what was found, what it shows and why it matters; metrics serve the scientific question | section contracts, Readers checks 3 and 4 and Results | an advantage is a number with its comparison, not an adjective; the Abstract implies no win the Results do not show |
+| 5 | Every key experiment has an argumentative job; evidence, reasonable inference and untested claims are kept apart; what repeats or does not strengthen the argument goes | `manuscript-optimizer`, figure and analysis roles | a control or a prespecified analysis has a job whatever its outcome |
+| 6 | One narrative line: Abstract and Introduction run important problem, key gap, core idea, strongest evidence; Results follow the key findings; Discussion gives their meaning; the conclusion reinforces the take-home point | section contracts, Abstract, Introduction, Results and Discussion | the problem comes first; scope comes before the closing sentence, and a scope that contradicts the headline means the headline is too broad |
+| 7 | Write for the broad peer, short and exact: common, direct, accurate wording, fewer terms, modifiers and technical details | section contracts, Readers; `write-scientific-manuscript`; `scientific-prose-style` | technical positions (Methods, the body of Results, the SI) keep their precision |
+| 8 | First-reading test: read cold as a broad peer, answer the four questions, and compare the contribution the authors intend with the one the reader receives | run first as the diagnosis and last as the acceptance check, preferably by a reader not anchored on the draft's history | a mismatch is fixed by emphasis, information hierarchy and order before wording |
 
-Principles 6 and 8 add emphasis, not content. A claim about prior work (the gap), a protocol detail
+Principles 4 and 6 add emphasis, not content. A claim about prior work (the gap), a protocol detail
 or an explanation that the supplied text does not give is taken from the Introduction or Methods,
 or left marked for the author. An explanation the data do not test is written as one ("consistent with"), not as "shows
 why". The reply lists every statement the rewrite adds that the source does not contain, derived
-numbers included, so that the author can confirm or cut it. The request that usually comes with the
-principles, "逐处指出并给出改法", is proposal mode
-(Modes).
+numbers included, so that the author can confirm or cut it.
+
+**How a launch review runs (V3).** Look at the whole paper before editing any sentence.
+
+1. **Diagnosis.** As a first-time reader, say briefly what the paper is actually about, what its
+   strongest contribution is, what the reader will most likely remember, and where the narrative
+   loses most persuasive force. Judge whether the contribution stands out, whether the argument
+   holds, whether the hierarchy of information is right, and whether a section or paragraph
+   structure needs to change.
+2. **Line by line.** Cover every text position in paper order: title, abstract, introduction,
+   methods, results, discussion, conclusion, figure and table titles and captions. For each place
+   worth changing give the **original** (quoted, with its location), the **problem** (narrative,
+   logic, evidence or wording, and its effect on the reader) and the **replacement** (complete text
+   that can be pasted in), or, when the problem is structure or order, the restructuring plan.
+3. **Priority.** Separate what affects the core contribution and the argument from ordinary language
+   polish, and solve the first kind first.
+
+Boundaries: no change for its own sake; nothing invented, inflated or hidden; the review is not a
+list of weaknesses, its job is to let the real contribution come through clearly and strongly; when a
+problem comes from positioning, the organisation of evidence or the information hierarchy, fix the
+structure rather than polish sentences. The goal: a broad peer reading the paper for the first time
+understands why it matters, identifies its distinct contribution and is persuaded by the strongest
+evidence. The request "逐处指出并给出改法", or a request to review against these principles, is
+proposal mode (Modes) unless it asks for edits.
 
 ### Emphasis is chosen, the record is not
 
@@ -229,7 +268,7 @@ The launch analogy holds for attention and fails for evidence. A launch audience
 numbers. A reviewer has the tables, the SI and often the code, and an omission found there reads as
 selective reporting. What leads is a writing choice. What is reported is not.
 
-Principles 1 to 3 and 6 to 9 govern emphasis and apply in full. Principles 4 and 5 touch the record
+Principles 1, 2 and 5 to 8 govern emphasis and apply in full. Principles 3 and 4 touch the record
 and apply only in this form:
 
 - **The frame comes from what the method is for.** Lead with the dimension the method was built to
