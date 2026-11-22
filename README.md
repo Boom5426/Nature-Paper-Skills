@@ -9,9 +9,7 @@
 🧠 **Structure** · 📊 **Figures** · ✍️ **Writing** · 📚 **Citations** · 📨 **Rebuttals**
 
 
-[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/) · [🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [🪄 Examples](#see-what-changes) · [📚 27 Skills](docs/skill-map.md)
-
-**English** · [简体中文](README.zh-CN.md)
+[🌐 Website](https://boom5426.github.io/Nature-Paper-Skills/) · [🗺️ Workflow](#workflow-at-a-glance) · [🚀 Quick start](#quick-start) · [🧩 Choose a task](#choose-a-task) · [🪄 Examples](#see-what-changes) · [📚 27 Skills](docs/skill-map.md) · **English** · [简体中文](README.zh-CN.md)
 
 </div>
 
