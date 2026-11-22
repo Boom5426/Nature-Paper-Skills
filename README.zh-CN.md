@@ -8,9 +8,9 @@
 
 🧠 **论文结构** · 📊 **科研图表** · ✍️ **科学写作** · 📚 **引用核验** · 📨 **审稿回复**
 
-🌐 [English](README.md) · **简体中文**
+[🌐 项目主页](https://boom5426.github.io/Nature-Paper-Skills/zh/) · [🗺️ 工作流总览](#工作流总览) · [🚀 快速开始](#快速开始) · [🧩 按任务选择](#按任务选择) · [🪄 效果示例](#修改效果示例) · [📚 27 Skills](docs/skill-map.md)
 
-[🌐 项目主页](https://boom5426.github.io/Nature-Paper-Skills/zh/) · [🗺️ 工作流总览](#工作流总览) · [🚀 快速开始](#快速开始) · [🧩 按任务选择](#按任务选择) · [🪄 Examples](#修改效果示例) · [🧩 27 Skills](docs/skill-map.md)
+[English](README.md) · **简体中文**
 
 </div>
 
